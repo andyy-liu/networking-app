@@ -17,6 +17,7 @@ interface ContactTableProps {
   onFilterByTag: (tag: ContactTag | null) => void;
   activeTagFilter: ContactTag | null;
   onEditContact: (contact: Contact) => void;
+  onViewNotes: (contact: Contact) => void;
 }
 
 export const ContactTable: React.FC<ContactTableProps> = ({ 
@@ -26,7 +27,8 @@ export const ContactTable: React.FC<ContactTableProps> = ({
   sortDirection,
   onFilterByTag,
   activeTagFilter,
-  onEditContact
+  onEditContact,
+  onViewNotes
 }) => {
   // Get all unique tags from contacts for filter dropdown
   const allTags = Array.from(new Set(contacts.flatMap(contact => contact.tags))) as ContactTag[];
@@ -50,7 +52,8 @@ export const ContactTable: React.FC<ContactTableProps> = ({
               <ContactTableRow 
                 key={contact.id} 
                 contact={contact} 
-                onEditContact={onEditContact} 
+                onEditContact={onEditContact}
+                onViewNotes={onViewNotes}
               />
             ))
           )}

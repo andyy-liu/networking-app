@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Header } from '@/components/layout/Header';
@@ -7,78 +7,176 @@ import { ContactTable } from '@/components/contacts/ContactTable';
 import { NewContactButton } from '@/components/contacts/NewContactButton';
 import { NewContactModal } from '@/components/contacts/NewContactModal';
 import { EditContactModal } from '@/components/contacts/EditContactModal';
+import { ContactNotesModal } from '@/components/contacts/ContactNotesModal';
 import { Contact, ContactTag } from '@/lib/types';
 import { toast } from '@/components/ui/use-toast';
-
-// Initial sample data
-const initialContacts: Contact[] = [
-  {
-    id: uuidv4(),
-    name: 'Jennifer Smith',
-    email: 'jennifer.smith@example.com',
-    role: 'Product Manager at Tech Co.',
-    tags: ['Alumni', 'Recruiter'],
-    dateOfContact: '2023-05-15',
-    status: 'Chatted',
-  },
-  {
-    id: uuidv4(),
-    name: 'Michael Johnson',
-    email: 'michael.johnson@example.com',
-    role: 'Computer Science Professor',
-    tags: ['Professor'],
-    dateOfContact: '2023-05-10',
-    status: 'Responded',
-  },
-  {
-    id: uuidv4(),
-    name: 'Emily Brown',
-    email: 'emily.brown@example.com',
-    role: 'President of Coding Club',
-    tags: ['Club', 'Other'],
-    dateOfContact: '2023-05-05',
-    status: 'Reached Out',
-  },
-];
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/context/AuthContext';
 
 const Index = () => {
-  const [contacts, setContacts] = useState<Contact[]>(initialContacts);
+  const { user } = useAuth();
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
+  const [contactForNotes, setContactForNotes] = useState<Contact | null>(null);
   const [sortKey, setSortKey] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | 'default'>('default');
   const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const handleAddContact = (newContactData: Omit<Contact, 'id'>) => {
-    const newContact: Contact = {
-      id: uuidv4(),
-      ...newContactData,
-    };
+  // Fetch contacts on component mount and when user changes
+  useEffect(() => {
+    if (user) {
+      fetchContacts();
+    } else {
+      setContacts([]);
+      setLoading(false);
+    }
+  }, [user]);
+
+  const fetchContacts = async () => {
+    if (!user) return;
     
-    setContacts([newContact, ...contacts]);
-    toast({
-      title: "Contact added",
-      description: `${newContact.name} has been added to your contacts.`,
-    });
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('contacts')
+        .select('*')
+        .eq('user_id', user.id);
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Transform database data to match our Contact type
+      const transformedContacts: Contact[] = data.map(item => ({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        role: item.role || '',
+        tags: item.tags as ContactTag[],
+        dateOfContact: item.dateofcontact,
+        status: item.status as Contact['status'],
+      }));
+      
+      setContacts(transformedContacts);
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load your contacts',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddContact = async (newContactData: Omit<Contact, 'id'>) => {
+    if (!user) return;
+    
+    try {
+      // Insert into Supabase
+      const { data, error } = await supabase
+        .from('contacts')
+        .insert({
+          user_id: user.id,
+          name: newContactData.name,
+          email: newContactData.email,
+          role: newContactData.role,
+          tags: newContactData.tags,
+          dateofcontact: newContactData.dateOfContact,
+          status: newContactData.status,
+        })
+        .select()
+        .single();
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Create Contact object from the returned data
+      const newContact: Contact = {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        role: data.role || '',
+        tags: data.tags as ContactTag[],
+        dateOfContact: data.dateofcontact,
+        status: data.status as Contact['status'],
+      };
+      
+      // Update local state
+      setContacts([newContact, ...contacts]);
+      
+      toast({
+        title: "Contact added",
+        description: `${newContact.name} has been added to your contacts.`,
+      });
+    } catch (error) {
+      console.error('Error adding contact:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to add the contact',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleEditContact = (contact: Contact) => {
-    console.log('Edit contact:', contact);
     setContactToEdit(contact);
     setIsEditModalOpen(true);
   };
 
-  const handleUpdateContact = (id: string, updatedData: Omit<Contact, 'id'>) => {
-    const updatedContacts = contacts.map(contact => 
-      contact.id === id ? { ...updatedData, id } : contact
-    );
+  const handleViewNotes = (contact: Contact) => {
+    setContactForNotes(contact);
+    setIsNotesModalOpen(true);
+  };
+
+  const handleUpdateContact = async (id: string, updatedData: Omit<Contact, 'id'>) => {
+    if (!user) return;
     
-    setContacts(updatedContacts);
-    toast({
-      title: "Contact updated",
-      description: `${updatedData.name} has been updated.`,
-    });
+    try {
+      // Update in Supabase
+      const { error } = await supabase
+        .from('contacts')
+        .update({
+          name: updatedData.name,
+          email: updatedData.email,
+          role: updatedData.role,
+          tags: updatedData.tags,
+          dateofcontact: updatedData.dateOfContact,
+          status: updatedData.status,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', id)
+        .eq('user_id', user.id);
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Update local state
+      const updatedContacts = contacts.map(contact => 
+        contact.id === id ? { ...updatedData, id } : contact
+      );
+      
+      setContacts(updatedContacts);
+      
+      toast({
+        title: "Contact updated",
+        description: `${updatedData.name} has been updated.`,
+      });
+    } catch (error) {
+      console.error('Error updating contact:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update the contact',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleSort = (key: string, direction: 'asc' | 'desc' | 'default') => {
@@ -142,17 +240,24 @@ const Index = () => {
             <NewContactButton onClick={() => setIsNewModalOpen(true)} />
           </div>
           
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
-            <ContactTable 
-              contacts={filteredAndSortedContacts} 
-              onSort={handleSort}
-              sortKey={sortKey}
-              sortDirection={sortDirection}
-              onFilterByTag={handleFilterByTag}
-              activeTagFilter={activeTagFilter}
-              onEditContact={handleEditContact}
-            />
-          </div>
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
+              <ContactTable 
+                contacts={filteredAndSortedContacts} 
+                onSort={handleSort}
+                sortKey={sortKey}
+                sortDirection={sortDirection}
+                onFilterByTag={handleFilterByTag}
+                activeTagFilter={activeTagFilter}
+                onEditContact={handleEditContact}
+                onViewNotes={handleViewNotes}
+              />
+            </div>
+          )}
         </main>
       </div>
       
@@ -168,6 +273,12 @@ const Index = () => {
         onClose={() => setIsEditModalOpen(false)}
         onSubmit={handleUpdateContact}
         contact={contactToEdit}
+      />
+      
+      <ContactNotesModal
+        isOpen={isNotesModalOpen}
+        onClose={() => setIsNotesModalOpen(false)}
+        contact={contactForNotes}
       />
     </div>
   );

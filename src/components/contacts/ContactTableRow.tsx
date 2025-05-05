@@ -4,18 +4,20 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { Contact } from '@/lib/types';
 import { AvatarWithInitial } from '@/components/ui/avatar-with-initial';
 import { Badge } from '@/components/ui/badge';
-import { FilePen } from 'lucide-react';
+import { FilePen, StickyNote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getStatusColor, getTagColor, formatDate } from './contact-utils';
 
 interface ContactTableRowProps {
   contact: Contact;
   onEditContact: (contact: Contact) => void;
+  onViewNotes: (contact: Contact) => void;
 }
 
 export const ContactTableRow: React.FC<ContactTableRowProps> = ({ 
   contact, 
-  onEditContact 
+  onEditContact,
+  onViewNotes
 }) => {
   return (
     <TableRow>
@@ -52,14 +54,24 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
         </Badge>
       </TableCell>
       <TableCell>
-        <Button 
-          variant="ghost" 
-          size="icon"
-          onClick={() => onEditContact(contact)}
-          title="Edit contact"
-        >
-          <FilePen className="h-4 w-4" />
-        </Button>
+        <div className="flex space-x-1">
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={() => onViewNotes(contact)}
+            title="Contact notes"
+          >
+            <StickyNote className="h-4 w-4" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={() => onEditContact(contact)}
+            title="Edit contact"
+          >
+            <FilePen className="h-4 w-4" />
+          </Button>
+        </div>
       </TableCell>
     </TableRow>
   );
