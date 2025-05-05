@@ -11,7 +11,18 @@ import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Trash2, Pencil, Save, X } from 'lucide-react';
+import { 
+  AlertDialog, 
+  AlertDialogAction, 
+  AlertDialogCancel, 
+  AlertDialogContent, 
+  AlertDialogDescription, 
+  AlertDialogFooter, 
+  AlertDialogHeader, 
+  AlertDialogTitle 
+} from '@/components/ui/alert-dialog';
+import { Input } from '@/components/ui/input';
 
 const GroupContacts = () => {
   const { groupId } = useParams<{ groupId: string }>();
@@ -28,6 +39,13 @@ const GroupContacts = () => {
   const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
+  
+  // New states for group renaming
+  const [editingGroupName, setEditingGroupName] = useState(false);
+  const [newGroupName, setNewGroupName] = useState('');
+  
+  // New state for deletion confirmation
+  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
 
   // Fetch group info and contacts
   useEffect(() => {
@@ -61,6 +79,9 @@ const GroupContacts = () => {
         userId: data.user_id,
         createdAt: data.created_at,
       });
+      
+      // Initialize newGroupName with current name
+      setNewGroupName(data.name);
     } catch (error) {
       console.error('Error fetching group info:', error);
       toast({
@@ -128,6 +149,78 @@ const GroupContacts = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  // New function to handle group name update
+  const updateGroupName = async () => {
+    if (!user || !groupId || !newGroupName.trim()) return;
+    
+    try {
+      const { error } = await supabase
+        .from('contact_groups')
+        .update({ name: newGroupName.trim() })
+        .eq('id', groupId)
+        .eq('user_id', user.id);
+      
+      if (error) throw error;
+      
+      // Update local state
+      if (groupInfo) {
+        setGroupInfo({
+          ...groupInfo,
+          name: newGroupName.trim()
+        });
+      }
+      
+      toast({
+        title: "Group updated",
+        description: "Group name has been updated successfully."
+      });
+    } catch (error) {
+      console.error('Error updating group name:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update group name',
+        variant: 'destructive',
+      });
+    } finally {
+      setEditingGroupName(false);
+    }
+  };
+
+  // New function to handle removing contacts from group
+  const removeContactsFromGroup = async () => {
+    if (!user || !groupId || selectedContacts.length === 0) return;
+    
+    try {
+      const contactIds = selectedContacts.map(contact => contact.id);
+      
+      const { error } = await supabase
+        .from('contact_group_members')
+        .delete()
+        .eq('group_id', groupId)
+        .in('contact_id', contactIds);
+      
+      if (error) throw error;
+      
+      // Update local state
+      setContacts(contacts.filter(contact => !contactIds.includes(contact.id)));
+      setSelectedContacts([]);
+      
+      toast({
+        title: "Contacts removed",
+        description: `${contactIds.length} contact(s) removed from group.`
+      });
+    } catch (error) {
+      console.error('Error removing contacts from group:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to remove contacts from group',
+        variant: 'destructive',
+      });
+    } finally {
+      setShowRemoveDialog(false);
     }
   };
 
@@ -259,11 +352,57 @@ const GroupContacts = () => {
             </div>
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-semibold">{groupInfo?.name || 'Group'}</h2>
+                {editingGroupName ? (
+                  <div className="flex gap-2 items-center">
+                    <Input
+                      value={newGroupName}
+                      onChange={(e) => setNewGroupName(e.target.value)}
+                      className="text-xl font-semibold w-64"
+                      autoFocus
+                    />
+                    <Button 
+                      size="sm" 
+                      variant="ghost"
+                      onClick={updateGroupName}
+                      disabled={!newGroupName.trim()}
+                    >
+                      <Save className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="ghost"
+                      onClick={() => {
+                        setEditingGroupName(false);
+                        setNewGroupName(groupInfo?.name || '');
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <h2 
+                    className="text-2xl font-semibold cursor-pointer group flex items-center gap-2"
+                    onDoubleClick={() => setEditingGroupName(true)}
+                  >
+                    {groupInfo?.name || 'Group'}
+                    <Pencil className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h2>
+                )}
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {contacts.length} contacts in this group
                 </p>
               </div>
+              
+              {selectedContacts.length > 0 && (
+                <Button 
+                  variant="destructive"
+                  className="gap-1"
+                  onClick={() => setShowRemoveDialog(true)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Remove from Group
+                </Button>
+              )}
             </div>
           </div>
           
@@ -303,6 +442,25 @@ const GroupContacts = () => {
         onClose={() => setIsNotesModalOpen(false)}
         contact={contactForNotes}
       />
+      
+      {/* Remove confirmation dialog */}
+      <AlertDialog open={showRemoveDialog} onOpenChange={setShowRemoveDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove contacts from group</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to remove {selectedContacts.length} contact(s) from this group?
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={removeContactsFromGroup}>
+              Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
