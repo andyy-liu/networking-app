@@ -6,21 +6,35 @@ import { AvatarWithInitial } from '@/components/ui/avatar-with-initial';
 import { Badge } from '@/components/ui/badge';
 import { FilePen, StickyNote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { getStatusColor, getTagColor, formatDate } from './contact-utils';
 
 interface ContactTableRowProps {
   contact: Contact;
   onEditContact: (contact: Contact) => void;
   onViewNotes: (contact: Contact) => void;
+  isSelected: boolean;
+  onSelectContact: (contact: Contact, isSelected: boolean) => void;
 }
 
 export const ContactTableRow: React.FC<ContactTableRowProps> = ({ 
   contact, 
   onEditContact,
-  onViewNotes
+  onViewNotes,
+  isSelected,
+  onSelectContact
 }) => {
   return (
     <TableRow>
+      <TableCell className="w-10">
+        <Checkbox 
+          checked={isSelected}
+          onCheckedChange={(checked) => {
+            onSelectContact(contact, !!checked);
+          }}
+          aria-label={`Select ${contact.name}`}
+        />
+      </TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
           <AvatarWithInitial name={contact.name} className="h-8 w-8" />

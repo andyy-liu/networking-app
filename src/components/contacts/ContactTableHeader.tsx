@@ -17,6 +17,7 @@ interface ContactTableHeaderProps {
   onFilterByTag: (tag: ContactTag | null) => void;
   activeTagFilter: ContactTag | null;
   availableTags: ContactTag[];
+  hasCheckboxColumn?: boolean;
 }
 
 export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
@@ -25,7 +26,8 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
   sortDirection,
   onFilterByTag,
   activeTagFilter,
-  availableTags
+  availableTags,
+  hasCheckboxColumn = false
 }) => {
   const handleSortClick = (key: string) => {
     if (sortKey === key) {
@@ -60,6 +62,7 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
   return (
     <TableHeader>
       <TableRow>
+        {hasCheckboxColumn && <TableHead className="w-10"></TableHead>}
         <TableHead 
           className="w-[200px] cursor-pointer"
           onClick={() => handleSortClick('name')}

@@ -1,28 +1,26 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Header } from '@/components/layout/Header';
 import { ContactTable } from '@/components/contacts/ContactTable';
-import { NewContactButton } from '@/components/contacts/NewContactButton';
-import { NewContactModal } from '@/components/contacts/NewContactModal';
 import { EditContactModal } from '@/components/contacts/EditContactModal';
 import { ContactNotesModal } from '@/components/contacts/ContactNotesModal';
-import { AddToGroupModal } from '@/components/contacts/AddToGroupModal';
-import { Contact, ContactTag } from '@/lib/types';
+import { Contact, ContactTag, ContactGroup } from '@/lib/types';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { UserPlus } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
-const Index = () => {
+const GroupContacts = () => {
+  const { groupId } = useParams<{ groupId: string }>();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const [groupInfo, setGroupInfo] = useState<ContactGroup | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
-  const [isAddToGroupModalOpen, setIsAddToGroupModalOpen] = useState(false);
   const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
   const [contactForNotes, setContactForNotes] = useState<Contact | null>(null);
   const [sortKey, setSortKey] = useState<string>('');
@@ -31,32 +29,85 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
 
-  // Fetch contacts on component mount and when user changes
+  // Fetch group info and contacts
   useEffect(() => {
-    if (user) {
-      fetchContacts();
+    if (user && groupId) {
+      fetchGroupInfo();
+      fetchGroupContacts();
     } else {
       setContacts([]);
       setLoading(false);
     }
-  }, [user]);
+  }, [user, groupId]);
 
-  const fetchContacts = async () => {
-    if (!user) return;
+  const fetchGroupInfo = async () => {
+    if (!user || !groupId) return;
     
-    setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('contacts')
+        .from('contact_groups')
         .select('*')
-        .eq('user_id', user.id);
+        .eq('id', groupId)
+        .eq('user_id', user.id)
+        .single();
       
       if (error) {
         throw error;
       }
       
+      setGroupInfo({
+        id: data.id,
+        name: data.name,
+        userId: data.user_id,
+        createdAt: data.created_at,
+      });
+    } catch (error) {
+      console.error('Error fetching group info:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load group information',
+        variant: 'destructive',
+      });
+      // Navigate back to home if group not found
+      navigate('/');
+    }
+  };
+
+  const fetchGroupContacts = async () => {
+    if (!user || !groupId) return;
+    
+    setLoading(true);
+    try {
+      // Get contact IDs in this group
+      const { data: memberData, error: memberError } = await supabase
+        .from('contact_group_members')
+        .select('contact_id')
+        .eq('group_id', groupId);
+      
+      if (memberError) {
+        throw memberError;
+      }
+      
+      if (memberData.length === 0) {
+        setContacts([]);
+        setLoading(false);
+        return;
+      }
+      
+      // Get contact details
+      const contactIds = memberData.map(member => member.contact_id);
+      const { data: contactsData, error: contactsError } = await supabase
+        .from('contacts')
+        .select('*')
+        .in('id', contactIds)
+        .eq('user_id', user.id);
+      
+      if (contactsError) {
+        throw contactsError;
+      }
+      
       // Transform database data to match our Contact type
-      const transformedContacts: Contact[] = data.map(item => ({
+      const transformedContacts: Contact[] = contactsData.map(item => ({
         id: item.id,
         name: item.name,
         email: item.email,
@@ -69,67 +120,14 @@ const Index = () => {
       
       setContacts(transformedContacts);
     } catch (error) {
-      console.error('Error fetching contacts:', error);
+      console.error('Error fetching group contacts:', error);
       toast({
         title: 'Error',
-        description: 'Failed to load your contacts',
+        description: 'Failed to load contacts in this group',
         variant: 'destructive',
       });
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleAddContact = async (newContactData: Omit<Contact, 'id'>) => {
-    if (!user) return;
-    
-    try {
-      // Insert into Supabase
-      const { data, error } = await supabase
-        .from('contacts')
-        .insert({
-          user_id: user.id,
-          name: newContactData.name,
-          email: newContactData.email,
-          role: newContactData.role,
-          company: newContactData.company,
-          tags: newContactData.tags,
-          dateofcontact: newContactData.dateOfContact,
-          status: newContactData.status,
-        })
-        .select()
-        .single();
-      
-      if (error) {
-        throw error;
-      }
-      
-      // Create Contact object from the returned data
-      const newContact: Contact = {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        role: data.role || '',
-        company: data.company || '',
-        tags: data.tags as ContactTag[],
-        dateOfContact: data.dateofcontact,
-        status: data.status as Contact['status'],
-      };
-      
-      // Update local state
-      setContacts([newContact, ...contacts]);
-      
-      toast({
-        title: "Contact added",
-        description: `${newContact.name} has been added to your contacts.`,
-      });
-    } catch (error) {
-      console.error('Error adding contact:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to add the contact',
-        variant: 'destructive',
-      });
     }
   };
 
@@ -205,15 +203,8 @@ const Index = () => {
     }
   };
 
-  const handleGroupAdded = () => {
-    // Clear selections after adding to group
-    setSelectedContacts([]);
-    // Refresh sidebar groups
-    // The sidebar component will refresh its own data on next render
-  };
-
   // Apply sorting and filtering
-  const filteredAndSortedContacts = useMemo(() => {
+  const filteredAndSortedContacts = React.useMemo(() => {
     // First apply tag filtering
     let filtered = activeTagFilter 
       ? contacts.filter(contact => contact.tags.includes(activeTagFilter))
@@ -240,7 +231,7 @@ const Index = () => {
             : bValue.localeCompare(aValue);
         }
         
-        // Fallback for non-string values (though we shouldn't have any)
+        // Fallback for non-string values
         return 0;
       });
     }
@@ -254,25 +245,25 @@ const Index = () => {
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />
         <main className="flex-1 overflow-auto p-6 bg-gray-50 dark:bg-gray-800">
-          <div className="mb-6 flex justify-between items-center">
-            <div>
-              <h2 className="text-2xl font-semibold">Contacts</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Manage your professional network
-              </p>
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigate('/')}
+                className="gap-1"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
             </div>
-            <div className="flex gap-2">
-              {selectedContacts.length > 0 && (
-                <Button 
-                  onClick={() => setIsAddToGroupModalOpen(true)}
-                  variant="outline"
-                  className="gap-1"
-                >
-                  <UserPlus className="h-4 w-4" />
-                  Add to Group ({selectedContacts.length})
-                </Button>
-              )}
-              <NewContactButton onClick={() => setIsNewModalOpen(true)} />
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-semibold">{groupInfo?.name || 'Group'}</h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {contacts.length} contacts in this group
+                </p>
+              </div>
             </div>
           </div>
           
@@ -300,12 +291,6 @@ const Index = () => {
       </div>
       
       {/* Modals */}
-      <NewContactModal
-        isOpen={isNewModalOpen}
-        onClose={() => setIsNewModalOpen(false)}
-        onSubmit={handleAddContact}
-      />
-      
       <EditContactModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
@@ -318,15 +303,8 @@ const Index = () => {
         onClose={() => setIsNotesModalOpen(false)}
         contact={contactForNotes}
       />
-
-      <AddToGroupModal
-        isOpen={isAddToGroupModalOpen}
-        onClose={() => setIsAddToGroupModalOpen(false)}
-        selectedContacts={selectedContacts}
-        onGroupAdded={handleGroupAdded}
-      />
     </div>
   );
 };
 
-export default Index;
+export default GroupContacts;

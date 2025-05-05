@@ -18,6 +18,8 @@ interface ContactTableProps {
   activeTagFilter: ContactTag | null;
   onEditContact: (contact: Contact) => void;
   onViewNotes: (contact: Contact) => void;
+  selectedContacts: Contact[];
+  onSelectContact: (contact: Contact, isSelected: boolean) => void;
 }
 
 export const ContactTable: React.FC<ContactTableProps> = ({ 
@@ -28,7 +30,9 @@ export const ContactTable: React.FC<ContactTableProps> = ({
   onFilterByTag,
   activeTagFilter,
   onEditContact,
-  onViewNotes
+  onViewNotes,
+  selectedContacts,
+  onSelectContact
 }) => {
   // Get all unique tags from contacts for filter dropdown
   const allTags = Array.from(new Set(contacts.flatMap(contact => contact.tags))) as ContactTag[];
@@ -43,6 +47,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
           onFilterByTag={onFilterByTag}
           activeTagFilter={activeTagFilter}
           availableTags={allTags}
+          hasCheckboxColumn={true}
         />
         <TableBody>
           {contacts.length === 0 ? (
@@ -54,6 +59,8 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                 contact={contact} 
                 onEditContact={onEditContact}
                 onViewNotes={onViewNotes}
+                isSelected={selectedContacts.some(c => c.id === contact.id)}
+                onSelectContact={onSelectContact}
               />
             ))
           )}

@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '@/components/icons/Logo';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -9,8 +10,11 @@ import {
   Settings, 
   Users, 
   ChevronLeft, 
-  ChevronRight 
+  ChevronRight,
 } from 'lucide-react';
+import { ContactGroup } from '@/lib/types';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/context/AuthContext';
 
 interface SidebarProps {
   className?: string;
@@ -20,20 +24,68 @@ interface NavItem {
   icon: React.ElementType;
   label: string;
   isActive: boolean;
+  path?: string;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [contactGroups, setContactGroups] = useState<ContactGroup[]>([]);
 
   const navItems: NavItem[] = [
-    { icon: LayoutDashboard, label: 'Dashboard', isActive: true },
-    { icon: Bell, label: 'Reminders', isActive: false },
-    { icon: Settings, label: 'Settings', isActive: false },
-    { icon: Users, label: 'Groups', isActive: false },
+    { icon: LayoutDashboard, label: 'Dashboard', isActive: location.pathname === '/', path: '/' },
+    { icon: Bell, label: 'Reminders', isActive: location.pathname === '/reminders', path: '/reminders' },
+    { icon: Settings, label: 'Settings', isActive: location.pathname === '/settings', path: '/settings' },
   ];
+
+  useEffect(() => {
+    if (user) {
+      fetchContactGroups();
+    } else {
+      setContactGroups([]);
+    }
+  }, [user]);
+
+  const fetchContactGroups = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('contact_groups')
+        .select('*')
+        .eq('user_id', user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      const transformedGroups: ContactGroup[] = data.map(item => ({
+        id: item.id,
+        name: item.name,
+        userId: item.user_id,
+        createdAt: item.created_at,
+      }));
+
+      setContactGroups(transformedGroups);
+    } catch (error) {
+      console.error('Error fetching contact groups:', error);
+    }
+  };
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const handleNavigation = (path?: string) => {
+    if (path) {
+      navigate(path);
+    }
+  };
+
+  const isGroupActive = (groupId: string) => {
+    return location.pathname === `/groups/${groupId}`;
   };
 
   return (
@@ -50,14 +102,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
         </Button>
       </div>
       <Separator />
-      <div className="flex-1 py-6">
+      <div className="flex-1 py-6 overflow-y-auto">
         <nav className="px-2 space-y-1">
           {navItems.map((item) => (
             <a
               key={item.label}
               href="#"
-              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 sidebar-item ${
-                item.isActive ? 'active-sidebar-item' : 'text-gray-700 dark:text-gray-300'
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation(item.path);
+              }}
+              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+                item.isActive ? 'bg-gray-100 dark:bg-gray-800 text-primary' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
             >
               <item.icon size={20} />
@@ -65,6 +121,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
             </a>
           ))}
         </nav>
+
+        {/* Contact Groups Section */}
+        {contactGroups.length > 0 && (
+          <div className="mt-6">
+            {!isCollapsed && (
+              <div className="px-3 mb-2">
+                <h3 className="text-xs uppercase font-semibold text-gray-500 dark:text-gray-400">
+                  Contact Groups
+                </h3>
+              </div>
+            )}
+            <nav className="px-2 space-y-1">
+              {contactGroups.map((group) => (
+                <a
+                  key={group.id}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavigation(`/groups/${group.id}`);
+                  }}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+                    isGroupActive(group.id) ? 'bg-gray-100 dark:bg-gray-800 text-primary' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  <Users size={20} />
+                  {!isCollapsed && <span>{group.name}</span>}
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
       </div>
       <div className="p-4">
         {!isCollapsed && (
