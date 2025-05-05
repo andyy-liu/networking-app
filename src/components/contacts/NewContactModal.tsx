@@ -61,7 +61,16 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
   });
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    onSubmit(values);
+    // Make sure all required fields are present
+    const contactData: Omit<Contact, 'id'> = {
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      dateOfContact: values.dateOfContact,
+      status: values.status,
+    };
+    
+    onSubmit(contactData);
     form.reset();
     onClose();
   };
