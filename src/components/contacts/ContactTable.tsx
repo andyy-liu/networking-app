@@ -8,11 +8,11 @@ import {
   TableHeader,
   TableRow 
 } from '@/components/ui/table';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Contact, ContactTag } from '@/lib/types';
 import { AvatarWithInitial } from '@/components/ui/avatar-with-initial';
 import { Badge } from '@/components/ui/badge';
-import { ArrowUpDown, Filter } from 'lucide-react';
+import { ArrowUpDown, Filter, FileTextPen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +27,7 @@ interface ContactTableProps {
   sortDirection: 'asc' | 'desc' | 'default';
   onFilterByTag: (tag: ContactTag | null) => void;
   activeTagFilter: ContactTag | null;
+  onEditContact: (contact: Contact) => void;
 }
 
 export const ContactTable: React.FC<ContactTableProps> = ({ 
@@ -35,7 +36,8 @@ export const ContactTable: React.FC<ContactTableProps> = ({
   sortKey, 
   sortDirection,
   onFilterByTag,
-  activeTagFilter
+  activeTagFilter,
+  onEditContact
 }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -113,9 +115,6 @@ export const ContactTable: React.FC<ContactTableProps> = ({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-12">
-              <Checkbox />
-            </TableHead>
             <TableHead 
               className="w-[200px] cursor-pointer"
               onClick={() => handleSortClick('name')}
@@ -172,6 +171,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                 {renderSortIndicator('status')}
               </div>
             </TableHead>
+            <TableHead className="w-[80px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -184,9 +184,6 @@ export const ContactTable: React.FC<ContactTableProps> = ({
           ) : (
             contacts.map((contact) => (
               <TableRow key={contact.id}>
-                <TableCell>
-                  <Checkbox />
-                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <AvatarWithInitial name={contact.name} className="h-8 w-8" />
@@ -218,6 +215,16 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                   >
                     {contact.status}
                   </Badge>
+                </TableCell>
+                <TableCell>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={() => onEditContact(contact)}
+                    title="Edit contact"
+                  >
+                    <FileTextPen className="h-4 w-4" />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))

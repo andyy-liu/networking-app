@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/Header';
 import { ContactTable } from '@/components/contacts/ContactTable';
 import { NewContactButton } from '@/components/contacts/NewContactButton';
 import { NewContactModal } from '@/components/contacts/NewContactModal';
+import { EditContactModal } from '@/components/contacts/EditContactModal';
 import { Contact, ContactTag } from '@/lib/types';
 import { toast } from '@/components/ui/use-toast';
 
@@ -42,7 +43,9 @@ const initialContacts: Contact[] = [
 
 const Index = () => {
   const [contacts, setContacts] = useState<Contact[]>(initialContacts);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
   const [sortKey, setSortKey] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | 'default'>('default');
   const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(null);
@@ -57,6 +60,23 @@ const Index = () => {
     toast({
       title: "Contact added",
       description: `${newContact.name} has been added to your contacts.`,
+    });
+  };
+
+  const handleEditContact = (contact: Contact) => {
+    setContactToEdit(contact);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateContact = (id: string, updatedData: Omit<Contact, 'id'>) => {
+    const updatedContacts = contacts.map(contact => 
+      contact.id === id ? { ...updatedData, id } : contact
+    );
+    
+    setContacts(updatedContacts);
+    toast({
+      title: "Contact updated",
+      description: `${updatedData.name} has been updated.`,
     });
   };
 
@@ -118,7 +138,7 @@ const Index = () => {
                 Manage your professional network
               </p>
             </div>
-            <NewContactButton onClick={() => setIsModalOpen(true)} />
+            <NewContactButton onClick={() => setIsNewModalOpen(true)} />
           </div>
           
           <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
@@ -129,15 +149,24 @@ const Index = () => {
               sortDirection={sortDirection}
               onFilterByTag={handleFilterByTag}
               activeTagFilter={activeTagFilter}
+              onEditContact={handleEditContact}
             />
           </div>
         </main>
       </div>
       
+      {/* Modals */}
       <NewContactModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isNewModalOpen}
+        onClose={() => setIsNewModalOpen(false)}
         onSubmit={handleAddContact}
+      />
+      
+      <EditContactModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onSubmit={handleUpdateContact}
+        contact={contactToEdit}
       />
     </div>
   );
