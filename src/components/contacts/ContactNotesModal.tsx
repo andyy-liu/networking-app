@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
+import { StarterKit } from '@tiptap/starter-kit';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 import Underline from '@tiptap/extension-underline';
@@ -14,7 +15,6 @@ import {
   DialogHeader, 
   DialogTitle, 
   DialogFooter,
-  DialogClose
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Bold as BoldIcon, Italic as ItalicIcon, Underline as UnderlineIcon, Link as LinkIcon, Save } from 'lucide-react';
@@ -44,6 +44,7 @@ export const ContactNotesModal: React.FC<ContactNotesModalProps> = ({
   
   const editor = useEditor({
     extensions: [
+      StarterKit,
       Bold,
       Italic,
       Underline,
