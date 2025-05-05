@@ -3,7 +3,7 @@ import React from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Contact, ContactStatus } from '@/lib/types';
+import { Contact, ContactStatus, ContactTag } from '@/lib/types';
 import {
   Dialog,
   DialogContent,
@@ -29,6 +29,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from '@/components/ui/toggle-group';
 
 interface NewContactModalProps {
   isOpen: boolean;
@@ -39,9 +43,11 @@ interface NewContactModalProps {
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
-  phone: z.string().min(10, { message: 'Phone number must be at least 10 digits.' }),
   dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be in YYYY-MM-DD format.' }),
   status: z.enum(['Reached Out', 'Responded', 'Chatted'] as const),
+  tags: z.array(z.enum(['Club', 'Recruiter', 'Alumni', 'Professor', 'Other'] as const)).min(1, { 
+    message: 'Please select at least one tag.' 
+  }),
 });
 
 export const NewContactModal: React.FC<NewContactModalProps> = ({
@@ -54,9 +60,9 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
       dateOfContact: new Date().toISOString().split('T')[0],
       status: 'Reached Out',
+      tags: ['Other'],
     },
   });
 
@@ -65,7 +71,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
     const contactData: Omit<Contact, 'id'> = {
       name: values.name,
       email: values.email,
-      phone: values.phone,
+      tags: values.tags,
       dateOfContact: values.dateOfContact,
       status: values.status,
     };
@@ -114,12 +120,38 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
             />
             <FormField
               control={form.control}
-              name="phone"
+              name="tags"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Tags</FormLabel>
                   <FormControl>
-                    <Input placeholder="(123) 456-7890" {...field} />
+                    <ToggleGroup
+                      type="multiple"
+                      className="flex flex-wrap gap-2"
+                      value={field.value}
+                      onValueChange={(value) => {
+                        // Ensure at least one tag is selected
+                        if (value.length > 0) {
+                          field.onChange(value);
+                        }
+                      }}
+                    >
+                      <ToggleGroupItem value="Club" aria-label="Club">
+                        Club
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="Recruiter" aria-label="Recruiter">
+                        Recruiter
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="Alumni" aria-label="Alumni">
+                        Alumni
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="Professor" aria-label="Professor">
+                        Professor
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="Other" aria-label="Other">
+                        Other
+                      </ToggleGroupItem>
+                    </ToggleGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

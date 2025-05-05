@@ -31,6 +31,22 @@ export const ContactTable: React.FC<ContactTableProps> = ({ contacts }) => {
     }
   };
 
+  const getTagColor = (tag: string) => {
+    switch (tag) {
+      case 'Club':
+        return 'bg-purple-100 text-purple-800 border-purple-200';
+      case 'Recruiter':
+        return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+      case 'Alumni':
+        return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'Professor':
+        return 'bg-cyan-100 text-cyan-800 border-cyan-200';
+      case 'Other':
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-US', {
@@ -50,7 +66,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({ contacts }) => {
             </TableHead>
             <TableHead className="w-[200px]">Person</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Phone Number</TableHead>
+            <TableHead>Tags</TableHead>
             <TableHead>Contact Date</TableHead>
             <TableHead>Status</TableHead>
           </TableRow>
@@ -75,12 +91,24 @@ export const ContactTable: React.FC<ContactTableProps> = ({ contacts }) => {
                   </div>
                 </TableCell>
                 <TableCell>{contact.email}</TableCell>
-                <TableCell>{contact.phone}</TableCell>
+                <TableCell>
+                  <div className="flex flex-wrap gap-1">
+                    {contact.tags.map((tag) => (
+                      <Badge 
+                        key={tag} 
+                        variant="outline" 
+                        className={getTagColor(tag)}
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </TableCell>
                 <TableCell>{formatDate(contact.dateOfContact)}</TableCell>
                 <TableCell>
                   <Badge 
                     variant="outline" 
-                    className={`${getStatusColor(contact.status)}`}
+                    className={getStatusColor(contact.status)}
                   >
                     {contact.status}
                   </Badge>
