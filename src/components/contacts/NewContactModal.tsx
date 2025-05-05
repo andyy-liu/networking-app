@@ -43,6 +43,7 @@ interface NewContactModalProps {
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
+  role: z.string().optional(),
   dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be in YYYY-MM-DD format.' }),
   status: z.enum(['Reached Out', 'Responded', 'Chatted'] as const),
   tags: z.array(z.enum(['Club', 'Recruiter', 'Alumni', 'Professor', 'Other'] as const)).min(1, { 
@@ -60,6 +61,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
     defaultValues: {
       name: '',
       email: '',
+      role: '',
       dateOfContact: new Date().toISOString().split('T')[0],
       status: 'Reached Out',
       tags: ['Other'],
@@ -71,6 +73,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
     const contactData: Omit<Contact, 'id'> = {
       name: values.name,
       email: values.email,
+      role: values.role,
       tags: values.tags,
       dateOfContact: values.dateOfContact,
       status: values.status,
@@ -120,6 +123,19 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
             />
             <FormField
               control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Software Engineer at Tech Corp" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="tags"
               render={({ field }) => (
                 <FormItem>
@@ -157,6 +173,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 </FormItem>
               )}
             />
+            
             <FormField
               control={form.control}
               name="dateOfContact"

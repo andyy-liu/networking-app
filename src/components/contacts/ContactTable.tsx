@@ -66,6 +66,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({ contacts }) => {
             </TableHead>
             <TableHead className="w-[200px]">Person</TableHead>
             <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
             <TableHead>Tags</TableHead>
             <TableHead>Contact Date</TableHead>
             <TableHead>Status</TableHead>
@@ -74,7 +75,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({ contacts }) => {
         <TableBody>
           {contacts.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={6} className="h-24 text-center">
+              <TableCell colSpan={7} className="h-24 text-center">
                 No contacts found. Add your first contact to get started.
               </TableCell>
             </TableRow>
@@ -91,6 +92,9 @@ export const ContactTable: React.FC<ContactTableProps> = ({ contacts }) => {
                   </div>
                 </TableCell>
                 <TableCell>{contact.email}</TableCell>
+                <TableCell>
+                  <span className="text-sm text-gray-600">{contact.role || '-'}</span>
+                </TableCell>
                 <TableCell>
                   <div className="flex flex-wrap gap-1">
                     {contact.tags.map((tag) => (
