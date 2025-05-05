@@ -1,9 +1,9 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Contact, ContactStatus, ContactTag } from '@/lib/types';
+import { Contact, ContactStatus } from '@/lib/types';
 import {
   Dialog,
   DialogContent,
@@ -29,10 +29,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from '@/components/ui/toggle-group';
+import { Badge } from '@/components/ui/badge';
+import { X, Plus } from 'lucide-react';
+import { getTagColor } from './contact-utils';
 
 interface EditContactModalProps {
   isOpen: boolean;
@@ -45,12 +44,10 @@ const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   role: z.string().optional(),
-  company: z.string().optional(), // Add company field to schema
+  company: z.string().optional(),
   dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be in YYYY-MM-DD format.' }),
   status: z.enum(['Reached Out', 'Responded', 'Chatted'] as const),
-  tags: z.array(z.enum(['Club', 'Recruiter', 'Alumni', 'Professor', 'Other'] as const)).min(1, { 
-    message: 'Please select at least one tag.' 
-  }),
+  tags: z.array(z.string()).default([]),
 });
 
 export const EditContactModal: React.FC<EditContactModalProps> = ({
@@ -59,6 +56,9 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
   onSubmit,
   contact,
 }) => {
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
+  const [newTagInput, setNewTagInput] = useState('');
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     // Initialize with contact data or defaults
@@ -66,7 +66,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
       name: contact.name,
       email: contact.email,
       role: contact.role || '',
-      company: contact.company || '', // Add company field default value
+      company: contact.company || '',
       dateOfContact: contact.dateOfContact,
       status: contact.status,
       tags: contact.tags,
@@ -74,10 +74,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
       name: '',
       email: '',
       role: '',
-      company: '', // Add default value for company
+      company: '',
       dateOfContact: new Date().toISOString().split('T')[0],
       status: 'Reached Out',
-      tags: ['Other'],
+      tags: [],
     },
   });
 
@@ -88,13 +88,50 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
         name: contact.name,
         email: contact.email,
         role: contact.role || '',
-        company: contact.company || '', // Add company to reset form
+        company: contact.company || '',
         dateOfContact: contact.dateOfContact,
         status: contact.status,
         tags: contact.tags,
       });
+      
+      // Add contact tags to available tags if they're not already there
+      contact.tags.forEach(tag => {
+        if (!availableTags.includes(tag)) {
+          setAvailableTags(prev => [...prev, tag]);
+        }
+      });
     }
-  }, [contact, form]);
+  }, [contact, form, availableTags]);
+
+  const addNewTag = () => {
+    if (newTagInput.trim() !== '' && !availableTags.includes(newTagInput.trim())) {
+      const newTag = newTagInput.trim();
+      setAvailableTags(prev => [...prev, newTag]);
+      setNewTagInput('');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addNewTag();
+    }
+  };
+
+  const selectedTags = form.watch('tags') || [];
+
+  const toggleTagSelection = (tag: string) => {
+    const currentTags = [...selectedTags];
+    const tagIndex = currentTags.indexOf(tag);
+    
+    if (tagIndex > -1) {
+      currentTags.splice(tagIndex, 1);
+    } else {
+      currentTags.push(tag);
+    }
+    
+    form.setValue('tags', currentTags, { shouldValidate: true });
+  };
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     if (!contact) return;
@@ -104,7 +141,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
       name: values.name,
       email: values.email,
       role: values.role,
-      company: values.company, // Add company to contact data
+      company: values.company,
       tags: values.tags,
       dateOfContact: values.dateOfContact,
       status: values.status,
@@ -166,7 +203,6 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                 </FormItem>
               )}
             />
-            {/* Add new company field */}
             <FormField
               control={form.control}
               name="company"
@@ -186,35 +222,57 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Tags</FormLabel>
-                  <FormControl>
-                    <ToggleGroup
-                      type="multiple"
-                      className="flex flex-wrap gap-2"
-                      value={field.value}
-                      onValueChange={(value) => {
-                        // Ensure at least one tag is selected
-                        if (value.length > 0) {
-                          field.onChange(value);
-                        }
-                      }}
-                    >
-                      <ToggleGroupItem value="Club" aria-label="Club">
-                        Club
-                      </ToggleGroupItem>
-                      <ToggleGroupItem value="Recruiter" aria-label="Recruiter">
-                        Recruiter
-                      </ToggleGroupItem>
-                      <ToggleGroupItem value="Alumni" aria-label="Alumni">
-                        Alumni
-                      </ToggleGroupItem>
-                      <ToggleGroupItem value="Professor" aria-label="Professor">
-                        Professor
-                      </ToggleGroupItem>
-                      <ToggleGroupItem value="Other" aria-label="Other">
-                        Other
-                      </ToggleGroupItem>
-                    </ToggleGroup>
-                  </FormControl>
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-2">
+                      {selectedTags.map(tag => (
+                        <Badge 
+                          key={tag} 
+                          className={`${getTagColor(tag)} cursor-pointer flex items-center gap-1 px-2 py-1`}
+                          onClick={() => toggleTagSelection(tag)}
+                        >
+                          {tag}
+                          <X className="h-3 w-3" />
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        placeholder="Add a tag"
+                        value={newTagInput}
+                        onChange={(e) => setNewTagInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        className="flex-1"
+                      />
+                      <Button 
+                        type="button" 
+                        size="sm"
+                        variant="outline"
+                        onClick={addNewTag}
+                        disabled={!newTagInput.trim()}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    {availableTags.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-sm text-muted-foreground mb-1">Available tags:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {availableTags.map(tag => (
+                            !selectedTags.includes(tag) && (
+                              <Badge
+                                key={tag}
+                                className={`${getTagColor(tag)} cursor-pointer opacity-70 hover:opacity-100`}
+                                variant="outline"
+                                onClick={() => toggleTagSelection(tag)}
+                              >
+                                {tag}
+                              </Badge>
+                            )
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -259,7 +317,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-outreach-blue hover:bg-outreach-blue/90">
+              <Button type="submit">
                 Save Changes
               </Button>
             </DialogFooter>

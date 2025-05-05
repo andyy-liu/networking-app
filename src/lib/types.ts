@@ -1,7 +1,7 @@
 
 export type ContactStatus = 'Reached Out' | 'Responded' | 'Chatted';
 
-export type ContactTag = 'Club' | 'Recruiter' | 'Alumni' | 'Professor' | 'Other';
+export type ContactTag = string;
 
 export interface Contact {
   id: string;

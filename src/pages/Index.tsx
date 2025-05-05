@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Sidebar } from '@/components/layout/Sidebar';
@@ -193,7 +192,7 @@ const Index = () => {
     setSortDirection(direction);
   };
 
-  const handleFilterByTag = (tag: ContactTag | null) => {
+  const handleFilterByTag = (tag: string | null) => {
     setActiveTagFilter(tag);
   };
 
