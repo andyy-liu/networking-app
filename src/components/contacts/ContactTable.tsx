@@ -220,7 +220,13 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    onClick={() => onEditContact(contact)}
+                    onClick={() => {
+                      if (typeof onEditContact === 'function') {
+                        onEditContact(contact);
+                      } else {
+                        console.error('onEditContact is not a function', onEditContact);
+                      }
+                    }}
                     title="Edit contact"
                   >
                     <FilePen className="h-4 w-4" />

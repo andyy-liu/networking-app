@@ -64,6 +64,7 @@ const Index = () => {
   };
 
   const handleEditContact = (contact: Contact) => {
+    console.log('Edit contact:', contact);
     setContactToEdit(contact);
     setIsEditModalOpen(true);
   };
