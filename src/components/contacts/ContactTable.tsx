@@ -11,7 +11,7 @@ import {
 import { Contact, ContactTag } from '@/lib/types';
 import { AvatarWithInitial } from '@/components/ui/avatar-with-initial';
 import { Badge } from '@/components/ui/badge';
-import { ArrowUpDown, Filter, FileTextPen } from 'lucide-react';
+import { ArrowUpDown, Filter, FilePen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -223,7 +223,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                     onClick={() => onEditContact(contact)}
                     title="Edit contact"
                   >
-                    <FileTextPen className="h-4 w-4" />
+                    <FilePen className="h-4 w-4" />
                   </Button>
                 </TableCell>
               </TableRow>
