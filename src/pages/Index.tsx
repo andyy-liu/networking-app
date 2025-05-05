@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Header } from '@/components/layout/Header';
 import { ContactTable } from '@/components/contacts/ContactTable';
 import { NewContactButton } from '@/components/contacts/NewContactButton';
 import { NewContactModal } from '@/components/contacts/NewContactModal';
-import { Contact } from '@/lib/types';
+import { Contact, ContactTag } from '@/lib/types';
 import { toast } from '@/components/ui/use-toast';
 
 // Initial sample data
@@ -43,6 +43,9 @@ const initialContacts: Contact[] = [
 const Index = () => {
   const [contacts, setContacts] = useState<Contact[]>(initialContacts);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortKey, setSortKey] = useState<string>('');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | 'default'>('default');
+  const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(null);
 
   const handleAddContact = (newContactData: Omit<Contact, 'id'>) => {
     const newContact: Contact = {
@@ -56,6 +59,51 @@ const Index = () => {
       description: `${newContact.name} has been added to your contacts.`,
     });
   };
+
+  const handleSort = (key: string, direction: 'asc' | 'desc' | 'default') => {
+    setSortKey(key);
+    setSortDirection(direction);
+  };
+
+  const handleFilterByTag = (tag: ContactTag | null) => {
+    setActiveTagFilter(tag);
+  };
+
+  // Apply sorting and filtering
+  const filteredAndSortedContacts = useMemo(() => {
+    // First apply tag filtering
+    let filtered = activeTagFilter 
+      ? contacts.filter(contact => contact.tags.includes(activeTagFilter))
+      : contacts;
+    
+    // Then apply sorting
+    if (sortKey && sortDirection !== 'default') {
+      return [...filtered].sort((a, b) => {
+        const aValue = a[sortKey as keyof Contact];
+        const bValue = b[sortKey as keyof Contact];
+        
+        // Handle different types of values
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          // For dates, convert to timestamp first
+          if (sortKey === 'dateOfContact') {
+            const aDate = new Date(aValue).getTime();
+            const bDate = new Date(bValue).getTime();
+            return sortDirection === 'asc' ? aDate - bDate : bDate - aDate;
+          }
+          
+          // For normal strings
+          return sortDirection === 'asc' 
+            ? aValue.localeCompare(bValue) 
+            : bValue.localeCompare(aValue);
+        }
+        
+        // Fallback for non-string values (though we shouldn't have any)
+        return 0;
+      });
+    }
+    
+    return filtered;
+  }, [contacts, sortKey, sortDirection, activeTagFilter]);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -74,7 +122,14 @@ const Index = () => {
           </div>
           
           <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
-            <ContactTable contacts={contacts} />
+            <ContactTable 
+              contacts={filteredAndSortedContacts} 
+              onSort={handleSort}
+              sortKey={sortKey}
+              sortDirection={sortDirection}
+              onFilterByTag={handleFilterByTag}
+              activeTagFilter={activeTagFilter}
+            />
           </div>
         </main>
       </div>
