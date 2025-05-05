@@ -71,6 +71,15 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
         </TableHead>
         <TableHead>Email</TableHead>
         <TableHead>Role</TableHead>
+        <TableHead 
+          className="cursor-pointer"
+          onClick={() => handleSortClick('company')}
+        >
+          <div className="flex items-center">
+            Company
+            {renderSortIndicator('company')}
+          </div>
+        </TableHead>
         <TableHead>
           <div className="flex items-center">
             Tags

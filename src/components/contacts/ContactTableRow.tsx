@@ -32,6 +32,9 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
         <span className="text-sm text-gray-600">{contact.role || '-'}</span>
       </TableCell>
       <TableCell>
+        <span className="text-sm text-gray-600">{contact.company || '-'}</span>
+      </TableCell>
+      <TableCell>
         <div className="flex flex-wrap gap-1">
           {contact.tags.map((tag) => (
             <Badge 

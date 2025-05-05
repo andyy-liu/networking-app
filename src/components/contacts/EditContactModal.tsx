@@ -45,6 +45,7 @@ const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   role: z.string().optional(),
+  company: z.string().optional(), // Add company field to schema
   dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be in YYYY-MM-DD format.' }),
   status: z.enum(['Reached Out', 'Responded', 'Chatted'] as const),
   tags: z.array(z.enum(['Club', 'Recruiter', 'Alumni', 'Professor', 'Other'] as const)).min(1, { 
@@ -65,6 +66,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
       name: contact.name,
       email: contact.email,
       role: contact.role || '',
+      company: contact.company || '', // Add company field default value
       dateOfContact: contact.dateOfContact,
       status: contact.status,
       tags: contact.tags,
@@ -72,6 +74,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
       name: '',
       email: '',
       role: '',
+      company: '', // Add default value for company
       dateOfContact: new Date().toISOString().split('T')[0],
       status: 'Reached Out',
       tags: ['Other'],
@@ -85,6 +88,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
         name: contact.name,
         email: contact.email,
         role: contact.role || '',
+        company: contact.company || '', // Add company to reset form
         dateOfContact: contact.dateOfContact,
         status: contact.status,
         tags: contact.tags,
@@ -100,6 +104,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
       name: values.name,
       email: values.email,
       role: values.role,
+      company: values.company, // Add company to contact data
       tags: values.tags,
       dateOfContact: values.dateOfContact,
       status: values.status,
@@ -156,6 +161,20 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                   <FormLabel>Role</FormLabel>
                   <FormControl>
                     <Input placeholder="Software Engineer at Tech Corp" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Add new company field */}
+            <FormField
+              control={form.control}
+              name="company"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Tech Corp" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -56,6 +56,7 @@ const Index = () => {
         name: item.name,
         email: item.email,
         role: item.role || '',
+        company: item.company || '', // Add company field
         tags: item.tags as ContactTag[],
         dateOfContact: item.dateofcontact,
         status: item.status as Contact['status'],
@@ -86,6 +87,7 @@ const Index = () => {
           name: newContactData.name,
           email: newContactData.email,
           role: newContactData.role,
+          company: newContactData.company, // Add company field
           tags: newContactData.tags,
           dateofcontact: newContactData.dateOfContact,
           status: newContactData.status,
@@ -103,6 +105,7 @@ const Index = () => {
         name: data.name,
         email: data.email,
         role: data.role || '',
+        company: data.company || '', // Add company field
         tags: data.tags as ContactTag[],
         dateOfContact: data.dateofcontact,
         status: data.status as Contact['status'],
@@ -146,6 +149,7 @@ const Index = () => {
           name: updatedData.name,
           email: updatedData.email,
           role: updatedData.role,
+          company: updatedData.company, // Add company field
           tags: updatedData.tags,
           dateofcontact: updatedData.dateOfContact,
           status: updatedData.status,
