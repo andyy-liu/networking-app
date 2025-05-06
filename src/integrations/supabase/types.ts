@@ -148,7 +148,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_user: {
+        Args: Record<string, never>
+        Returns: void
+      }
     }
     Enums: {
       [_ in never]: never

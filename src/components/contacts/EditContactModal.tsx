@@ -1,9 +1,8 @@
-
-import React, { useState, useEffect } from 'react';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Contact, ContactStatus } from '@/lib/types';
+import React, { useState, useEffect } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Contact, ContactStatus } from "@/lib/types";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +10,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -19,34 +18,37 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { X, Plus } from 'lucide-react';
-import { getTagColor } from './contact-utils';
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { X, Plus } from "lucide-react";
+import { getTagColor } from "./contact-utils";
+import { useTags } from "@/context/TagContext";
 
 interface EditContactModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (id: string, data: Omit<Contact, 'id'>) => void;
+  onSubmit: (contact: Contact) => void;
   contact: Contact | null;
 }
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
-  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
   role: z.string().optional(),
   company: z.string().optional(),
-  dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be in YYYY-MM-DD format.' }),
-  status: z.enum(['Reached Out', 'Responded', 'Chatted'] as const),
+  dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+    message: "Date must be in YYYY-MM-DD format.",
+  }),
+  status: z.enum(["Reached Out", "Responded", "Chatted"] as const),
   tags: z.array(z.string()).default([]),
 });
 
@@ -56,29 +58,31 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
   onSubmit,
   contact,
 }) => {
-  const [availableTags, setAvailableTags] = useState<string[]>([]);
-  const [newTagInput, setNewTagInput] = useState('');
-  
+  const { availableTags, addTag } = useTags();
+  const [newTagInput, setNewTagInput] = useState("");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     // Initialize with contact data or defaults
-    defaultValues: contact ? {
-      name: contact.name,
-      email: contact.email,
-      role: contact.role || '',
-      company: contact.company || '',
-      dateOfContact: contact.dateOfContact,
-      status: contact.status,
-      tags: contact.tags,
-    } : {
-      name: '',
-      email: '',
-      role: '',
-      company: '',
-      dateOfContact: new Date().toISOString().split('T')[0],
-      status: 'Reached Out',
-      tags: [],
-    },
+    defaultValues: contact
+      ? {
+          name: contact.name,
+          email: contact.email,
+          role: contact.role || "",
+          company: contact.company || "",
+          dateOfContact: contact.dateOfContact,
+          status: contact.status,
+          tags: contact.tags,
+        }
+      : {
+          name: "",
+          email: "",
+          role: "",
+          company: "",
+          dateOfContact: new Date().toISOString().split("T")[0],
+          status: "Reached Out",
+          tags: [],
+        },
   });
 
   // Update form values when contact changes
@@ -87,74 +91,75 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
       form.reset({
         name: contact.name,
         email: contact.email,
-        role: contact.role || '',
-        company: contact.company || '',
+        role: contact.role || "",
+        company: contact.company || "",
         dateOfContact: contact.dateOfContact,
         status: contact.status,
         tags: contact.tags,
       });
-      
-      // Add contact tags to available tags if they're not already there
-      contact.tags.forEach(tag => {
-        if (!availableTags.includes(tag)) {
-          setAvailableTags(prev => [...prev, tag]);
-        }
-      });
     }
-  }, [contact, form, availableTags]);
+  }, [contact, form]);
 
   const addNewTag = () => {
-    if (newTagInput.trim() !== '' && !availableTags.includes(newTagInput.trim())) {
+    if (
+      newTagInput.trim() !== "" &&
+      !availableTags.includes(newTagInput.trim())
+    ) {
       const newTag = newTagInput.trim();
-      setAvailableTags(prev => [...prev, newTag]);
-      setNewTagInput('');
+      // Add to global available tags
+      addTag(newTag);
+
+      // Add to form
+      const currentTags = form.getValues("tags") || [];
+      if (!currentTags.includes(newTag)) {
+        form.setValue("tags", [...currentTags, newTag], {
+          shouldValidate: true,
+        });
+      }
+
+      setNewTagInput("");
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       addNewTag();
     }
   };
 
-  const selectedTags = form.watch('tags') || [];
+  const selectedTags = form.watch("tags") || [];
 
   const toggleTagSelection = (tag: string) => {
     const currentTags = [...selectedTags];
     const tagIndex = currentTags.indexOf(tag);
-    
+
     if (tagIndex > -1) {
       currentTags.splice(tagIndex, 1);
     } else {
       currentTags.push(tag);
     }
-    
-    form.setValue('tags', currentTags, { shouldValidate: true });
+
+    form.setValue("tags", currentTags, { shouldValidate: true });
   };
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = (data: z.infer<typeof formSchema>) => {
     if (!contact) return;
-    
-    // Make sure all required fields are present
-    const contactData: Omit<Contact, 'id'> = {
-      name: values.name,
-      email: values.email,
-      role: values.role,
-      company: values.company,
-      tags: values.tags,
-      dateOfContact: values.dateOfContact,
-      status: values.status,
-    };
-    
-    onSubmit(contact.id, contactData);
+
+    onSubmit({
+      ...contact,
+      ...data,
+    });
     onClose();
   };
 
   if (!contact) return null;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={onClose}
+    >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit Contact</DialogTitle>
@@ -163,7 +168,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="name"
@@ -171,7 +179,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -184,7 +195,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="john.doe@example.com" {...field} />
+                    <Input
+                      placeholder="john.doe@example.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -197,7 +211,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Role</FormLabel>
                   <FormControl>
-                    <Input placeholder="Software Engineer at Tech Corp" {...field} />
+                    <Input
+                      placeholder="Software Engineer at Tech Corp"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -210,7 +227,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Company</FormLabel>
                   <FormControl>
-                    <Input placeholder="Tech Corp" {...field} />
+                    <Input
+                      placeholder="Tech Corp"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -224,10 +244,12 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                   <FormLabel>Tags</FormLabel>
                   <div className="space-y-2">
                     <div className="flex flex-wrap gap-2">
-                      {selectedTags.map(tag => (
-                        <Badge 
-                          key={tag} 
-                          className={`${getTagColor(tag)} cursor-pointer flex items-center gap-1 px-2 py-1`}
+                      {selectedTags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          className={`${getTagColor(
+                            tag
+                          )} cursor-pointer flex items-center gap-1 px-2 py-1`}
                           onClick={() => toggleTagSelection(tag)}
                         >
                           {tag}
@@ -243,8 +265,8 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                         onKeyDown={handleKeyDown}
                         className="flex-1"
                       />
-                      <Button 
-                        type="button" 
+                      <Button
+                        type="button"
                         size="sm"
                         variant="outline"
                         onClick={addNewTag}
@@ -255,20 +277,25 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                     </div>
                     {availableTags.length > 0 && (
                       <div className="mt-2">
-                        <p className="text-sm text-muted-foreground mb-1">Available tags:</p>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Available tags:
+                        </p>
                         <div className="flex flex-wrap gap-2">
-                          {availableTags.map(tag => (
-                            !selectedTags.includes(tag) && (
-                              <Badge
-                                key={tag}
-                                className={`${getTagColor(tag)} cursor-pointer opacity-70 hover:opacity-100`}
-                                variant="outline"
-                                onClick={() => toggleTagSelection(tag)}
-                              >
-                                {tag}
-                              </Badge>
-                            )
-                          ))}
+                          {availableTags.map(
+                            (tag) =>
+                              !selectedTags.includes(tag) && (
+                                <Badge
+                                  key={tag}
+                                  className={`${getTagColor(
+                                    tag
+                                  )} cursor-pointer opacity-70 hover:opacity-100`}
+                                  variant="outline"
+                                  onClick={() => toggleTagSelection(tag)}
+                                >
+                                  {tag}
+                                </Badge>
+                              )
+                          )}
                         </div>
                       </div>
                     )}
@@ -277,7 +304,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="dateOfContact"
@@ -285,7 +312,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Date of Contact</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input
+                      type="date"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -297,7 +327,10 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Status</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a status" />
@@ -314,12 +347,14 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
               )}
             />
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+              >
                 Cancel
               </Button>
-              <Button type="submit">
-                Save Changes
-              </Button>
+              <Button type="submit">Save Changes</Button>
             </DialogFooter>
           </form>
         </Form>

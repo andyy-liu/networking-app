@@ -1,46 +1,46 @@
-
-import React from 'react';
-import { 
-  Table,
-  TableBody,
-} from '@/components/ui/table';
-import { Contact } from '@/lib/types';
-import { ContactTableHeader } from './ContactTableHeader';
-import { ContactTableRow } from './ContactTableRow';
-import { ContactEmptyState } from './ContactEmptyState';
+import React from "react";
+import { Table, TableBody } from "@/components/ui/table";
+import { Contact } from "@/lib/types";
+import { ContactTableHeader } from "./ContactTableHeader";
+import { ContactTableRow } from "./ContactTableRow";
+import { ContactEmptyState } from "./ContactEmptyState";
 
 interface ContactTableProps {
   contacts: Contact[];
-  onSort: (key: string, direction: 'asc' | 'desc' | 'default') => void;
+  onSort: (key: string, direction: "asc" | "desc" | "default") => void;
   sortKey: string;
-  sortDirection: 'asc' | 'desc' | 'default';
+  sortDirection: "asc" | "desc" | "default";
   onFilterByTag: (tag: string | null) => void;
   activeTagFilter: string | null;
   onEditContact: (contact: Contact) => void;
+  onUpdateContact: (contact: Contact) => void;
   onViewNotes: (contact: Contact) => void;
   selectedContacts: Contact[];
   onSelectContact: (contact: Contact, isSelected: boolean) => void;
 }
 
-export const ContactTable: React.FC<ContactTableProps> = ({ 
-  contacts, 
-  onSort, 
-  sortKey, 
+export const ContactTable: React.FC<ContactTableProps> = ({
+  contacts,
+  onSort,
+  sortKey,
   sortDirection,
   onFilterByTag,
   activeTagFilter,
   onEditContact,
+  onUpdateContact,
   onViewNotes,
   selectedContacts,
-  onSelectContact
+  onSelectContact,
 }) => {
   // Get all unique tags from contacts for filter dropdown
-  const allTags = Array.from(new Set(contacts.flatMap(contact => contact.tags)));
+  const allTags = Array.from(
+    new Set(contacts.flatMap((contact) => contact.tags))
+  );
 
   return (
     <div className="rounded-md border">
       <Table>
-        <ContactTableHeader 
+        <ContactTableHeader
           onSort={onSort}
           sortKey={sortKey}
           sortDirection={sortDirection}
@@ -49,17 +49,18 @@ export const ContactTable: React.FC<ContactTableProps> = ({
           availableTags={allTags}
           hasCheckboxColumn={true}
         />
-        <TableBody>
+        <TableBody className="[&_tr]:!h-7 [&_td]:!py-0.5">
           {contacts.length === 0 ? (
             <ContactEmptyState />
           ) : (
             contacts.map((contact) => (
-              <ContactTableRow 
-                key={contact.id} 
-                contact={contact} 
+              <ContactTableRow
+                key={contact.id}
+                contact={contact}
                 onEditContact={onEditContact}
+                onUpdateContact={onUpdateContact}
                 onViewNotes={onViewNotes}
-                isSelected={selectedContacts.some(c => c.id === contact.id)}
+                isSelected={selectedContacts.some((c) => c.id === contact.id)}
                 onSelectContact={onSelectContact}
               />
             ))

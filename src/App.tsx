@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +7,9 @@ import Index from "./pages/Index";
 import GroupContacts from "./pages/GroupContacts";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import { Settings } from "./pages/Settings";
 import { AuthProvider } from "@/context/AuthContext";
+import { TagProvider } from "@/context/TagContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -20,19 +21,37 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/auth" element={<Auth />} />
-            
-            {/* Protected routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/groups/:groupId" element={<GroupContacts />} />
-              {/* Add other protected routes here */}
-            </Route>
-            
-            {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <TagProvider>
+            <Routes>
+              <Route
+                path="/auth"
+                element={<Auth />}
+              />
+
+              {/* Protected routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route
+                  path="/"
+                  element={<Index />}
+                />
+                <Route
+                  path="/groups/:groupId"
+                  element={<GroupContacts />}
+                />
+                <Route
+                  path="/settings"
+                  element={<Settings />}
+                />
+                {/* Add other protected routes here */}
+              </Route>
+
+              {/* Catch-all route */}
+              <Route
+                path="*"
+                element={<NotFound />}
+              />
+            </Routes>
+          </TagProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>

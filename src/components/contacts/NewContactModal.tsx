@@ -1,9 +1,8 @@
-
-import React, { useState } from 'react';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Contact, ContactStatus } from '@/lib/types';
+import React, { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Contact, ContactStatus } from "@/lib/types";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +10,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -19,35 +18,42 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { X, Plus } from 'lucide-react';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { getTagColor } from './contact-utils';
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { X, Plus } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { getTagColor } from "./contact-utils";
+import { useTags } from "@/context/TagContext";
 
 interface NewContactModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: Omit<Contact, 'id'>) => void;
+  onSubmit: (data: Omit<Contact, "id">) => void;
 }
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
-  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
   role: z.string().optional(),
   company: z.string().optional(),
-  dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be in YYYY-MM-DD format.' }),
-  status: z.enum(['Reached Out', 'Responded', 'Chatted'] as const),
+  dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+    message: "Date must be in YYYY-MM-DD format.",
+  }),
+  status: z.enum(["Reached Out", "Responded", "Chatted"] as const),
   tags: z.array(z.string()).optional().default([]),
 });
 
@@ -56,55 +62,66 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
   onClose,
   onSubmit,
 }) => {
-  const [availableTags, setAvailableTags] = useState<string[]>([]);
-  const [newTagInput, setNewTagInput] = useState('');
-  
+  const { availableTags, addTag } = useTags();
+  const [newTagInput, setNewTagInput] = useState("");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      role: '',
-      company: '',
-      dateOfContact: new Date().toISOString().split('T')[0],
-      status: 'Reached Out',
+      name: "",
+      email: "",
+      role: "",
+      company: "",
+      dateOfContact: new Date().toISOString().split("T")[0],
+      status: "Reached Out",
       tags: [],
     },
   });
 
   const addNewTag = () => {
-    if (newTagInput.trim() !== '' && !availableTags.includes(newTagInput.trim())) {
+    if (
+      newTagInput.trim() !== "" &&
+      !availableTags.includes(newTagInput.trim())
+    ) {
       const newTag = newTagInput.trim();
-      setAvailableTags(prev => [...prev, newTag]);
-      setNewTagInput('');
+      addTag(newTag);
+
+      const currentTags = form.getValues("tags") || [];
+      if (!currentTags.includes(newTag)) {
+        form.setValue("tags", [...currentTags, newTag], {
+          shouldValidate: true,
+        });
+      }
+
+      setNewTagInput("");
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       addNewTag();
     }
   };
 
-  const selectedTags = form.watch('tags') || [];
+  const selectedTags = form.watch("tags") || [];
 
   const toggleTagSelection = (tag: string) => {
     const currentTags = [...selectedTags];
     const tagIndex = currentTags.indexOf(tag);
-    
+
     if (tagIndex > -1) {
       currentTags.splice(tagIndex, 1);
     } else {
       currentTags.push(tag);
     }
-    
-    form.setValue('tags', currentTags, { shouldValidate: true });
+
+    form.setValue("tags", currentTags, { shouldValidate: true });
   };
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     // Make sure all required fields are present
-    const contactData: Omit<Contact, 'id'> = {
+    const contactData: Omit<Contact, "id"> = {
       name: values.name,
       email: values.email,
       role: values.role,
@@ -113,14 +130,17 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
       dateOfContact: values.dateOfContact,
       status: values.status,
     };
-    
+
     onSubmit(contactData);
     form.reset();
     onClose();
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={onClose}
+    >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add New Contact</DialogTitle>
@@ -129,7 +149,10 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="name"
@@ -137,7 +160,10 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -150,7 +176,10 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="john.doe@example.com" {...field} />
+                    <Input
+                      placeholder="john.doe@example.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +192,10 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Role</FormLabel>
                   <FormControl>
-                    <Input placeholder="Software Engineer at Tech Corp" {...field} />
+                    <Input
+                      placeholder="Software Engineer"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -176,7 +208,10 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Company</FormLabel>
                   <FormControl>
-                    <Input placeholder="Tech Corp" {...field} />
+                    <Input
+                      placeholder="Tech Corp"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -190,10 +225,12 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                   <FormLabel>Tags</FormLabel>
                   <div className="space-y-2">
                     <div className="flex flex-wrap gap-2">
-                      {selectedTags.map(tag => (
-                        <Badge 
-                          key={tag} 
-                          className={`${getTagColor(tag)} cursor-pointer flex items-center gap-1 px-2 py-1`}
+                      {selectedTags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          className={`${getTagColor(
+                            tag
+                          )} cursor-pointer flex items-center gap-1 px-2 py-1`}
                           onClick={() => toggleTagSelection(tag)}
                         >
                           {tag}
@@ -209,8 +246,8 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                         onKeyDown={handleKeyDown}
                         className="flex-1"
                       />
-                      <Button 
-                        type="button" 
+                      <Button
+                        type="button"
                         size="sm"
                         variant="outline"
                         onClick={addNewTag}
@@ -221,20 +258,25 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                     </div>
                     {availableTags.length > 0 && (
                       <div className="mt-2">
-                        <p className="text-sm text-muted-foreground mb-1">Available tags:</p>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Available tags:
+                        </p>
                         <div className="flex flex-wrap gap-2">
-                          {availableTags.map(tag => (
-                            !selectedTags.includes(tag) && (
-                              <Badge
-                                key={tag}
-                                className={`${getTagColor(tag)} cursor-pointer opacity-70 hover:opacity-100`}
-                                variant="outline"
-                                onClick={() => toggleTagSelection(tag)}
-                              >
-                                {tag}
-                              </Badge>
-                            )
-                          ))}
+                          {availableTags.map(
+                            (tag) =>
+                              !selectedTags.includes(tag) && (
+                                <Badge
+                                  key={tag}
+                                  className={`${getTagColor(
+                                    tag
+                                  )} cursor-pointer opacity-70 hover:opacity-100`}
+                                  variant="outline"
+                                  onClick={() => toggleTagSelection(tag)}
+                                >
+                                  {tag}
+                                </Badge>
+                              )
+                          )}
                         </div>
                       </div>
                     )}
@@ -243,7 +285,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="dateOfContact"
@@ -251,7 +293,10 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 <FormItem>
                   <FormLabel>Date of Contact</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input
+                      type="date"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -263,7 +308,10 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Status</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a status" />
@@ -280,12 +328,14 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
               )}
             />
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+              >
                 Cancel
               </Button>
-              <Button type="submit">
-                Add Contact
-              </Button>
+              <Button type="submit">Add Contact</Button>
             </DialogFooter>
           </form>
         </Form>
