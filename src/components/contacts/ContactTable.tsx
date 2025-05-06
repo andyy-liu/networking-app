@@ -40,36 +40,40 @@ export const ContactTable: React.FC<ContactTableProps> = ({
   );
 
   return (
-    <div className="rounded-md border">
-      <Table>
-        <ContactTableHeader
-          onSort={onSort}
-          sortKey={sortKey}
-          sortDirection={sortDirection}
-          onFilterByTag={onFilterByTag}
-          activeTagFilter={activeTagFilter}
-          availableTags={allTags}
-          hasCheckboxColumn={true}
-        />
-        <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
-          {contacts.length === 0 ? (
-            <ContactEmptyState />
-          ) : (
-            contacts.map((contact) => (
-              <ContactTableRow
-                key={contact.id}
-                contact={contact}
-                onEditContact={onEditContact}
-                onUpdateContact={onUpdateContact}
-                onViewNotes={onViewNotes}
-                isSelected={selectedContacts.some((c) => c.id === contact.id)}
-                onSelectContact={onSelectContact}
-                onOpenTodoPanel={onOpenTodoPanel}
-              />
-            ))
-          )}
-        </TableBody>
-      </Table>
+    // outer wrapper enables horizontal scrolling when needed
+    <div className="rounded-md border overflow-x-auto">
+      {/* inner wrapper forces table to its full content width */}
+      <div className="min-w-max">
+        <Table className="w-full table-auto whitespace-nowrap">
+          <ContactTableHeader
+            onSort={onSort}
+            sortKey={sortKey}
+            sortDirection={sortDirection}
+            onFilterByTag={onFilterByTag}
+            activeTagFilter={activeTagFilter}
+            availableTags={allTags}
+            hasCheckboxColumn={true}
+          />
+          <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
+            {contacts.length === 0 ? (
+              <ContactEmptyState />
+            ) : (
+              contacts.map((contact) => (
+                <ContactTableRow
+                  key={contact.id}
+                  contact={contact}
+                  onEditContact={onEditContact}
+                  onUpdateContact={onUpdateContact}
+                  onViewNotes={onViewNotes}
+                  isSelected={selectedContacts.some((c) => c.id === contact.id)}
+                  onSelectContact={onSelectContact}
+                  onOpenTodoPanel={onOpenTodoPanel}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

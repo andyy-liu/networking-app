@@ -340,7 +340,7 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
           </PopoverContent>
         </Popover>
       </TableCell>
-      <TableCell>
+      <TableCell className="min-w-0">
         <Popover>
           <PopoverTrigger asChild>
             <button
@@ -351,7 +351,14 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
               )}
             >
               <CalendarIcon className="h-3 w-3" />
-              <span>{format(date, "MMM d, yyyy")}</span>
+
+              {/* Small screens: only “May 8” */}
+              <span className="inline sm:hidden">{format(date, "MMM d")}</span>
+
+              {/* sm+ screens: full “May 8, 2025” */}
+              <span className="hidden sm:inline">
+                {format(date, "MMM d, yyyy")}
+              </span>
             </button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">

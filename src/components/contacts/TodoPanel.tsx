@@ -250,6 +250,28 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
     }
   };
 
+  const deleteTodo = async (todoId: string) => {
+    if (!user) return;
+    try {
+      const { error } = await supabase
+        .from("contact_todos")
+        .delete()
+        .eq("id", todoId)
+        .eq("user_id", user.id);
+      if (error) throw error;
+      // remove it locally
+      setTodos((prev) => prev.filter((t) => t.id !== todoId));
+      toast({ title: "Deleted", description: "To‑do removed" });
+    } catch (err) {
+      console.error("Delete error:", err);
+      toast({
+        title: "Error",
+        description: "Could not delete to‑do",
+        variant: "destructive",
+      });
+    }
+  };
+
   const saveNote = async () => {
     if (!contact || !user || !editor) return;
 
@@ -303,7 +325,7 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
       open={open}
       onOpenChange={(isOpen) => !isOpen && onClose()}
     >
-      <SheetContent className="w-[600px] sm:w-[540px] overflow-y-auto">
+      <SheetContent className="overflow-y-auto">
         <SheetHeader>
           <SheetTitle>
             {contact ? `To-dos for ${contact.name}` : "Loading..."}
@@ -371,6 +393,7 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
                         todo.completed && "line-through text-muted-foreground"
                       )}
                     >
+                      {/* checkbox toggle */}
                       <Button
                         variant="ghost"
                         size="icon"
@@ -385,6 +408,8 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
                           <Circle className="h-5 w-5" />
                         )}
                       </Button>
+
+                      {/* task text */}
                       <div className="flex-1">
                         <p className="text-sm">{todo.task}</p>
                         {todo.dueDate && (
@@ -393,6 +418,17 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
                           </p>
                         )}
                       </div>
+
+                      {/* delete “X” */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 text-muted-foreground"
+                        onClick={() => deleteTodo(todo.id)}
+                        aria-label="Delete to‑do"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
                     </div>
                   ))}
                 </div>
@@ -460,7 +496,7 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
                     <LinkIcon className="h-4 w-4" />
                   </Button>
                 </div>
-                <div className="min-h-[200px] p-3">
+                <div className="min-h-[300px] p-3">
                   <EditorContent
                     editor={editor}
                     className="h-full [&_div.ProseMirror]:outline-none"
