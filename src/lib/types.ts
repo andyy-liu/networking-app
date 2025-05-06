@@ -1,7 +1,15 @@
-
 export type ContactStatus = 'Reached Out' | 'Responded' | 'Chatted';
 
 export type ContactTag = string;
+
+export interface Todo {
+  id: string;
+  contactId: string;
+  task: string;
+  dueDate: string | null;
+  completed: boolean;
+  createdAt: string;
+}
 
 export interface Contact {
   id: string;
@@ -12,6 +20,7 @@ export interface Contact {
   tags: ContactTag[];
   dateOfContact: string;
   status: ContactStatus;
+  todos?: Todo[];
 }
 
 export interface ContactGroup {

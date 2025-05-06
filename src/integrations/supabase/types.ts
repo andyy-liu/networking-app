@@ -101,6 +101,47 @@ export type Database = {
           },
         ]
       }
+      contact_todos: {
+        Row: {
+          completed: boolean
+          contact_id: string
+          created_at: string | null
+          due_date: string | null
+          id: string
+          task: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          contact_id: string
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          task: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          contact_id?: string
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          task?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_todos_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contacts: {
         Row: {
           company: string | null
@@ -149,8 +190,8 @@ export type Database = {
     }
     Functions: {
       delete_user: {
-        Args: Record<string, never>
-        Returns: void
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {

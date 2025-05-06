@@ -17,6 +17,7 @@ interface ContactTableProps {
   onViewNotes: (contact: Contact) => void;
   selectedContacts: Contact[];
   onSelectContact: (contact: Contact, isSelected: boolean) => void;
+  onOpenTodoPanel?: (contact: Contact) => void;
 }
 
 export const ContactTable: React.FC<ContactTableProps> = ({
@@ -31,6 +32,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
   onViewNotes,
   selectedContacts,
   onSelectContact,
+  onOpenTodoPanel,
 }) => {
   // Get all unique tags from contacts for filter dropdown
   const allTags = Array.from(
@@ -49,7 +51,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
           availableTags={allTags}
           hasCheckboxColumn={true}
         />
-        <TableBody className="[&_tr]:!h-7 [&_td]:!py-0.5">
+        <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
           {contacts.length === 0 ? (
             <ContactEmptyState />
           ) : (
@@ -62,6 +64,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                 onViewNotes={onViewNotes}
                 isSelected={selectedContacts.some((c) => c.id === contact.id)}
                 onSelectContact={onSelectContact}
+                onOpenTodoPanel={onOpenTodoPanel}
               />
             ))
           )}

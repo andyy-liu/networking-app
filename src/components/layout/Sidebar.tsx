@@ -1,20 +1,19 @@
-
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Logo } from '@/components/icons/Logo';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { 
-  LayoutDashboard, 
-  Bell, 
-  Settings, 
-  Users, 
-  ChevronLeft, 
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Logo } from "@/components/icons/Logo";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  LayoutDashboard,
+  Bell,
+  Settings,
+  Users,
+  ChevronLeft,
   ChevronRight,
-} from 'lucide-react';
-import { ContactGroup } from '@/lib/types';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/context/AuthContext';
+} from "lucide-react";
+import { ContactGroup } from "@/lib/types";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/context/AuthContext";
 
 interface SidebarProps {
   className?: string;
@@ -27,7 +26,7 @@ interface NavItem {
   path?: string;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -35,9 +34,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
   const [contactGroups, setContactGroups] = useState<ContactGroup[]>([]);
 
   const navItems: NavItem[] = [
-    { icon: LayoutDashboard, label: 'Dashboard', isActive: location.pathname === '/', path: '/' },
-    { icon: Bell, label: 'Reminders', isActive: location.pathname === '/reminders', path: '/reminders' },
-    { icon: Settings, label: 'Settings', isActive: location.pathname === '/settings', path: '/settings' },
+    {
+      icon: LayoutDashboard,
+      label: "Dashboard",
+      isActive: location.pathname === "/",
+      path: "/",
+    },
+    {
+      icon: Bell,
+      label: "Reminders",
+      isActive: location.pathname === "/reminders",
+      path: "/reminders",
+    },
+    {
+      icon: Settings,
+      label: "Settings",
+      isActive: location.pathname === "/settings",
+      path: "/settings",
+    },
   ];
 
   useEffect(() => {
@@ -53,15 +67,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
 
     try {
       const { data, error } = await supabase
-        .from('contact_groups')
-        .select('*')
-        .eq('user_id', user.id);
+        .from("contact_groups")
+        .select("*")
+        .eq("user_id", user.id);
 
       if (error) {
         throw error;
       }
 
-      const transformedGroups: ContactGroup[] = data.map(item => ({
+      const transformedGroups: ContactGroup[] = data.map((item) => ({
         id: item.id,
         name: item.name,
         userId: item.user_id,
@@ -70,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
 
       setContactGroups(transformedGroups);
     } catch (error) {
-      console.error('Error fetching contact groups:', error);
+      console.error("Error fetching contact groups:", error);
     }
   };
 
@@ -89,12 +103,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
   };
 
   return (
-    <div className={`${className} relative bg-white dark:bg-gray-900 h-screen shadow-sm flex flex-col transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}>
+    <div
+      className={`${className} relative bg-white dark:bg-gray-900 h-screen shadow-sm flex flex-col transition-all duration-300 ${
+        isCollapsed ? "w-16" : "w-64"
+      }`}
+    >
       <div className="p-4 flex items-center justify-between">
         {!isCollapsed && <Logo />}
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={toggleSidebar}
           className="absolute -right-3 top-6 bg-white dark:bg-gray-900 rounded-full shadow-sm border z-10"
         >
@@ -113,7 +131,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                 handleNavigation(item.path);
               }}
               className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
-                item.isActive ? 'bg-gray-100 dark:bg-gray-800 text-primary' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                item.isActive
+                  ? "bg-gray-100 dark:bg-gray-800 text-primary"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
               }`}
             >
               <item.icon size={20} />
@@ -142,7 +162,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                     handleNavigation(`/groups/${group.id}`);
                   }}
                   className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
-                    isGroupActive(group.id) ? 'bg-gray-100 dark:bg-gray-800 text-primary' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                    isGroupActive(group.id)
+                      ? "bg-gray-100 dark:bg-gray-800 text-primary"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
                   }`}
                 >
                   <Users size={20} />
@@ -156,7 +178,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
       <div className="p-4">
         {!isCollapsed && (
           <div className="text-xs text-gray-500 dark:text-gray-400">
-            OutreachBuddy v1.0
+            Made with ❤️ by{" "}
+            <a
+              href="https://www.linkedin.com/in/aliu24/"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Andy Liu
+            </a>
           </div>
         )}
       </div>

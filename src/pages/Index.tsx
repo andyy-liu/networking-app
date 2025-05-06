@@ -8,7 +8,7 @@ import { NewContactModal } from "@/components/contacts/NewContactModal";
 import { EditContactModal } from "@/components/contacts/EditContactModal";
 import { ContactNotesModal } from "@/components/contacts/ContactNotesModal";
 import { AddToGroupModal } from "@/components/contacts/AddToGroupModal";
-import { Contact, ContactTag } from "@/lib/types";
+import { Contact, ContactTag, Todo } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/context/AuthContext";
@@ -25,6 +25,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { TagManagementModal } from "@/components/contacts/TagManagementModal";
+import { TodoPanel } from "@/components/contacts/TodoPanel";
 
 const Index = () => {
   const { user } = useAuth();
@@ -46,6 +47,8 @@ const Index = () => {
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isTagManagementOpen, setIsTagManagementOpen] = useState(false);
+  const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(false);
+  const [contactForTodos, setContactForTodos] = useState<Contact | null>(null);
 
   // Fetch contacts on component mount and when user changes
   useEffect(() => {
@@ -62,6 +65,7 @@ const Index = () => {
 
     setLoading(true);
     try {
+      // Fetch contacts
       const { data, error } = await supabase
         .from("contacts")
         .select("*")
@@ -81,9 +85,15 @@ const Index = () => {
         tags: item.tags as ContactTag[],
         dateOfContact: item.dateofcontact,
         status: item.status as Contact["status"],
+        todos: [], // Initialize with empty todos array
       }));
 
       setContacts(transformedContacts);
+
+      // After setting contacts, fetch todos if there are any contacts
+      if (transformedContacts.length > 0) {
+        fetchTodos(transformedContacts);
+      }
     } catch (error) {
       console.error("Error fetching contacts:", error);
       toast({
@@ -93,6 +103,65 @@ const Index = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchTodos = async (contactsList: Contact[]) => {
+    if (!user) return;
+
+    try {
+      // Get contact IDs
+      const contactIds = contactsList.map((contact) => contact.id);
+
+      // Fetch todos
+      const { data, error } = await supabase
+        .from("contact_todos")
+        .select("*")
+        .eq("user_id", user.id)
+        .in("contact_id", contactIds);
+
+      if (error) {
+        console.error("Error fetching todos:", error);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        return; // No todos to process
+      }
+
+      // Update contacts with their todos
+      const updatedContacts = contactsList.map((contact) => {
+        const contactTodos = data
+          .filter(
+            (todo: { contact_id: string }) => todo.contact_id === contact.id
+          )
+          .map(
+            (todo: {
+              created_at: string;
+              completed: boolean;
+              due_date: string;
+              id: string;
+              contact_id: string;
+              task: string;
+            }) => ({
+              id: todo.id,
+              contactId: todo.contact_id,
+              task: todo.task,
+              dueDate: todo.due_date as string,
+              completed: todo.completed as boolean,
+              createdAt: todo.created_at as string,
+            })
+          );
+
+        return {
+          ...contact,
+          todos: contactTodos,
+        };
+      });
+
+      setContacts(updatedContacts);
+    } catch (err) {
+      console.error("Error in fetchTodos:", err);
     }
   };
 
@@ -130,6 +199,7 @@ const Index = () => {
         tags: data.tags as ContactTag[],
         dateOfContact: data.dateofcontact,
         status: data.status as Contact["status"],
+        todos: [],
       };
 
       // Update local state
@@ -159,6 +229,11 @@ const Index = () => {
     setIsNotesModalOpen(true);
   };
 
+  const handleOpenTodoPanel = (contact: Contact) => {
+    setContactForTodos(contact);
+    setIsTodoPanelOpen(true);
+  };
+
   const handleUpdateContact = async (updatedContact: Contact) => {
     if (!user) return;
 
@@ -185,7 +260,13 @@ const Index = () => {
 
       // Update local state
       const updatedContacts = contacts.map((contact) =>
-        contact.id === updatedContact.id ? updatedContact : contact
+        contact.id === updatedContact.id
+          ? {
+              ...updatedContact,
+              // Preserve todos which aren't part of the update
+              todos: contact.todos || [],
+            }
+          : contact
       );
 
       setContacts(updatedContacts);
@@ -202,6 +283,44 @@ const Index = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const handleTodoAdded = (contactId: string, todo: Todo) => {
+    // Update the contacts array with the new todo
+    const updatedContacts = contacts.map((contact) => {
+      if (contact.id === contactId) {
+        const todos = contact.todos || [];
+        return {
+          ...contact,
+          todos: [todo, ...todos],
+        };
+      }
+      return contact;
+    });
+
+    setContacts(updatedContacts);
+  };
+
+  const handleTodoCompleted = (
+    contactId: string,
+    todoId: string,
+    completed: boolean
+  ) => {
+    // Update the contacts array with the updated todo status
+    const updatedContacts = contacts.map((contact) => {
+      if (contact.id === contactId && contact.todos) {
+        const updatedTodos = contact.todos.map((todo) =>
+          todo.id === todoId ? { ...todo, completed } : todo
+        );
+        return {
+          ...contact,
+          todos: updatedTodos,
+        };
+      }
+      return contact;
+    });
+
+    setContacts(updatedContacts);
   };
 
   const handleSort = (key: string, direction: "asc" | "desc" | "default") => {
@@ -317,7 +436,6 @@ const Index = () => {
             <div className="flex gap-2">
               <Button
                 variant="outline"
-                size="sm"
                 onClick={() => setIsTagManagementOpen(true)}
                 className="gap-1"
               >
@@ -366,6 +484,7 @@ const Index = () => {
                 onViewNotes={handleViewNotes}
                 selectedContacts={selectedContacts}
                 onSelectContact={handleSelectContact}
+                onOpenTodoPanel={handleOpenTodoPanel}
               />
             </div>
           )}
@@ -403,6 +522,15 @@ const Index = () => {
       <TagManagementModal
         isOpen={isTagManagementOpen}
         onClose={() => setIsTagManagementOpen(false)}
+      />
+
+      {/* Todo Panel */}
+      <TodoPanel
+        open={isTodoPanelOpen}
+        onClose={() => setIsTodoPanelOpen(false)}
+        contact={contactForTodos}
+        onTodoAdded={handleTodoAdded}
+        onTodoCompleted={handleTodoCompleted}
       />
 
       {/* Delete confirmation dialog */}

@@ -118,6 +118,9 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
             {renderSortIndicator("dateOfContact")}
           </div>
         </TableHead>
+        <TableHead>
+          <div className="flex items-center ml-4">To-do</div>
+        </TableHead>
         <TableHead
           className="cursor-pointer"
           onClick={() => handleSortClick("status")}
@@ -127,7 +130,6 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
             {renderSortIndicator("status")}
           </div>
         </TableHead>
-        <TableHead className="w-[80px]">Notes</TableHead>
       </TableRow>
     </TableHeader>
   );

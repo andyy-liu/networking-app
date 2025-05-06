@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Contact, ContactStatus } from "@/lib/types";
+import { Contact, ContactStatus, Todo } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
-import { StickyNote } from "lucide-react";
+import { StickyNote, CheckCircle2, Circle, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { getStatusColor, getTagColor, formatDate } from "./contact-utils";
@@ -40,6 +40,7 @@ interface ContactTableRowProps {
   onViewNotes: (contact: Contact) => void;
   isSelected: boolean;
   onSelectContact: (contact: Contact, isSelected: boolean) => void;
+  onOpenTodoPanel?: (contact: Contact) => void;
 }
 
 export const ContactTableRow: React.FC<ContactTableRowProps> = ({
@@ -49,6 +50,7 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
   onViewNotes,
   isSelected,
   onSelectContact,
+  onOpenTodoPanel,
 }) => {
   // State for each editable field
   const [name, setName] = useState(contact.name);
@@ -142,19 +144,60 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
     }
   };
 
+  const handleOpenTodoPanel = () => {
+    if (onOpenTodoPanel) {
+      onOpenTodoPanel(contact);
+    }
+  };
+
+  // Find the most recent incomplete todo
+  const getLatestTodo = (): Todo | null => {
+    if (!contact.todos || contact.todos.length === 0) {
+      return null;
+    }
+
+    // First look for incomplete todos
+    const incompleteTodos = contact.todos.filter((todo) => !todo.completed);
+
+    if (incompleteTodos.length > 0) {
+      // Sort by due date (if available) or creation date
+      return incompleteTodos.sort((a, b) => {
+        // If both have due dates, compare them
+        if (a.dueDate && b.dueDate) {
+          return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+        }
+        // If only one has a due date, it comes first
+        if (a.dueDate) return -1;
+        if (b.dueDate) return 1;
+        // If neither has due dates, sort by created date (newest first)
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      })[0]; // Get the first one (earliest due date or most recent)
+    }
+
+    // If no incomplete todos, return the most recently completed one
+    return contact.todos.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )[0];
+  };
+
+  const latestTodo = getLatestTodo();
+
   return (
-    <TableRow className="group !h-7 max-h-7">
-      <TableCell className="w-10 !py-0 px-4">
+    <TableRow>
+      <TableCell className="w-10 px-4">
         <Checkbox
           checked={isSelected}
           onCheckedChange={(checked) => {
             onSelectContact(contact, !!checked);
           }}
           aria-label={`Select ${contact.name}`}
-          className="h-4 w-4"
+          className="flex h-4 w-4"
         />
       </TableCell>
-      <TableCell className="!py-0 px-4">
+      <TableCell>
         <Input
           ref={nameInputRef}
           value={name}
@@ -164,10 +207,10 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
               handleUpdate({ name });
             }
           }}
-          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
         />
       </TableCell>
-      <TableCell className="!py-0 px-4">
+      <TableCell>
         <Input
           ref={emailInputRef}
           value={email}
@@ -180,7 +223,7 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
           className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
         />
       </TableCell>
-      <TableCell className="!py-0 px-4">
+      <TableCell>
         <Input
           ref={roleInputRef}
           value={role}
@@ -194,7 +237,7 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
           placeholder="-"
         />
       </TableCell>
-      <TableCell className="!py-0 px-4">
+      <TableCell>
         <Input
           ref={companyInputRef}
           value={company}
@@ -208,9 +251,9 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
           placeholder="-"
         />
       </TableCell>
-      <TableCell className="!py-0 px-4">
+      <TableCell className="py-2">
         <Popover>
-          <div className="flex flex-wrap gap-1 min-h-[20px] h-6 group">
+          <div className="flex flex-wrap gap-1 min-h-[24px] group">
             {tags.map((tag) => (
               <Badge
                 key={tag}
@@ -236,22 +279,19 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
                 </button>
               </Badge>
             ))}
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex">
-              <PopoverTrigger asChild>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-7 w-7 p-0 hover:bg-gray-100"
-                  title="Add Tags"
-                >
-                  <Plus
-                    color="black"
-                    className="h-4 w-4"
-                  />
-                </Button>
-              </PopoverTrigger>
-            </div>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="h-7 w-7 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <Plus
+                  color="black"
+                  className="h-4 w-4"
+                />
+              </Button>
+            </PopoverTrigger>
           </div>
           <PopoverContent
             className="w-[200px] p-2"
@@ -274,7 +314,6 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
                   size="sm"
                   onClick={handleAddNewTag}
                   disabled={!newTagInput.trim()}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   Add
                 </Button>
@@ -304,124 +343,83 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
       <TableCell>
         <Popover>
           <PopoverTrigger asChild>
-            <Button
-              variant="ghost"
+            <button
+              type="button"
               className={cn(
-                "w-half justify-start text-left font-normal hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900",
-                !date && "text-muted-foreground"
+                "ml-4 flex h-6 items-center justify-center gap-1 rounded-md border bg-background px-2 text-sm",
+                "hover:bg-gray-100 dark:hover:bg-gray-800"
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4 hover:text-gray-900" />
-              {/* Display manually using our tracked date parts */}
-              {selectedDateDisplay ? (
-                `${new Date(0, selectedDateDisplay.month - 1).toLocaleString(
-                  "default",
-                  { month: "short" }
-                )} ${selectedDateDisplay.day}, ${selectedDateDisplay.year}`
-              ) : (
-                <span>Pick a date</span>
-              )}
-            </Button>
+              <CalendarIcon className="h-3 w-3" />
+              <span>{format(date, "MMM d, yyyy")}</span>
+            </button>
           </PopoverTrigger>
-          <PopoverContent
-            className="w-auto p-0"
-            align="start"
-          >
+          <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
               selected={date}
-              onSelect={(newDate) => {
-                if (newDate) {
-                  // Extract the exact parts we want to display
-                  const year = newDate.getFullYear();
-                  const month = newDate.getMonth() + 1; // Convert from 0-indexed
-                  const day = newDate.getDate();
+              onSelect={(date) => {
+                if (date) {
+                  setDate(date);
+                  // Build ISO date string: YYYY-MM-DD
+                  const year = date.getFullYear();
+                  // Month is 0-based, so add 1 and pad with leading 0 if needed
+                  const month = String(date.getMonth() + 1).padStart(2, "0");
+                  const day = String(date.getDate()).padStart(2, "0");
+                  const formattedDate = `${year}-${month}-${day}`;
 
-                  // Save these parts for direct display
-                  setSelectedDateDisplay({ year, month, day });
-
-                  // Create date string manually for database
-                  const monthStr = String(month).padStart(2, "0");
-                  const dayStr = String(day).padStart(2, "0");
-                  const newDateStr = `${year}-${monthStr}-${dayStr}`;
-
-                  // Update the calendar component date as well
-                  setDate(newDate);
-
-                  // Store in database
-                  handleUpdate({
-                    dateOfContact: newDateStr,
-                  });
+                  handleUpdate({ dateOfContact: formattedDate });
                 }
               }}
               initialFocus
-              className="[&_.rdp-day_button:focus]:bg-outreach-blue/90 [&_.rdp-day_button:hover]:bg-outreach-blue/90 [&_.rdp-day_button.rdp-day_selected]:bg-outreach-blue [&_.rdp-day_button.rdp-day_selected:hover]:bg-outreach-blue/90"
             />
           </PopoverContent>
         </Popover>
       </TableCell>
       <TableCell>
-        <Select
-          value={status}
-          onValueChange={(value: ContactStatus) => {
-            if (value !== contact.status) {
+        <button
+          className="w-full flex items-center gap-2 h-6 px-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer"
+          onClick={handleOpenTodoPanel}
+        >
+          <ClipboardList className="h-4 w-4 text-blue-500" />
+          {latestTodo ? (
+            <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+              {latestTodo.completed ? (
+                <span className="text-gray-400 line-through">
+                  {latestTodo.task}
+                </span>
+              ) : (
+                <span>{latestTodo.task}</span>
+              )}
+            </div>
+          ) : (
+            <span className="text-gray-400">Add to-do</span>
+          )}
+        </button>
+      </TableCell>
+      <TableCell className="!py-2 px-4 text-center">
+        <div className="ml-4">
+          <Select
+            value={status}
+            onValueChange={(value: ContactStatus) => {
               setStatus(value);
               handleUpdate({ status: value });
-            }
-          }}
-        >
-          <SelectTrigger className="w-full border-0 focus:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900">
-            <SelectValue>
-              <Badge
-                variant="outline"
-                className={getStatusColor(status)}
-              >
-                {status}
-              </Badge>
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="[&_[data-highlighted]]:bg-outreach-blue [&_[data-highlighted]]:text-white">
-            <SelectItem value="Reached Out">
-              <Badge
-                variant="outline"
-                className={getStatusColor("Reached Out")}
-              >
-                Reached Out
-              </Badge>
-            </SelectItem>
-            <SelectItem value="Responded">
-              <Badge
-                variant="outline"
-                className={getStatusColor("Responded")}
-              >
-                Responded
-              </Badge>
-            </SelectItem>
-            <SelectItem value="Chatted">
-              <Badge
-                variant="outline"
-                className={getStatusColor("Chatted")}
-              >
-                Chatted
-              </Badge>
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      </TableCell>
-      <TableCell className="!py-0 px-4">
-        <div className="flex space-x-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onViewNotes(contact)}
-            title="Contact notes"
-            className="hover:bg-gray-100 dark:hover:bg-gray-800"
+            }}
           >
-            <StickyNote
-              color="black"
-              className="h-4 w-4"
-            />
-          </Button>
+            <SelectTrigger
+              className={cn(
+                "h-6 border-none w-[140px] focus:ring-0",
+                getStatusColor(status)
+              )}
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Reached Out">Reached Out</SelectItem>
+              <SelectItem value="Responded">Responded</SelectItem>
+              <SelectItem value="Chatted">Chatted</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </TableCell>
     </TableRow>
