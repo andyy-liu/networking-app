@@ -8,6 +8,7 @@ import GroupContacts from "./pages/GroupContacts";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import { Settings } from "./pages/Settings";
+import Todos from "./pages/Todos";
 import { AuthProvider } from "@/context/AuthContext";
 import { TagProvider } from "@/context/TagContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
@@ -41,6 +42,10 @@ const App = () => (
                 <Route
                   path="/settings"
                   element={<Settings />}
+                />
+                <Route
+                  path="/todos"
+                  element={<Todos />}
                 />
                 {/* Add other protected routes here */}
               </Route>

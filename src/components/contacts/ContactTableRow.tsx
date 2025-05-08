@@ -23,14 +23,7 @@ import {
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import { X, Plus, Check } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import { useTags } from "@/context/TagContext";
 
 interface ContactTableRowProps {
@@ -57,22 +50,11 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
   const [email, setEmail] = useState(contact.email);
   const [role, setRole] = useState(contact.role || "");
   const [company, setCompany] = useState(contact.company || "");
-
-  // Manual tracking of the selected date for display
-  const [selectedDateDisplay, setSelectedDateDisplay] = useState(() => {
-    // Extract the parts directly from the string for display
-    const [year, month, day] = contact.dateOfContact.split("-").map(Number);
-    return { year, month, day };
-  });
-
-  // Regular date object for the calendar component
   const [date, setDate] = useState<Date>(() => {
-    const [year, month, day] = contact.dateOfContact.split("-").map(Number);
-    return new Date(year, month - 1, day);
+    return new Date(`${contact.dateOfContact}T00:00:00`);
   });
   const [status, setStatus] = useState<ContactStatus>(contact.status);
   const [tags, setTags] = useState<string[]>(contact.tags);
-  const [isTagPopoverOpen, setIsTagPopoverOpen] = useState(false);
   const [newTagInput, setNewTagInput] = useState("");
 
   // Refs for handling blur events
@@ -90,30 +72,18 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
     setEmail(contact.email);
     setRole(contact.role || "");
     setCompany(contact.company || "");
-
-    // Update both date representations
-    const [year, month, day] = contact.dateOfContact.split("-").map(Number);
-    setSelectedDateDisplay({ year, month, day });
-    setDate(new Date(year, month - 1, day));
-
+    setDate(new Date(`${contact.dateOfContact}T00:00:00`));
     setStatus(contact.status);
     setTags(contact.tags);
   }, [contact]);
 
   // Handle field updates
   const handleUpdate = (updates: Partial<Contact>) => {
-    // Check if any values have actually changed
-    const hasChanges = Object.entries(updates).some(([key, value]) => {
-      return contact[key as keyof Contact] !== value;
-    });
-
     // Only trigger update if something changed
-    if (hasChanges) {
-      onUpdateContact({
-        ...contact,
-        ...updates,
-      });
-    }
+    onUpdateContact({
+      ...contact,
+      ...updates,
+    });
   };
 
   const handleTagManagement = (selectedTag: string) => {
@@ -124,11 +94,8 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
       updatedTags = [...tags, selectedTag];
     }
 
-    // Only update if tags actually changed
-    if (JSON.stringify(updatedTags) !== JSON.stringify(tags)) {
-      setTags(updatedTags);
-      handleUpdate({ tags: updatedTags });
-    }
+    setTags(updatedTags);
+    handleUpdate({ tags: updatedTags });
   };
 
   const handleAddNewTag = () => {
@@ -351,11 +318,6 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
               )}
             >
               <CalendarIcon className="h-3 w-3" />
-
-              {/* Small screens: only “May 8” */}
-              <span className="inline sm:hidden">{format(date, "MMM d")}</span>
-
-              {/* sm+ screens: full “May 8, 2025” */}
               <span className="hidden sm:inline">
                 {format(date, "MMM d, yyyy")}
               </span>
@@ -365,16 +327,10 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
             <Calendar
               mode="single"
               selected={date}
-              onSelect={(date) => {
-                if (date) {
-                  setDate(date);
-                  // Build ISO date string: YYYY-MM-DD
-                  const year = date.getFullYear();
-                  // Month is 0-based, so add 1 and pad with leading 0 if needed
-                  const month = String(date.getMonth() + 1).padStart(2, "0");
-                  const day = String(date.getDate()).padStart(2, "0");
-                  const formattedDate = `${year}-${month}-${day}`;
-
+              onSelect={(newDate) => {
+                if (newDate) {
+                  setDate(newDate);
+                  const formattedDate = format(newDate, "yyyy-MM-dd");
                   handleUpdate({ dateOfContact: formattedDate });
                 }
               }}

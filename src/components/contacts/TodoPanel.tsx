@@ -39,6 +39,7 @@ import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
+import { useTodos } from "@/hooks/useTodos";
 
 interface ContactNote {
   id: string;
@@ -69,9 +70,21 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
   const { user } = useAuth();
   const [newTodo, setNewTodo] = useState("");
   const [dueDate, setDueDate] = useState<Date | null>(null);
-  const [todos, setTodos] = useState<Todo[]>([]);
   const [note, setNote] = useState<ContactNote | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const {
+    todos,
+    loading: todosLoading,
+    fetchTodos,
+    addTodo,
+    toggleTodoCompletion,
+    deleteTodo,
+  } = useTodos({
+    contactId: contact?.id,
+    onTodoAdded,
+    onTodoCompleted,
+  });
 
   const editor = useEditor({
     extensions: [StarterKit, Bold, Italic, Underline, Link],
@@ -84,45 +97,6 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
       fetchNote();
     }
   }, [open, contact, user]);
-
-  const fetchTodos = async () => {
-    if (!contact || !user) return;
-
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from("contact_todos")
-        .select("*")
-        .eq("contact_id", contact.id)
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        throw error;
-      }
-
-      // Transform database data to match our Todo type
-      const transformedTodos: Todo[] = data.map((item) => ({
-        id: item.id,
-        contactId: item.contact_id,
-        task: item.task,
-        dueDate: item.due_date,
-        completed: item.completed,
-        createdAt: item.created_at,
-      }));
-
-      setTodos(transformedTodos);
-    } catch (error) {
-      console.error("Error fetching todos:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load to-dos",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const fetchNote = async () => {
     if (!contact || !user) return;
@@ -159,116 +133,20 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
     }
   };
 
-  const addTodo = async () => {
-    if (!newTodo.trim() || !contact || !user) return;
+  const handleAddTodo = async () => {
+    if (!newTodo.trim() || !contact || !dueDate) {
+      toast({
+        title: "Error",
+        description: "Please enter a task and select a due date",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from("contact_todos")
-        .insert({
-          contact_id: contact.id,
-          user_id: user.id,
-          task: newTodo,
-          due_date: dueDate ? format(dueDate, "yyyy-MM-dd") : null,
-          completed: false,
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      // Create Todo object from the returned data
-      const newTodoItem: Todo = {
-        id: data.id,
-        contactId: data.contact_id,
-        task: data.task,
-        dueDate: data.due_date,
-        completed: data.completed,
-        createdAt: data.created_at,
-      };
-
-      // Update local state
-      setTodos([newTodoItem, ...todos]);
-
-      // Call the parent callback to update the main view
-      onTodoAdded(contact.id, newTodoItem);
-
-      // Reset form
+    const added = await addTodo(newTodo, dueDate);
+    if (added) {
       setNewTodo("");
       setDueDate(null);
-
-      toast({
-        title: "To-do added",
-        description: "New to-do has been added successfully",
-      });
-    } catch (error) {
-      console.error("Error adding todo:", error);
-      toast({
-        title: "Error",
-        description: "Failed to add to-do",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const toggleTodoCompletion = async (
-    todoId: string,
-    currentStatus: boolean
-  ) => {
-    if (!user || !contact) return;
-
-    const newStatus = !currentStatus;
-
-    try {
-      const { error } = await supabase
-        .from("contact_todos")
-        .update({ completed: newStatus })
-        .eq("id", todoId)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      // Update local state
-      const updatedTodos = todos.map((todo) =>
-        todo.id === todoId ? { ...todo, completed: newStatus } : todo
-      );
-
-      setTodos(updatedTodos);
-
-      // Call the parent callback
-      onTodoCompleted(contact.id, todoId, newStatus);
-    } catch (error) {
-      console.error("Error updating todo:", error);
-      toast({
-        title: "Error",
-        description: "Failed to update to-do status",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const deleteTodo = async (todoId: string) => {
-    if (!user) return;
-    try {
-      const { error } = await supabase
-        .from("contact_todos")
-        .delete()
-        .eq("id", todoId)
-        .eq("user_id", user.id);
-      if (error) throw error;
-      // remove it locally
-      setTodos((prev) => prev.filter((t) => t.id !== todoId));
-      toast({ title: "Deleted", description: "To‑do removed" });
-    } catch (err) {
-      console.error("Delete error:", err);
-      toast({
-        title: "Error",
-        description: "Could not delete to‑do",
-        variant: "destructive",
-      });
     }
   };
 
@@ -352,12 +230,12 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-[140px] justify-start text-left font-normal",
+                        "w-[160px] justify-start text-left font-normal pl-3",
                         !dueDate && "text-muted-foreground"
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {dueDate ? format(dueDate, "PPP") : "Due date"}
+                      <CalendarIcon className="h-4 w-4" />
+                      {dueDate ? format(dueDate, "PPP") : "Select due date*"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
@@ -370,12 +248,15 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
                   </PopoverContent>
                 </Popover>
                 <Button
-                  onClick={addTodo}
-                  disabled={!newTodo.trim() || loading}
+                  onClick={handleAddTodo}
+                  disabled={!newTodo.trim() || !dueDate || loading}
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
+              <p className="text-xs text-muted-foreground">
+                * Due date is required
+              </p>
             </div>
 
             {/* To-do list section */}
@@ -414,12 +295,16 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
                         <p className="text-sm">{todo.task}</p>
                         {todo.dueDate && (
                           <p className="text-xs text-muted-foreground">
-                            Due: {format(new Date(todo.dueDate), "PP")}
+                            Due:{" "}
+                            {format(
+                              new Date(`${todo.dueDate}T00:00:00`),
+                              "MMM d, yyyy"
+                            )}
                           </p>
                         )}
                       </div>
 
-                      {/* delete “X” */}
+                      {/* delete "X" */}
                       <Button
                         variant="ghost"
                         size="icon"

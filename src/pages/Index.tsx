@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { ContactTable } from "@/components/contacts/ContactTable";
@@ -8,10 +7,7 @@ import { NewContactModal } from "@/components/contacts/NewContactModal";
 import { EditContactModal } from "@/components/contacts/EditContactModal";
 import { ContactNotesModal } from "@/components/contacts/ContactNotesModal";
 import { AddToGroupModal } from "@/components/contacts/AddToGroupModal";
-import { Contact, ContactTag, Todo } from "@/lib/types";
-import { toast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/context/AuthContext";
+import { Contact, Todo } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { UserPlus, Trash2, Tag } from "lucide-react";
 import {
@@ -26,198 +22,48 @@ import {
 } from "@/components/ui/alert-dialog";
 import { TagManagementModal } from "@/components/contacts/TagManagementModal";
 import { TodoPanel } from "@/components/contacts/TodoPanel";
+import { useContacts } from "@/hooks/useContacts";
+import { useContactFilters } from "@/hooks/useContactFilters";
+import { useTodos } from "@/hooks/useTodos";
 
 const Index = () => {
-  const { user } = useAuth();
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  // Contact management
+  const {
+    contacts,
+    loading,
+    selectedContacts,
+    addContact,
+    updateContact,
+    deleteContacts,
+    selectContact,
+  } = useContacts();
+
+  // Sorting and filtering
+  const {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    handleSort,
+    handleFilterByTag,
+    filteredAndSortedContacts,
+  } = useContactFilters(contacts);
+
+  // Todo management
+  const { handleTodoAdded, handleTodoCompleted } = useTodos();
+
+  // Modal states
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [isAddToGroupModalOpen, setIsAddToGroupModalOpen] = useState(false);
-  const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
-  const [contactForNotes, setContactForNotes] = useState<Contact | null>(null);
-  const [sortKey, setSortKey] = useState<string>("");
-  const [sortDirection, setSortDirection] = useState<
-    "asc" | "desc" | "default"
-  >("default");
-  const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(
-    null
-  );
-  const [loading, setLoading] = useState(true);
-  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isTagManagementOpen, setIsTagManagementOpen] = useState(false);
   const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(false);
+
+  // Selected contact states
+  const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
+  const [contactForNotes, setContactForNotes] = useState<Contact | null>(null);
   const [contactForTodos, setContactForTodos] = useState<Contact | null>(null);
-
-  // Fetch contacts on component mount and when user changes
-  useEffect(() => {
-    if (user) {
-      fetchContacts();
-    } else {
-      setContacts([]);
-      setLoading(false);
-    }
-  }, [user]);
-
-  const fetchContacts = async () => {
-    if (!user) return;
-
-    setLoading(true);
-    try {
-      // Fetch contacts
-      const { data, error } = await supabase
-        .from("contacts")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) {
-        throw error;
-      }
-
-      // Transform database data to match our Contact type
-      const transformedContacts: Contact[] = data.map((item) => ({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        role: item.role || "",
-        company: item.company || "",
-        tags: item.tags as ContactTag[],
-        dateOfContact: item.dateofcontact,
-        status: item.status as Contact["status"],
-        todos: [], // Initialize with empty todos array
-      }));
-
-      setContacts(transformedContacts);
-
-      // After setting contacts, fetch todos if there are any contacts
-      if (transformedContacts.length > 0) {
-        fetchTodos(transformedContacts);
-      }
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load your contacts",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchTodos = async (contactsList: Contact[]) => {
-    if (!user) return;
-
-    try {
-      // Get contact IDs
-      const contactIds = contactsList.map((contact) => contact.id);
-
-      // Fetch todos
-      const { data, error } = await supabase
-        .from("contact_todos")
-        .select("*")
-        .eq("user_id", user.id)
-        .in("contact_id", contactIds);
-
-      if (error) {
-        console.error("Error fetching todos:", error);
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        return; // No todos to process
-      }
-
-      // Update contacts with their todos
-      const updatedContacts = contactsList.map((contact) => {
-        const contactTodos = data
-          .filter(
-            (todo: { contact_id: string }) => todo.contact_id === contact.id
-          )
-          .map(
-            (todo: {
-              created_at: string;
-              completed: boolean;
-              due_date: string;
-              id: string;
-              contact_id: string;
-              task: string;
-            }) => ({
-              id: todo.id,
-              contactId: todo.contact_id,
-              task: todo.task,
-              dueDate: todo.due_date as string,
-              completed: todo.completed as boolean,
-              createdAt: todo.created_at as string,
-            })
-          );
-
-        return {
-          ...contact,
-          todos: contactTodos,
-        };
-      });
-
-      setContacts(updatedContacts);
-    } catch (err) {
-      console.error("Error in fetchTodos:", err);
-    }
-  };
-
-  const handleAddContact = async (newContactData: Omit<Contact, "id">) => {
-    if (!user) return;
-
-    try {
-      // Insert into Supabase
-      const { data, error } = await supabase
-        .from("contacts")
-        .insert({
-          user_id: user.id,
-          name: newContactData.name,
-          email: newContactData.email,
-          role: newContactData.role,
-          company: newContactData.company,
-          tags: newContactData.tags,
-          dateofcontact: newContactData.dateOfContact,
-          status: newContactData.status,
-        })
-        .select()
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      // Create Contact object from the returned data
-      const newContact: Contact = {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        role: data.role || "",
-        company: data.company || "",
-        tags: data.tags as ContactTag[],
-        dateOfContact: data.dateofcontact,
-        status: data.status as Contact["status"],
-        todos: [],
-      };
-
-      // Update local state
-      setContacts([newContact, ...contacts]);
-
-      toast({
-        title: "Contact added",
-        description: `${newContact.name} has been added to your contacts.`,
-      });
-    } catch (error) {
-      console.error("Error adding contact:", error);
-      toast({
-        title: "Error",
-        description: "Failed to add the contact",
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleEditContact = (contact: Contact) => {
     setContactToEdit(contact);
@@ -234,191 +80,15 @@ const Index = () => {
     setIsTodoPanelOpen(true);
   };
 
-  const handleUpdateContact = async (updatedContact: Contact) => {
-    if (!user) return;
-
-    try {
-      // Update in Supabase
-      const { error } = await supabase
-        .from("contacts")
-        .update({
-          name: updatedContact.name,
-          email: updatedContact.email,
-          role: updatedContact.role,
-          company: updatedContact.company,
-          tags: updatedContact.tags,
-          dateofcontact: updatedContact.dateOfContact,
-          status: updatedContact.status,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", updatedContact.id)
-        .eq("user_id", user.id);
-
-      if (error) {
-        throw error;
-      }
-
-      // Update local state
-      const updatedContacts = contacts.map((contact) =>
-        contact.id === updatedContact.id
-          ? {
-              ...updatedContact,
-              // Preserve todos which aren't part of the update
-              todos: contact.todos || [],
-            }
-          : contact
-      );
-
-      setContacts(updatedContacts);
-
-      toast({
-        title: "Contact updated",
-        description: `${updatedContact.name} has been updated.`,
-      });
-    } catch (error) {
-      console.error("Error updating contact:", error);
-      toast({
-        title: "Error",
-        description: "Failed to update the contact",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleTodoAdded = (contactId: string, todo: Todo) => {
-    // Update the contacts array with the new todo
-    const updatedContacts = contacts.map((contact) => {
-      if (contact.id === contactId) {
-        const todos = contact.todos || [];
-        return {
-          ...contact,
-          todos: [todo, ...todos],
-        };
-      }
-      return contact;
-    });
-
-    setContacts(updatedContacts);
-  };
-
-  const handleTodoCompleted = (
-    contactId: string,
-    todoId: string,
-    completed: boolean
-  ) => {
-    // Update the contacts array with the updated todo status
-    const updatedContacts = contacts.map((contact) => {
-      if (contact.id === contactId && contact.todos) {
-        const updatedTodos = contact.todos.map((todo) =>
-          todo.id === todoId ? { ...todo, completed } : todo
-        );
-        return {
-          ...contact,
-          todos: updatedTodos,
-        };
-      }
-      return contact;
-    });
-
-    setContacts(updatedContacts);
-  };
-
-  const handleSort = (key: string, direction: "asc" | "desc" | "default") => {
-    setSortKey(key);
-    setSortDirection(direction);
-  };
-
-  const handleFilterByTag = (tag: string | null) => {
-    setActiveTagFilter(tag);
-  };
-
-  const handleSelectContact = (contact: Contact, isSelected: boolean) => {
-    if (isSelected) {
-      setSelectedContacts((prev) => [...prev, contact]);
-    } else {
-      setSelectedContacts((prev) => prev.filter((c) => c.id !== contact.id));
-    }
+  const handleDeleteSelectedContacts = async () => {
+    if (selectedContacts.length === 0) return;
+    await deleteContacts(selectedContacts.map((c) => c.id));
+    setIsDeleteDialogOpen(false);
   };
 
   const handleGroupAdded = () => {
-    // Clear selections after adding to group
-    setSelectedContacts([]);
-    // Refresh sidebar groups
-    // The sidebar component will refresh its own data on next render
+    setIsAddToGroupModalOpen(false);
   };
-
-  const handleDeleteSelectedContacts = async () => {
-    if (!user || selectedContacts.length === 0) return;
-
-    try {
-      const contactIds = selectedContacts.map((contact) => contact.id);
-
-      // Delete contacts from Supabase
-      const { error } = await supabase
-        .from("contacts")
-        .delete()
-        .in("id", contactIds)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      // Update local state
-      setContacts(
-        contacts.filter((contact) => !contactIds.includes(contact.id))
-      );
-      setSelectedContacts([]);
-
-      toast({
-        title: "Contacts deleted",
-        description: `${contactIds.length} contact(s) have been deleted.`,
-      });
-    } catch (error) {
-      console.error("Error deleting contacts:", error);
-      toast({
-        title: "Error",
-        description: "Failed to delete contacts",
-        variant: "destructive",
-      });
-    } finally {
-      setIsDeleteDialogOpen(false);
-    }
-  };
-
-  // Apply sorting and filtering
-  const filteredAndSortedContacts = useMemo(() => {
-    // First apply tag filtering
-    const filtered = activeTagFilter
-      ? contacts.filter((contact) => contact.tags.includes(activeTagFilter))
-      : contacts;
-
-    // Then apply sorting
-    if (sortKey && sortDirection !== "default") {
-      return [...filtered].sort((a, b) => {
-        const aValue = a[sortKey as keyof Contact];
-        const bValue = b[sortKey as keyof Contact];
-
-        // Handle different types of values
-        if (typeof aValue === "string" && typeof bValue === "string") {
-          // For dates, convert to timestamp first
-          if (sortKey === "dateOfContact") {
-            const aDate = new Date(aValue).getTime();
-            const bDate = new Date(bValue).getTime();
-            return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
-          }
-
-          // For normal strings
-          return sortDirection === "asc"
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue);
-        }
-
-        // Fallback for non-string values (though we shouldn't have any)
-        return 0;
-      });
-    }
-
-    return filtered;
-  }, [contacts, sortKey, sortDirection, activeTagFilter]);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -480,10 +150,10 @@ const Index = () => {
                 onFilterByTag={handleFilterByTag}
                 activeTagFilter={activeTagFilter}
                 onEditContact={handleEditContact}
-                onUpdateContact={handleUpdateContact}
+                onUpdateContact={updateContact}
                 onViewNotes={handleViewNotes}
                 selectedContacts={selectedContacts}
-                onSelectContact={handleSelectContact}
+                onSelectContact={selectContact}
                 onOpenTodoPanel={handleOpenTodoPanel}
               />
             </div>
@@ -495,13 +165,13 @@ const Index = () => {
       <NewContactModal
         isOpen={isNewModalOpen}
         onClose={() => setIsNewModalOpen(false)}
-        onSubmit={handleAddContact}
+        onSubmit={addContact}
       />
 
       <EditContactModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        onSubmit={handleUpdateContact}
+        onSubmit={updateContact}
         contact={contactToEdit}
       />
 
@@ -518,13 +188,11 @@ const Index = () => {
         onGroupAdded={handleGroupAdded}
       />
 
-      {/* Tag Management Modal */}
       <TagManagementModal
         isOpen={isTagManagementOpen}
         onClose={() => setIsTagManagementOpen(false)}
       />
 
-      {/* Todo Panel */}
       <TodoPanel
         open={isTodoPanelOpen}
         onClose={() => setIsTodoPanelOpen(false)}
@@ -533,7 +201,6 @@ const Index = () => {
         onTodoCompleted={handleTodoCompleted}
       />
 
-      {/* Delete confirmation dialog */}
       <AlertDialog
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}

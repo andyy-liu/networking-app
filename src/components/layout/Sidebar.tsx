@@ -10,6 +10,8 @@ import {
   Users,
   ChevronLeft,
   ChevronRight,
+  Home,
+  ClipboardList,
 } from "lucide-react";
 import { ContactGroup } from "@/lib/types";
 import { supabase } from "@/integrations/supabase/client";
@@ -35,16 +37,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
 
   const navItems: NavItem[] = [
     {
-      icon: LayoutDashboard,
-      label: "Dashboard",
+      icon: Home,
+      label: "Contacts",
       isActive: location.pathname === "/",
       path: "/",
     },
     {
-      icon: Bell,
-      label: "Reminders",
-      isActive: location.pathname === "/reminders",
-      path: "/reminders",
+      icon: ClipboardList,
+      label: "Todos",
+      isActive: location.pathname === "/todos",
+      path: "/todos",
+    },
+    {
+      icon: Users,
+      label: "Groups",
+      isActive: location.pathname.startsWith("/groups"),
+      path: "/groups",
     },
     {
       icon: Settings,
