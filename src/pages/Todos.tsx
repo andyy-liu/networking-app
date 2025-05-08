@@ -31,7 +31,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { format } from "date-fns";
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  isWithinInterval,
+} from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 
@@ -44,6 +51,12 @@ const Todos = () => {
   const [newTask, setNewTask] = useState("");
   const [selectedContactId, setSelectedContactId] = useState<string>("");
   const [dueDate, setDueDate] = useState<Date | null>(null);
+  const [completionFilter, setCompletionFilter] = useState<
+    "all" | "completed" | "not-completed"
+  >("all");
+  const [dueDateFilter, setDueDateFilter] = useState<
+    "all" | "this-week" | "this-month"
+  >("all");
 
   const {
     todos,
@@ -51,8 +64,38 @@ const Todos = () => {
     fetchTodos,
     toggleTodoCompletion,
     updateTodoDueDate,
-    addTodo,
-  } = useTodos({ contactId: selectedContactId });
+  } = useTodos();
+
+  const { addTodo: addTodoForContact } = useTodos({
+    contactId: selectedContactId,
+  });
+
+  const filteredTodos = todos.filter((todo) => {
+    // First filter by completion status
+    if (completionFilter === "completed" && !todo.completed) return false;
+    if (completionFilter === "not-completed" && todo.completed) return false;
+
+    // Then filter by due date
+    if (dueDateFilter === "all") return true;
+    if (!todo.dueDate) return false;
+
+    const todoDate = new Date(todo.dueDate);
+    const now = new Date();
+
+    if (dueDateFilter === "this-week") {
+      const weekStart = startOfWeek(now);
+      const weekEnd = endOfWeek(now);
+      return isWithinInterval(todoDate, { start: weekStart, end: weekEnd });
+    }
+
+    if (dueDateFilter === "this-month") {
+      const monthStart = startOfMonth(now);
+      const monthEnd = endOfMonth(now);
+      return isWithinInterval(todoDate, { start: monthStart, end: monthEnd });
+    }
+
+    return true;
+  });
 
   useEffect(() => {
     if (user) {
@@ -124,7 +167,7 @@ const Todos = () => {
       return;
     }
 
-    const added = await addTodo(newTask, dueDate);
+    const added = await addTodoForContact(newTask, dueDate);
     if (added) {
       setNewTask("");
       setSelectedContactId("");
@@ -140,9 +183,39 @@ const Todos = () => {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 p-6 bg-gray-50 dark:bg-gray-800 overflow-auto">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-2xl font-bold">All Todos</h1>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold">All Todos</h1>
+            <div className="flex items-center gap-2">
+              <Select
+                value={completionFilter}
+                onValueChange={(value: "all" | "completed" | "not-completed") =>
+                  setCompletionFilter(value)
+                }
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Tasks</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="not-completed">Not Completed</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select
+                value={dueDateFilter}
+                onValueChange={(value: "all" | "this-week" | "this-month") =>
+                  setDueDateFilter(value)
+                }
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by due date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Due Dates</SelectItem>
+                  <SelectItem value="this-week">Due This Week</SelectItem>
+                  <SelectItem value="this-month">Due This Month</SelectItem>
+                </SelectContent>
+              </Select>
               <Button onClick={() => setIsAddTaskModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add New Task
@@ -156,7 +229,7 @@ const Todos = () => {
           ) : (
             <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
               <TodoTable
-                todos={todos}
+                todos={filteredTodos}
                 contacts={contacts}
                 onToggleCompletion={toggleTodoCompletion}
                 onUpdateDueDate={updateTodoDueDate}

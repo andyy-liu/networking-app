@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,7 +8,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Circle, CalendarIcon, ArrowUpDown } from "lucide-react";
+import {
+  CheckCircle2,
+  Circle,
+  CalendarIcon,
+  ArrowDown,
+  ArrowUp,
+} from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Todo } from "@/lib/types";
@@ -19,7 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 
-type SortField = "status" | "task" | "contact" | "dueDate" | null;
+type SortField = "status" | "contact" | "dueDate" | null;
 type SortOrder = "asc" | "desc" | null;
 
 interface TodoTableProps {
@@ -46,53 +52,59 @@ export const TodoTable: React.FC<TodoTableProps> = ({
   };
 
   const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      // Cycle through: asc -> desc -> null
-      if (sortOrder === "asc") {
+    // Cycle through: null -> asc -> desc -> null
+    if (sortField !== field) {
+      setSortField(field);
+      setSortOrder("asc");
+    } else {
+      if (sortOrder === null) {
+        setSortOrder("asc");
+      } else if (sortOrder === "asc") {
         setSortOrder("desc");
-      } else if (sortOrder === "desc") {
+      } else {
         setSortField(null);
         setSortOrder(null);
       }
-    } else {
-      setSortField(field);
-      setSortOrder("asc");
     }
   };
 
-  const sortedTodos = useMemo(() => {
-    if (!sortField || !sortOrder) return todos;
+  const sortedTodos = [...todos];
+  if (sortField && sortOrder) {
+    sortedTodos.sort((a, b) => {
+      if (sortField === "status") {
+        // Sort by completion status
+        const comparison = Number(a.completed) - Number(b.completed);
+        return sortOrder === "asc" ? comparison : -comparison;
+      } else if (sortField === "contact") {
+        // Sort by contact name
+        const nameA = getContactName(a.contactId).toLowerCase();
+        const nameB = getContactName(b.contactId).toLowerCase();
+        const comparison = nameA.localeCompare(nameB);
+        return sortOrder === "asc" ? comparison : -comparison;
+      } else if (sortField === "dueDate") {
+        // Sort by due date (handle null values)
+        if (!a.dueDate && !b.dueDate) return 0;
+        if (!a.dueDate) return sortOrder === "asc" ? 1 : -1;
+        if (!b.dueDate) return sortOrder === "asc" ? -1 : 1;
 
-    return [...todos].sort((a, b) => {
-      let comparison = 0;
-      let contactA: string;
-      let contactB: string;
-
-      switch (sortField) {
-        case "status":
-          comparison = a.completed === b.completed ? 0 : a.completed ? 1 : -1;
-          break;
-        case "task":
-          comparison = a.task.localeCompare(b.task);
-          break;
-        case "contact":
-          contactA = getContactName(a.contactId);
-          contactB = getContactName(b.contactId);
-          comparison = contactA.localeCompare(contactB);
-          break;
-        case "dueDate":
-          if (!a.dueDate && !b.dueDate) comparison = 0;
-          else if (!a.dueDate) comparison = 1;
-          else if (!b.dueDate) comparison = -1;
-          else
-            comparison =
-              new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
-          break;
+        const dateA = new Date(a.dueDate);
+        const dateB = new Date(b.dueDate);
+        const comparison = dateA.getTime() - dateB.getTime();
+        return sortOrder === "asc" ? comparison : -comparison;
       }
-
-      return sortOrder === "asc" ? comparison : -comparison;
+      return 0;
     });
-  }, [todos, contacts, sortField, sortOrder, getContactName]);
+  }
+
+  const renderSortIndicator = (field: SortField) => {
+    if (sortField !== field) return null;
+
+    return sortOrder === "asc" ? (
+      <ArrowUp className="ml-1 h-4 w-4 inline" />
+    ) : (
+      <ArrowDown className="ml-1 h-4 w-4 inline" />
+    );
+  };
 
   return (
     <div className="rounded-md border">
@@ -100,41 +112,23 @@ export const TodoTable: React.FC<TodoTableProps> = ({
         <TableHeader>
           <TableRow>
             <TableHead
-              className="w-[100px] pr-4"
+              className="w-[100px] cursor-pointer"
               onClick={() => handleSort("status")}
-              style={{ cursor: "pointer" }}
             >
-              Status{" "}
-              {sortField === "status" && (
-                <ArrowUpDown className="inline h-4 w-4 ml-1" />
-              )}
+              Status {renderSortIndicator("status")}
             </TableHead>
+            <TableHead>Task</TableHead>
             <TableHead
-              onClick={() => handleSort("task")}
-              style={{ cursor: "pointer" }}
-            >
-              Task{" "}
-              {sortField === "task" && (
-                <ArrowUpDown className="inline h-4 w-4 ml-1" />
-              )}
-            </TableHead>
-            <TableHead
+              className="cursor-pointer"
               onClick={() => handleSort("contact")}
-              style={{ cursor: "pointer" }}
             >
-              Contact{" "}
-              {sortField === "contact" && (
-                <ArrowUpDown className="inline h-4 w-4 ml-1" />
-              )}
+              Contact {renderSortIndicator("contact")}
             </TableHead>
             <TableHead
+              className="cursor-pointer"
               onClick={() => handleSort("dueDate")}
-              style={{ cursor: "pointer" }}
             >
-              Due Date{" "}
-              {sortField === "dueDate" && (
-                <ArrowUpDown className="inline h-4 w-4 ml-1" />
-              )}
+              Due Date {renderSortIndicator("dueDate")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -151,7 +145,7 @@ export const TodoTable: React.FC<TodoTableProps> = ({
           ) : (
             sortedTodos.map((todo) => (
               <TableRow key={todo.id}>
-                <TableCell className="pl-5">
+                <TableCell>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -194,7 +188,10 @@ export const TodoTable: React.FC<TodoTableProps> = ({
                           : "Set due date"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
+                    <PopoverContent
+                      className="w-auto p-0"
+                      align="start"
+                    >
                       <Calendar
                         mode="single"
                         selected={

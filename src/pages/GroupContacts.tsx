@@ -385,12 +385,12 @@ const GroupContacts = () => {
                     </Button>
                   </div>
                 ) : (
-                  <h2
-                    className="text-2xl font-semibold cursor-pointer group flex items-center gap-2"
-                    onDoubleClick={() => setEditingGroupName(true)}
-                  >
+                  <h2 className="text-2xl font-semibold group flex items-center gap-2">
                     {groupInfo?.name || "Group"}
-                    <Pencil className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Pencil
+                      className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      onClick={() => setEditingGroupName(true)}
+                    />
                   </h2>
                 )}
                 <p className="text-sm text-gray-500 dark:text-gray-400">

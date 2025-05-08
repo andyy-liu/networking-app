@@ -1,7 +1,7 @@
 import React from "react";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ContactTag } from "@/lib/types";
-import { ArrowUpDown, Filter } from "lucide-react";
+import { ArrowUp, ArrowDown, Filter } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,17 +45,14 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
   };
 
   const renderSortIndicator = (key: string) => {
-    if (sortKey !== key) {
-      return <ArrowUpDown className="ml-2 h-4 w-4" />;
-    }
+    if (sortKey !== key) return null;
 
     if (sortDirection === "asc") {
-      return <ArrowUpDown className="ml-2 h-4 w-4 text-blue-500" />;
+      return <ArrowUp className="ml-2 h-4 w-4 text-blue-500" />;
     } else if (sortDirection === "desc") {
-      return <ArrowUpDown className="ml-2 h-4 w-4 text-blue-500 rotate-180" />;
-    } else {
-      return <ArrowUpDown className="ml-2 h-4 w-4" />;
+      return <ArrowDown className="ml-2 h-4 w-4 text-blue-500" />;
     }
+    return null;
   };
 
   return (
