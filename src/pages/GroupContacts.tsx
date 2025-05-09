@@ -7,7 +7,7 @@ import { EditContactModal } from "@/components/contacts/EditContactModal";
 import { ContactNotesModal } from "@/components/contacts/ContactNotesModal";
 import { Contact, ContactTag, ContactGroup } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/client";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Trash2, Pencil, Save, X } from "lucide-react";

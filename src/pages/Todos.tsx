@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { Contact, Todo } from "@/lib/types";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/client";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/components/ui/use-toast";
 import { TodoPanel } from "@/components/contacts/TodoPanel";

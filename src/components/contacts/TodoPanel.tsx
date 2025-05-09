@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Contact, Todo } from "@/lib/types";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/client";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import {

@@ -14,7 +14,7 @@ import {
   ClipboardList,
 } from "lucide-react";
 import { ContactGroup } from "@/lib/types";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/client";
 import { useAuth } from "@/context/AuthContext";
 
 interface SidebarProps {

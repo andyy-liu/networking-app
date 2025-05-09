@@ -1,21 +1,20 @@
-
-import React, { useState, useEffect } from 'react';
-import { 
+import React, { useState, useEffect } from "react";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Contact, ContactGroup } from '@/lib/types';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from '@/components/ui/use-toast';
-import { useAuth } from '@/context/AuthContext';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Contact, ContactGroup } from "@/lib/types";
+import { supabase } from "@/lib/client";
+import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@/context/AuthContext";
 
 interface AddToGroupModalProps {
   isOpen: boolean;
@@ -28,12 +27,12 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
   isOpen,
   onClose,
   selectedContacts,
-  onGroupAdded
+  onGroupAdded,
 }) => {
   const { user } = useAuth();
   const [groups, setGroups] = useState<ContactGroup[]>([]);
-  const [newGroupName, setNewGroupName] = useState('');
-  const [selectedGroupId, setSelectedGroupId] = useState<string | 'new'>('new');
+  const [newGroupName, setNewGroupName] = useState("");
+  const [selectedGroupId, setSelectedGroupId] = useState<string | "new">("new");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -47,15 +46,15 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
 
     try {
       const { data, error } = await supabase
-        .from('contact_groups')
-        .select('*')
-        .eq('user_id', user.id);
+        .from("contact_groups")
+        .select("*")
+        .eq("user_id", user.id);
 
       if (error) {
         throw error;
       }
 
-      const transformedGroups: ContactGroup[] = data.map(item => ({
+      const transformedGroups: ContactGroup[] = data.map((item) => ({
         id: item.id,
         name: item.name,
         userId: item.user_id,
@@ -67,11 +66,11 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
         setSelectedGroupId(transformedGroups[0].id);
       }
     } catch (error) {
-      console.error('Error fetching groups:', error);
+      console.error("Error fetching groups:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to load contact groups',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to load contact groups",
+        variant: "destructive",
       });
     }
   };
@@ -79,63 +78,63 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
-    
+
     if (selectedContacts.length === 0) {
       toast({
-        title: 'No contacts selected',
-        description: 'Please select at least one contact to add to the group',
-        variant: 'destructive',
+        title: "No contacts selected",
+        description: "Please select at least one contact to add to the group",
+        variant: "destructive",
       });
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       let groupId = selectedGroupId;
-      
+
       // Create a new group if selected
-      if (selectedGroupId === 'new' && newGroupName.trim()) {
+      if (selectedGroupId === "new" && newGroupName.trim()) {
         const { data, error } = await supabase
-          .from('contact_groups')
+          .from("contact_groups")
           .insert({
             name: newGroupName.trim(),
             user_id: user.id,
           })
-          .select('id')
+          .select("id")
           .single();
-        
+
         if (error) throw error;
         groupId = data.id;
       }
-      
-      if (typeof groupId === 'string' && groupId !== 'new') {
+
+      if (typeof groupId === "string" && groupId !== "new") {
         // Add contacts to the group
-        const groupMembers = selectedContacts.map(contact => ({
+        const groupMembers = selectedContacts.map((contact) => ({
           contact_id: contact.id,
           group_id: groupId,
         }));
-        
+
         const { error } = await supabase
-          .from('contact_group_members')
+          .from("contact_group_members")
           .insert(groupMembers);
-        
+
         if (error) throw error;
-        
+
         toast({
-          title: 'Success',
+          title: "Success",
           description: `${selectedContacts.length} contacts added to group`,
         });
-        
+
         onGroupAdded();
         onClose();
       }
     } catch (error) {
-      console.error('Error adding to group:', error);
+      console.error("Error adding to group:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to add contacts to group',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to add contacts to group",
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);
@@ -143,30 +142,49 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+    >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add to Group</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 py-4"
+        >
           <div className="space-y-2">
-            <RadioGroup value={selectedGroupId} onValueChange={value => setSelectedGroupId(value)}>
-              {groups.map(group => (
-                <div key={group.id} className="flex items-center space-x-2">
-                  <RadioGroupItem value={group.id} id={`group-${group.id}`} />
+            <RadioGroup
+              value={selectedGroupId}
+              onValueChange={(value) => setSelectedGroupId(value)}
+            >
+              {groups.map((group) => (
+                <div
+                  key={group.id}
+                  className="flex items-center space-x-2"
+                >
+                  <RadioGroupItem
+                    value={group.id}
+                    id={`group-${group.id}`}
+                  />
                   <Label htmlFor={`group-${group.id}`}>{group.name}</Label>
                 </div>
               ))}
               <div className="flex items-start space-x-2">
-                <RadioGroupItem value="new" id="new-group" className="mt-2" />
+                <RadioGroupItem
+                  value="new"
+                  id="new-group"
+                  className="mt-2"
+                />
                 <div className="flex-1">
                   <Label htmlFor="new-group">Create new group</Label>
-                  <Input 
+                  <Input
                     className="mt-1"
-                    placeholder="Enter new group name" 
+                    placeholder="Enter new group name"
                     value={newGroupName}
                     onChange={(e) => setNewGroupName(e.target.value)}
-                    disabled={selectedGroupId !== 'new'}
+                    disabled={selectedGroupId !== "new"}
                   />
                 </div>
               </div>
@@ -174,13 +192,20 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
           </div>
           <DialogFooter className="pt-4">
             <DialogClose asChild>
-              <Button variant="outline" type="button">Cancel</Button>
+              <Button
+                variant="outline"
+                type="button"
+              >
+                Cancel
+              </Button>
             </DialogClose>
-            <Button 
-              type="submit" 
-              disabled={isLoading || (selectedGroupId === 'new' && !newGroupName.trim())}
+            <Button
+              type="submit"
+              disabled={
+                isLoading || (selectedGroupId === "new" && !newGroupName.trim())
+              }
             >
-              {isLoading ? 'Adding...' : 'Add to Group'}
+              {isLoading ? "Adding..." : "Add to Group"}
             </Button>
           </DialogFooter>
         </form>

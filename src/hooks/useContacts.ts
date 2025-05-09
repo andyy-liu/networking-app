@@ -1,221 +1,138 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from 'react'
 import { useAuth } from "@/context/AuthContext";
-import { Contact, ContactTag } from "@/lib/types";
+import { Contact } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { useTodos } from "./useTodos";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import * as contactsService from '@/services/contacts';
 
-interface UseContactsProps {
-  onContactUpdated?: () => void;
-}
-
-export function useContacts({ onContactUpdated }: UseContactsProps = {}) {
+export function useContacts() {
   const { user } = useAuth();
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
-
+  const queryClient = useQueryClient();
   const { fetchTodos } = useTodos();
 
+  // Fetch contacts using React Query
+  const { 
+    data: contacts = [], 
+    isLoading, 
+    isError 
+  } = useQuery({
+    queryKey: ['contacts', user?.id],
+    queryFn: async () => {
+      if (!user) throw new Error("User not authenticated");
+      return await contactsService.fetchContacts(user.id);
+    },
+    enabled: !!user,
+  });
+  
+  // Use useEffect for side effects
   useEffect(() => {
-    if (user) {
-      fetchContacts();
-    } else {
-      setContacts([]);
-      setLoading(false);
+    if (contacts && contacts.length > 0) {
+      fetchTodos(contacts);
     }
-  }, [user]);
-
-  const fetchContacts = async () => {
-    if (!user) return;
-
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from("contacts")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      const transformedContacts: Contact[] = data.map((item) => ({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        role: item.role || "",
-        company: item.company || "",
-        tags: item.tags as ContactTag[],
-        dateOfContact: item.dateofcontact,
-        status: item.status as Contact["status"],
-        todos: [],
-      }));
-
-      setContacts(transformedContacts);
-
-      if (transformedContacts.length > 0) {
-        await fetchTodos(transformedContacts);
-      }
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
+  }, [contacts, fetchTodos]);
+  
+  // Error handling
+  useEffect(() => {
+    if (isError) {
+      console.error("Error fetching contacts");
       toast({
         title: "Error",
         description: "Failed to load your contacts",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [isError]);
 
-  const addContact = async (newContactData: Omit<Contact, "id">) => {
-    if (!user) return;
-
-    try {
-      const { data, error } = await supabase
-        .from("contacts")
-        .insert({
-          user_id: user.id,
-          name: newContactData.name,
-          email: newContactData.email,
-          role: newContactData.role,
-          company: newContactData.company,
-          tags: newContactData.tags,
-          dateofcontact: newContactData.dateOfContact,
-          status: newContactData.status,
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      const newContact: Contact = {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        role: data.role || "",
-        company: data.company || "",
-        tags: data.tags as ContactTag[],
-        dateOfContact: data.dateofcontact,
-        status: data.status as Contact["status"],
-        todos: [],
-      };
-
-      setContacts((prev) => [newContact, ...prev]);
-      onContactUpdated?.();
-
+  // Mutation for adding a contact
+  const addContactMutation = useMutation({
+    mutationFn: async (newContactData: Omit<Contact, "id">) => {
+      if (!user) throw new Error("User not authenticated");
+      return await contactsService.createContact(user.id, newContactData);
+    },
+    // Use onSuccess for cache updates
+    onSuccess: (newContact: Contact) => {
+      queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) => 
+        [newContact, ...(oldContacts || [])]);
+      
       toast({
         title: "Contact added",
         description: `${newContact.name} has been added to your contacts.`,
       });
-
-      return newContact;
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error("Error adding contact:", error);
       toast({
         title: "Error",
         description: "Failed to add the contact",
         variant: "destructive",
       });
-      return null;
-    }
-  };
+    },
+  });
 
-  const updateContact = async (updatedContact: Contact) => {
-    if (!user) return;
-
-    try {
-      const { error } = await supabase
-        .from("contacts")
-        .update({
-          name: updatedContact.name,
-          email: updatedContact.email,
-          role: updatedContact.role,
-          company: updatedContact.company,
-          tags: updatedContact.tags,
-          dateofcontact: updatedContact.dateOfContact,
-          status: updatedContact.status,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", updatedContact.id)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      setContacts((prev) =>
-        prev.map((contact) =>
-          contact.id === updatedContact.id
-            ? {
-                ...updatedContact,
-                todos: contact.todos || [],
-              }
-            : contact
-        )
+  // Mutation for updating a contact
+  const updateContactMutation = useMutation({
+    mutationFn: async (updatedContact: Contact) => {
+      if (!user) throw new Error("User not authenticated");
+      // Make sure service returns the updated contact
+      await contactsService.updateContact(user.id, updatedContact);
+      return updatedContact; // Return the updated contact object to fix the void error
+    },
+    onSuccess: (updatedContact: Contact) => {
+      queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) =>
+        oldContacts?.map(contact => 
+          contact.id === updatedContact.id ? updatedContact : contact
+        ) || []
       );
-
-      onContactUpdated?.();
-
+      
       toast({
         title: "Contact updated",
         description: `${updatedContact.name} has been updated.`,
       });
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error("Error updating contact:", error);
       toast({
         title: "Error",
         description: "Failed to update the contact",
         variant: "destructive",
       });
-    }
-  };
+    },
+  });
 
-  const deleteContacts = async (contactIds: string[]) => {
-    if (!user || contactIds.length === 0) return;
-
-    try {
-      const { error } = await supabase
-        .from("contacts")
-        .delete()
-        .in("id", contactIds)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      setContacts((prev) =>
-        prev.filter((contact) => !contactIds.includes(contact.id))
+  // Mutation for deleting contacts
+  const deleteContactsMutation = useMutation({
+    mutationFn: async (contactIds: string[]) => {
+      if (!user) throw new Error("User not authenticated");
+      await contactsService.deleteContacts(user.id, contactIds);
+      return contactIds; // Return the deleted IDs to fix the void error
+    },
+    onSuccess: (deletedIds: string[]) => {
+      queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) =>
+        oldContacts?.filter(contact => !deletedIds.includes(contact.id)) || []
       );
-      setSelectedContacts([]);
-      onContactUpdated?.();
-
+      
       toast({
         title: "Contacts deleted",
-        description: `${contactIds.length} contact(s) have been deleted.`,
+        description: `${deletedIds.length} contact(s) have been deleted.`,
       });
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error("Error deleting contacts:", error);
       toast({
         title: "Error",
         description: "Failed to delete contacts",
         variant: "destructive",
       });
-    }
-  };
-
-  const selectContact = (contact: Contact, isSelected: boolean) => {
-    if (isSelected) {
-      setSelectedContacts((prev) => [...prev, contact]);
-    } else {
-      setSelectedContacts((prev) => prev.filter((c) => c.id !== contact.id));
-    }
-  };
+    },
+  });
 
   return {
     contacts,
-    loading,
-    selectedContacts,
-    fetchContacts,
-    addContact,
-    updateContact,
-    deleteContacts,
-    selectContact,
+    isLoading,
+    isError,
+    addContact: addContactMutation.mutate,
+    updateContact: updateContactMutation.mutate,
+    deleteContacts: deleteContactsMutation.mutate,
   };
-} 
+}
