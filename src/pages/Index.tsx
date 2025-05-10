@@ -4,7 +4,6 @@ import { Header } from "@/components/layout/Header";
 import { ContactTable } from "@/components/contacts/ContactTable";
 import { NewContactButton } from "@/components/contacts/NewContactButton";
 import { NewContactModal } from "@/components/contacts/NewContactModal";
-import { EditContactModal } from "@/components/contacts/EditContactModal";
 import { AddToGroupModal } from "@/components/contacts/AddToGroupModal";
 import { Contact, Todo } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -159,13 +158,6 @@ const Index = () => {
         isOpen={isNewModalOpen}
         onClose={() => setIsNewModalOpen(false)}
         onSubmit={addContact}
-      />
-
-      <EditContactModal
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        onSubmit={updateContact}
-        contact={contactToEdit}
       />
 
       <AddToGroupModal

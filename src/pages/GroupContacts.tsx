@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { ContactTable } from "@/components/contacts/ContactTable";
-import { EditContactModal } from "@/components/contacts/EditContactModal";
-import { ContactNotesModal } from "@/components/contacts/ContactNotesModal";
 import { Contact, ContactTag, ContactGroup } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/client";
@@ -293,8 +291,9 @@ const GroupContacts = () => {
     setActiveTagFilter(tag);
   };
 
-  const handleSelectContact = (contact: Contact, isSelected: boolean) => {
-    if (isSelected) {
+  const handleSelectContact = (contact: Contact) => {
+    const isSelected = selectedContacts.some((c) => c.id === contact.id);
+    if (!isSelected) {
       setSelectedContacts((prev) => [...prev, contact]);
     } else {
       setSelectedContacts((prev) => prev.filter((c) => c.id !== contact.id));
@@ -304,7 +303,7 @@ const GroupContacts = () => {
   // Apply sorting and filtering
   const filteredAndSortedContacts = React.useMemo(() => {
     // First apply tag filtering
-    let filtered = activeTagFilter
+    const filtered = activeTagFilter
       ? contacts.filter((contact) => contact.tags.includes(activeTagFilter))
       : contacts;
 
@@ -426,7 +425,6 @@ const GroupContacts = () => {
                 activeTagFilter={activeTagFilter}
                 onEditContact={handleEditContact}
                 onUpdateContact={handleUpdateContact}
-                onViewNotes={handleViewNotes}
                 selectedContacts={selectedContacts}
                 onSelectContact={handleSelectContact}
               />
@@ -436,18 +434,6 @@ const GroupContacts = () => {
       </div>
 
       {/* Modals */}
-      <EditContactModal
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        onSubmit={handleUpdateContact}
-        contact={contactToEdit}
-      />
-
-      <ContactNotesModal
-        isOpen={isNotesModalOpen}
-        onClose={() => setIsNotesModalOpen(false)}
-        contact={contactForNotes}
-      />
 
       {/* Remove confirmation dialog */}
       <AlertDialog
