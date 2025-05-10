@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { ContactTable } from "@/components/contacts/ContactTable";
-import { NewContactButton } from "@/components/contacts/NewContactButton";
 import { NewContactModal } from "@/components/contacts/NewContactModal";
 import { AddToGroupModal } from "@/components/contacts/AddToGroupModal";
 import { Contact, Todo } from "@/lib/types";
@@ -23,6 +22,7 @@ import { TodoPanel } from "@/components/contacts/TodoPanel";
 import { useContacts } from "@/hooks/useContacts";
 import { useContactFilters } from "@/hooks/useContactFilters";
 import { useTodos } from "@/hooks/useTodos";
+import { Plus } from "lucide-react";
 
 const Index = () => {
   // Contact management
@@ -125,7 +125,12 @@ const Index = () => {
                   </Button>
                 </>
               )}
-              <NewContactButton onClick={() => setIsNewModalOpen(true)} />
+              <Button
+                onClick={() => setIsNewModalOpen(true)}
+                className="hover:bg/90"
+              >
+                <Plus className="mr-2 h-4 w-4" /> New Contact
+              </Button>
             </div>
           </div>
 
