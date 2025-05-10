@@ -14,9 +14,8 @@ interface ContactTableProps {
   activeTagFilter: string | null;
   onEditContact: (contact: Contact) => void;
   onUpdateContact: (contact: Contact) => void;
-  onViewNotes: (contact: Contact) => void;
   selectedContacts: Contact[];
-  onSelectContact: (contact: Contact, isSelected: boolean) => void;
+  onSelectContact: (contact: Contact) => void;
   onOpenTodoPanel?: (contact: Contact) => void;
 }
 
@@ -29,7 +28,6 @@ export const ContactTable: React.FC<ContactTableProps> = ({
   activeTagFilter,
   onEditContact,
   onUpdateContact,
-  onViewNotes,
   selectedContacts,
   onSelectContact,
   onOpenTodoPanel,
@@ -64,7 +62,6 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                   contact={contact}
                   onEditContact={onEditContact}
                   onUpdateContact={onUpdateContact}
-                  onViewNotes={onViewNotes}
                   isSelected={selectedContacts.some((c) => c.id === contact.id)}
                   onSelectContact={onSelectContact}
                   onOpenTodoPanel={onOpenTodoPanel}

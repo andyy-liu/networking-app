@@ -30,9 +30,8 @@ interface ContactTableRowProps {
   contact: Contact;
   onEditContact: (contact: Contact) => void;
   onUpdateContact: (contact: Contact) => void;
-  onViewNotes: (contact: Contact) => void;
   isSelected: boolean;
-  onSelectContact: (contact: Contact, isSelected: boolean) => void;
+  onSelectContact: (contact: Contact) => void;
   onOpenTodoPanel?: (contact: Contact) => void;
 }
 
@@ -40,7 +39,6 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
   contact,
   onEditContact,
   onUpdateContact,
-  onViewNotes,
   isSelected,
   onSelectContact,
   onOpenTodoPanel,
@@ -157,8 +155,8 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
       <TableCell className="w-10 px-4">
         <Checkbox
           checked={isSelected}
-          onCheckedChange={(checked) => {
-            onSelectContact(contact, !!checked);
+          onCheckedChange={() => {
+            onSelectContact(contact);
           }}
           aria-label={`Select ${contact.name}`}
           className="flex h-4 w-4"

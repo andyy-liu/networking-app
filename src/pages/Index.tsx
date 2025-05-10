@@ -5,7 +5,6 @@ import { ContactTable } from "@/components/contacts/ContactTable";
 import { NewContactButton } from "@/components/contacts/NewContactButton";
 import { NewContactModal } from "@/components/contacts/NewContactModal";
 import { EditContactModal } from "@/components/contacts/EditContactModal";
-import { ContactNotesModal } from "@/components/contacts/ContactNotesModal";
 import { AddToGroupModal } from "@/components/contacts/AddToGroupModal";
 import { Contact, Todo } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -30,12 +29,14 @@ const Index = () => {
   // Contact management
   const {
     contacts,
-    loading,
-    selectedContacts,
+    isLoading,
+    isError,
     addContact,
     updateContact,
     deleteContacts,
+    selectedContacts,
     selectContact,
+    clearSelectedContacts,
   } = useContacts();
 
   // Sorting and filtering
@@ -54,7 +55,6 @@ const Index = () => {
   // Modal states
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [isAddToGroupModalOpen, setIsAddToGroupModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isTagManagementOpen, setIsTagManagementOpen] = useState(false);
@@ -62,17 +62,11 @@ const Index = () => {
 
   // Selected contact states
   const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
-  const [contactForNotes, setContactForNotes] = useState<Contact | null>(null);
   const [contactForTodos, setContactForTodos] = useState<Contact | null>(null);
 
   const handleEditContact = (contact: Contact) => {
     setContactToEdit(contact);
     setIsEditModalOpen(true);
-  };
-
-  const handleViewNotes = (contact: Contact) => {
-    setContactForNotes(contact);
-    setIsNotesModalOpen(true);
   };
 
   const handleOpenTodoPanel = (contact: Contact) => {
@@ -136,7 +130,7 @@ const Index = () => {
             </div>
           </div>
 
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
@@ -151,7 +145,6 @@ const Index = () => {
                 activeTagFilter={activeTagFilter}
                 onEditContact={handleEditContact}
                 onUpdateContact={updateContact}
-                onViewNotes={handleViewNotes}
                 selectedContacts={selectedContacts}
                 onSelectContact={selectContact}
                 onOpenTodoPanel={handleOpenTodoPanel}
@@ -173,12 +166,6 @@ const Index = () => {
         onClose={() => setIsEditModalOpen(false)}
         onSubmit={updateContact}
         contact={contactToEdit}
-      />
-
-      <ContactNotesModal
-        isOpen={isNotesModalOpen}
-        onClose={() => setIsNotesModalOpen(false)}
-        contact={contactForNotes}
       />
 
       <AddToGroupModal
