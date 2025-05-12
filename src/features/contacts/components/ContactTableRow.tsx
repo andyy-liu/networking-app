@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Contact, ContactStatus, Todo } from "@/lib/types";
+import { Contact, ContactStatus } from "@/features/contacts/types";
+import { Todo } from "@/features/todos/types";
 import { Badge } from "@/components/ui/badge";
 import { StickyNote, CheckCircle2, Circle, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { getStatusColor, getTagColor, formatDate } from "./contact-utils";
+import {
+  getStatusColor,
+  getTagColor,
+  formatDate,
+} from "../utils/contact-utils";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import {

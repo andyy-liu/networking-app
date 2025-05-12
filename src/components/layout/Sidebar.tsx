@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Logo } from "@/components/icons/Logo";
+import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -13,9 +13,9 @@ import {
   Home,
   ClipboardList,
 } from "lucide-react";
-import { ContactGroup } from "@/lib/types";
+import { ContactGroup } from "@/features/contacts/types";
 import { supabase } from "@/lib/client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 
 interface SidebarProps {
   className?: string;

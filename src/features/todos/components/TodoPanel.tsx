@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Contact, Todo } from "@/lib/types";
+import { Contact } from "@/features/contacts/types";
+import { Todo } from "../types";
 import { supabase } from "@/lib/client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -39,7 +40,7 @@ import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import { useTodos } from "@/hooks/useTodos";
+import { useTodos } from "@/features/todos/hooks/useTodos";
 
 interface ContactNote {
   id: string;

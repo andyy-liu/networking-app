@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Contact, ContactTag } from "@/lib/types";
+import { Contact, ContactTag } from "@/features/contacts/types";
 
 export function useContactFilters(contacts: Contact[]) {
   const [sortKey, setSortKey] = useState<string>("");

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useAuth } from "@/context/AuthContext";
-import { Contact } from "@/lib/types";
+import { useAuth } from "@/features/auth/context/AuthContext";
+import { Contact } from "@/features/contacts/types";
 import { toast } from "@/components/ui/use-toast";
-import { useTodos } from "./useTodos";
+import { useTodos } from "@/features/todos/hooks/useTodos";
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import * as contactsService from '@/services/contacts';
+import * as contactsService from '@/features/contacts/services/contacts';
 
 export function useContacts() {
   const { user } = useAuth();

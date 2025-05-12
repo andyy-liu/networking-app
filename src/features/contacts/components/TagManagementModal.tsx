@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash2, Plus, X } from "lucide-react";
-import { getTagColor } from "./contact-utils";
+import { getTagColor } from "../utils/contact-utils";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -26,8 +26,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/client";
-import { useAuth } from "@/context/AuthContext";
-import { ContactStatus } from "@/lib/types";
+import { useAuth } from "@/features/auth/context/AuthContext";
+import { ContactStatus } from "@/features/contacts/types";
 
 interface TagManagementModalProps {
   isOpen: boolean;

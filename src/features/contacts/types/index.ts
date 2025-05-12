@@ -1,15 +1,8 @@
+import { Todo } from 'src/features/todos/types';
+
 export type ContactStatus = 'Reached Out' | 'Responded' | 'Chatted';
 
 export type ContactTag = string;
-
-export interface Todo {
-  id: string;
-  contactId: string;
-  task: string;
-  dueDate: string | null;
-  completed: boolean;
-  createdAt: string;
-}
 
 export interface Contact {
   id: string;

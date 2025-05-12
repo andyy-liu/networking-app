@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
-import { ContactTable } from "@/components/contacts/ContactTable";
-import { NewContactModal } from "@/components/contacts/NewContactModal";
-import { AddToGroupModal } from "@/components/contacts/AddToGroupModal";
-import { Contact, Todo } from "@/lib/types";
+import { ContactTable } from "@/features/contacts/components/ContactTable";
+import { NewContactModal } from "@/features/contacts/components/NewContactModal";
+import { AddToGroupModal } from "@/features/contacts/components/AddToGroupModal";
+import { Contact } from "@/features/contacts/types";
 import { Button } from "@/components/ui/button";
 import { UserPlus, Trash2, Tag } from "lucide-react";
 import {
@@ -17,11 +17,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { TagManagementModal } from "@/components/contacts/TagManagementModal";
-import { TodoPanel } from "@/components/contacts/TodoPanel";
-import { useContacts } from "@/hooks/useContacts";
+import { TagManagementModal } from "@/features/contacts/components/TagManagementModal";
+import { TodoPanel } from "@/features/todos/components/TodoPanel";
+import { useContacts } from "@/features/contacts/hooks/useContacts";
 import { useContactFilters } from "@/hooks/useContactFilters";
-import { useTodos } from "@/hooks/useTodos";
+import { useTodos } from "@/features/todos/hooks/useTodos";
 import { Plus } from "lucide-react";
 
 const Index = () => {

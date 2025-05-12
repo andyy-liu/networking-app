@@ -11,10 +11,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Contact, ContactGroup } from "@/lib/types";
+import { Contact, ContactGroup } from "@/features/contacts/types";
 import { supabase } from "@/lib/client";
 import { toast } from "@/components/ui/use-toast";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 
 interface AddToGroupModalProps {
   isOpen: boolean;

@@ -1,6 +1,6 @@
 import React from "react";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ContactTag } from "@/lib/types";
+import { ContactTag } from "@/features/contacts/types";
 import { ArrowUp, ArrowDown, Filter } from "lucide-react";
 import {
   DropdownMenu,

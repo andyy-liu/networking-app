@@ -9,9 +9,9 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import { Settings } from "./pages/Settings";
 import Todos from "./pages/Todos";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/features/auth/context/AuthContext";
 import { TagProvider } from "@/context/TagContext";
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 

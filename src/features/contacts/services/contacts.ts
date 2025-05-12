@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/client";
-import type { Contact, ContactTag } from "@/lib/types";
+import type { Contact, ContactTag } from "@/features/contacts/types";
 
 // async allows for the use of await inside the function and lets the function return a Promise
 // await pauses the execution of the function until the Promise is resolved

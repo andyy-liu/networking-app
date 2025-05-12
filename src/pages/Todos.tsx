@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
-import { Contact, Todo } from "@/lib/types";
+import { Contact } from "@/features/contacts/types";
+import { Todo } from "@/features/todos/types";
 import { supabase } from "@/lib/client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 import { toast } from "@/components/ui/use-toast";
-import { TodoPanel } from "@/components/contacts/TodoPanel";
-import { TodoTable } from "@/components/todos/TodoTable";
-import { useTodos } from "@/hooks/useTodos";
+import { TodoPanel } from "@/features/todos/components/TodoPanel";
+import { TodoTable } from "@/features/todos/components/TodoTable";
+import { useTodos } from "@/features/todos/hooks/useTodos";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import {

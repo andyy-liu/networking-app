@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/lib/client";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../features/auth/context/AuthContext";
 
 // Default available tags
 const DEFAULT_TAGS = ["Recruiter", "Alumni", "Employee", "Other"];

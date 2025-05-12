@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
-import { ContactTable } from "@/components/contacts/ContactTable";
-import { Contact, ContactTag, ContactGroup } from "@/lib/types";
+import { ContactTable } from "@/features/contacts/components/ContactTable";
+import { Contact, ContactTag, ContactGroup } from "@/features/contacts/types";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Trash2, Pencil, Save, X } from "lucide-react";
 import {

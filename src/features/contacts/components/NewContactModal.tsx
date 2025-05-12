@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Contact, ContactStatus } from "@/lib/types";
+import { Contact } from "@/features/contacts/types";
 import {
   Dialog,
   DialogContent,
@@ -30,13 +30,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { X, Plus } from "lucide-react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { getTagColor } from "./contact-utils";
+import { getTagColor } from "../utils/contact-utils";
 import { useTags } from "@/context/TagContext";
 
 interface NewContactModalProps {

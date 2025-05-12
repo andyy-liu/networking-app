@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, TableBody } from "@/components/ui/table";
-import { Contact } from "@/lib/types";
+import { Contact } from "@/features/contacts/types";
 import { ContactTableHeader } from "./ContactTableHeader";
 import { ContactTableRow } from "./ContactTableRow";
 import { ContactEmptyState } from "./ContactEmptyState";
