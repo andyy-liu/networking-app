@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
-  LayoutDashboard,
-  Bell,
   Settings,
   Users,
   ChevronLeft,
@@ -13,9 +11,9 @@ import {
   Home,
   ClipboardList,
 } from "lucide-react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useContactGroups } from "@/features/contacts/hooks/useContactGroups";
 import { ContactGroup } from "@/features/contacts/types";
-import { supabase } from "@/lib/client";
-import { useAuth } from "@/features/auth/context/AuthContext";
 
 interface SidebarProps {
   className?: string;
@@ -33,7 +31,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [contactGroups, setContactGroups] = useState<ContactGroup[]>([]);
+  const { data: contactGroups = [] } = useContactGroups();
 
   const navItems: NavItem[] = [
     {
@@ -50,9 +48,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
     },
     {
       icon: Users,
-      label: "Groups",
-      isActive: location.pathname.startsWith("/groups"),
-      path: "/groups",
+      label: "Reminders",
+      isActive: location.pathname.startsWith("/reminders"),
+      path: "/reminders",
     },
     {
       icon: Settings,
@@ -61,40 +59,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
       path: "/settings",
     },
   ];
-
-  useEffect(() => {
-    if (user) {
-      fetchContactGroups();
-    } else {
-      setContactGroups([]);
-    }
-  }, [user]);
-
-  const fetchContactGroups = async () => {
-    if (!user) return;
-
-    try {
-      const { data, error } = await supabase
-        .from("contact_groups")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) {
-        throw error;
-      }
-
-      const transformedGroups: ContactGroup[] = data.map((item) => ({
-        id: item.id,
-        name: item.name,
-        userId: item.user_id,
-        createdAt: item.created_at,
-      }));
-
-      setContactGroups(transformedGroups);
-    } catch (error) {
-      console.error("Error fetching contact groups:", error);
-    }
-  };
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);

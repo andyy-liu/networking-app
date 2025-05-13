@@ -1,5 +1,6 @@
-import { useAuth } from "@/features/auth/context/AuthContext";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Navigate, Outlet } from "react-router-dom";
+import { AuthSpinner } from "./AuthSpinner";
 
 type ProtectedRouteProps = {
   redirectPath?: string;
@@ -13,7 +14,7 @@ export const ProtectedRoute = ({
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        Loading...
+        <AuthSpinner message="Loading your account..." />
       </div>
     );
   }

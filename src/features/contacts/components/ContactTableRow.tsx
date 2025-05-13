@@ -3,14 +3,10 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Contact, ContactStatus } from "@/features/contacts/types";
 import { Todo } from "@/features/todos/types";
 import { Badge } from "@/components/ui/badge";
-import { StickyNote, CheckCircle2, Circle, ClipboardList } from "lucide-react";
+import { ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  getStatusColor,
-  getTagColor,
-  formatDate,
-} from "../utils/contact-utils";
+import { getStatusColor, getTagColor } from "../utils/contact-utils";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -29,7 +25,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { X, Plus } from "lucide-react";
-import { useTags } from "@/context/TagContext";
+import { useTags } from "@/features/tags/hooks/useTags";
 
 interface ContactTableRowProps {
   contact: Contact;

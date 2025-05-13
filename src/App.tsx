@@ -10,7 +10,7 @@ import NotFound from "./pages/NotFound";
 import { Settings } from "./pages/Settings";
 import Todos from "./pages/Todos";
 import { AuthProvider } from "@/features/auth/context/AuthContext";
-import { TagProvider } from "@/context/TagContext";
+import { TagProvider } from "@/features/tags/context/TagContext";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 
 const queryClient = new QueryClient();

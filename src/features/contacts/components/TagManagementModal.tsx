@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTags } from "@/context/TagContext";
+import { useTags } from "@/features/tags/hooks/useTags";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/client";
-import { useAuth } from "@/features/auth/context/AuthContext";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ContactStatus } from "@/features/contacts/types";
 
 interface TagManagementModalProps {

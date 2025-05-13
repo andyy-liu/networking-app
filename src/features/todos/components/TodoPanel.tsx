@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Contact } from "@/features/contacts/types";
 import { Todo } from "../types";
 import { supabase } from "@/lib/client";
-import { useAuth } from "@/features/auth/context/AuthContext";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,

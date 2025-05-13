@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { supabase } from "@/lib/client";
-import { useAuth } from "@/features/auth/context/AuthContext";
+import { useCallback } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Todo } from "../types";
 import { toast } from "@/components/ui/use-toast";
-import { format } from "date-fns";
 import { Contact } from "@/features/contacts/types";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import * as todoService from '../services/todos';
 
 interface UseTodosProps {
   contactId?: string;
@@ -14,45 +14,42 @@ interface UseTodosProps {
 
 export function useTodos({ contactId, onTodoAdded, onTodoCompleted }: UseTodosProps = {}) {
   const { user } = useAuth();
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
 
-  const fetchTodos = async (contacts?: Contact[]) => {
+  // Query key for this specific todos request
+  const todosQueryKey = contactId 
+    ? ['todos', user?.id, contactId]
+    : ['todos', user?.id];
+
+  // Fetch todos using React Query
+  const { 
+    data: todos = [], 
+    isLoading: loading,
+    isError,
+    refetch 
+  } = useQuery({
+    queryKey: todosQueryKey,
+    queryFn: async () => {
+      if (!user) throw new Error("User not authenticated");
+      return await todoService.fetchTodos(user.id, contactId);
+    },
+    enabled: !!user,
+  });
+
+  // Function to fetch todos and update contacts if needed
+  const fetchTodos = useCallback(async (contacts?: Contact[]) => {
     if (!user) return;
 
-    setLoading(true);
     try {
-      let query = supabase
-        .from("contact_todos")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
-
-      if (contactId) {
-        query = query.eq("contact_id", contactId);
-      }
-
-      const { data, error } = await query;
-
-      if (error) throw error;
-
-      const transformedTodos: Todo[] = data.map((item) => ({
-        id: item.id,
-        contactId: item.contact_id,
-        task: item.task,
-        dueDate: item.due_date,
-        completed: item.completed,
-        createdAt: item.created_at,
-      }));
-
-      setTodos(transformedTodos);
+      // Use the refetch function from React Query
+      const { data } = await refetch();
 
       // If contacts were provided, update their todos
-      if (contacts) {
-        contacts.forEach(contact => {
-          contact.todos = transformedTodos.filter(todo => todo.contactId === contact.id);
-        });
+      if (contacts && data) {
+        todoService.updateContactsWithTodos(contacts, data);
       }
+
+      return data;
     } catch (error) {
       console.error("Error fetching todos:", error);
       toast({
@@ -60,77 +57,50 @@ export function useTodos({ contactId, onTodoAdded, onTodoCompleted }: UseTodosPr
         description: "Failed to load to-dos",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [user, refetch]);
 
-  const addTodo = async (task: string, dueDate: Date | null = null) => {
-    if (!task.trim() || !user || !contactId) return;
-
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from("contact_todos")
-        .insert({
-          contact_id: contactId,
-          user_id: user.id,
-          task,
-          due_date: dueDate ? format(dueDate, "yyyy-MM-dd") : null,
-          completed: false,
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      const newTodo: Todo = {
-        id: data.id,
-        contactId: data.contact_id,
-        task: data.task,
-        dueDate: data.due_date,
-        completed: data.completed,
-        createdAt: data.created_at,
-      };
-
-      setTodos((prev) => [newTodo, ...prev]);
-      onTodoAdded?.(contactId, newTodo);
-
+  // Mutation for adding a todo
+  const addTodoMutation = useMutation({
+    mutationFn: async ({ task, dueDate }: { task: string; dueDate: Date | null }) => {
+      if (!task.trim() || !user || !contactId) throw new Error("Invalid todo data");
+      return await todoService.createTodo(user.id, contactId, task, dueDate);
+    },
+    onSuccess: (newTodo: Todo) => {
+      // Update React Query cache with the new todo
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) => 
+        [newTodo, ...(oldTodos || [])]
+      );
+      
+      // Call the callback if provided
+      onTodoAdded?.(contactId!, newTodo);
+      
       toast({
         title: "To-do added",
         description: "New to-do has been added successfully",
       });
-
-      return newTodo;
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error("Error adding todo:", error);
       toast({
         title: "Error",
         description: "Failed to add to-do",
         variant: "destructive",
       });
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+  });
 
-  const toggleTodoCompletion = async (todoId: string, currentStatus: boolean) => {
-    if (!user) return;
-
-    const newStatus = !currentStatus;
-
-    try {
-      const { error } = await supabase
-        .from("contact_todos")
-        .update({ completed: newStatus })
-        .eq("id", todoId)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      setTodos((prev) =>
-        prev.map((todo) =>
+  // Mutation for toggling todo completion
+  const toggleTodoCompletionMutation = useMutation({
+    mutationFn: async ({ todoId, newStatus }: { todoId: string; newStatus: boolean }) => {
+      if (!user) throw new Error("User not authenticated");
+      await todoService.updateTodoCompletion(user.id, todoId, newStatus);
+      return { todoId, newStatus };
+    },
+    onSuccess: ({ todoId, newStatus }) => {
+      // Update the cache with the new todo status
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+        (oldTodos || []).map((todo) =>
           todo.id === todoId ? { ...todo, completed: newStatus } : todo
         )
       );
@@ -138,62 +108,62 @@ export function useTodos({ contactId, onTodoAdded, onTodoCompleted }: UseTodosPr
       if (contactId) {
         onTodoCompleted?.(contactId, todoId, newStatus);
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error("Error updating todo:", error);
       toast({
         title: "Error",
         description: "Failed to update to-do status",
         variant: "destructive",
       });
-    }
-  };
+    },
+  });
 
-  const deleteTodo = async (todoId: string) => {
-    if (!user) return;
+  // Mutation for deleting a todo
+  const deleteTodoMutation = useMutation({
+    mutationFn: async (todoId: string) => {
+      if (!user) throw new Error("User not authenticated");
+      await todoService.deleteTodo(user.id, todoId);
+      return todoId;
+    },
+    onSuccess: (todoId) => {
+      // Remove the deleted todo from the cache
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+        (oldTodos || []).filter((todo) => todo.id !== todoId)
+      );
 
-    try {
-      const { error } = await supabase
-        .from("contact_todos")
-        .delete()
-        .eq("id", todoId)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      setTodos((prev) => prev.filter((t) => t.id !== todoId));
-      toast({ title: "Deleted", description: "To‑do removed" });
-    } catch (error) {
+      toast({ 
+        title: "Deleted", 
+        description: "To‑do removed" 
+      });
+    },
+    onError: (error) => {
       console.error("Delete error:", error);
       toast({
         title: "Error",
         description: "Could not delete to‑do",
         variant: "destructive",
       });
-    }
-  };
+    },
+  });
 
-  const updateTodoDueDate = async (todoId: string, newDate: Date | null) => {
-    if (!user) return;
+  // Mutation for updating todo due date
+  const updateTodoDateMutation = useMutation({
+    mutationFn: async ({ todoId, newDate }: { todoId: string; newDate: Date | null }) => {
+      if (!user) throw new Error("User not authenticated");
+      await todoService.updateTodoDueDate(user.id, todoId, newDate);
+      return { todoId, newDate };
+    },
+    onSuccess: ({ todoId, newDate }) => {
+      // Format the date for display in the UI
+      const formattedDate = newDate 
+        ? new Date(newDate).toISOString().split('T')[0] // format as YYYY-MM-DD
+        : null;
 
-    try {
-      const { error } = await supabase
-        .from("contact_todos")
-        .update({
-          due_date: newDate ? format(newDate, "yyyy-MM-dd") : null,
-        })
-        .eq("id", todoId)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      setTodos((prev) =>
-        prev.map((todo) =>
-          todo.id === todoId
-            ? {
-                ...todo,
-                dueDate: newDate ? format(newDate, "yyyy-MM-dd") : null,
-              }
-            : todo
+      // Update the cache with the new due date
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+        (oldTodos || []).map((todo) =>
+          todo.id === todoId ? { ...todo, dueDate: formattedDate } : todo
         )
       );
 
@@ -201,24 +171,70 @@ export function useTodos({ contactId, onTodoAdded, onTodoCompleted }: UseTodosPr
         title: "Success",
         description: "Due date updated successfully",
       });
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error("Error updating due date:", error);
       toast({
         title: "Error",
         description: "Failed to update due date",
         variant: "destructive",
       });
+    },
+  });
+
+  // Wrapper functions to maintain the original API
+  const addTodo = async (task: string, dueDate: Date | null = null) => {
+    if (!task.trim() || !user || !contactId) return null;
+    
+    try {
+      return await addTodoMutation.mutateAsync({ task, dueDate });
+    } catch (error) {
+      return null;
     }
   };
 
+  const toggleTodoCompletion = async (todoId: string, currentStatus: boolean) => {
+    if (!user) return;
+
+    const newStatus = !currentStatus;
+    try {
+      await toggleTodoCompletionMutation.mutateAsync({ todoId, newStatus });
+    } catch (error) {
+      // Error handling is done in the mutation
+    }
+  };
+
+  const deleteTodo = async (todoId: string) => {
+    if (!user) return;
+    
+    try {
+      await deleteTodoMutation.mutateAsync(todoId);
+    } catch (error) {
+      // Error handling is done in the mutation
+    }
+  };
+
+  const updateTodoDueDate = async (todoId: string, newDate: Date | null) => {
+    if (!user) return;
+    
+    try {
+      await updateTodoDateMutation.mutateAsync({ todoId, newDate });
+    } catch (error) {
+      // Error handling is done in the mutation
+    }
+  };
+
+  // Helper functions to handle todo state changes
   const handleTodoAdded = (contactId: string, todo: Todo) => {
-    setTodos((prev) => [todo, ...prev]);
+    queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) => 
+      [todo, ...(oldTodos || [])]
+    );
     onTodoAdded?.(contactId, todo);
   };
 
   const handleTodoCompleted = (contactId: string, todoId: string, completed: boolean) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
+    queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+      (oldTodos || []).map((todo) =>
         todo.id === todoId ? { ...todo, completed } : todo
       )
     );
@@ -236,4 +252,4 @@ export function useTodos({ contactId, onTodoAdded, onTodoCompleted }: UseTodosPr
     handleTodoAdded,
     handleTodoCompleted,
   };
-} 
+}

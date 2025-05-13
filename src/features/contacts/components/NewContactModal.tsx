@@ -31,7 +31,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { X, Plus } from "lucide-react";
 import { getTagColor } from "../utils/contact-utils";
-import { useTags } from "@/context/TagContext";
+import { useTags } from "@/features/tags/hooks/useTags";
 
 interface NewContactModalProps {
   isOpen: boolean;

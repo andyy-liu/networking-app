@@ -1,18 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/lib/client";
-import { useAuth } from "../features/auth/context/AuthContext";
+import { useAuth } from "../../auth/hooks/useAuth";
+import { useCallback } from "react";
+import { TagContext } from "../types";
 
 // Default available tags
-const DEFAULT_TAGS = ["Recruiter", "Alumni", "Employee", "Other"];
-
-type TagContextType = {
-  availableTags: string[];
-  addTag: (tag: string) => void;
-  deleteTag: (tag: string) => Promise<boolean>;
-  isDefaultTag: (tag: string) => boolean;
-};
-
-const TagContext = createContext<TagContextType | undefined>(undefined);
+const DEFAULT_TAGS = ["Recruiter", "Alumni", "Employee"];
 
 export const TagProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -20,15 +13,8 @@ export const TagProvider: React.FC<{ children: React.ReactNode }> = ({
   const { user } = useAuth();
   const [availableTags, setAvailableTags] = useState<string[]>(DEFAULT_TAGS);
 
-  // Load tags when user changes
-  useEffect(() => {
-    if (user) {
-      fetchAllTags();
-    }
-  }, [user]);
-
   // Fetch all unique tags from existing contacts
-  const fetchAllTags = async () => {
+  const fetchAllTags = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -53,7 +39,14 @@ export const TagProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error processing tags:", error);
     }
-  };
+  }, [user]);
+
+  // Load tags when user changes
+  useEffect(() => {
+    if (user) {
+      fetchAllTags();
+    }
+  }, [user, fetchAllTags]);
 
   // Check if a tag is a default tag
   const isDefaultTag = (tag: string): boolean => {
@@ -126,10 +119,3 @@ export const TagProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 // Custom hook to use the tag context
-export const useTags = () => {
-  const context = useContext(TagContext);
-  if (context === undefined) {
-    throw new Error("useTags must be used within a TagProvider");
-  }
-  return context;
-};

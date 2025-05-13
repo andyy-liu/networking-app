@@ -11,10 +11,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Contact, ContactGroup } from "@/features/contacts/types";
-import { supabase } from "@/lib/client";
+import { Contact } from "@/features/contacts/types";
 import { toast } from "@/components/ui/use-toast";
-import { useAuth } from "@/features/auth/context/AuthContext";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useContactGroups } from "@/features/contacts/hooks/useContactGroups";
+import { useContactGroupMembers } from "@/features/contacts/hooks/useContactGroupMembers";
 
 interface AddToGroupModalProps {
   isOpen: boolean;
@@ -30,50 +31,17 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
   onGroupAdded,
 }) => {
   const { user } = useAuth();
-  const [groups, setGroups] = useState<ContactGroup[]>([]);
+  const { data: groups = [], createGroup } = useContactGroups();
+  const { addContactsToGroup } = useContactGroupMembers();
   const [newGroupName, setNewGroupName] = useState("");
   const [selectedGroupId, setSelectedGroupId] = useState<string | "new">("new");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (isOpen && user) {
-      fetchGroups();
+    if (groups.length > 0 && selectedGroupId === "new") {
+      setSelectedGroupId(groups[0].id);
     }
-  }, [isOpen, user]);
-
-  const fetchGroups = async () => {
-    if (!user) return;
-
-    try {
-      const { data, error } = await supabase
-        .from("contact_groups")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) {
-        throw error;
-      }
-
-      const transformedGroups: ContactGroup[] = data.map((item) => ({
-        id: item.id,
-        name: item.name,
-        userId: item.user_id,
-        createdAt: item.created_at,
-      }));
-
-      setGroups(transformedGroups);
-      if (transformedGroups.length > 0) {
-        setSelectedGroupId(transformedGroups[0].id);
-      }
-    } catch (error) {
-      console.error("Error fetching groups:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load contact groups",
-        variant: "destructive",
-      });
-    }
-  };
+  }, [groups, selectedGroupId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,42 +63,35 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
 
       // Create a new group if selected
       if (selectedGroupId === "new" && newGroupName.trim()) {
-        const { data, error } = await supabase
-          .from("contact_groups")
-          .insert({
-            name: newGroupName.trim(),
-            user_id: user.id,
-          })
-          .select("id")
-          .single();
-
-        if (error) throw error;
-        groupId = data.id;
+        const newGroup = await createGroup(newGroupName.trim());
+        if (newGroup) {
+          groupId = newGroup.id;
+        } else {
+          throw new Error("Failed to create group");
+        }
       }
 
       if (typeof groupId === "string" && groupId !== "new") {
         // Add contacts to the group
-        const groupMembers = selectedContacts.map((contact) => ({
-          contact_id: contact.id,
-          group_id: groupId,
-        }));
-
-        const { error } = await supabase
-          .from("contact_group_members")
-          .insert(groupMembers);
-
-        if (error) throw error;
-
-        toast({
-          title: "Success",
-          description: `${selectedContacts.length} contacts added to group`,
+        const contactIds = selectedContacts.map((contact) => contact.id);
+        const success = await addContactsToGroup({
+          groupId,
+          contactIds,
         });
 
-        onGroupAdded();
-        onClose();
+        if (success) {
+          toast({
+            title: "Success",
+            description: `${selectedContacts.length} contacts added to group`,
+          });
+          onGroupAdded();
+          onClose();
+        } else {
+          throw new Error("Failed to add contacts to group");
+        }
       }
     } catch (error) {
-      console.error("Error adding to group:", error);
+      console.error("Error adding contacts to group:", error);
       toast({
         title: "Error",
         description: "Failed to add contacts to group",
@@ -144,20 +105,18 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
   return (
     <Dialog
       open={isOpen}
-      onOpenChange={(open) => !open && onClose()}
+      onOpenChange={onClose}
     >
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Add to Group</DialogTitle>
         </DialogHeader>
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4 py-4"
-        >
-          <div className="space-y-2">
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4 py-4">
             <RadioGroup
               value={selectedGroupId}
-              onValueChange={(value) => setSelectedGroupId(value)}
+              onValueChange={setSelectedGroupId}
+              className="gap-3"
             >
               {groups.map((group) => (
                 <div
@@ -166,44 +125,45 @@ export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
                 >
                   <RadioGroupItem
                     value={group.id}
-                    id={`group-${group.id}`}
+                    id={group.id}
                   />
-                  <Label htmlFor={`group-${group.id}`}>{group.name}</Label>
+                  <Label htmlFor={group.id}>{group.name}</Label>
                 </div>
               ))}
-              <div className="flex items-start space-x-2">
+              <div className="flex items-center space-x-2">
                 <RadioGroupItem
                   value="new"
                   id="new-group"
-                  className="mt-2"
                 />
-                <div className="flex-1">
-                  <Label htmlFor="new-group">Create new group</Label>
-                  <Input
-                    className="mt-1"
-                    placeholder="Enter new group name"
-                    value={newGroupName}
-                    onChange={(e) => setNewGroupName(e.target.value)}
-                    disabled={selectedGroupId !== "new"}
-                  />
-                </div>
+                <Label htmlFor="new-group">Create new group</Label>
               </div>
             </RadioGroup>
+
+            {selectedGroupId === "new" && (
+              <div className="space-y-2">
+                <Label htmlFor="group-name">Group Name</Label>
+                <Input
+                  id="group-name"
+                  value={newGroupName}
+                  onChange={(e) => setNewGroupName(e.target.value)}
+                  placeholder="Enter group name"
+                  required={selectedGroupId === "new"}
+                />
+              </div>
+            )}
           </div>
-          <DialogFooter className="pt-4">
+          <DialogFooter>
             <DialogClose asChild>
               <Button
-                variant="outline"
                 type="button"
+                variant="outline"
               >
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
-              disabled={
-                isLoading || (selectedGroupId === "new" && !newGroupName.trim())
-              }
+              disabled={isLoading}
             >
               {isLoading ? "Adding..." : "Add to Group"}
             </Button>

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useAuth } from "@/features/auth/context/AuthContext";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Contact } from "@/features/contacts/types";
 import { toast } from "@/components/ui/use-toast";
 import { useTodos } from "@/features/todos/hooks/useTodos";
-import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as contactsService from '@/features/contacts/services/contacts';
+import { useContactSelection } from './useContactSelection';
 
 export function useContacts() {
   const { user } = useAuth();
@@ -128,25 +128,10 @@ export function useContacts() {
         description: "Failed to delete contacts",
         variant: "destructive",
       });
-    },
-  });
+    },  });
 
-  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
-
-  const selectContact = (contact: Contact) => {
-    setSelectedContacts(prev => {
-      const isSelected = prev.some(c => c.id === contact.id);
-      if (isSelected) {
-        return prev.filter(c => c.id !== contact.id);
-      } else {
-        return [...prev, contact];
-      }
-    });
-  };
-
-  const clearSelectedContacts = () => {
-    setSelectedContacts([]);
-  };
+  // Use the shared contact selection hook
+  const contactSelection = useContactSelection();
 
   return {
     contacts,
@@ -155,8 +140,7 @@ export function useContacts() {
     addContact: addContactMutation.mutate,
     updateContact: updateContactMutation.mutate,
     deleteContacts: deleteContactsMutation.mutate,
-    selectedContacts,
-    selectContact,
-    clearSelectedContacts,
+    // Spread the contact selection properties
+    ...contactSelection
   };
 }

@@ -3,10 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { ContactTable } from "@/features/contacts/components/ContactTable";
-import { Contact, ContactTag, ContactGroup } from "@/features/contacts/types";
+import { Contact, ContactTag } from "@/features/contacts/types";
 import { toast } from "@/components/ui/use-toast";
-import { supabase } from "@/lib/client";
-import { useAuth } from "@/features/auth/context/AuthContext";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Trash2, Pencil, Save, X } from "lucide-react";
 import {
@@ -20,260 +19,122 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
+import { useContactGroup } from "@/features/contacts/hooks/useContactGroup";
+import { useContactFilters } from "@/features/contacts/hooks/useContactFilters";
+import { useContactSelection } from "@/features/contacts/hooks/useContactSelection";
 
 const GroupContacts = () => {
-  const { groupId } = useParams<{ groupId: string }>();
+  const { groupId = "" } = useParams<{ groupId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [groupInfo, setGroupInfo] = useState<ContactGroup | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
-  const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
-  const [contactForNotes, setContactForNotes] = useState<Contact | null>(null);
-  const [sortKey, setSortKey] = useState<string>("");
-  const [sortDirection, setSortDirection] = useState<
-    "asc" | "desc" | "default"
-  >("default");
-  const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(
-    null
-  );
-  const [loading, setLoading] = useState(true);
-  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
 
-  // New states for group renaming
+  // Use the shared contact selection hook
+  const { selectedContacts, toggleContactSelection, clearSelectedContacts } =
+    useContactSelection();
+
+  // State for group renaming
   const [editingGroupName, setEditingGroupName] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
 
-  // New state for deletion confirmation
+  // State for deletion confirmation
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
 
-  // Fetch group info and contacts
+  // Use the contactGroup hook to fetch group data and contacts
+  const {
+    group,
+    contacts,
+    isLoading,
+    isError,
+    updateGroupName: updateGroupNameMutation,
+    updateContact: updateContactMutation,
+    removeContacts: removeContactsMutation,
+    isUpdatingGroup,
+  } = useContactGroup(groupId);
+
+  // Set newGroupName when group data is loaded
   useEffect(() => {
-    if (user && groupId) {
-      fetchGroupInfo();
-      fetchGroupContacts();
-    } else {
-      setContacts([]);
-      setLoading(false);
+    if (group) {
+      setNewGroupName(group.name);
     }
-  }, [user, groupId]);
+  }, [group]);
 
-  const fetchGroupInfo = async () => {
-    if (!user || !groupId) return;
-
-    try {
-      const { data, error } = await supabase
-        .from("contact_groups")
-        .select("*")
-        .eq("id", groupId)
-        .eq("user_id", user.id)
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      setGroupInfo({
-        id: data.id,
-        name: data.name,
-        userId: data.user_id,
-        createdAt: data.created_at,
-      });
-
-      // Initialize newGroupName with current name
-      setNewGroupName(data.name);
-    } catch (error) {
-      console.error("Error fetching group info:", error);
+  // Navigate away if there's an error fetching the group
+  useEffect(() => {
+    if (isError) {
       toast({
         title: "Error",
         description: "Failed to load group information",
         variant: "destructive",
       });
-      // Navigate back to home if group not found
       navigate("/");
     }
-  };
+  }, [isError, navigate]);
 
-  const fetchGroupContacts = async () => {
-    if (!user || !groupId) return;
+  // Use the contactFilters hook for sorting and filtering
+  const {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    filteredAndSortedContacts,
+    handleSort,
+    handleFilterByTag,
+  } = useContactFilters(contacts);
 
-    setLoading(true);
-    try {
-      // Get contact IDs in this group
-      const { data: memberData, error: memberError } = await supabase
-        .from("contact_group_members")
-        .select("contact_id")
-        .eq("group_id", groupId);
+  // Handle group name update
+  const handleUpdateGroupName = async () => {
+    if (!newGroupName.trim()) return;
 
-      if (memberError) {
-        throw memberError;
-      }
+    const success = await updateGroupNameMutation(newGroupName.trim());
 
-      if (memberData.length === 0) {
-        setContacts([]);
-        setLoading(false);
-        return;
-      }
-
-      // Get contact details
-      const contactIds = memberData.map((member) => member.contact_id);
-      const { data: contactsData, error: contactsError } = await supabase
-        .from("contacts")
-        .select("*")
-        .in("id", contactIds)
-        .eq("user_id", user.id);
-
-      if (contactsError) {
-        throw contactsError;
-      }
-
-      // Transform database data to match our Contact type
-      const transformedContacts: Contact[] = contactsData.map((item) => ({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        role: item.role || "",
-        company: item.company || "",
-        tags: item.tags as ContactTag[],
-        dateOfContact: item.dateofcontact,
-        status: item.status as Contact["status"],
-      }));
-
-      setContacts(transformedContacts);
-    } catch (error) {
-      console.error("Error fetching group contacts:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load contacts in this group",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // New function to handle group name update
-  const updateGroupName = async () => {
-    if (!user || !groupId || !newGroupName.trim()) return;
-
-    try {
-      const { error } = await supabase
-        .from("contact_groups")
-        .update({ name: newGroupName.trim() })
-        .eq("id", groupId)
-        .eq("user_id", user.id);
-
-      if (error) throw error;
-
-      // Update local state
-      if (groupInfo) {
-        setGroupInfo({
-          ...groupInfo,
-          name: newGroupName.trim(),
-        });
-      }
-
+    if (success) {
       toast({
         title: "Group updated",
         description: "Group name has been updated successfully.",
       });
-    } catch (error) {
-      console.error("Error updating group name:", error);
+    } else {
       toast({
         title: "Error",
         description: "Failed to update group name",
         variant: "destructive",
       });
-    } finally {
-      setEditingGroupName(false);
     }
+
+    setEditingGroupName(false);
   };
+  // Handle removing contacts from group
+  const handleRemoveContacts = async () => {
+    if (selectedContacts.length === 0) return;
 
-  // New function to handle removing contacts from group
-  const removeContactsFromGroup = async () => {
-    if (!user || !groupId || selectedContacts.length === 0) return;
+    const contactIds = selectedContacts.map((contact) => contact.id);
+    const success = await removeContactsMutation(contactIds);
 
-    try {
-      const contactIds = selectedContacts.map((contact) => contact.id);
-
-      const { error } = await supabase
-        .from("contact_group_members")
-        .delete()
-        .eq("group_id", groupId)
-        .in("contact_id", contactIds);
-
-      if (error) throw error;
-
-      // Update local state
-      setContacts(
-        contacts.filter((contact) => !contactIds.includes(contact.id))
-      );
-      setSelectedContacts([]);
-
+    if (success) {
+      clearSelectedContacts();
       toast({
         title: "Contacts removed",
         description: `${contactIds.length} contact(s) removed from group.`,
       });
-    } catch (error) {
-      console.error("Error removing contacts from group:", error);
+    } else {
       toast({
         title: "Error",
         description: "Failed to remove contacts from group",
         variant: "destructive",
       });
-    } finally {
-      setShowRemoveDialog(false);
     }
+
+    setShowRemoveDialog(false);
   };
 
-  const handleEditContact = (contact: Contact) => {
-    setContactToEdit(contact);
-    setIsEditModalOpen(true);
-  };
-
-  const handleViewNotes = (contact: Contact) => {
-    setContactForNotes(contact);
-    setIsNotesModalOpen(true);
-  };
-
+  // Handle contact update
   const handleUpdateContact = async (updatedContact: Contact) => {
-    if (!user) return;
+    const success = await updateContactMutation(updatedContact);
 
-    try {
-      // Update in Supabase
-      const { error } = await supabase
-        .from("contacts")
-        .update({
-          name: updatedContact.name,
-          email: updatedContact.email,
-          role: updatedContact.role,
-          company: updatedContact.company,
-          tags: updatedContact.tags,
-          dateofcontact: updatedContact.dateOfContact,
-          status: updatedContact.status,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", updatedContact.id)
-        .eq("user_id", user.id);
-
-      if (error) {
-        throw error;
-      }
-
-      // Update local state
-      const updatedContacts = contacts.map((contact) =>
-        contact.id === updatedContact.id ? updatedContact : contact
-      );
-
-      setContacts(updatedContacts);
-
+    if (success) {
       toast({
         title: "Contact updated",
         description: `${updatedContact.name} has been updated.`,
       });
-    } catch (error) {
-      console.error("Error updating contact:", error);
+    } else {
       toast({
         title: "Error",
         description: "Failed to update the contact",
@@ -281,61 +142,10 @@ const GroupContacts = () => {
       });
     }
   };
-
-  const handleSort = (key: string, direction: "asc" | "desc" | "default") => {
-    setSortKey(key);
-    setSortDirection(direction);
-  };
-
-  const handleFilterByTag = (tag: ContactTag | null) => {
-    setActiveTagFilter(tag);
-  };
-
+  // Handle contact selection
   const handleSelectContact = (contact: Contact) => {
-    const isSelected = selectedContacts.some((c) => c.id === contact.id);
-    if (!isSelected) {
-      setSelectedContacts((prev) => [...prev, contact]);
-    } else {
-      setSelectedContacts((prev) => prev.filter((c) => c.id !== contact.id));
-    }
+    toggleContactSelection(contact);
   };
-
-  // Apply sorting and filtering
-  const filteredAndSortedContacts = React.useMemo(() => {
-    // First apply tag filtering
-    const filtered = activeTagFilter
-      ? contacts.filter((contact) => contact.tags.includes(activeTagFilter))
-      : contacts;
-
-    // Then apply sorting
-    if (sortKey && sortDirection !== "default") {
-      return [...filtered].sort((a, b) => {
-        const aValue = a[sortKey as keyof Contact];
-        const bValue = b[sortKey as keyof Contact];
-
-        // Handle different types of values
-        if (typeof aValue === "string" && typeof bValue === "string") {
-          // For dates, convert to timestamp first
-          if (sortKey === "dateOfContact") {
-            const aDate = new Date(aValue).getTime();
-            const bDate = new Date(bValue).getTime();
-            return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
-          }
-
-          // For normal strings
-          return sortDirection === "asc"
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue);
-        }
-
-        // Fallback for non-string values
-        return 0;
-      });
-    }
-
-    return filtered;
-  }, [contacts, sortKey, sortDirection, activeTagFilter]);
-
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
@@ -367,8 +177,8 @@ const GroupContacts = () => {
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={updateGroupName}
-                      disabled={!newGroupName.trim()}
+                      onClick={handleUpdateGroupName}
+                      disabled={!newGroupName.trim() || isUpdatingGroup}
                     >
                       <Save className="h-4 w-4" />
                     </Button>
@@ -377,7 +187,7 @@ const GroupContacts = () => {
                       variant="ghost"
                       onClick={() => {
                         setEditingGroupName(false);
-                        setNewGroupName(groupInfo?.name || "");
+                        setNewGroupName(group?.name || "");
                       }}
                     >
                       <X className="h-4 w-4" />
@@ -385,7 +195,7 @@ const GroupContacts = () => {
                   </div>
                 ) : (
                   <h2 className="text-2xl font-semibold group flex items-center gap-2">
-                    {groupInfo?.name || "Group"}
+                    {group?.name || "Group"}
                     <Pencil
                       className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                       onClick={() => setEditingGroupName(true)}
@@ -410,7 +220,7 @@ const GroupContacts = () => {
             </div>
           </div>
 
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
@@ -423,7 +233,7 @@ const GroupContacts = () => {
                 sortDirection={sortDirection}
                 onFilterByTag={handleFilterByTag}
                 activeTagFilter={activeTagFilter}
-                onEditContact={handleEditContact}
+                onEditContact={handleUpdateContact}
                 onUpdateContact={handleUpdateContact}
                 selectedContacts={selectedContacts}
                 onSelectContact={handleSelectContact}
@@ -450,7 +260,7 @@ const GroupContacts = () => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={removeContactsFromGroup}>
+            <AlertDialogAction onClick={handleRemoveContacts}>
               Remove
             </AlertDialogAction>
           </AlertDialogFooter>
