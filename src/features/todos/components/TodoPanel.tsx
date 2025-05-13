@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Contact } from "@/features/contacts/types";
 import { Todo } from "../types";
 import { supabase } from "@/lib/client";
@@ -92,14 +92,7 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
     content: "",
   });
 
-  useEffect(() => {
-    if (open && contact && user) {
-      fetchTodos();
-      fetchNote();
-    }
-  }, [open, contact, user]);
-
-  const fetchNote = async () => {
+  const fetchNote = useCallback(async () => {
     if (!contact || !user) return;
 
     setLoading(true);
@@ -132,7 +125,14 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [contact, user, editor]);
+
+  useEffect(() => {
+    if (open && contact && user) {
+      fetchTodos();
+      fetchNote();
+    }
+  }, [open, contact, user, fetchTodos, fetchNote]);
 
   const handleAddTodo = async () => {
     if (!newTodo.trim() || !contact || !dueDate) {
