@@ -25,13 +25,32 @@ export function useContacts() {
     },
     enabled: !!user, // only run the query if user is authenticated
   });
-  
-  // Fetch todos when the contacts array changes
+    // Fetch todos when the contacts array changes and update contacts with todos
   useEffect(() => {
     if (contacts && contacts.length > 0) {
-      fetchTodos(contacts);
+      // Using async IIFE to handle async operation
+      (async () => {
+        try {
+          const todos = await fetchTodos(contacts);
+          if (todos) {
+            // Update the contact's todos in the React Query cache
+            queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) => {
+              if (!oldContacts) return [];
+              
+              return oldContacts.map(contact => ({
+                ...contact,
+                todos: todos.filter(todo => todo.contactId === contact.id)
+              }));
+            });
+            
+            console.log("Todos loaded and attached to contacts:", todos.length);
+          }
+        } catch (err) {
+          console.error("Error loading todos:", err);
+        }
+      })();
     }
-  }, [contacts, fetchTodos]);
+  }, [contacts, fetchTodos, queryClient, user?.id]);
   
   // Handle errors in fetching contacts
   useEffect(() => {

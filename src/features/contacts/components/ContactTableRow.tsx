@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Contact, ContactStatus } from "@/features/contacts/types";
 import { Todo } from "@/features/todos/types";
@@ -64,7 +64,6 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
 
   // Use the shared tags context
   const { availableTags, addTag } = useTags();
-
   // Update local state when contact prop changes
   useEffect(() => {
     setName(contact.name);
@@ -74,6 +73,13 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
     setDate(new Date(`${contact.dateOfContact}T00:00:00`));
     setStatus(contact.status);
     setTags(contact.tags);
+
+    // Debug: Check if todos is properly passed
+    if (contact.todos) {
+      console.log(`Updated todos for ${contact.name}:`, contact.todos.length);
+    } else {
+      console.log(`No todos available for ${contact.name}`);
+    }
   }, [contact]);
 
   // Handle field updates
@@ -109,18 +115,22 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
       addTag(newTag);
     }
   };
-
   const handleOpenTodoPanel = () => {
     if (onOpenTodoPanel) {
       onOpenTodoPanel(contact);
     }
-  };
-
-  // Find the most recent incomplete todo
-  const getLatestTodo = (): Todo | null => {
+  }; // Calculate latest todo and update when contact or todos change
+  const latestTodo = useMemo(() => {
+    // Directly compute the latest todo here
     if (!contact.todos || contact.todos.length === 0) {
       return null;
     }
+
+    // Debug info
+    console.log(`Recalculating latest todo for ${contact.name}:`, {
+      todoCount: contact.todos.length,
+      todoData: contact.todos,
+    });
 
     // First look for incomplete todos
     const incompleteTodos = contact.todos.filter((todo) => !todo.completed);
@@ -147,9 +157,12 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )[0];
-  };
+  }, [contact.todos, contact.name]);
 
-  const latestTodo = getLatestTodo();
+  // Debug: Log the latestTodo value
+  useEffect(() => {
+    console.log(`Latest todo for ${contact.name}:`, latestTodo);
+  }, [latestTodo, contact.name]);
 
   return (
     <TableRow>
