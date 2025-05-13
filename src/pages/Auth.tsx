@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,8 +20,15 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp, resetPassword, signInWithOAuth } = useAuth();
+  const { user, signIn, signUp, resetPassword, signInWithOAuth } = useAuth();
+  const navigate = useNavigate();
 
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
   const handleEmailAuth = async (
     e: React.FormEvent,
     mode: "login" | "signup" | "reset"
@@ -29,22 +37,73 @@ const Auth = () => {
     setLoading(true);
 
     try {
+      console.log(`Attempting ${mode} for email: ${email}`);
       let result;
 
       if (mode === "login") {
+        // Perform login and capture result
+        console.log("Calling signIn function with:", {
+          email,
+          passwordLength: password.length,
+        });
         result = await signIn(email, password);
-      } else if (mode === "signup") {
-        result = await signUp(email, password);
-      } else if (mode === "reset") {
-        result = await resetPassword(email);
-      }
 
+        // Check user state after login attempt
+        console.log("Login result:", {
+          success: !result?.error,
+          error: result?.error?.message || "none",
+          userAfterLogin: !!user,
+        });
+
+        // If we have a user object but got an error, something is inconsistent
+        if (result?.error && user) {
+          console.warn("Inconsistent state: Error reported but user exists");
+        }
+
+        // If successful but no user, delay and check again (async update may be pending)
+        if (!result?.error && !user) {
+          console.log("No error but user not set yet, might be async");
+          setTimeout(() => {
+            console.log("Delayed user state check:", { userExists: !!user });
+          }, 500);
+        }
+      } else if (mode === "signup") {
+        console.log("Calling signUp function with:", {
+          email,
+          passwordLength: password.length,
+        });
+        result = await signUp(email, password);
+        console.log("Signup result:", {
+          success: !result?.error,
+          error: result?.error?.message || "none",
+        });
+      } else if (mode === "reset") {
+        console.log("Calling resetPassword function with:", { email });
+        result = await resetPassword(email);
+        console.log("Password reset result:", {
+          success: !result?.error,
+          error: result?.error?.message || "none",
+        });
+      }
       if (result?.error) {
+        console.error("Auth error detected:", result.error.message);
         toast({
           title: "Authentication error",
-          description: result.error.message,
+          description: result.error.message || "An error occurred",
           variant: "destructive",
         });
+      } else if (mode === "login") {
+        console.log("Login successful, showing toast and redirecting");
+        toast({
+          title: "Login successful",
+          description: "You have been signed in successfully.",
+        });
+
+        // Explicitly redirect to home page after successful login
+        setTimeout(() => {
+          console.log("Executing navigation to home page");
+          navigate("/");
+        }, 100); // Small delay to ensure toast is displayed
       } else if (mode === "signup") {
         toast({
           title: "Account created",

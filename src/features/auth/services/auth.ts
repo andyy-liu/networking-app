@@ -20,16 +20,43 @@ export async function signInWithPassword(email: string, password: string): Promi
   session: Session | null;
   error: AuthError | null;
 }> {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  console.log("Calling Supabase signInWithPassword for:", email);
+  
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  return { 
-    user: data?.user ?? null,
-    session: data?.session ?? null,
-    error 
-  };
+    console.log("Supabase auth response:", { 
+      hasUser: !!data?.user, 
+      hasSession: !!data?.session,
+      hasError: !!error,
+      errorMessage: error?.message || "none"
+    });
+
+    if (error) {
+      console.error("Supabase auth error:", error.message);
+    } else if (data?.user && data?.session) {
+      console.log("Supabase auth success - user and session found");
+    } else {
+      console.warn("Supabase auth partial success - missing user or session");
+    }
+
+    return { 
+      user: data?.user ?? null,
+      session: data?.session ?? null,
+      error 
+    };
+  } catch (err) {
+    const error = err as AuthError;
+    console.error("Unexpected error during sign in:", error);
+    return {
+      user: null,
+      session: null,
+      error
+    };
+  }
 }
 
 /**
@@ -73,8 +100,23 @@ export async function signInWithOAuth(provider: 'google' | 'github' | 'facebook'
  * Sign out the current user
  */
 export async function signOut(): Promise<{ error: AuthError | null }> {
-  const { error } = await supabase.auth.signOut();
-  return { error };
+  console.log("Auth service: Calling Supabase signOut");
+  
+  try {
+    const { error } = await supabase.auth.signOut();
+    
+    if (error) {
+      console.error("Error during Supabase signOut:", error.message);
+    } else {
+      console.log("Supabase signOut successful");
+    }
+    
+    return { error };
+  } catch (err) {
+    const error = err as AuthError;
+    console.error("Unexpected error during signOut:", error);
+    return { error };
+  }
 }
 
 /**
@@ -107,7 +149,13 @@ export async function updateProfile(displayName: string): Promise<{ error: AuthE
  * Set up auth state change listener
  */
 export function onAuthStateChange(callback: (event: string, session: Session | null) => void) {
+  console.log("Setting up auth state change listener");
+  
   const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    console.log(`Auth state change detected: ${event}`, { 
+      hasSession: !!session,
+      userId: session?.user?.id
+    });
     callback(event, session);
   });
   

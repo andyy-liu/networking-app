@@ -3,12 +3,34 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/use-toast";
 
 export const Header: React.FC = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
-    await signOut();
+    try {
+      console.log("Header: Signing out user");
+      await signOut();
+
+      // Show success message
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully.",
+      });
+
+      // Redirect to login page
+      navigate("/auth");
+    } catch (error) {
+      console.error("Error during sign out:", error);
+      toast({
+        title: "Sign out failed",
+        description: "An error occurred while signing out.",
+        variant: "destructive",
+      });
+    }
   };
 
   const getInitials = () => {
