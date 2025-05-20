@@ -20,7 +20,7 @@ import {
 import { TagManagementModal } from "@/features/contacts/components/TagManagementModal";
 import { TodoPanel } from "@/features/todos/components/TodoPanel";
 import { useContacts } from "@/features/contacts/hooks/useContacts";
-import { useContactFilters } from "@/hooks/useContactFilters";
+import { useContactFilters } from "@/features/contacts/hooks/useContactFilters";
 import { useTodos } from "@/features/todos/hooks/useTodos";
 import { Plus } from "lucide-react";
 
@@ -34,7 +34,7 @@ const Index = () => {
     updateContact,
     deleteContacts,
     selectedContacts,
-    selectContact,
+    toggleContactSelection,
     clearSelectedContacts,
   } = useContacts();
 
@@ -150,7 +150,7 @@ const Index = () => {
                 onEditContact={handleEditContact}
                 onUpdateContact={updateContact}
                 selectedContacts={selectedContacts}
-                onSelectContact={selectContact}
+                onSelectContact={toggleContactSelection}
                 onOpenTodoPanel={handleOpenTodoPanel}
               />
             </div>

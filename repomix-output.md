@@ -13,6 +13,437 @@ The content is organized as follows:
 2. Repository information
 3. Directory structure
 4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  a. A header with the file path (## File: path/to/file)
+  b. The full contents of the file in a code block
+
+## Usage Guidelines
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+
+## Notes
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+
+# Directory Structure
+```
+.github/copilot-instructions.md
+.gitignore
+components.json
+eslint.config.js
+index.html
+package.json
+postcss.config.js
+public/_redirects
+public/placeholder.svg
+public/robots.txt
+README.md
+repomix-output.xml
+src/App.css
+src/App.tsx
+src/components/layout/Header.tsx
+src/components/layout/Sidebar.tsx
+src/components/ui/accordion.tsx
+src/components/ui/alert-dialog.tsx
+src/components/ui/alert.tsx
+src/components/ui/aspect-ratio.tsx
+src/components/ui/avatar-with-initial.tsx
+src/components/ui/avatar.tsx
+src/components/ui/badge.tsx
+src/components/ui/breadcrumb.tsx
+src/components/ui/button.tsx
+src/components/ui/calendar.tsx
+src/components/ui/card.tsx
+src/components/ui/carousel.tsx
+src/components/ui/chart.tsx
+src/components/ui/checkbox.tsx
+src/components/ui/collapsible.tsx
+src/components/ui/command.tsx
+src/components/ui/context-menu.tsx
+src/components/ui/dialog.tsx
+src/components/ui/drawer.tsx
+src/components/ui/dropdown-menu.tsx
+src/components/ui/form.tsx
+src/components/ui/hover-card.tsx
+src/components/ui/input-otp.tsx
+src/components/ui/input.tsx
+src/components/ui/label.tsx
+src/components/ui/Logo.tsx
+src/components/ui/menubar.tsx
+src/components/ui/navigation-menu.tsx
+src/components/ui/pagination.tsx
+src/components/ui/popover.tsx
+src/components/ui/progress.tsx
+src/components/ui/radio-group.tsx
+src/components/ui/resizable.tsx
+src/components/ui/scroll-area.tsx
+src/components/ui/select.tsx
+src/components/ui/separator.tsx
+src/components/ui/sheet.tsx
+src/components/ui/sidebar.tsx
+src/components/ui/skeleton.tsx
+src/components/ui/slider.tsx
+src/components/ui/sonner.tsx
+src/components/ui/switch.tsx
+src/components/ui/table.tsx
+src/components/ui/tabs.tsx
+src/components/ui/textarea.tsx
+src/components/ui/toast.tsx
+src/components/ui/toaster.tsx
+src/components/ui/toggle-group.tsx
+src/components/ui/toggle.tsx
+src/components/ui/tooltip.tsx
+src/components/ui/use-toast.ts
+src/features/auth/components/AuthSpinner.tsx
+src/features/auth/components/ProtectedRoute.tsx
+src/features/auth/context/AuthContext.tsx
+src/features/auth/hooks/useAuth.ts
+src/features/auth/services/auth.ts
+src/features/auth/types/index.ts
+src/features/auth/utils/auth-errors.ts
+src/features/contacts/components/AddToGroupModal.tsx
+src/features/contacts/components/ContactEmptyState.tsx
+src/features/contacts/components/ContactTable.tsx
+src/features/contacts/components/ContactTableHeader.tsx
+src/features/contacts/components/ContactTableRow.tsx
+src/features/contacts/components/NewContactModal.tsx
+src/features/contacts/components/TagManagementModal.tsx
+src/features/contacts/hooks/useContactFilters.ts
+src/features/contacts/hooks/useContactGroup.ts
+src/features/contacts/hooks/useContactGroupMembers.ts
+src/features/contacts/hooks/useContactGroups.ts
+src/features/contacts/hooks/useContacts.ts
+src/features/contacts/hooks/useContactSelection.ts
+src/features/contacts/services/contactGroupMembers.ts
+src/features/contacts/services/contactGroups.ts
+src/features/contacts/services/contacts.ts
+src/features/contacts/types/index.ts
+src/features/contacts/utils/contact-utils.ts
+src/features/tags/context/TagContext.tsx
+src/features/tags/hooks/useTags.ts
+src/features/tags/types/index.ts
+src/features/todos/components/AddTaskDialog.tsx
+src/features/todos/components/TodoFilters.tsx
+src/features/todos/components/TodoPanel.tsx
+src/features/todos/components/TodoTable.tsx
+src/features/todos/hooks/useTodoFilters.ts
+src/features/todos/hooks/useTodos.ts
+src/features/todos/services/todos.ts
+src/features/todos/types/index.ts
+src/hooks/use-mobile.tsx
+src/hooks/use-toast.ts
+src/hooks/useContactFilters.ts
+src/index.css
+src/lib/client.ts
+src/lib/supabase.ts
+src/lib/utils.ts
+src/main.tsx
+src/pages/Auth.tsx
+src/pages/GroupContacts.tsx
+src/pages/Index.tsx
+src/pages/NotFound.tsx
+src/pages/Settings.tsx
+src/pages/Todos.tsx
+src/vite-env.d.ts
+supabase/.temp/cli-latest
+supabase/config.toml
+tailwind.config.ts
+tsconfig.app.json
+tsconfig.json
+tsconfig.node.json
+vercel.json
+vite.config.ts
+```
+
+# Files
+
+## File: .github/copilot-instructions.md
+````markdown
+You are an agent - please keep going until the user’s query is completely resolved, before ending your turn and yielding back to the user. Only terminate your turn when you are sure that the problem is solved.
+
+If you are not sure about file content or codebase structure pertaining to the user’s request, use your tools to read files and gather the relevant information: do NOT guess or make up an answer.
+
+You MUST plan extensively before each function call, and reflect extensively on the outcomes of the previous function calls. DO NOT do this entire process by making function calls only, as this can impair your ability to solve the problem and think insightfully.
+````
+
+## File: components.json
+````json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/index.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+````
+
+## File: eslint.config.js
+````javascript
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
+
+export default tseslint.config(
+  { ignores: ["dist"] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
+      "@typescript-eslint/no-unused-vars": "off",
+    },
+  }
+);
+````
+
+## File: postcss.config.js
+````javascript
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+````
+
+## File: public/_redirects
+````
+/* /index.html 200
+````
+
+## File: public/placeholder.svg
+````
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" fill="none"><rect width="1200" height="1200" fill="#EAEAEA" rx="3"/><g opacity=".5"><g opacity=".5"><path fill="#FAFAFA" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/><path stroke="#C9C9C9" stroke-width="2.418" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/></g><path stroke="url(#a)" stroke-width="2.418" d="M0-1.209h553.581" transform="scale(1 -1) rotate(45 1163.11 91.165)"/><path stroke="url(#b)" stroke-width="2.418" d="M404.846 598.671h391.726"/><path stroke="url(#c)" stroke-width="2.418" d="M599.5 795.742V404.017"/><path stroke="url(#d)" stroke-width="2.418" d="m795.717 796.597-391.441-391.44"/><path fill="#fff" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/><g clip-path="url(#e)"><path fill="#666" fill-rule="evenodd" d="M616.426 586.58h-31.434v16.176l3.553-3.554.531-.531h9.068l.074-.074 8.463-8.463h2.565l7.18 7.181V586.58Zm-15.715 14.654 3.698 3.699 1.283 1.282-2.565 2.565-1.282-1.283-5.2-5.199h-6.066l-5.514 5.514-.073.073v2.876a2.418 2.418 0 0 0 2.418 2.418h26.598a2.418 2.418 0 0 0 2.418-2.418v-8.317l-8.463-8.463-7.181 7.181-.071.072Zm-19.347 5.442v4.085a6.045 6.045 0 0 0 6.046 6.045h26.598a6.044 6.044 0 0 0 6.045-6.045v-7.108l1.356-1.355-1.282-1.283-.074-.073v-17.989h-38.689v23.43l-.146.146.146.147Z" clip-rule="evenodd"/></g><path stroke="#C9C9C9" stroke-width="2.418" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/></g><defs><linearGradient id="a" x1="554.061" x2="-.48" y1=".083" y2=".087" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="b" x1="796.912" x2="404.507" y1="599.963" y2="599.965" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="c" x1="600.792" x2="600.794" y1="403.677" y2="796.082" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="d" x1="404.85" x2="796.972" y1="403.903" y2="796.02" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><clipPath id="e"><path fill="#fff" d="M581.364 580.535h38.689v38.689h-38.689z"/></clipPath></defs></svg>
+````
+
+## File: public/robots.txt
+````
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /
+````
+
+## File: repomix-output.xml
+````xml
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+4. Repository files, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+<additional_info>
+
+</additional_info>
+
+</file_summary>
+
+<directory_structure>
+.cursorrules
+.gitignore
+components.json
+eslint.config.js
+index.html
+package.json
+postcss.config.js
+public/_redirects
+public/placeholder.svg
+public/robots.txt
+README.md
+repomix-output.md
+src/App.css
+src/App.tsx
+src/components/auth/ProtectedRoute.tsx
+src/components/contacts/AddToGroupModal.tsx
+src/components/contacts/contact-utils.ts
+src/components/contacts/ContactEmptyState.tsx
+src/components/contacts/ContactTable.tsx
+src/components/contacts/ContactTableHeader.tsx
+src/components/contacts/ContactTableRow.tsx
+src/components/contacts/NewContactModal.tsx
+src/components/contacts/TagManagementModal.tsx
+src/components/contacts/TodoPanel.tsx
+src/components/icons/Logo.tsx
+src/components/layout/Header.tsx
+src/components/layout/Sidebar.tsx
+src/components/todos/TodoTable.tsx
+src/components/ui/accordion.tsx
+src/components/ui/alert-dialog.tsx
+src/components/ui/alert.tsx
+src/components/ui/aspect-ratio.tsx
+src/components/ui/avatar-with-initial.tsx
+src/components/ui/avatar.tsx
+src/components/ui/badge.tsx
+src/components/ui/breadcrumb.tsx
+src/components/ui/button.tsx
+src/components/ui/calendar.tsx
+src/components/ui/card.tsx
+src/components/ui/carousel.tsx
+src/components/ui/chart.tsx
+src/components/ui/checkbox.tsx
+src/components/ui/collapsible.tsx
+src/components/ui/command.tsx
+src/components/ui/context-menu.tsx
+src/components/ui/dialog.tsx
+src/components/ui/drawer.tsx
+src/components/ui/dropdown-menu.tsx
+src/components/ui/form.tsx
+src/components/ui/hover-card.tsx
+src/components/ui/input-otp.tsx
+src/components/ui/input.tsx
+src/components/ui/label.tsx
+src/components/ui/menubar.tsx
+src/components/ui/navigation-menu.tsx
+src/components/ui/pagination.tsx
+src/components/ui/popover.tsx
+src/components/ui/progress.tsx
+src/components/ui/radio-group.tsx
+src/components/ui/resizable.tsx
+src/components/ui/scroll-area.tsx
+src/components/ui/select.tsx
+src/components/ui/separator.tsx
+src/components/ui/sheet.tsx
+src/components/ui/sidebar.tsx
+src/components/ui/skeleton.tsx
+src/components/ui/slider.tsx
+src/components/ui/sonner.tsx
+src/components/ui/switch.tsx
+src/components/ui/table.tsx
+src/components/ui/tabs.tsx
+src/components/ui/textarea.tsx
+src/components/ui/toast.tsx
+src/components/ui/toaster.tsx
+src/components/ui/toggle-group.tsx
+src/components/ui/toggle.tsx
+src/components/ui/tooltip.tsx
+src/components/ui/use-toast.ts
+src/context/AuthContext.tsx
+src/context/TagContext.tsx
+src/hooks/use-mobile.tsx
+src/hooks/use-toast.ts
+src/hooks/useContactFilters.ts
+src/hooks/useContacts.ts
+src/hooks/useTodos.ts
+src/index.css
+src/lib/client.ts
+src/lib/supabase.ts
+src/lib/types.ts
+src/lib/utils.ts
+src/main.tsx
+src/pages/Auth.tsx
+src/pages/GroupContacts.tsx
+src/pages/Index.tsx
+src/pages/NotFound.tsx
+src/pages/Settings.tsx
+src/pages/Todos.tsx
+src/services/contacts.ts
+src/vite-env.d.ts
+supabase/.temp/cli-latest
+supabase/config.toml
+tailwind.config.ts
+tsconfig.app.json
+tsconfig.json
+tsconfig.node.json
+vercel.json
+vite.config.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="repomix-output.md">
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+# File Summary
+
+## Purpose
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+
+## File Format
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
 4. Multiple file entries, each consisting of:
   a. A header with the file path (## File: path/to/file)
   b. The full contents of the file in a code block
@@ -11436,3 +11867,23732 @@ const Index = () => {
 
 export default Index;
 ```
+</file>
+
+<file path=".cursorrules">
+You are an expert in TypeScript, Node.js, React, Vite, TanStack Query, TanStack Router, and Tailwind.
+
+Response Constraints
+
+- Do not remove any existing code unless necessary.
+- Do not remove my comments or commented-out code unless necessary.
+- Do not change the formatting of my imports.
+- Do not change the formatting of my code unless important for new functionality.
+
+Code Style and Structure
+
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+- Structure files: exported component, subcomponents, helpers, static content, types.
+
+Naming Conventions
+
+- Use lowercase with dashes for directories (e.g., components/auth-wizard).
+- Favor named exports for components.
+
+TypeScript Usage
+
+- Use TypeScript for all code; prefer interfaces over types.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript interfaces.
+
+Syntax and Formatting
+
+- Use the "function" keyword for pure functions.
+- Use curly braces for all conditionals. Favor simplicity over cleverness.
+- Use declarative JSX.
+
+UI and Styling
+
+- Use Tailwind for components and styling.
+
+Performance Optimization
+
+- Look for ways to make things faster:
+  - Use immutable data structures
+  - Use efficient data fetching strategies
+  - Optimize network requests
+  - Use efficient data structures
+  - Use efficient algorithms
+  - Use efficient rendering strategies
+  - Use efficient state management
+</file>
+
+<file path="components.json">
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/index.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+</file>
+
+<file path="eslint.config.js">
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
+
+export default tseslint.config(
+  { ignores: ["dist"] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
+      "@typescript-eslint/no-unused-vars": "off",
+    },
+  }
+);
+</file>
+
+<file path="postcss.config.js">
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+</file>
+
+<file path="public/_redirects">
+/* /index.html 200
+</file>
+
+<file path="public/placeholder.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" fill="none"><rect width="1200" height="1200" fill="#EAEAEA" rx="3"/><g opacity=".5"><g opacity=".5"><path fill="#FAFAFA" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/><path stroke="#C9C9C9" stroke-width="2.418" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/></g><path stroke="url(#a)" stroke-width="2.418" d="M0-1.209h553.581" transform="scale(1 -1) rotate(45 1163.11 91.165)"/><path stroke="url(#b)" stroke-width="2.418" d="M404.846 598.671h391.726"/><path stroke="url(#c)" stroke-width="2.418" d="M599.5 795.742V404.017"/><path stroke="url(#d)" stroke-width="2.418" d="m795.717 796.597-391.441-391.44"/><path fill="#fff" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/><g clip-path="url(#e)"><path fill="#666" fill-rule="evenodd" d="M616.426 586.58h-31.434v16.176l3.553-3.554.531-.531h9.068l.074-.074 8.463-8.463h2.565l7.18 7.181V586.58Zm-15.715 14.654 3.698 3.699 1.283 1.282-2.565 2.565-1.282-1.283-5.2-5.199h-6.066l-5.514 5.514-.073.073v2.876a2.418 2.418 0 0 0 2.418 2.418h26.598a2.418 2.418 0 0 0 2.418-2.418v-8.317l-8.463-8.463-7.181 7.181-.071.072Zm-19.347 5.442v4.085a6.045 6.045 0 0 0 6.046 6.045h26.598a6.044 6.044 0 0 0 6.045-6.045v-7.108l1.356-1.355-1.282-1.283-.074-.073v-17.989h-38.689v23.43l-.146.146.146.147Z" clip-rule="evenodd"/></g><path stroke="#C9C9C9" stroke-width="2.418" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/></g><defs><linearGradient id="a" x1="554.061" x2="-.48" y1=".083" y2=".087" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="b" x1="796.912" x2="404.507" y1="599.963" y2="599.965" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="c" x1="600.792" x2="600.794" y1="403.677" y2="796.082" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="d" x1="404.85" x2="796.972" y1="403.903" y2="796.02" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><clipPath id="e"><path fill="#fff" d="M581.364 580.535h38.689v38.689h-38.689z"/></clipPath></defs></svg>
+</file>
+
+<file path="public/robots.txt">
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /
+</file>
+
+<file path="src/App.css">
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+</file>
+
+<file path="src/components/auth/ProtectedRoute.tsx">
+import { useAuth } from '@/context/AuthContext';
+import { Navigate, Outlet } from 'react-router-dom';
+
+type ProtectedRouteProps = {
+  redirectPath?: string;
+};
+
+export const ProtectedRoute = ({ redirectPath = '/auth' }: ProtectedRouteProps) => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="flex h-screen items-center justify-center">Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return <Outlet />;
+};
+</file>
+
+<file path="src/components/contacts/ContactEmptyState.tsx">
+import React from 'react';
+import { TableCell, TableRow } from '@/components/ui/table';
+
+export const ContactEmptyState: React.FC = () => {
+  return (
+    <TableRow>
+      <TableCell colSpan={7} className="h-24 text-center">
+        No contacts found. Add your first contact to get started.
+      </TableCell>
+    </TableRow>
+  );
+};
+</file>
+
+<file path="src/components/icons/Logo.tsx">
+import React from 'react';
+
+export const Logo: React.FC = () => {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="h-8 w-8 rounded-full bg-outreach-blue flex items-center justify-center">
+        <div className="h-3 w-3 rounded-full bg-white"></div>
+      </div>
+      <span className="font-semibold text-lg">OutreachBuddy</span>
+    </div>
+  );
+};
+</file>
+
+<file path="src/components/ui/accordion.tsx">
+import * as React from "react"
+import * as AccordionPrimitive from "@radix-ui/react-accordion"
+import { ChevronDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Accordion = AccordionPrimitive.Root
+
+const AccordionItem = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
+>(({ className, ...props }, ref) => (
+  <AccordionPrimitive.Item
+    ref={ref}
+    className={cn("border-b", className)}
+    {...props}
+  />
+))
+AccordionItem.displayName = "AccordionItem"
+
+const AccordionTrigger = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Header className="flex">
+    <AccordionPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+    </AccordionPrimitive.Trigger>
+  </AccordionPrimitive.Header>
+))
+AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
+
+const AccordionContent = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Content
+    ref={ref}
+    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    {...props}
+  >
+    <div className={cn("pb-4 pt-0", className)}>{children}</div>
+  </AccordionPrimitive.Content>
+))
+
+AccordionContent.displayName = AccordionPrimitive.Content.displayName
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+</file>
+
+<file path="src/components/ui/alert-dialog.tsx">
+import * as React from "react"
+import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
+
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
+
+const AlertDialog = AlertDialogPrimitive.Root
+
+const AlertDialogTrigger = AlertDialogPrimitive.Trigger
+
+const AlertDialogPortal = AlertDialogPrimitive.Portal
+
+const AlertDialogOverlay = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Overlay
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+    ref={ref}
+  />
+))
+AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
+
+const AlertDialogContent = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPortal>
+    <AlertDialogOverlay />
+    <AlertDialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        className
+      )}
+      {...props}
+    />
+  </AlertDialogPortal>
+))
+AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
+
+const AlertDialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-2 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+)
+AlertDialogHeader.displayName = "AlertDialogHeader"
+
+const AlertDialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+)
+AlertDialogFooter.displayName = "AlertDialogFooter"
+
+const AlertDialogTitle = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Title
+    ref={ref}
+    className={cn("text-lg font-semibold", className)}
+    {...props}
+  />
+))
+AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
+
+const AlertDialogDescription = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+AlertDialogDescription.displayName =
+  AlertDialogPrimitive.Description.displayName
+
+const AlertDialogAction = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Action>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Action
+    ref={ref}
+    className={cn(buttonVariants(), className)}
+    {...props}
+  />
+))
+AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName
+
+const AlertDialogCancel = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Cancel
+    ref={ref}
+    className={cn(
+      buttonVariants({ variant: "outline" }),
+      "mt-2 sm:mt-0",
+      className
+    )}
+    {...props}
+  />
+))
+AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
+
+export {
+  AlertDialog,
+  AlertDialogPortal,
+  AlertDialogOverlay,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+}
+</file>
+
+<file path="src/components/ui/alert.tsx">
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const alertVariants = cva(
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-background text-foreground",
+        destructive:
+          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="alert"
+    className={cn(alertVariants({ variant }), className)}
+    {...props}
+  />
+))
+Alert.displayName = "Alert"
+
+const AlertTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h5
+    ref={ref}
+    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    {...props}
+  />
+))
+AlertTitle.displayName = "AlertTitle"
+
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
+))
+AlertDescription.displayName = "AlertDescription"
+
+export { Alert, AlertTitle, AlertDescription }
+</file>
+
+<file path="src/components/ui/aspect-ratio.tsx">
+import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
+
+const AspectRatio = AspectRatioPrimitive.Root
+
+export { AspectRatio }
+</file>
+
+<file path="src/components/ui/avatar-with-initial.tsx">
+import React from 'react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+
+interface AvatarWithInitialProps {
+  name: string;
+  className?: string;
+}
+
+const getInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(part => part.charAt(0))
+    .join('')
+    .toUpperCase()
+    .substring(0, 2);
+};
+
+const getRandomColor = (name: string): string => {
+  const colors = [
+    'bg-blue-500',
+    'bg-purple-500',
+    'bg-green-500',
+    'bg-yellow-500',
+    'bg-red-500',
+    'bg-pink-500',
+    'bg-indigo-500',
+  ];
+  
+  const index = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length;
+  return colors[index];
+};
+
+export const AvatarWithInitial: React.FC<AvatarWithInitialProps> = ({ 
+  name,
+  className = ''
+}) => {
+  const initials = getInitials(name);
+  const bgColor = getRandomColor(name);
+  
+  return (
+    <Avatar className={className}>
+      <AvatarFallback className={`${bgColor} text-white`}>
+        {initials}
+      </AvatarFallback>
+    </Avatar>
+  );
+};
+</file>
+
+<file path="src/components/ui/avatar.tsx">
+import * as React from "react"
+import * as AvatarPrimitive from "@radix-ui/react-avatar"
+
+import { cn } from "@/lib/utils"
+
+const Avatar = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      className
+    )}
+    {...props}
+  />
+))
+Avatar.displayName = AvatarPrimitive.Root.displayName
+
+const AvatarImage = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Image>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Image
+    ref={ref}
+    className={cn("aspect-square h-full w-full", className)}
+    {...props}
+  />
+))
+AvatarImage.displayName = AvatarPrimitive.Image.displayName
+
+const AvatarFallback = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Fallback>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Fallback
+    ref={ref}
+    className={cn(
+      "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      className
+    )}
+    {...props}
+  />
+))
+AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
+
+export { Avatar, AvatarImage, AvatarFallback }
+</file>
+
+<file path="src/components/ui/badge.tsx">
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const badgeVariants = cva(
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  {
+    variants: {
+      variant: {
+        default:
+          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+        secondary:
+          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        destructive:
+          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+        outline: "text-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+  )
+}
+
+export { Badge, badgeVariants }
+</file>
+
+<file path="src/components/ui/breadcrumb.tsx">
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { ChevronRight, MoreHorizontal } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Breadcrumb = React.forwardRef<
+  HTMLElement,
+  React.ComponentPropsWithoutRef<"nav"> & {
+    separator?: React.ReactNode
+  }
+>(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
+Breadcrumb.displayName = "Breadcrumb"
+
+const BreadcrumbList = React.forwardRef<
+  HTMLOListElement,
+  React.ComponentPropsWithoutRef<"ol">
+>(({ className, ...props }, ref) => (
+  <ol
+    ref={ref}
+    className={cn(
+      "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+      className
+    )}
+    {...props}
+  />
+))
+BreadcrumbList.displayName = "BreadcrumbList"
+
+const BreadcrumbItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentPropsWithoutRef<"li">
+>(({ className, ...props }, ref) => (
+  <li
+    ref={ref}
+    className={cn("inline-flex items-center gap-1.5", className)}
+    {...props}
+  />
+))
+BreadcrumbItem.displayName = "BreadcrumbItem"
+
+const BreadcrumbLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentPropsWithoutRef<"a"> & {
+    asChild?: boolean
+  }
+>(({ asChild, className, ...props }, ref) => {
+  const Comp = asChild ? Slot : "a"
+
+  return (
+    <Comp
+      ref={ref}
+      className={cn("transition-colors hover:text-foreground", className)}
+      {...props}
+    />
+  )
+})
+BreadcrumbLink.displayName = "BreadcrumbLink"
+
+const BreadcrumbPage = React.forwardRef<
+  HTMLSpanElement,
+  React.ComponentPropsWithoutRef<"span">
+>(({ className, ...props }, ref) => (
+  <span
+    ref={ref}
+    role="link"
+    aria-disabled="true"
+    aria-current="page"
+    className={cn("font-normal text-foreground", className)}
+    {...props}
+  />
+))
+BreadcrumbPage.displayName = "BreadcrumbPage"
+
+const BreadcrumbSeparator = ({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<"li">) => (
+  <li
+    role="presentation"
+    aria-hidden="true"
+    className={cn("[&>svg]:size-3.5", className)}
+    {...props}
+  >
+    {children ?? <ChevronRight />}
+  </li>
+)
+BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
+
+const BreadcrumbEllipsis = ({
+  className,
+  ...props
+}: React.ComponentProps<"span">) => (
+  <span
+    role="presentation"
+    aria-hidden="true"
+    className={cn("flex h-9 w-9 items-center justify-center", className)}
+    {...props}
+  >
+    <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only">More</span>
+  </span>
+)
+BreadcrumbEllipsis.displayName = "BreadcrumbElipssis"
+
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+}
+</file>
+
+<file path="src/components/ui/button.tsx">
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
+</file>
+
+<file path="src/components/ui/calendar.tsx">
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+
+function Calendar({
+  className,
+  classNames,
+  showOutsideDays = true,
+  ...props
+}: CalendarProps) {
+  return (
+    <DayPicker
+      showOutsideDays={showOutsideDays}
+      className={cn("p-3", className)}
+      classNames={{
+        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+        month: "space-y-4",
+        caption: "flex justify-center pt-1 relative items-center",
+        caption_label: "text-sm font-medium",
+        nav: "space-x-1 flex items-center",
+        nav_button: cn(
+          buttonVariants({ variant: "outline" }),
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+        ),
+        nav_button_previous: "absolute left-1",
+        nav_button_next: "absolute right-1",
+        table: "w-full border-collapse space-y-1",
+        head_row: "flex",
+        head_cell:
+          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+        row: "flex w-full mt-2",
+        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+        day: cn(
+          buttonVariants({ variant: "ghost" }),
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
+        ),
+        day_range_end: "day-range-end",
+        day_selected:
+          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+        day_today: "bg-accent text-accent-foreground",
+        day_outside:
+          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
+        day_disabled: "text-muted-foreground opacity-50",
+        day_range_middle:
+          "aria-selected:bg-accent aria-selected:text-accent-foreground",
+        day_hidden: "invisible",
+        ...classNames,
+      }}
+      components={{
+        IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
+        IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
+      }}
+      {...props}
+    />
+  );
+}
+Calendar.displayName = "Calendar";
+
+export { Calendar };
+</file>
+
+<file path="src/components/ui/card.tsx">
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      className
+    )}
+    {...props}
+  />
+))
+Card.displayName = "Card"
+
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    {...props}
+  />
+))
+CardHeader.displayName = "CardHeader"
+
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      "text-2xl font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+CardTitle.displayName = "CardTitle"
+
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+CardDescription.displayName = "CardDescription"
+
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+))
+CardContent.displayName = "CardContent"
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+))
+CardFooter.displayName = "CardFooter"
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+</file>
+
+<file path="src/components/ui/carousel.tsx">
+import * as React from "react"
+import useEmblaCarousel, {
+  type UseEmblaCarouselType,
+} from "embla-carousel-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+
+type CarouselApi = UseEmblaCarouselType[1]
+type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
+type CarouselOptions = UseCarouselParameters[0]
+type CarouselPlugin = UseCarouselParameters[1]
+
+type CarouselProps = {
+  opts?: CarouselOptions
+  plugins?: CarouselPlugin
+  orientation?: "horizontal" | "vertical"
+  setApi?: (api: CarouselApi) => void
+}
+
+type CarouselContextProps = {
+  carouselRef: ReturnType<typeof useEmblaCarousel>[0]
+  api: ReturnType<typeof useEmblaCarousel>[1]
+  scrollPrev: () => void
+  scrollNext: () => void
+  canScrollPrev: boolean
+  canScrollNext: boolean
+} & CarouselProps
+
+const CarouselContext = React.createContext<CarouselContextProps | null>(null)
+
+function useCarousel() {
+  const context = React.useContext(CarouselContext)
+
+  if (!context) {
+    throw new Error("useCarousel must be used within a <Carousel />")
+  }
+
+  return context
+}
+
+const Carousel = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & CarouselProps
+>(
+  (
+    {
+      orientation = "horizontal",
+      opts,
+      setApi,
+      plugins,
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const [carouselRef, api] = useEmblaCarousel(
+      {
+        ...opts,
+        axis: orientation === "horizontal" ? "x" : "y",
+      },
+      plugins
+    )
+    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
+    const [canScrollNext, setCanScrollNext] = React.useState(false)
+
+    const onSelect = React.useCallback((api: CarouselApi) => {
+      if (!api) {
+        return
+      }
+
+      setCanScrollPrev(api.canScrollPrev())
+      setCanScrollNext(api.canScrollNext())
+    }, [])
+
+    const scrollPrev = React.useCallback(() => {
+      api?.scrollPrev()
+    }, [api])
+
+    const scrollNext = React.useCallback(() => {
+      api?.scrollNext()
+    }, [api])
+
+    const handleKeyDown = React.useCallback(
+      (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault()
+          scrollPrev()
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault()
+          scrollNext()
+        }
+      },
+      [scrollPrev, scrollNext]
+    )
+
+    React.useEffect(() => {
+      if (!api || !setApi) {
+        return
+      }
+
+      setApi(api)
+    }, [api, setApi])
+
+    React.useEffect(() => {
+      if (!api) {
+        return
+      }
+
+      onSelect(api)
+      api.on("reInit", onSelect)
+      api.on("select", onSelect)
+
+      return () => {
+        api?.off("select", onSelect)
+      }
+    }, [api, onSelect])
+
+    return (
+      <CarouselContext.Provider
+        value={{
+          carouselRef,
+          api: api,
+          opts,
+          orientation:
+            orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+          scrollPrev,
+          scrollNext,
+          canScrollPrev,
+          canScrollNext,
+        }}
+      >
+        <div
+          ref={ref}
+          onKeyDownCapture={handleKeyDown}
+          className={cn("relative", className)}
+          role="region"
+          aria-roledescription="carousel"
+          {...props}
+        >
+          {children}
+        </div>
+      </CarouselContext.Provider>
+    )
+  }
+)
+Carousel.displayName = "Carousel"
+
+const CarouselContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const { carouselRef, orientation } = useCarousel()
+
+  return (
+    <div ref={carouselRef} className="overflow-hidden">
+      <div
+        ref={ref}
+        className={cn(
+          "flex",
+          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+          className
+        )}
+        {...props}
+      />
+    </div>
+  )
+})
+CarouselContent.displayName = "CarouselContent"
+
+const CarouselItem = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const { orientation } = useCarousel()
+
+  return (
+    <div
+      ref={ref}
+      role="group"
+      aria-roledescription="slide"
+      className={cn(
+        "min-w-0 shrink-0 grow-0 basis-full",
+        orientation === "horizontal" ? "pl-4" : "pt-4",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+CarouselItem.displayName = "CarouselItem"
+
+const CarouselPrevious = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+
+  return (
+    <Button
+      ref={ref}
+      variant={variant}
+      size={size}
+      className={cn(
+        "absolute  h-8 w-8 rounded-full",
+        orientation === "horizontal"
+          ? "-left-12 top-1/2 -translate-y-1/2"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      <ArrowLeft className="h-4 w-4" />
+      <span className="sr-only">Previous slide</span>
+    </Button>
+  )
+})
+CarouselPrevious.displayName = "CarouselPrevious"
+
+const CarouselNext = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+  const { orientation, scrollNext, canScrollNext } = useCarousel()
+
+  return (
+    <Button
+      ref={ref}
+      variant={variant}
+      size={size}
+      className={cn(
+        "absolute h-8 w-8 rounded-full",
+        orientation === "horizontal"
+          ? "-right-12 top-1/2 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollNext}
+      onClick={scrollNext}
+      {...props}
+    >
+      <ArrowRight className="h-4 w-4" />
+      <span className="sr-only">Next slide</span>
+    </Button>
+  )
+})
+CarouselNext.displayName = "CarouselNext"
+
+export {
+  type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+}
+</file>
+
+<file path="src/components/ui/chart.tsx">
+import * as React from "react"
+import * as RechartsPrimitive from "recharts"
+
+import { cn } from "@/lib/utils"
+
+// Format: { THEME_NAME: CSS_SELECTOR }
+const THEMES = { light: "", dark: ".dark" } as const
+
+export type ChartConfig = {
+  [k in string]: {
+    label?: React.ReactNode
+    icon?: React.ComponentType
+  } & (
+    | { color?: string; theme?: never }
+    | { color?: never; theme: Record<keyof typeof THEMES, string> }
+  )
+}
+
+type ChartContextProps = {
+  config: ChartConfig
+}
+
+const ChartContext = React.createContext<ChartContextProps | null>(null)
+
+function useChart() {
+  const context = React.useContext(ChartContext)
+
+  if (!context) {
+    throw new Error("useChart must be used within a <ChartContainer />")
+  }
+
+  return context
+}
+
+const ChartContainer = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    config: ChartConfig
+    children: React.ComponentProps<
+      typeof RechartsPrimitive.ResponsiveContainer
+    >["children"]
+  }
+>(({ id, className, children, config, ...props }, ref) => {
+  const uniqueId = React.useId()
+  const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
+
+  return (
+    <ChartContext.Provider value={{ config }}>
+      <div
+        data-chart={chartId}
+        ref={ref}
+        className={cn(
+          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          className
+        )}
+        {...props}
+      >
+        <ChartStyle id={chartId} config={config} />
+        <RechartsPrimitive.ResponsiveContainer>
+          {children}
+        </RechartsPrimitive.ResponsiveContainer>
+      </div>
+    </ChartContext.Provider>
+  )
+})
+ChartContainer.displayName = "Chart"
+
+const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+  const colorConfig = Object.entries(config).filter(
+    ([_, config]) => config.theme || config.color
+  )
+
+  if (!colorConfig.length) {
+    return null
+  }
+
+  return (
+    <style
+      dangerouslySetInnerHTML={{
+        __html: Object.entries(THEMES)
+          .map(
+            ([theme, prefix]) => `
+${prefix} [data-chart=${id}] {
+${colorConfig
+  .map(([key, itemConfig]) => {
+    const color =
+      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+      itemConfig.color
+    return color ? `  --color-${key}: ${color};` : null
+  })
+  .join("\n")}
+}
+`
+          )
+          .join("\n"),
+      }}
+    />
+  )
+}
+
+const ChartTooltip = RechartsPrimitive.Tooltip
+
+const ChartTooltipContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+    React.ComponentProps<"div"> & {
+      hideLabel?: boolean
+      hideIndicator?: boolean
+      indicator?: "line" | "dot" | "dashed"
+      nameKey?: string
+      labelKey?: string
+    }
+>(
+  (
+    {
+      active,
+      payload,
+      className,
+      indicator = "dot",
+      hideLabel = false,
+      hideIndicator = false,
+      label,
+      labelFormatter,
+      labelClassName,
+      formatter,
+      color,
+      nameKey,
+      labelKey,
+    },
+    ref
+  ) => {
+    const { config } = useChart()
+
+    const tooltipLabel = React.useMemo(() => {
+      if (hideLabel || !payload?.length) {
+        return null
+      }
+
+      const [item] = payload
+      const key = `${labelKey || item.dataKey || item.name || "value"}`
+      const itemConfig = getPayloadConfigFromPayload(config, item, key)
+      const value =
+        !labelKey && typeof label === "string"
+          ? config[label as keyof typeof config]?.label || label
+          : itemConfig?.label
+
+      if (labelFormatter) {
+        return (
+          <div className={cn("font-medium", labelClassName)}>
+            {labelFormatter(value, payload)}
+          </div>
+        )
+      }
+
+      if (!value) {
+        return null
+      }
+
+      return <div className={cn("font-medium", labelClassName)}>{value}</div>
+    }, [
+      label,
+      labelFormatter,
+      payload,
+      hideLabel,
+      labelClassName,
+      config,
+      labelKey,
+    ])
+
+    if (!active || !payload?.length) {
+      return null
+    }
+
+    const nestLabel = payload.length === 1 && indicator !== "dot"
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+          className
+        )}
+      >
+        {!nestLabel ? tooltipLabel : null}
+        <div className="grid gap-1.5">
+          {payload.map((item, index) => {
+            const key = `${nameKey || item.name || item.dataKey || "value"}`
+            const itemConfig = getPayloadConfigFromPayload(config, item, key)
+            const indicatorColor = color || item.payload.fill || item.color
+
+            return (
+              <div
+                key={item.dataKey}
+                className={cn(
+                  "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
+                  indicator === "dot" && "items-center"
+                )}
+              >
+                {formatter && item?.value !== undefined && item.name ? (
+                  formatter(item.value, item.name, item, index, item.payload)
+                ) : (
+                  <>
+                    {itemConfig?.icon ? (
+                      <itemConfig.icon />
+                    ) : (
+                      !hideIndicator && (
+                        <div
+                          className={cn(
+                            "shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]",
+                            {
+                              "h-2.5 w-2.5": indicator === "dot",
+                              "w-1": indicator === "line",
+                              "w-0 border-[1.5px] border-dashed bg-transparent":
+                                indicator === "dashed",
+                              "my-0.5": nestLabel && indicator === "dashed",
+                            }
+                          )}
+                          style={
+                            {
+                              "--color-bg": indicatorColor,
+                              "--color-border": indicatorColor,
+                            } as React.CSSProperties
+                          }
+                        />
+                      )
+                    )}
+                    <div
+                      className={cn(
+                        "flex flex-1 justify-between leading-none",
+                        nestLabel ? "items-end" : "items-center"
+                      )}
+                    >
+                      <div className="grid gap-1.5">
+                        {nestLabel ? tooltipLabel : null}
+                        <span className="text-muted-foreground">
+                          {itemConfig?.label || item.name}
+                        </span>
+                      </div>
+                      {item.value && (
+                        <span className="font-mono font-medium tabular-nums text-foreground">
+                          {item.value.toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+)
+ChartTooltipContent.displayName = "ChartTooltip"
+
+const ChartLegend = RechartsPrimitive.Legend
+
+const ChartLegendContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> &
+    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+      hideIcon?: boolean
+      nameKey?: string
+    }
+>(
+  (
+    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
+    ref
+  ) => {
+    const { config } = useChart()
+
+    if (!payload?.length) {
+      return null
+    }
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "flex items-center justify-center gap-4",
+          verticalAlign === "top" ? "pb-3" : "pt-3",
+          className
+        )}
+      >
+        {payload.map((item) => {
+          const key = `${nameKey || item.dataKey || "value"}`
+          const itemConfig = getPayloadConfigFromPayload(config, item, key)
+
+          return (
+            <div
+              key={item.value}
+              className={cn(
+                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
+              )}
+            >
+              {itemConfig?.icon && !hideIcon ? (
+                <itemConfig.icon />
+              ) : (
+                <div
+                  className="h-2 w-2 shrink-0 rounded-[2px]"
+                  style={{
+                    backgroundColor: item.color,
+                  }}
+                />
+              )}
+              {itemConfig?.label}
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+)
+ChartLegendContent.displayName = "ChartLegend"
+
+// Helper to extract item config from a payload.
+function getPayloadConfigFromPayload(
+  config: ChartConfig,
+  payload: unknown,
+  key: string
+) {
+  if (typeof payload !== "object" || payload === null) {
+    return undefined
+  }
+
+  const payloadPayload =
+    "payload" in payload &&
+    typeof payload.payload === "object" &&
+    payload.payload !== null
+      ? payload.payload
+      : undefined
+
+  let configLabelKey: string = key
+
+  if (
+    key in payload &&
+    typeof payload[key as keyof typeof payload] === "string"
+  ) {
+    configLabelKey = payload[key as keyof typeof payload] as string
+  } else if (
+    payloadPayload &&
+    key in payloadPayload &&
+    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
+  ) {
+    configLabelKey = payloadPayload[
+      key as keyof typeof payloadPayload
+    ] as string
+  }
+
+  return configLabelKey in config
+    ? config[configLabelKey]
+    : config[key as keyof typeof config]
+}
+
+export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+}
+</file>
+
+<file path="src/components/ui/checkbox.tsx">
+import * as React from "react"
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
+import { Check } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Checkbox = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
+    className={cn(
+      "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+      className
+    )}
+    {...props}
+  >
+    <CheckboxPrimitive.Indicator
+      className={cn("flex items-center justify-center text-current")}
+    >
+      <Check className="h-4 w-4" />
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+))
+Checkbox.displayName = CheckboxPrimitive.Root.displayName
+
+export { Checkbox }
+</file>
+
+<file path="src/components/ui/collapsible.tsx">
+import * as CollapsiblePrimitive from "@radix-ui/react-collapsible"
+
+const Collapsible = CollapsiblePrimitive.Root
+
+const CollapsibleTrigger = CollapsiblePrimitive.CollapsibleTrigger
+
+const CollapsibleContent = CollapsiblePrimitive.CollapsibleContent
+
+export { Collapsible, CollapsibleTrigger, CollapsibleContent }
+</file>
+
+<file path="src/components/ui/command.tsx">
+import * as React from "react"
+import { type DialogProps } from "@radix-ui/react-dialog"
+import { Command as CommandPrimitive } from "cmdk"
+import { Search } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+
+const Command = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive
+    ref={ref}
+    className={cn(
+      "flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+Command.displayName = CommandPrimitive.displayName
+
+interface CommandDialogProps extends DialogProps {}
+
+const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+  return (
+    <Dialog {...props}>
+      <DialogContent className="overflow-hidden p-0 shadow-lg">
+        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+          {children}
+        </Command>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+const CommandInput = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Input>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
+>(({ className, ...props }, ref) => (
+  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+    <CommandPrimitive.Input
+      ref={ref}
+      className={cn(
+        "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
+      {...props}
+    />
+  </div>
+))
+
+CommandInput.displayName = CommandPrimitive.Input.displayName
+
+const CommandList = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.List
+    ref={ref}
+    className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
+    {...props}
+  />
+))
+
+CommandList.displayName = CommandPrimitive.List.displayName
+
+const CommandEmpty = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Empty>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
+>((props, ref) => (
+  <CommandPrimitive.Empty
+    ref={ref}
+    className="py-6 text-center text-sm"
+    {...props}
+  />
+))
+
+CommandEmpty.displayName = CommandPrimitive.Empty.displayName
+
+const CommandGroup = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Group>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Group
+    ref={ref}
+    className={cn(
+      "overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+
+CommandGroup.displayName = CommandPrimitive.Group.displayName
+
+const CommandSeparator = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 h-px bg-border", className)}
+    {...props}
+  />
+))
+CommandSeparator.displayName = CommandPrimitive.Separator.displayName
+
+const CommandItem = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50",
+      className
+    )}
+    {...props}
+  />
+))
+
+CommandItem.displayName = CommandPrimitive.Item.displayName
+
+const CommandShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+CommandShortcut.displayName = "CommandShortcut"
+
+export {
+  Command,
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+  CommandSeparator,
+}
+</file>
+
+<file path="src/components/ui/context-menu.tsx">
+import * as React from "react"
+import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
+import { Check, ChevronRight, Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const ContextMenu = ContextMenuPrimitive.Root
+
+const ContextMenuTrigger = ContextMenuPrimitive.Trigger
+
+const ContextMenuGroup = ContextMenuPrimitive.Group
+
+const ContextMenuPortal = ContextMenuPrimitive.Portal
+
+const ContextMenuSub = ContextMenuPrimitive.Sub
+
+const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup
+
+const ContextMenuSubTrigger = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.SubTrigger>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubTrigger> & {
+    inset?: boolean
+  }
+>(({ className, inset, children, ...props }, ref) => (
+  <ContextMenuPrimitive.SubTrigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRight className="ml-auto h-4 w-4" />
+  </ContextMenuPrimitive.SubTrigger>
+))
+ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName
+
+const ContextMenuSubContent = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.SubContent>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubContent>
+>(({ className, ...props }, ref) => (
+  <ContextMenuPrimitive.SubContent
+    ref={ref}
+    className={cn(
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+ContextMenuSubContent.displayName = ContextMenuPrimitive.SubContent.displayName
+
+const ContextMenuContent = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <ContextMenuPrimitive.Portal>
+    <ContextMenuPrimitive.Content
+      ref={ref}
+      className={cn(
+        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </ContextMenuPrimitive.Portal>
+))
+ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName
+
+const ContextMenuItem = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <ContextMenuPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+ContextMenuItem.displayName = ContextMenuPrimitive.Item.displayName
+
+const ContextMenuCheckboxItem = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.CheckboxItem>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.CheckboxItem>
+>(({ className, children, checked, ...props }, ref) => (
+  <ContextMenuPrimitive.CheckboxItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    checked={checked}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <ContextMenuPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </ContextMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </ContextMenuPrimitive.CheckboxItem>
+))
+ContextMenuCheckboxItem.displayName =
+  ContextMenuPrimitive.CheckboxItem.displayName
+
+const ContextMenuRadioItem = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.RadioItem>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.RadioItem>
+>(({ className, children, ...props }, ref) => (
+  <ContextMenuPrimitive.RadioItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <ContextMenuPrimitive.ItemIndicator>
+        <Circle className="h-2 w-2 fill-current" />
+      </ContextMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </ContextMenuPrimitive.RadioItem>
+))
+ContextMenuRadioItem.displayName = ContextMenuPrimitive.RadioItem.displayName
+
+const ContextMenuLabel = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Label> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <ContextMenuPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2 py-1.5 text-sm font-semibold text-foreground",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+ContextMenuLabel.displayName = ContextMenuPrimitive.Label.displayName
+
+const ContextMenuSeparator = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <ContextMenuPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-border", className)}
+    {...props}
+  />
+))
+ContextMenuSeparator.displayName = ContextMenuPrimitive.Separator.displayName
+
+const ContextMenuShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+ContextMenuShortcut.displayName = "ContextMenuShortcut"
+
+export {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuGroup,
+  ContextMenuPortal,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuRadioGroup,
+}
+</file>
+
+<file path="src/components/ui/dialog.tsx">
+import * as React from "react"
+import * as DialogPrimitive from "@radix-ui/react-dialog"
+import { X } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Dialog = DialogPrimitive.Root
+
+const DialogTrigger = DialogPrimitive.Trigger
+
+const DialogPortal = DialogPrimitive.Portal
+
+const DialogClose = DialogPrimitive.Close
+
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    ref={ref}
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+  />
+))
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </DialogPrimitive.Close>
+    </DialogPrimitive.Content>
+  </DialogPortal>
+))
+DialogContent.displayName = DialogPrimitive.Content.displayName
+
+const DialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-1.5 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+)
+DialogHeader.displayName = "DialogHeader"
+
+const DialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+)
+DialogFooter.displayName = "DialogFooter"
+
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+DialogTitle.displayName = DialogPrimitive.Title.displayName
+
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+DialogDescription.displayName = DialogPrimitive.Description.displayName
+
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+}
+</file>
+
+<file path="src/components/ui/drawer.tsx">
+import * as React from "react"
+import { Drawer as DrawerPrimitive } from "vaul"
+
+import { cn } from "@/lib/utils"
+
+const Drawer = ({
+  shouldScaleBackground = true,
+  ...props
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
+  <DrawerPrimitive.Root
+    shouldScaleBackground={shouldScaleBackground}
+    {...props}
+  />
+)
+Drawer.displayName = "Drawer"
+
+const DrawerTrigger = DrawerPrimitive.Trigger
+
+const DrawerPortal = DrawerPrimitive.Portal
+
+const DrawerClose = DrawerPrimitive.Close
+
+const DrawerOverlay = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Overlay
+    ref={ref}
+    className={cn("fixed inset-0 z-50 bg-black/80", className)}
+    {...props}
+  />
+))
+DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
+
+const DrawerContent = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DrawerPortal>
+    <DrawerOverlay />
+    <DrawerPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background",
+        className
+      )}
+      {...props}
+    >
+      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      {children}
+    </DrawerPrimitive.Content>
+  </DrawerPortal>
+))
+DrawerContent.displayName = "DrawerContent"
+
+const DrawerHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)}
+    {...props}
+  />
+)
+DrawerHeader.displayName = "DrawerHeader"
+
+const DrawerFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+    {...props}
+  />
+)
+DrawerFooter.displayName = "DrawerFooter"
+
+const DrawerTitle = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+DrawerTitle.displayName = DrawerPrimitive.Title.displayName
+
+const DrawerDescription = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+DrawerDescription.displayName = DrawerPrimitive.Description.displayName
+
+export {
+  Drawer,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+}
+</file>
+
+<file path="src/components/ui/dropdown-menu.tsx">
+import * as React from "react"
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
+import { Check, ChevronRight, Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const DropdownMenu = DropdownMenuPrimitive.Root
+
+const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
+
+const DropdownMenuGroup = DropdownMenuPrimitive.Group
+
+const DropdownMenuPortal = DropdownMenuPrimitive.Portal
+
+const DropdownMenuSub = DropdownMenuPrimitive.Sub
+
+const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
+
+const DropdownMenuSubTrigger = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+    inset?: boolean
+  }
+>(({ className, inset, children, ...props }, ref) => (
+  <DropdownMenuPrimitive.SubTrigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRight className="ml-auto h-4 w-4" />
+  </DropdownMenuPrimitive.SubTrigger>
+))
+DropdownMenuSubTrigger.displayName =
+  DropdownMenuPrimitive.SubTrigger.displayName
+
+const DropdownMenuSubContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
+>(({ className, ...props }, ref) => (
+  <DropdownMenuPrimitive.SubContent
+    ref={ref}
+    className={cn(
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+DropdownMenuSubContent.displayName =
+  DropdownMenuPrimitive.SubContent.displayName
+
+const DropdownMenuContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <DropdownMenuPrimitive.Portal>
+    <DropdownMenuPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </DropdownMenuPrimitive.Portal>
+))
+DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
+
+const DropdownMenuItem = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <DropdownMenuPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName
+
+const DropdownMenuCheckboxItem = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
+>(({ className, children, checked, ...props }, ref) => (
+  <DropdownMenuPrimitive.CheckboxItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    checked={checked}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <DropdownMenuPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </DropdownMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </DropdownMenuPrimitive.CheckboxItem>
+))
+DropdownMenuCheckboxItem.displayName =
+  DropdownMenuPrimitive.CheckboxItem.displayName
+
+const DropdownMenuRadioItem = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
+>(({ className, children, ...props }, ref) => (
+  <DropdownMenuPrimitive.RadioItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <DropdownMenuPrimitive.ItemIndicator>
+        <Circle className="h-2 w-2 fill-current" />
+      </DropdownMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </DropdownMenuPrimitive.RadioItem>
+))
+DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName
+
+const DropdownMenuLabel = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <DropdownMenuPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2 py-1.5 text-sm font-semibold",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName
+
+const DropdownMenuSeparator = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <DropdownMenuPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    {...props}
+  />
+))
+DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName
+
+const DropdownMenuShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn("ml-auto text-xs tracking-widest opacity-60", className)}
+      {...props}
+    />
+  )
+}
+DropdownMenuShortcut.displayName = "DropdownMenuShortcut"
+
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuRadioGroup,
+}
+</file>
+
+<file path="src/components/ui/form.tsx">
+import * as React from "react"
+import * as LabelPrimitive from "@radix-ui/react-label"
+import { Slot } from "@radix-ui/react-slot"
+import {
+  Controller,
+  ControllerProps,
+  FieldPath,
+  FieldValues,
+  FormProvider,
+  useFormContext,
+} from "react-hook-form"
+
+import { cn } from "@/lib/utils"
+import { Label } from "@/components/ui/label"
+
+const Form = FormProvider
+
+type FormFieldContextValue<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = {
+  name: TName
+}
+
+const FormFieldContext = React.createContext<FormFieldContextValue>(
+  {} as FormFieldContextValue
+)
+
+const FormField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+  ...props
+}: ControllerProps<TFieldValues, TName>) => {
+  return (
+    <FormFieldContext.Provider value={{ name: props.name }}>
+      <Controller {...props} />
+    </FormFieldContext.Provider>
+  )
+}
+
+const useFormField = () => {
+  const fieldContext = React.useContext(FormFieldContext)
+  const itemContext = React.useContext(FormItemContext)
+  const { getFieldState, formState } = useFormContext()
+
+  const fieldState = getFieldState(fieldContext.name, formState)
+
+  if (!fieldContext) {
+    throw new Error("useFormField should be used within <FormField>")
+  }
+
+  const { id } = itemContext
+
+  return {
+    id,
+    name: fieldContext.name,
+    formItemId: `${id}-form-item`,
+    formDescriptionId: `${id}-form-item-description`,
+    formMessageId: `${id}-form-item-message`,
+    ...fieldState,
+  }
+}
+
+type FormItemContextValue = {
+  id: string
+}
+
+const FormItemContext = React.createContext<FormItemContextValue>(
+  {} as FormItemContextValue
+)
+
+const FormItem = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const id = React.useId()
+
+  return (
+    <FormItemContext.Provider value={{ id }}>
+      <div ref={ref} className={cn("space-y-2", className)} {...props} />
+    </FormItemContext.Provider>
+  )
+})
+FormItem.displayName = "FormItem"
+
+const FormLabel = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+>(({ className, ...props }, ref) => {
+  const { error, formItemId } = useFormField()
+
+  return (
+    <Label
+      ref={ref}
+      className={cn(error && "text-destructive", className)}
+      htmlFor={formItemId}
+      {...props}
+    />
+  )
+})
+FormLabel.displayName = "FormLabel"
+
+const FormControl = React.forwardRef<
+  React.ElementRef<typeof Slot>,
+  React.ComponentPropsWithoutRef<typeof Slot>
+>(({ ...props }, ref) => {
+  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+
+  return (
+    <Slot
+      ref={ref}
+      id={formItemId}
+      aria-describedby={
+        !error
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
+      }
+      aria-invalid={!!error}
+      {...props}
+    />
+  )
+})
+FormControl.displayName = "FormControl"
+
+const FormDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => {
+  const { formDescriptionId } = useFormField()
+
+  return (
+    <p
+      ref={ref}
+      id={formDescriptionId}
+      className={cn("text-sm text-muted-foreground", className)}
+      {...props}
+    />
+  )
+})
+FormDescription.displayName = "FormDescription"
+
+const FormMessage = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, children, ...props }, ref) => {
+  const { error, formMessageId } = useFormField()
+  const body = error ? String(error?.message) : children
+
+  if (!body) {
+    return null
+  }
+
+  return (
+    <p
+      ref={ref}
+      id={formMessageId}
+      className={cn("text-sm font-medium text-destructive", className)}
+      {...props}
+    >
+      {body}
+    </p>
+  )
+})
+FormMessage.displayName = "FormMessage"
+
+export {
+  useFormField,
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormField,
+}
+</file>
+
+<file path="src/components/ui/hover-card.tsx">
+import * as React from "react"
+import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
+
+import { cn } from "@/lib/utils"
+
+const HoverCard = HoverCardPrimitive.Root
+
+const HoverCardTrigger = HoverCardPrimitive.Trigger
+
+const HoverCardContent = React.forwardRef<
+  React.ElementRef<typeof HoverCardPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Content>
+>(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+  <HoverCardPrimitive.Content
+    ref={ref}
+    align={align}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+HoverCardContent.displayName = HoverCardPrimitive.Content.displayName
+
+export { HoverCard, HoverCardTrigger, HoverCardContent }
+</file>
+
+<file path="src/components/ui/input-otp.tsx">
+import * as React from "react"
+import { OTPInput, OTPInputContext } from "input-otp"
+import { Dot } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const InputOTP = React.forwardRef<
+  React.ElementRef<typeof OTPInput>,
+  React.ComponentPropsWithoutRef<typeof OTPInput>
+>(({ className, containerClassName, ...props }, ref) => (
+  <OTPInput
+    ref={ref}
+    containerClassName={cn(
+      "flex items-center gap-2 has-[:disabled]:opacity-50",
+      containerClassName
+    )}
+    className={cn("disabled:cursor-not-allowed", className)}
+    {...props}
+  />
+))
+InputOTP.displayName = "InputOTP"
+
+const InputOTPGroup = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("flex items-center", className)} {...props} />
+))
+InputOTPGroup.displayName = "InputOTPGroup"
+
+const InputOTPSlot = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div"> & { index: number }
+>(({ index, className, ...props }, ref) => {
+  const inputOTPContext = React.useContext(OTPInputContext)
+  const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+        isActive && "z-10 ring-2 ring-ring ring-offset-background",
+        className
+      )}
+      {...props}
+    >
+      {char}
+      {hasFakeCaret && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+        </div>
+      )}
+    </div>
+  )
+})
+InputOTPSlot.displayName = "InputOTPSlot"
+
+const InputOTPSeparator = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
+>(({ ...props }, ref) => (
+  <div ref={ref} role="separator" {...props}>
+    <Dot />
+  </div>
+))
+InputOTPSeparator.displayName = "InputOTPSeparator"
+
+export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+</file>
+
+<file path="src/components/ui/label.tsx">
+import * as React from "react"
+import * as LabelPrimitive from "@radix-ui/react-label"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const labelVariants = cva(
+  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+)
+
+const Label = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
+    VariantProps<typeof labelVariants>
+>(({ className, ...props }, ref) => (
+  <LabelPrimitive.Root
+    ref={ref}
+    className={cn(labelVariants(), className)}
+    {...props}
+  />
+))
+Label.displayName = LabelPrimitive.Root.displayName
+
+export { Label }
+</file>
+
+<file path="src/components/ui/menubar.tsx">
+import * as React from "react"
+import * as MenubarPrimitive from "@radix-ui/react-menubar"
+import { Check, ChevronRight, Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const MenubarMenu = MenubarPrimitive.Menu
+
+const MenubarGroup = MenubarPrimitive.Group
+
+const MenubarPortal = MenubarPrimitive.Portal
+
+const MenubarSub = MenubarPrimitive.Sub
+
+const MenubarRadioGroup = MenubarPrimitive.RadioGroup
+
+const Menubar = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "flex h-10 items-center space-x-1 rounded-md border bg-background p-1",
+      className
+    )}
+    {...props}
+  />
+))
+Menubar.displayName = MenubarPrimitive.Root.displayName
+
+const MenubarTrigger = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarTrigger.displayName = MenubarPrimitive.Trigger.displayName
+
+const MenubarSubTrigger = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.SubTrigger>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> & {
+    inset?: boolean
+  }
+>(({ className, inset, children, ...props }, ref) => (
+  <MenubarPrimitive.SubTrigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRight className="ml-auto h-4 w-4" />
+  </MenubarPrimitive.SubTrigger>
+))
+MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName
+
+const MenubarSubContent = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.SubContent>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.SubContent
+    ref={ref}
+    className={cn(
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName
+
+const MenubarContent = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>
+>(
+  (
+    { className, align = "start", alignOffset = -4, sideOffset = 8, ...props },
+    ref
+  ) => (
+    <MenubarPrimitive.Portal>
+      <MenubarPrimitive.Content
+        ref={ref}
+        align={align}
+        alignOffset={alignOffset}
+        sideOffset={sideOffset}
+        className={cn(
+          "z-50 min-w-[12rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          className
+        )}
+        {...props}
+      />
+    </MenubarPrimitive.Portal>
+  )
+)
+MenubarContent.displayName = MenubarPrimitive.Content.displayName
+
+const MenubarItem = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <MenubarPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarItem.displayName = MenubarPrimitive.Item.displayName
+
+const MenubarCheckboxItem = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.CheckboxItem>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem>
+>(({ className, children, checked, ...props }, ref) => (
+  <MenubarPrimitive.CheckboxItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    checked={checked}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <MenubarPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </MenubarPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </MenubarPrimitive.CheckboxItem>
+))
+MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName
+
+const MenubarRadioItem = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.RadioItem>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem>
+>(({ className, children, ...props }, ref) => (
+  <MenubarPrimitive.RadioItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <MenubarPrimitive.ItemIndicator>
+        <Circle className="h-2 w-2 fill-current" />
+      </MenubarPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </MenubarPrimitive.RadioItem>
+))
+MenubarRadioItem.displayName = MenubarPrimitive.RadioItem.displayName
+
+const MenubarLabel = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <MenubarPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2 py-1.5 text-sm font-semibold",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarLabel.displayName = MenubarPrimitive.Label.displayName
+
+const MenubarSeparator = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    {...props}
+  />
+))
+MenubarSeparator.displayName = MenubarPrimitive.Separator.displayName
+
+const MenubarShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+MenubarShortcut.displayname = "MenubarShortcut"
+
+export {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+  MenubarSeparator,
+  MenubarLabel,
+  MenubarCheckboxItem,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarPortal,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarGroup,
+  MenubarSub,
+  MenubarShortcut,
+}
+</file>
+
+<file path="src/components/ui/navigation-menu.tsx">
+import * as React from "react"
+import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
+import { cva } from "class-variance-authority"
+import { ChevronDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const NavigationMenu = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative z-10 flex max-w-max flex-1 items-center justify-center",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <NavigationMenuViewport />
+  </NavigationMenuPrimitive.Root>
+))
+NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
+
+const NavigationMenuList = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.List
+    ref={ref}
+    className={cn(
+      "group flex flex-1 list-none items-center justify-center space-x-1",
+      className
+    )}
+    {...props}
+  />
+))
+NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
+
+const NavigationMenuItem = NavigationMenuPrimitive.Item
+
+const navigationMenuTriggerStyle = cva(
+  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+)
+
+const NavigationMenuTrigger = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Trigger
+    ref={ref}
+    className={cn(navigationMenuTriggerStyle(), "group", className)}
+    {...props}
+  >
+    {children}{" "}
+    <ChevronDown
+      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+      aria-hidden="true"
+    />
+  </NavigationMenuPrimitive.Trigger>
+))
+NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName
+
+const NavigationMenuContent = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.Content
+    ref={ref}
+    className={cn(
+      "left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto ",
+      className
+    )}
+    {...props}
+  />
+))
+NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
+
+const NavigationMenuLink = NavigationMenuPrimitive.Link
+
+const NavigationMenuViewport = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
+>(({ className, ...props }, ref) => (
+  <div className={cn("absolute left-0 top-full flex justify-center")}>
+    <NavigationMenuPrimitive.Viewport
+      className={cn(
+        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+        className
+      )}
+      ref={ref}
+      {...props}
+    />
+  </div>
+))
+NavigationMenuViewport.displayName =
+  NavigationMenuPrimitive.Viewport.displayName
+
+const NavigationMenuIndicator = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Indicator>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Indicator>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.Indicator
+    ref={ref}
+    className={cn(
+      "top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in",
+      className
+    )}
+    {...props}
+  >
+    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+  </NavigationMenuPrimitive.Indicator>
+))
+NavigationMenuIndicator.displayName =
+  NavigationMenuPrimitive.Indicator.displayName
+
+export {
+  navigationMenuTriggerStyle,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+}
+</file>
+
+<file path="src/components/ui/pagination.tsx">
+import * as React from "react"
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { ButtonProps, buttonVariants } from "@/components/ui/button"
+
+const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
+  <nav
+    role="navigation"
+    aria-label="pagination"
+    className={cn("mx-auto flex w-full justify-center", className)}
+    {...props}
+  />
+)
+Pagination.displayName = "Pagination"
+
+const PaginationContent = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<"ul">
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    className={cn("flex flex-row items-center gap-1", className)}
+    {...props}
+  />
+))
+PaginationContent.displayName = "PaginationContent"
+
+const PaginationItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<"li">
+>(({ className, ...props }, ref) => (
+  <li ref={ref} className={cn("", className)} {...props} />
+))
+PaginationItem.displayName = "PaginationItem"
+
+type PaginationLinkProps = {
+  isActive?: boolean
+} & Pick<ButtonProps, "size"> &
+  React.ComponentProps<"a">
+
+const PaginationLink = ({
+  className,
+  isActive,
+  size = "icon",
+  ...props
+}: PaginationLinkProps) => (
+  <a
+    aria-current={isActive ? "page" : undefined}
+    className={cn(
+      buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      }),
+      className
+    )}
+    {...props}
+  />
+)
+PaginationLink.displayName = "PaginationLink"
+
+const PaginationPrevious = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to previous page"
+    size="default"
+    className={cn("gap-1 pl-2.5", className)}
+    {...props}
+  >
+    <ChevronLeft className="h-4 w-4" />
+    <span>Previous</span>
+  </PaginationLink>
+)
+PaginationPrevious.displayName = "PaginationPrevious"
+
+const PaginationNext = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to next page"
+    size="default"
+    className={cn("gap-1 pr-2.5", className)}
+    {...props}
+  >
+    <span>Next</span>
+    <ChevronRight className="h-4 w-4" />
+  </PaginationLink>
+)
+PaginationNext.displayName = "PaginationNext"
+
+const PaginationEllipsis = ({
+  className,
+  ...props
+}: React.ComponentProps<"span">) => (
+  <span
+    aria-hidden
+    className={cn("flex h-9 w-9 items-center justify-center", className)}
+    {...props}
+  >
+    <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only">More pages</span>
+  </span>
+)
+PaginationEllipsis.displayName = "PaginationEllipsis"
+
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+}
+</file>
+
+<file path="src/components/ui/popover.tsx">
+import * as React from "react"
+import * as PopoverPrimitive from "@radix-ui/react-popover"
+
+import { cn } from "@/lib/utils"
+
+const Popover = PopoverPrimitive.Root
+
+const PopoverTrigger = PopoverPrimitive.Trigger
+
+const PopoverContent = React.forwardRef<
+  React.ElementRef<typeof PopoverPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
+>(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+  <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Content
+      ref={ref}
+      align={align}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </PopoverPrimitive.Portal>
+))
+PopoverContent.displayName = PopoverPrimitive.Content.displayName
+
+export { Popover, PopoverTrigger, PopoverContent }
+</file>
+
+<file path="src/components/ui/progress.tsx">
+import * as React from "react"
+import * as ProgressPrimitive from "@radix-ui/react-progress"
+
+import { cn } from "@/lib/utils"
+
+const Progress = React.forwardRef<
+  React.ElementRef<typeof ProgressPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
+>(({ className, value, ...props }, ref) => (
+  <ProgressPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative h-4 w-full overflow-hidden rounded-full bg-secondary",
+      className
+    )}
+    {...props}
+  >
+    <ProgressPrimitive.Indicator
+      className="h-full w-full flex-1 bg-primary transition-all"
+      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+    />
+  </ProgressPrimitive.Root>
+))
+Progress.displayName = ProgressPrimitive.Root.displayName
+
+export { Progress }
+</file>
+
+<file path="src/components/ui/resizable.tsx">
+import { GripVertical } from "lucide-react"
+import * as ResizablePrimitive from "react-resizable-panels"
+
+import { cn } from "@/lib/utils"
+
+const ResizablePanelGroup = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
+  <ResizablePrimitive.PanelGroup
+    className={cn(
+      "flex h-full w-full data-[panel-group-direction=vertical]:flex-col",
+      className
+    )}
+    {...props}
+  />
+)
+
+const ResizablePanel = ResizablePrimitive.Panel
+
+const ResizableHandle = ({
+  withHandle,
+  className,
+  ...props
+}: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & {
+  withHandle?: boolean
+}) => (
+  <ResizablePrimitive.PanelResizeHandle
+    className={cn(
+      "relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-y-1/2 data-[panel-group-direction=vertical]:after:translate-x-0 [&[data-panel-group-direction=vertical]>div]:rotate-90",
+      className
+    )}
+    {...props}
+  >
+    {withHandle && (
+      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border">
+        <GripVertical className="h-2.5 w-2.5" />
+      </div>
+    )}
+  </ResizablePrimitive.PanelResizeHandle>
+)
+
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
+</file>
+
+<file path="src/components/ui/scroll-area.tsx">
+import * as React from "react"
+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
+
+import { cn } from "@/lib/utils"
+
+const ScrollArea = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
+>(({ className, children, ...props }, ref) => (
+  <ScrollAreaPrimitive.Root
+    ref={ref}
+    className={cn("relative overflow-hidden", className)}
+    {...props}
+  >
+    <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
+      {children}
+    </ScrollAreaPrimitive.Viewport>
+    <ScrollBar />
+    <ScrollAreaPrimitive.Corner />
+  </ScrollAreaPrimitive.Root>
+))
+ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
+
+const ScrollBar = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
+>(({ className, orientation = "vertical", ...props }, ref) => (
+  <ScrollAreaPrimitive.ScrollAreaScrollbar
+    ref={ref}
+    orientation={orientation}
+    className={cn(
+      "flex touch-none select-none transition-colors",
+      orientation === "vertical" &&
+        "h-full w-2.5 border-l border-l-transparent p-[1px]",
+      orientation === "horizontal" &&
+        "h-2.5 flex-col border-t border-t-transparent p-[1px]",
+      className
+    )}
+    {...props}
+  >
+    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
+  </ScrollAreaPrimitive.ScrollAreaScrollbar>
+))
+ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
+
+export { ScrollArea, ScrollBar }
+</file>
+
+<file path="src/components/ui/select.tsx">
+import * as React from "react"
+import * as SelectPrimitive from "@radix-ui/react-select"
+import { Check, ChevronDown, ChevronUp } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Select = SelectPrimitive.Root
+
+const SelectGroup = SelectPrimitive.Group
+
+const SelectValue = SelectPrimitive.Value
+
+const SelectTrigger = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <SelectPrimitive.Icon asChild>
+      <ChevronDown className="h-4 w-4 opacity-50" />
+    </SelectPrimitive.Icon>
+  </SelectPrimitive.Trigger>
+))
+SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
+
+const SelectScrollUpButton = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollUpButton
+    ref={ref}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1",
+      className
+    )}
+    {...props}
+  >
+    <ChevronUp className="h-4 w-4" />
+  </SelectPrimitive.ScrollUpButton>
+))
+SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
+
+const SelectScrollDownButton = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollDownButton
+    ref={ref}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1",
+      className
+    )}
+    {...props}
+  >
+    <ChevronDown className="h-4 w-4" />
+  </SelectPrimitive.ScrollDownButton>
+))
+SelectScrollDownButton.displayName =
+  SelectPrimitive.ScrollDownButton.displayName
+
+const SelectContent = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
+>(({ className, children, position = "popper", ...props }, ref) => (
+  <SelectPrimitive.Portal>
+    <SelectPrimitive.Content
+      ref={ref}
+      className={cn(
+        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        position === "popper" &&
+          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+        className
+      )}
+      position={position}
+      {...props}
+    >
+      <SelectScrollUpButton />
+      <SelectPrimitive.Viewport
+        className={cn(
+          "p-1",
+          position === "popper" &&
+            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+        )}
+      >
+        {children}
+      </SelectPrimitive.Viewport>
+      <SelectScrollDownButton />
+    </SelectPrimitive.Content>
+  </SelectPrimitive.Portal>
+))
+SelectContent.displayName = SelectPrimitive.Content.displayName
+
+const SelectLabel = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.Label
+    ref={ref}
+    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+    {...props}
+  />
+))
+SelectLabel.displayName = SelectPrimitive.Label.displayName
+
+const SelectItem = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <SelectPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </SelectPrimitive.ItemIndicator>
+    </span>
+
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+  </SelectPrimitive.Item>
+))
+SelectItem.displayName = SelectPrimitive.Item.displayName
+
+const SelectSeparator = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    {...props}
+  />
+))
+SelectSeparator.displayName = SelectPrimitive.Separator.displayName
+
+export {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+}
+</file>
+
+<file path="src/components/ui/separator.tsx">
+import * as React from "react"
+import * as SeparatorPrimitive from "@radix-ui/react-separator"
+
+import { cn } from "@/lib/utils"
+
+const Separator = React.forwardRef<
+  React.ElementRef<typeof SeparatorPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
+>(
+  (
+    { className, orientation = "horizontal", decorative = true, ...props },
+    ref
+  ) => (
+    <SeparatorPrimitive.Root
+      ref={ref}
+      decorative={decorative}
+      orientation={orientation}
+      className={cn(
+        "shrink-0 bg-border",
+        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+        className
+      )}
+      {...props}
+    />
+  )
+)
+Separator.displayName = SeparatorPrimitive.Root.displayName
+
+export { Separator }
+</file>
+
+<file path="src/components/ui/sidebar.tsx">
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { VariantProps, cva } from "class-variance-authority"
+import { PanelLeft } from "lucide-react"
+
+import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Separator } from "@/components/ui/separator"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+const SIDEBAR_COOKIE_NAME = "sidebar:state"
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
+const SIDEBAR_WIDTH = "16rem"
+const SIDEBAR_WIDTH_MOBILE = "18rem"
+const SIDEBAR_WIDTH_ICON = "3rem"
+const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+
+type SidebarContext = {
+  state: "expanded" | "collapsed"
+  open: boolean
+  setOpen: (open: boolean) => void
+  openMobile: boolean
+  setOpenMobile: (open: boolean) => void
+  isMobile: boolean
+  toggleSidebar: () => void
+}
+
+const SidebarContext = React.createContext<SidebarContext | null>(null)
+
+function useSidebar() {
+  const context = React.useContext(SidebarContext)
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider.")
+  }
+
+  return context
+}
+
+const SidebarProvider = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    defaultOpen?: boolean
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
+  }
+>(
+  (
+    {
+      defaultOpen = true,
+      open: openProp,
+      onOpenChange: setOpenProp,
+      className,
+      style,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const isMobile = useIsMobile()
+    const [openMobile, setOpenMobile] = React.useState(false)
+
+    // This is the internal state of the sidebar.
+    // We use openProp and setOpenProp for control from outside the component.
+    const [_open, _setOpen] = React.useState(defaultOpen)
+    const open = openProp ?? _open
+    const setOpen = React.useCallback(
+      (value: boolean | ((value: boolean) => boolean)) => {
+        const openState = typeof value === "function" ? value(open) : value
+        if (setOpenProp) {
+          setOpenProp(openState)
+        } else {
+          _setOpen(openState)
+        }
+
+        // This sets the cookie to keep the sidebar state.
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      },
+      [setOpenProp, open]
+    )
+
+    // Helper to toggle the sidebar.
+    const toggleSidebar = React.useCallback(() => {
+      return isMobile
+        ? setOpenMobile((open) => !open)
+        : setOpen((open) => !open)
+    }, [isMobile, setOpen, setOpenMobile])
+
+    // Adds a keyboard shortcut to toggle the sidebar.
+    React.useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (
+          event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
+          (event.metaKey || event.ctrlKey)
+        ) {
+          event.preventDefault()
+          toggleSidebar()
+        }
+      }
+
+      window.addEventListener("keydown", handleKeyDown)
+      return () => window.removeEventListener("keydown", handleKeyDown)
+    }, [toggleSidebar])
+
+    // We add a state so that we can do data-state="expanded" or "collapsed".
+    // This makes it easier to style the sidebar with Tailwind classes.
+    const state = open ? "expanded" : "collapsed"
+
+    const contextValue = React.useMemo<SidebarContext>(
+      () => ({
+        state,
+        open,
+        setOpen,
+        isMobile,
+        openMobile,
+        setOpenMobile,
+        toggleSidebar,
+      }),
+      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+    )
+
+    return (
+      <SidebarContext.Provider value={contextValue}>
+        <TooltipProvider delayDuration={0}>
+          <div
+            style={
+              {
+                "--sidebar-width": SIDEBAR_WIDTH,
+                "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+                ...style,
+              } as React.CSSProperties
+            }
+            className={cn(
+              "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+              className
+            )}
+            ref={ref}
+            {...props}
+          >
+            {children}
+          </div>
+        </TooltipProvider>
+      </SidebarContext.Provider>
+    )
+  }
+)
+SidebarProvider.displayName = "SidebarProvider"
+
+const Sidebar = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    side?: "left" | "right"
+    variant?: "sidebar" | "floating" | "inset"
+    collapsible?: "offcanvas" | "icon" | "none"
+  }
+>(
+  (
+    {
+      side = "left",
+      variant = "sidebar",
+      collapsible = "offcanvas",
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+
+    if (collapsible === "none") {
+      return (
+        <div
+          className={cn(
+            "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground",
+            className
+          )}
+          ref={ref}
+          {...props}
+        >
+          {children}
+        </div>
+      )
+    }
+
+    if (isMobile) {
+      return (
+        <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+          <SheetContent
+            data-sidebar="sidebar"
+            data-mobile="true"
+            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            style={
+              {
+                "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              } as React.CSSProperties
+            }
+            side={side}
+          >
+            <div className="flex h-full w-full flex-col">{children}</div>
+          </SheetContent>
+        </Sheet>
+      )
+    }
+
+    return (
+      <div
+        ref={ref}
+        className="group peer hidden md:block text-sidebar-foreground"
+        data-state={state}
+        data-collapsible={state === "collapsed" ? collapsible : ""}
+        data-variant={variant}
+        data-side={side}
+      >
+        {/* This is what handles the sidebar gap on desktop */}
+        <div
+          className={cn(
+            "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
+            "group-data-[collapsible=offcanvas]:w-0",
+            "group-data-[side=right]:rotate-180",
+            variant === "floating" || variant === "inset"
+              ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
+              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
+          )}
+        />
+        <div
+          className={cn(
+            "duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex",
+            side === "left"
+              ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
+              : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+            // Adjust the padding for floating and inset variants.
+            variant === "floating" || variant === "inset"
+              ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
+              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
+            className
+          )}
+          {...props}
+        >
+          <div
+            data-sidebar="sidebar"
+            className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    )
+  }
+)
+Sidebar.displayName = "Sidebar"
+
+const SidebarTrigger = React.forwardRef<
+  React.ElementRef<typeof Button>,
+  React.ComponentProps<typeof Button>
+>(({ className, onClick, ...props }, ref) => {
+  const { toggleSidebar } = useSidebar()
+
+  return (
+    <Button
+      ref={ref}
+      data-sidebar="trigger"
+      variant="ghost"
+      size="icon"
+      className={cn("h-7 w-7", className)}
+      onClick={(event) => {
+        onClick?.(event)
+        toggleSidebar()
+      }}
+      {...props}
+    >
+      <PanelLeft />
+      <span className="sr-only">Toggle Sidebar</span>
+    </Button>
+  )
+})
+SidebarTrigger.displayName = "SidebarTrigger"
+
+const SidebarRail = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button">
+>(({ className, ...props }, ref) => {
+  const { toggleSidebar } = useSidebar()
+
+  return (
+    <button
+      ref={ref}
+      data-sidebar="rail"
+      aria-label="Toggle Sidebar"
+      tabIndex={-1}
+      onClick={toggleSidebar}
+      title="Toggle Sidebar"
+      className={cn(
+        "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
+        "[[data-side=left]_&]:cursor-w-resize [[data-side=right]_&]:cursor-e-resize",
+        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+        "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar",
+        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
+        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarRail.displayName = "SidebarRail"
+
+const SidebarInset = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"main">
+>(({ className, ...props }, ref) => {
+  return (
+    <main
+      ref={ref}
+      className={cn(
+        "relative flex min-h-svh flex-1 flex-col bg-background",
+        "peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarInset.displayName = "SidebarInset"
+
+const SidebarInput = React.forwardRef<
+  React.ElementRef<typeof Input>,
+  React.ComponentProps<typeof Input>
+>(({ className, ...props }, ref) => {
+  return (
+    <Input
+      ref={ref}
+      data-sidebar="input"
+      className={cn(
+        "h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarInput.displayName = "SidebarInput"
+
+const SidebarHeader = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="header"
+      className={cn("flex flex-col gap-2 p-2", className)}
+      {...props}
+    />
+  )
+})
+SidebarHeader.displayName = "SidebarHeader"
+
+const SidebarFooter = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="footer"
+      className={cn("flex flex-col gap-2 p-2", className)}
+      {...props}
+    />
+  )
+})
+SidebarFooter.displayName = "SidebarFooter"
+
+const SidebarSeparator = React.forwardRef<
+  React.ElementRef<typeof Separator>,
+  React.ComponentProps<typeof Separator>
+>(({ className, ...props }, ref) => {
+  return (
+    <Separator
+      ref={ref}
+      data-sidebar="separator"
+      className={cn("mx-2 w-auto bg-sidebar-border", className)}
+      {...props}
+    />
+  )
+})
+SidebarSeparator.displayName = "SidebarSeparator"
+
+const SidebarContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="content"
+      className={cn(
+        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarContent.displayName = "SidebarContent"
+
+const SidebarGroup = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="group"
+      className={cn("relative flex w-full min-w-0 flex-col p-2", className)}
+      {...props}
+    />
+  )
+})
+SidebarGroup.displayName = "SidebarGroup"
+
+const SidebarGroupLabel = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & { asChild?: boolean }
+>(({ className, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "div"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="group-label"
+      className={cn(
+        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarGroupLabel.displayName = "SidebarGroupLabel"
+
+const SidebarGroupAction = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & { asChild?: boolean }
+>(({ className, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "button"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="group-action"
+      className={cn(
+        "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        // Increases the hit area of the button on mobile.
+        "after:absolute after:-inset-2 after:md:hidden",
+        "group-data-[collapsible=icon]:hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarGroupAction.displayName = "SidebarGroupAction"
+
+const SidebarGroupContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    data-sidebar="group-content"
+    className={cn("w-full text-sm", className)}
+    {...props}
+  />
+))
+SidebarGroupContent.displayName = "SidebarGroupContent"
+
+const SidebarMenu = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<"ul">
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    data-sidebar="menu"
+    className={cn("flex w-full min-w-0 flex-col gap-1", className)}
+    {...props}
+  />
+))
+SidebarMenu.displayName = "SidebarMenu"
+
+const SidebarMenuItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<"li">
+>(({ className, ...props }, ref) => (
+  <li
+    ref={ref}
+    data-sidebar="menu-item"
+    className={cn("group/menu-item relative", className)}
+    {...props}
+  />
+))
+SidebarMenuItem.displayName = "SidebarMenuItem"
+
+const sidebarMenuButtonVariants = cva(
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        outline:
+          "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+      },
+      size: {
+        default: "h-8 text-sm",
+        sm: "h-7 text-xs",
+        lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+const SidebarMenuButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    asChild?: boolean
+    isActive?: boolean
+    tooltip?: string | React.ComponentProps<typeof TooltipContent>
+  } & VariantProps<typeof sidebarMenuButtonVariants>
+>(
+  (
+    {
+      asChild = false,
+      isActive = false,
+      variant = "default",
+      size = "default",
+      tooltip,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : "button"
+    const { isMobile, state } = useSidebar()
+
+    const button = (
+      <Comp
+        ref={ref}
+        data-sidebar="menu-button"
+        data-size={size}
+        data-active={isActive}
+        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        {...props}
+      />
+    )
+
+    if (!tooltip) {
+      return button
+    }
+
+    if (typeof tooltip === "string") {
+      tooltip = {
+        children: tooltip,
+      }
+    }
+
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>{button}</TooltipTrigger>
+        <TooltipContent
+          side="right"
+          align="center"
+          hidden={state !== "collapsed" || isMobile}
+          {...tooltip}
+        />
+      </Tooltip>
+    )
+  }
+)
+SidebarMenuButton.displayName = "SidebarMenuButton"
+
+const SidebarMenuAction = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    asChild?: boolean
+    showOnHover?: boolean
+  }
+>(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "button"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="menu-action"
+      className={cn(
+        "absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground [&>svg]:size-4 [&>svg]:shrink-0",
+        // Increases the hit area of the button on mobile.
+        "after:absolute after:-inset-2 after:md:hidden",
+        "peer-data-[size=sm]/menu-button:top-1",
+        "peer-data-[size=default]/menu-button:top-1.5",
+        "peer-data-[size=lg]/menu-button:top-2.5",
+        "group-data-[collapsible=icon]:hidden",
+        showOnHover &&
+          "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarMenuAction.displayName = "SidebarMenuAction"
+
+const SidebarMenuBadge = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    data-sidebar="menu-badge"
+    className={cn(
+      "absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-sidebar-foreground select-none pointer-events-none",
+      "peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
+      "peer-data-[size=sm]/menu-button:top-1",
+      "peer-data-[size=default]/menu-button:top-1.5",
+      "peer-data-[size=lg]/menu-button:top-2.5",
+      "group-data-[collapsible=icon]:hidden",
+      className
+    )}
+    {...props}
+  />
+))
+SidebarMenuBadge.displayName = "SidebarMenuBadge"
+
+const SidebarMenuSkeleton = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    showIcon?: boolean
+  }
+>(({ className, showIcon = false, ...props }, ref) => {
+  // Random width between 50 to 90%.
+  const width = React.useMemo(() => {
+    return `${Math.floor(Math.random() * 40) + 50}%`
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      data-sidebar="menu-skeleton"
+      className={cn("rounded-md h-8 flex gap-2 px-2 items-center", className)}
+      {...props}
+    >
+      {showIcon && (
+        <Skeleton
+          className="size-4 rounded-md"
+          data-sidebar="menu-skeleton-icon"
+        />
+      )}
+      <Skeleton
+        className="h-4 flex-1 max-w-[--skeleton-width]"
+        data-sidebar="menu-skeleton-text"
+        style={
+          {
+            "--skeleton-width": width,
+          } as React.CSSProperties
+        }
+      />
+    </div>
+  )
+})
+SidebarMenuSkeleton.displayName = "SidebarMenuSkeleton"
+
+const SidebarMenuSub = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<"ul">
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    data-sidebar="menu-sub"
+    className={cn(
+      "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5",
+      "group-data-[collapsible=icon]:hidden",
+      className
+    )}
+    {...props}
+  />
+))
+SidebarMenuSub.displayName = "SidebarMenuSub"
+
+const SidebarMenuSubItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<"li">
+>(({ ...props }, ref) => <li ref={ref} {...props} />)
+SidebarMenuSubItem.displayName = "SidebarMenuSubItem"
+
+const SidebarMenuSubButton = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentProps<"a"> & {
+    asChild?: boolean
+    size?: "sm" | "md"
+    isActive?: boolean
+  }
+>(({ asChild = false, size = "md", isActive, className, ...props }, ref) => {
+  const Comp = asChild ? Slot : "a"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="menu-sub-button"
+      data-size={size}
+      data-active={isActive}
+      className={cn(
+        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
+        "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
+        size === "sm" && "text-xs",
+        size === "md" && "text-sm",
+        "group-data-[collapsible=icon]:hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarMenuSubButton.displayName = "SidebarMenuSubButton"
+
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+}
+</file>
+
+<file path="src/components/ui/skeleton.tsx">
+import { cn } from "@/lib/utils"
+
+function Skeleton({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn("animate-pulse rounded-md bg-muted", className)}
+      {...props}
+    />
+  )
+}
+
+export { Skeleton }
+</file>
+
+<file path="src/components/ui/slider.tsx">
+import * as React from "react"
+import * as SliderPrimitive from "@radix-ui/react-slider"
+
+import { cn } from "@/lib/utils"
+
+const Slider = React.forwardRef<
+  React.ElementRef<typeof SliderPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <SliderPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex w-full touch-none select-none items-center",
+      className
+    )}
+    {...props}
+  >
+    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
+      <SliderPrimitive.Range className="absolute h-full bg-primary" />
+    </SliderPrimitive.Track>
+    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+  </SliderPrimitive.Root>
+))
+Slider.displayName = SliderPrimitive.Root.displayName
+
+export { Slider }
+</file>
+
+<file path="src/components/ui/sonner.tsx">
+import { useTheme } from "next-themes"
+import { Toaster as Sonner, toast } from "sonner"
+
+type ToasterProps = React.ComponentProps<typeof Sonner>
+
+const Toaster = ({ ...props }: ToasterProps) => {
+  const { theme = "system" } = useTheme()
+
+  return (
+    <Sonner
+      theme={theme as ToasterProps["theme"]}
+      className="toaster group"
+      toastOptions={{
+        classNames: {
+          toast:
+            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+          description: "group-[.toast]:text-muted-foreground",
+          actionButton:
+            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
+          cancelButton:
+            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+        },
+      }}
+      {...props}
+    />
+  )
+}
+
+export { Toaster, toast }
+</file>
+
+<file path="src/components/ui/switch.tsx">
+import * as React from "react"
+import * as SwitchPrimitives from "@radix-ui/react-switch"
+
+import { cn } from "@/lib/utils"
+
+const Switch = React.forwardRef<
+  React.ElementRef<typeof SwitchPrimitives.Root>,
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
+>(({ className, ...props }, ref) => (
+  <SwitchPrimitives.Root
+    className={cn(
+      "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+      className
+    )}
+    {...props}
+    ref={ref}
+  >
+    <SwitchPrimitives.Thumb
+      className={cn(
+        "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+      )}
+    />
+  </SwitchPrimitives.Root>
+))
+Switch.displayName = SwitchPrimitives.Root.displayName
+
+export { Switch }
+</file>
+
+<file path="src/components/ui/table.tsx">
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+const Table = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  <div className="relative w-full overflow-auto">
+    <table
+      ref={ref}
+      className={cn("w-full caption-bottom text-sm", className)}
+      {...props}
+    />
+  </div>
+))
+Table.displayName = "Table"
+
+const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+))
+TableHeader.displayName = "TableHeader"
+
+const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tbody
+    ref={ref}
+    className={cn("[&_tr:last-child]:border-0", className)}
+    {...props}
+  />
+))
+TableBody.displayName = "TableBody"
+
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableFooter.displayName = "TableFooter"
+
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(
+      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      className
+    )}
+    {...props}
+  />
+))
+TableRow.displayName = "TableRow"
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(
+      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableHead.displayName = "TableHead"
+
+const TableCell = React.forwardRef<
+  HTMLTableCellElement,
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <td
+    ref={ref}
+    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    {...props}
+  />
+))
+TableCell.displayName = "TableCell"
+
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
+>(({ className, ...props }, ref) => (
+  <caption
+    ref={ref}
+    className={cn("mt-4 text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+TableCaption.displayName = "TableCaption"
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+}
+</file>
+
+<file path="src/components/ui/tabs.tsx">
+import * as React from "react"
+import * as TabsPrimitive from "@radix-ui/react-tabs"
+
+import { cn } from "@/lib/utils"
+
+const Tabs = TabsPrimitive.Root
+
+const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List
+    ref={ref}
+    className={cn(
+      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+TabsList.displayName = TabsPrimitive.List.displayName
+
+const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+      className
+    )}
+    {...props}
+  />
+))
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+
+const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content
+    ref={ref}
+    className={cn(
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className
+    )}
+    {...props}
+  />
+))
+TabsContent.displayName = TabsPrimitive.Content.displayName
+
+export { Tabs, TabsList, TabsTrigger, TabsContent }
+</file>
+
+<file path="src/components/ui/textarea.tsx">
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+export interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <textarea
+        className={cn(
+          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Textarea.displayName = "Textarea"
+
+export { Textarea }
+</file>
+
+<file path="src/components/ui/toast.tsx">
+import * as React from "react"
+import * as ToastPrimitives from "@radix-ui/react-toast"
+import { cva, type VariantProps } from "class-variance-authority"
+import { X } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const ToastProvider = ToastPrimitives.Provider
+
+const ToastViewport = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Viewport>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Viewport
+    ref={ref}
+    className={cn(
+      "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
+      className
+    )}
+    {...props}
+  />
+))
+ToastViewport.displayName = ToastPrimitives.Viewport.displayName
+
+const toastVariants = cva(
+  "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
+  {
+    variants: {
+      variant: {
+        default: "border bg-background text-foreground",
+        destructive:
+          "destructive group border-destructive bg-destructive text-destructive-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+const Toast = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Root>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
+    VariantProps<typeof toastVariants>
+>(({ className, variant, ...props }, ref) => {
+  return (
+    <ToastPrimitives.Root
+      ref={ref}
+      className={cn(toastVariants({ variant }), className)}
+      {...props}
+    />
+  )
+})
+Toast.displayName = ToastPrimitives.Root.displayName
+
+const ToastAction = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Action>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Action
+    ref={ref}
+    className={cn(
+      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
+      className
+    )}
+    {...props}
+  />
+))
+ToastAction.displayName = ToastPrimitives.Action.displayName
+
+const ToastClose = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Close>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Close
+    ref={ref}
+    className={cn(
+      "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
+      className
+    )}
+    toast-close=""
+    {...props}
+  >
+    <X className="h-4 w-4" />
+  </ToastPrimitives.Close>
+))
+ToastClose.displayName = ToastPrimitives.Close.displayName
+
+const ToastTitle = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Title>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Title
+    ref={ref}
+    className={cn("text-sm font-semibold", className)}
+    {...props}
+  />
+))
+ToastTitle.displayName = ToastPrimitives.Title.displayName
+
+const ToastDescription = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Description>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Description
+    ref={ref}
+    className={cn("text-sm opacity-90", className)}
+    {...props}
+  />
+))
+ToastDescription.displayName = ToastPrimitives.Description.displayName
+
+type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
+
+type ToastActionElement = React.ReactElement<typeof ToastAction>
+
+export {
+  type ToastProps,
+  type ToastActionElement,
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+  ToastAction,
+}
+</file>
+
+<file path="src/components/ui/toaster.tsx">
+import { useToast } from "@/hooks/use-toast"
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@/components/ui/toast"
+
+export function Toaster() {
+  const { toasts } = useToast()
+
+  return (
+    <ToastProvider>
+      {toasts.map(function ({ id, title, description, action, ...props }) {
+        return (
+          <Toast key={id} {...props}>
+            <div className="grid gap-1">
+              {title && <ToastTitle>{title}</ToastTitle>}
+              {description && (
+                <ToastDescription>{description}</ToastDescription>
+              )}
+            </div>
+            {action}
+            <ToastClose />
+          </Toast>
+        )
+      })}
+      <ToastViewport />
+    </ToastProvider>
+  )
+}
+</file>
+
+<file path="src/components/ui/toggle-group.tsx">
+import * as React from "react"
+import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
+import { type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+import { toggleVariants } from "@/components/ui/toggle"
+
+const ToggleGroupContext = React.createContext<
+  VariantProps<typeof toggleVariants>
+>({
+  size: "default",
+  variant: "default",
+})
+
+const ToggleGroup = React.forwardRef<
+  React.ElementRef<typeof ToggleGroupPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> &
+    VariantProps<typeof toggleVariants>
+>(({ className, variant, size, children, ...props }, ref) => (
+  <ToggleGroupPrimitive.Root
+    ref={ref}
+    className={cn("flex items-center justify-center gap-1", className)}
+    {...props}
+  >
+    <ToggleGroupContext.Provider value={{ variant, size }}>
+      {children}
+    </ToggleGroupContext.Provider>
+  </ToggleGroupPrimitive.Root>
+))
+
+ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName
+
+const ToggleGroupItem = React.forwardRef<
+  React.ElementRef<typeof ToggleGroupPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> &
+    VariantProps<typeof toggleVariants>
+>(({ className, children, variant, size, ...props }, ref) => {
+  const context = React.useContext(ToggleGroupContext)
+
+  return (
+    <ToggleGroupPrimitive.Item
+      ref={ref}
+      className={cn(
+        toggleVariants({
+          variant: context.variant || variant,
+          size: context.size || size,
+        }),
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </ToggleGroupPrimitive.Item>
+  )
+})
+
+ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName
+
+export { ToggleGroup, ToggleGroupItem }
+</file>
+
+<file path="src/components/ui/toggle.tsx">
+import * as React from "react"
+import * as TogglePrimitive from "@radix-ui/react-toggle"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const toggleVariants = cva(
+  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-transparent",
+        outline:
+          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
+      },
+      size: {
+        default: "h-10 px-3",
+        sm: "h-9 px-2.5",
+        lg: "h-11 px-5",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+const Toggle = React.forwardRef<
+  React.ElementRef<typeof TogglePrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
+    VariantProps<typeof toggleVariants>
+>(({ className, variant, size, ...props }, ref) => (
+  <TogglePrimitive.Root
+    ref={ref}
+    className={cn(toggleVariants({ variant, size, className }))}
+    {...props}
+  />
+))
+
+Toggle.displayName = TogglePrimitive.Root.displayName
+
+export { Toggle, toggleVariants }
+</file>
+
+<file path="src/components/ui/tooltip.tsx">
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+
+import { cn } from "@/lib/utils"
+
+const TooltipProvider = TooltipPrimitive.Provider
+
+const Tooltip = TooltipPrimitive.Root
+
+const TooltipTrigger = TooltipPrimitive.Trigger
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+</file>
+
+<file path="src/components/ui/use-toast.ts">
+import { useToast, toast } from "@/hooks/use-toast";
+
+export { useToast, toast };
+</file>
+
+<file path="src/hooks/use-mobile.tsx">
+import * as React from "react"
+
+const MOBILE_BREAKPOINT = 768
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
+    mql.addEventListener("change", onChange)
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+
+  return !!isMobile
+}
+</file>
+
+<file path="src/hooks/use-toast.ts">
+import * as React from "react"
+
+import type {
+  ToastActionElement,
+  ToastProps,
+} from "@/components/ui/toast"
+
+const TOAST_LIMIT = 1
+const TOAST_REMOVE_DELAY = 1000000
+
+type ToasterToast = ToastProps & {
+  id: string
+  title?: React.ReactNode
+  description?: React.ReactNode
+  action?: ToastActionElement
+}
+
+const actionTypes = {
+  ADD_TOAST: "ADD_TOAST",
+  UPDATE_TOAST: "UPDATE_TOAST",
+  DISMISS_TOAST: "DISMISS_TOAST",
+  REMOVE_TOAST: "REMOVE_TOAST",
+} as const
+
+let count = 0
+
+function genId() {
+  count = (count + 1) % Number.MAX_SAFE_INTEGER
+  return count.toString()
+}
+
+type ActionType = typeof actionTypes
+
+type Action =
+  | {
+      type: ActionType["ADD_TOAST"]
+      toast: ToasterToast
+    }
+  | {
+      type: ActionType["UPDATE_TOAST"]
+      toast: Partial<ToasterToast>
+    }
+  | {
+      type: ActionType["DISMISS_TOAST"]
+      toastId?: ToasterToast["id"]
+    }
+  | {
+      type: ActionType["REMOVE_TOAST"]
+      toastId?: ToasterToast["id"]
+    }
+
+interface State {
+  toasts: ToasterToast[]
+}
+
+const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+
+const addToRemoveQueue = (toastId: string) => {
+  if (toastTimeouts.has(toastId)) {
+    return
+  }
+
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId)
+    dispatch({
+      type: "REMOVE_TOAST",
+      toastId: toastId,
+    })
+  }, TOAST_REMOVE_DELAY)
+
+  toastTimeouts.set(toastId, timeout)
+}
+
+export const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "ADD_TOAST":
+      return {
+        ...state,
+        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
+      }
+
+    case "UPDATE_TOAST":
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
+        ),
+      }
+
+    case "DISMISS_TOAST": {
+      const { toastId } = action
+
+      // ! Side effects ! - This could be extracted into a dismissToast() action,
+      // but I'll keep it here for simplicity
+      if (toastId) {
+        addToRemoveQueue(toastId)
+      } else {
+        state.toasts.forEach((toast) => {
+          addToRemoveQueue(toast.id)
+        })
+      }
+
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === toastId || toastId === undefined
+            ? {
+                ...t,
+                open: false,
+              }
+            : t
+        ),
+      }
+    }
+    case "REMOVE_TOAST":
+      if (action.toastId === undefined) {
+        return {
+          ...state,
+          toasts: [],
+        }
+      }
+      return {
+        ...state,
+        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+      }
+  }
+}
+
+const listeners: Array<(state: State) => void> = []
+
+let memoryState: State = { toasts: [] }
+
+function dispatch(action: Action) {
+  memoryState = reducer(memoryState, action)
+  listeners.forEach((listener) => {
+    listener(memoryState)
+  })
+}
+
+type Toast = Omit<ToasterToast, "id">
+
+function toast({ ...props }: Toast) {
+  const id = genId()
+
+  const update = (props: ToasterToast) =>
+    dispatch({
+      type: "UPDATE_TOAST",
+      toast: { ...props, id },
+    })
+  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+
+  dispatch({
+    type: "ADD_TOAST",
+    toast: {
+      ...props,
+      id,
+      open: true,
+      onOpenChange: (open) => {
+        if (!open) dismiss()
+      },
+    },
+  })
+
+  return {
+    id: id,
+    dismiss,
+    update,
+  }
+}
+
+function useToast() {
+  const [state, setState] = React.useState<State>(memoryState)
+
+  React.useEffect(() => {
+    listeners.push(setState)
+    return () => {
+      const index = listeners.indexOf(setState)
+      if (index > -1) {
+        listeners.splice(index, 1)
+      }
+    }
+  }, [state])
+
+  return {
+    ...state,
+    toast,
+    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+  }
+}
+
+export { useToast, toast }
+</file>
+
+<file path="src/hooks/useContactFilters.ts">
+import { useState, useMemo } from "react";
+import { Contact, ContactTag } from "@/lib/types";
+
+export function useContactFilters(contacts: Contact[]) {
+  const [sortKey, setSortKey] = useState<string>("");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | "default">("default");
+  const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(null);
+
+  const handleSort = (key: string, direction: "asc" | "desc" | "default") => {
+    setSortKey(key);
+    setSortDirection(direction);
+  };
+
+  const handleFilterByTag = (tag: ContactTag | null) => {
+    setActiveTagFilter(tag);
+  };
+
+  const filteredAndSortedContacts = useMemo(() => {
+    // First apply tag filtering
+    const filtered = activeTagFilter
+      ? contacts.filter((contact) => contact.tags.includes(activeTagFilter))
+      : contacts;
+
+    // Then apply sorting
+    if (sortKey && sortDirection !== "default") {
+      return [...filtered].sort((a, b) => {
+        const aValue = a[sortKey as keyof Contact];
+        const bValue = b[sortKey as keyof Contact];
+
+        // Handle different types of values
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          // For dates, convert to timestamp first
+          if (sortKey === "dateOfContact") {
+            const aDate = new Date(aValue).getTime();
+            const bDate = new Date(bValue).getTime();
+            return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
+          }
+
+          // For normal strings
+          return sortDirection === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+
+        // Fallback for non-string values
+        return 0;
+      });
+    }
+
+    return filtered;
+  }, [contacts, sortKey, sortDirection, activeTagFilter]);
+
+  return {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    handleSort,
+    handleFilterByTag,
+    filteredAndSortedContacts,
+  };
+}
+</file>
+
+<file path="src/lib/client.ts">
+// This file is automatically generated. Do not edit it directly.
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/lib/supabase.ts';
+
+const SUPABASE_URL = "https://dzdxbxqxjqaxpiuzbhdd.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6ZHhieHF4anFheHBpdXpiaGRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY0NzQwODgsImV4cCI6MjA2MjA1MDA4OH0.ZVMTua9aXjIibJKcgTcTQq1VMzUzdjts5FFEqxHXFJQ";
+
+// Import the supabase client like this:
+// import { supabase } from "@/integrations/supabase/client";
+
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+</file>
+
+<file path="src/lib/supabase.ts">
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  public: {
+    Tables: {
+      contact_group_members: {
+        Row: {
+          contact_id: string
+          created_at: string
+          group_id: string
+          id: string
+        }
+        Insert: {
+          contact_id: string
+          created_at?: string
+          group_id: string
+          id?: string
+        }
+        Update: {
+          contact_id?: string
+          created_at?: string
+          group_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_group_members_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contact_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "contact_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contact_groups: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      contact_notes: {
+        Row: {
+          contact_id: string
+          content: string
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          contact_id: string
+          content: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          contact_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_notes_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contact_todos: {
+        Row: {
+          completed: boolean
+          contact_id: string
+          created_at: string | null
+          due_date: string | null
+          id: string
+          task: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          contact_id: string
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          task: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          contact_id?: string
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          task?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_todos_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contacts: {
+        Row: {
+          company: string | null
+          created_at: string
+          dateofcontact: string
+          email: string
+          id: string
+          name: string
+          role: string | null
+          status: string
+          tags: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          dateofcontact: string
+          email: string
+          id?: string
+          name: string
+          role?: string | null
+          status: string
+          tags?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          dateofcontact?: string
+          email?: string
+          id?: string
+          name?: string
+          role?: string | null
+          status?: string
+          tags?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      delete_user: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DefaultSchema = Database[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof Database },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof Database },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof Database },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof Database },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {},
+  },
+} as const
+</file>
+
+<file path="src/lib/utils.ts">
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+</file>
+
+<file path="src/pages/NotFound.tsx">
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
+const NotFound = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    console.error(
+      "404 Error: User attempted to access non-existent route:",
+      location.pathname
+    );
+  }, [location.pathname]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">404</h1>
+        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
+        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
+          Return to Home
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default NotFound;
+</file>
+
+<file path="src/vite-env.d.ts">
+/// <reference types="vite/client" />
+</file>
+
+<file path="supabase/.temp/cli-latest">
+v2.22.6
+</file>
+
+<file path="supabase/config.toml">
+project_id = "dzdxbxqxjqaxpiuzbhdd"
+</file>
+
+<file path="tsconfig.app.json">
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": false,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
+</file>
+
+<file path="tsconfig.json">
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noUnusedLocals": false,
+    "strictNullChecks": false
+  }
+}
+</file>
+
+<file path="tsconfig.node.json">
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["vite.config.ts"]
+}
+</file>
+
+<file path="vercel.json">
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+</file>
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.env
+</file>
+
+<file path="src/components/contacts/AddToGroupModal.tsx">
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Contact, ContactGroup } from "@/lib/types";
+import { supabase } from "@/lib/client";
+import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@/context/AuthContext";
+
+interface AddToGroupModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  selectedContacts: Contact[];
+  onGroupAdded: () => void;
+}
+
+export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
+  isOpen,
+  onClose,
+  selectedContacts,
+  onGroupAdded,
+}) => {
+  const { user } = useAuth();
+  const [groups, setGroups] = useState<ContactGroup[]>([]);
+  const [newGroupName, setNewGroupName] = useState("");
+  const [selectedGroupId, setSelectedGroupId] = useState<string | "new">("new");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen && user) {
+      fetchGroups();
+    }
+  }, [isOpen, user]);
+
+  const fetchGroups = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("contact_groups")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      const transformedGroups: ContactGroup[] = data.map((item) => ({
+        id: item.id,
+        name: item.name,
+        userId: item.user_id,
+        createdAt: item.created_at,
+      }));
+
+      setGroups(transformedGroups);
+      if (transformedGroups.length > 0) {
+        setSelectedGroupId(transformedGroups[0].id);
+      }
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load contact groups",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    if (selectedContacts.length === 0) {
+      toast({
+        title: "No contacts selected",
+        description: "Please select at least one contact to add to the group",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      let groupId = selectedGroupId;
+
+      // Create a new group if selected
+      if (selectedGroupId === "new" && newGroupName.trim()) {
+        const { data, error } = await supabase
+          .from("contact_groups")
+          .insert({
+            name: newGroupName.trim(),
+            user_id: user.id,
+          })
+          .select("id")
+          .single();
+
+        if (error) throw error;
+        groupId = data.id;
+      }
+
+      if (typeof groupId === "string" && groupId !== "new") {
+        // Add contacts to the group
+        const groupMembers = selectedContacts.map((contact) => ({
+          contact_id: contact.id,
+          group_id: groupId,
+        }));
+
+        const { error } = await supabase
+          .from("contact_group_members")
+          .insert(groupMembers);
+
+        if (error) throw error;
+
+        toast({
+          title: "Success",
+          description: `${selectedContacts.length} contacts added to group`,
+        });
+
+        onGroupAdded();
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error adding to group:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add contacts to group",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+    >
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add to Group</DialogTitle>
+        </DialogHeader>
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 py-4"
+        >
+          <div className="space-y-2">
+            <RadioGroup
+              value={selectedGroupId}
+              onValueChange={(value) => setSelectedGroupId(value)}
+            >
+              {groups.map((group) => (
+                <div
+                  key={group.id}
+                  className="flex items-center space-x-2"
+                >
+                  <RadioGroupItem
+                    value={group.id}
+                    id={`group-${group.id}`}
+                  />
+                  <Label htmlFor={`group-${group.id}`}>{group.name}</Label>
+                </div>
+              ))}
+              <div className="flex items-start space-x-2">
+                <RadioGroupItem
+                  value="new"
+                  id="new-group"
+                  className="mt-2"
+                />
+                <div className="flex-1">
+                  <Label htmlFor="new-group">Create new group</Label>
+                  <Input
+                    className="mt-1"
+                    placeholder="Enter new group name"
+                    value={newGroupName}
+                    onChange={(e) => setNewGroupName(e.target.value)}
+                    disabled={selectedGroupId !== "new"}
+                  />
+                </div>
+              </div>
+            </RadioGroup>
+          </div>
+          <DialogFooter className="pt-4">
+            <DialogClose asChild>
+              <Button
+                variant="outline"
+                type="button"
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              disabled={
+                isLoading || (selectedGroupId === "new" && !newGroupName.trim())
+              }
+            >
+              {isLoading ? "Adding..." : "Add to Group"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+</file>
+
+<file path="src/components/contacts/contact-utils.ts">
+/**
+ * Returns the appropriate CSS classes for contact status badges
+ */
+export const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'Reached Out':
+      return 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200';
+    case 'Responded':
+      return 'bg-blue-100 text-blue-800 hover:bg-blue-200';
+    case 'Chatted':
+      return 'bg-green-100 text-green-800 hover:bg-green-200';
+    default:
+      return 'bg-gray-100 text-gray-800 hover:bg-gray-200';
+  }
+};
+
+/**
+ * Returns the appropriate CSS classes for contact tag badges
+ * Using a hash function to generate consistent colors for the same tag
+ */
+export const getTagColor = (tag: string) => {
+  // Use a simple hash function to generate a consistent number from the tag
+  const hash = tag.split('').reduce((acc, char) => {
+    return char.charCodeAt(0) + ((acc << 5) - acc);
+  }, 0);
+  
+  // Use the hash to select from predefined color combinations
+  const colorIndex = Math.abs(hash) % 10;
+  
+  switch (colorIndex) {
+    case 0:
+      return 'bg-purple-100 text-purple-800 border-purple-200';
+    case 1:
+      return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+    case 2:
+      return 'bg-blue-100 text-blue-800 border-blue-200';
+    case 3:
+      return 'bg-cyan-100 text-cyan-800 border-cyan-200';
+    case 4:
+      return 'bg-teal-100 text-teal-800 border-teal-200';
+    case 5:
+      return 'bg-green-100 text-green-800 border-green-200';
+    case 6:
+      return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+    case 7:
+      return 'bg-orange-100 text-orange-800 border-orange-200';
+    case 8:
+      return 'bg-red-100 text-red-800 border-red-200';
+    case 9:
+      return 'bg-pink-100 text-pink-800 border-pink-200';
+    default:
+      return 'bg-gray-100 text-gray-800 border-gray-200';
+  }
+};
+
+/**
+ * Format date to a localized format
+ */
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(date);
+};
+</file>
+
+<file path="src/components/contacts/TagManagementModal.tsx">
+import React, { useState, useEffect } from "react";
+import { useTags } from "@/context/TagContext";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Trash2, Plus, X } from "lucide-react";
+import { getTagColor } from "./contact-utils";
+import { cn } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/context/AuthContext";
+import { ContactStatus } from "@/lib/types";
+
+interface TagManagementModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+// Database contact structure
+interface DbContact {
+  id: string;
+  user_id: string;
+  tags: string[];
+  dateofcontact: string;
+  email: string;
+  name: string;
+  role?: string | null;
+  company?: string | null;
+  status: ContactStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export const TagManagementModal: React.FC<TagManagementModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
+  const { availableTags, addTag, deleteTag, isDefaultTag } = useTags();
+  const { user } = useAuth();
+  const [newTagInput, setNewTagInput] = useState("");
+  const [tagToDelete, setTagToDelete] = useState<string | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [contacts, setContacts] = useState<DbContact[]>([]);
+
+  useEffect(() => {
+    if (isOpen && user) {
+      fetchContacts();
+    }
+  }, [isOpen, user]);
+
+  const fetchContacts = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      // Use type assertion to handle the database structure
+      setContacts((data as DbContact[]) || []);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+    }
+  };
+
+  const handleAddTag = () => {
+    if (newTagInput.trim() && !availableTags.includes(newTagInput.trim())) {
+      addTag(newTagInput.trim());
+      setNewTagInput("");
+      toast({
+        title: "Tag added",
+        description: `The tag "${newTagInput.trim()}" has been added.`,
+      });
+    }
+  };
+
+  const confirmDeleteTag = (tag: string) => {
+    setTagToDelete(tag);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteTag = async () => {
+    if (!tagToDelete || !user) return;
+
+    setIsLoading(true);
+
+    try {
+      // Use the TagContext's deleteTag function which handles the tag deletion
+      // from both the database and the UI context
+      const success = await deleteTag(tagToDelete);
+
+      if (success) {
+        // Update local contacts state to reflect the changes
+        setContacts((prevContacts) =>
+          prevContacts.map((contact) => {
+            if (contact.tags && contact.tags.includes(tagToDelete)) {
+              return {
+                ...contact,
+                tags: contact.tags.filter((tag) => tag !== tagToDelete),
+              };
+            }
+            return contact;
+          })
+        );
+
+        toast({
+          title: "Tag deleted",
+          description: `The tag "${tagToDelete}" has been removed from all contacts.`,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `Could not delete tag "${tagToDelete}". Default tags cannot be deleted.`,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting tag:", error);
+      toast({
+        title: "Error",
+        description: "An error occurred while deleting the tag.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+      setIsDeleteDialogOpen(false);
+      setTagToDelete(null);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddTag();
+    }
+  };
+
+  return (
+    <>
+      <Dialog
+        open={isOpen}
+        onOpenChange={onClose}
+      >
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Manage Tags</DialogTitle>
+            <DialogDescription>
+              Add, edit, or remove tags. Default tags cannot be deleted.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 my-4">
+            {/* Add new tag */}
+            <div className="flex items-center gap-2">
+              <Input
+                placeholder="Add a new tag"
+                value={newTagInput}
+                onChange={(e) => setNewTagInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                onClick={handleAddTag}
+                disabled={
+                  !newTagInput.trim() ||
+                  availableTags.includes(newTagInput.trim())
+                }
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Tag
+              </Button>
+            </div>
+
+            <div className="border rounded-md p-4">
+              <h3 className="text-sm font-medium mb-2">Available Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {availableTags.map((tag) => (
+                  <div
+                    key={tag}
+                    className="flex items-center"
+                  >
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        getTagColor(tag),
+                        isDefaultTag(tag) ? "opacity-70" : "opacity-100"
+                      )}
+                    >
+                      {tag}
+                      {isDefaultTag(tag) && (
+                        <span className="ml-1 text-xs opacity-70">
+                          (default)
+                        </span>
+                      )}
+                    </Badge>
+                    {!isDefaultTag(tag) && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 w-6 p-0 ml-1 text-gray-500 hover:text-red-600"
+                        onClick={() => confirmDeleteTag(tag)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                        <span className="sr-only">Delete {tag}</span>
+                      </Button>
+                    )}
+                  </div>
+                ))}
+                {availableTags.length === 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    No tags available
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              onClick={onClose}
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete confirmation dialog */}
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete tag</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete the tag "{tagToDelete}"? This will
+              remove the tag from all contacts where it's used. This action
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteTag}
+              className="bg-red-600 hover:bg-red-700"
+              disabled={isLoading}
+            >
+              {isLoading ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
+</file>
+
+<file path="src/components/todos/TodoTable.tsx">
+import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import {
+  CheckCircle2,
+  Circle,
+  CalendarIcon,
+  ArrowDown,
+  ArrowUp,
+} from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Todo } from "@/lib/types";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+
+type SortField = "status" | "contact" | "dueDate" | null;
+type SortOrder = "asc" | "desc" | null;
+
+interface TodoTableProps {
+  todos: Todo[];
+  contacts: { id: string; name: string }[];
+  onToggleCompletion: (todoId: string, completed: boolean) => void;
+  onUpdateDueDate: (todoId: string, date: Date | null) => void;
+  onOpenTodoPanel: (contactId: string) => void;
+}
+
+export const TodoTable: React.FC<TodoTableProps> = ({
+  todos,
+  contacts,
+  onToggleCompletion,
+  onUpdateDueDate,
+  onOpenTodoPanel,
+}) => {
+  const [sortField, setSortField] = useState<SortField>(null);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(null);
+
+  const getContactName = (contactId: string) => {
+    const contact = contacts.find((c) => c.id === contactId);
+    return contact?.name || "Unknown Contact";
+  };
+
+  const handleSort = (field: SortField) => {
+    // Cycle through: null -> asc -> desc -> null
+    if (sortField !== field) {
+      setSortField(field);
+      setSortOrder("asc");
+    } else {
+      if (sortOrder === null) {
+        setSortOrder("asc");
+      } else if (sortOrder === "asc") {
+        setSortOrder("desc");
+      } else {
+        setSortField(null);
+        setSortOrder(null);
+      }
+    }
+  };
+
+  const sortedTodos = [...todos];
+  if (sortField && sortOrder) {
+    sortedTodos.sort((a, b) => {
+      if (sortField === "status") {
+        // Sort by completion status
+        const comparison = Number(a.completed) - Number(b.completed);
+        return sortOrder === "asc" ? comparison : -comparison;
+      } else if (sortField === "contact") {
+        // Sort by contact name
+        const nameA = getContactName(a.contactId).toLowerCase();
+        const nameB = getContactName(b.contactId).toLowerCase();
+        const comparison = nameA.localeCompare(nameB);
+        return sortOrder === "asc" ? comparison : -comparison;
+      } else if (sortField === "dueDate") {
+        // Sort by due date (handle null values)
+        if (!a.dueDate && !b.dueDate) return 0;
+        if (!a.dueDate) return sortOrder === "asc" ? 1 : -1;
+        if (!b.dueDate) return sortOrder === "asc" ? -1 : 1;
+
+        const dateA = new Date(a.dueDate);
+        const dateB = new Date(b.dueDate);
+        const comparison = dateA.getTime() - dateB.getTime();
+        return sortOrder === "asc" ? comparison : -comparison;
+      }
+      return 0;
+    });
+  }
+
+  const renderSortIndicator = (field: SortField) => {
+    if (sortField !== field) return null;
+
+    return sortOrder === "asc" ? (
+      <ArrowUp className="ml-1 h-4 w-4 inline" />
+    ) : (
+      <ArrowDown className="ml-1 h-4 w-4 inline" />
+    );
+  };
+
+  return (
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead
+              className="w-[100px] cursor-pointer"
+              onClick={() => handleSort("status")}
+            >
+              Status {renderSortIndicator("status")}
+            </TableHead>
+            <TableHead>Task</TableHead>
+            <TableHead
+              className="cursor-pointer"
+              onClick={() => handleSort("contact")}
+            >
+              Contact {renderSortIndicator("contact")}
+            </TableHead>
+            <TableHead
+              className="cursor-pointer"
+              onClick={() => handleSort("dueDate")}
+            >
+              Due Date {renderSortIndicator("dueDate")}
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
+          {sortedTodos.length === 0 ? (
+            <TableRow>
+              <TableCell
+                colSpan={4}
+                className="h-24 text-center"
+              >
+                No todos found. Add some todos to get started.
+              </TableCell>
+            </TableRow>
+          ) : (
+            sortedTodos.map((todo) => (
+              <TableRow key={todo.id}>
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6"
+                    onClick={() => onToggleCompletion(todo.id, todo.completed)}
+                  >
+                    {todo.completed ? (
+                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    ) : (
+                      <Circle className="h-5 w-5" />
+                    )}
+                  </Button>
+                </TableCell>
+                <TableCell
+                  className={cn(
+                    todo.completed && "line-through text-muted-foreground",
+                    "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+                  )}
+                  onClick={() => onOpenTodoPanel(todo.contactId)}
+                >
+                  {todo.task}
+                </TableCell>
+                <TableCell>{getContactName(todo.contactId)}</TableCell>
+                <TableCell>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "flex h-6 items-center justify-center gap-1 rounded-md border bg-background px-2 text-sm",
+                          "hover:bg-gray-100 dark:hover:bg-gray-800"
+                        )}
+                      >
+                        <CalendarIcon className="h-3 w-3" />
+                        {todo.dueDate
+                          ? format(
+                              new Date(`${todo.dueDate}T00:00:00`),
+                              "MMM d, yyyy"
+                            )
+                          : "Set due date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-auto p-0"
+                      align="start"
+                    >
+                      <Calendar
+                        mode="single"
+                        selected={
+                          todo.dueDate
+                            ? new Date(`${todo.dueDate}T00:00:00`)
+                            : undefined
+                        }
+                        onSelect={(date) => onUpdateDueDate(todo.id, date)}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+</file>
+
+<file path="src/components/ui/radio-group.tsx">
+import * as React from "react"
+import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
+import { Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const RadioGroup = React.forwardRef<
+  React.ElementRef<typeof RadioGroupPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
+>(({ className, ...props }, ref) => {
+  return (
+    <RadioGroupPrimitive.Root
+      className={cn("grid gap-2", className)}
+      {...props}
+      ref={ref}
+    />
+  )
+})
+RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
+
+const RadioGroupItem = React.forwardRef<
+  React.ElementRef<typeof RadioGroupPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
+>(({ className, ...props }, ref) => {
+  return (
+    <RadioGroupPrimitive.Item
+      ref={ref}
+      className={cn(
+        "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
+      {...props}
+    >
+      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
+        <Circle className="h-2.5 w-2.5 fill-current text-current" />
+      </RadioGroupPrimitive.Indicator>
+    </RadioGroupPrimitive.Item>
+  )
+})
+RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
+
+export { RadioGroup, RadioGroupItem }
+</file>
+
+<file path="src/components/ui/sheet.tsx">
+import * as SheetPrimitive from "@radix-ui/react-dialog";
+import { cva, type VariantProps } from "class-variance-authority";
+import { X } from "lucide-react";
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+const Sheet = SheetPrimitive.Root;
+
+const SheetTrigger = SheetPrimitive.Trigger;
+
+const SheetClose = SheetPrimitive.Close;
+
+const SheetPortal = SheetPrimitive.Portal;
+
+const SheetOverlay = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Overlay
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+    ref={ref}
+  />
+));
+SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
+
+const sheetVariants = cva(
+  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  {
+    variants: {
+      side: {
+        top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        bottom:
+          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+        right:
+          "inset-y-0 right-0 h-full w-1/2 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
+      },
+    },
+    defaultVariants: {
+      side: "right",
+    },
+  }
+);
+
+interface SheetContentProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
+    VariantProps<typeof sheetVariants> {}
+
+const SheetContent = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Content>,
+  SheetContentProps
+>(({ side = "right", className, children, ...props }, ref) => (
+  <SheetPortal>
+    <SheetOverlay />
+    <SheetPrimitive.Content
+      ref={ref}
+      className={cn(sheetVariants({ side }), className)}
+      {...props}
+    >
+      {children}
+      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </SheetPrimitive.Close>
+    </SheetPrimitive.Content>
+  </SheetPortal>
+));
+SheetContent.displayName = SheetPrimitive.Content.displayName;
+
+const SheetHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-2 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+);
+SheetHeader.displayName = "SheetHeader";
+
+const SheetFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+);
+SheetFooter.displayName = "SheetFooter";
+
+const SheetTitle = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Title
+    ref={ref}
+    className={cn("text-lg font-semibold text-foreground", className)}
+    {...props}
+  />
+));
+SheetTitle.displayName = SheetPrimitive.Title.displayName;
+
+const SheetDescription = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+SheetDescription.displayName = SheetPrimitive.Description.displayName;
+
+export {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetOverlay,
+  SheetPortal,
+  SheetTitle,
+  SheetTrigger,
+};
+</file>
+
+<file path="src/context/TagContext.tsx">
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { supabase } from "@/lib/client";
+import { useAuth } from "./AuthContext";
+
+// Default available tags
+const DEFAULT_TAGS = ["Recruiter", "Alumni", "Employee", "Other"];
+
+type TagContextType = {
+  availableTags: string[];
+  addTag: (tag: string) => void;
+  deleteTag: (tag: string) => Promise<boolean>;
+  isDefaultTag: (tag: string) => boolean;
+};
+
+const TagContext = createContext<TagContextType | undefined>(undefined);
+
+export const TagProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const { user } = useAuth();
+  const [availableTags, setAvailableTags] = useState<string[]>(DEFAULT_TAGS);
+
+  // Load tags when user changes
+  useEffect(() => {
+    if (user) {
+      fetchAllTags();
+    }
+  }, [user]);
+
+  // Fetch all unique tags from existing contacts
+  const fetchAllTags = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("tags")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error("Error fetching tags:", error);
+        return;
+      }
+
+      // Extract all tags and flatten the array
+      const allTags = data.reduce((acc: string[], item) => {
+        return [...acc, ...(item.tags || [])];
+      }, []);
+
+      // Remove duplicates and merge with default tags
+      const uniqueTags = [...new Set([...DEFAULT_TAGS, ...allTags])];
+      setAvailableTags(uniqueTags);
+    } catch (error) {
+      console.error("Error processing tags:", error);
+    }
+  };
+
+  // Check if a tag is a default tag
+  const isDefaultTag = (tag: string): boolean => {
+    return DEFAULT_TAGS.includes(tag);
+  };
+
+  // Add a new tag to the available tags list
+  const addTag = (tag: string) => {
+    if (!tag || availableTags.includes(tag)) return;
+
+    setAvailableTags((prev) => [...prev, tag]);
+  };
+
+  // Delete a tag from the available tags list
+  // Returns a Promise that resolves to true if deletion was successful
+  const deleteTag = async (tag: string): Promise<boolean> => {
+    // Don't allow deletion of default tags
+    if (isDefaultTag(tag)) {
+      console.warn(`Cannot delete default tag: ${tag}`);
+      return false;
+    }
+
+    try {
+      if (!user) return false;
+
+      // If the tag is in use by contacts, update those contacts
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("id, tags")
+        .eq("user_id", user.id)
+        .contains("tags", [tag]);
+
+      if (error) {
+        console.error("Error checking tag usage:", error);
+        return false;
+      }
+
+      // Update any contacts that use this tag
+      for (const contact of data || []) {
+        const updatedTags = contact.tags.filter((t: string) => t !== tag);
+
+        const { error: updateError } = await supabase
+          .from("contacts")
+          .update({ tags: updatedTags })
+          .eq("id", contact.id)
+          .eq("user_id", user.id);
+
+        if (updateError) {
+          console.error("Error updating contact tags:", updateError);
+          return false;
+        }
+      }
+
+      // Update local state
+      setAvailableTags((prev) => prev.filter((t) => t !== tag));
+      return true;
+    } catch (error) {
+      console.error("Error deleting tag:", error);
+      return false;
+    }
+  };
+
+  return (
+    <TagContext.Provider
+      value={{ availableTags, addTag, deleteTag, isDefaultTag }}
+    >
+      {children}
+    </TagContext.Provider>
+  );
+};
+
+// Custom hook to use the tag context
+export const useTags = () => {
+  const context = useContext(TagContext);
+  if (context === undefined) {
+    throw new Error("useTags must be used within a TagProvider");
+  }
+  return context;
+};
+</file>
+
+<file path="src/hooks/useTodos.ts">
+import { useState } from "react";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/context/AuthContext";
+import { Todo } from "@/lib/types";
+import { toast } from "@/components/ui/use-toast";
+import { format } from "date-fns";
+import { Contact } from "@/lib/types";
+
+interface UseTodosProps {
+  contactId?: string;
+  onTodoAdded?: (contactId: string, todo: Todo) => void;
+  onTodoCompleted?: (contactId: string, todoId: string, completed: boolean) => void;
+}
+
+export function useTodos({ contactId, onTodoAdded, onTodoCompleted }: UseTodosProps = {}) {
+  const { user } = useAuth();
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchTodos = async (contacts?: Contact[]) => {
+    if (!user) return;
+
+    setLoading(true);
+    try {
+      let query = supabase
+        .from("contact_todos")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (contactId) {
+        query = query.eq("contact_id", contactId);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      const transformedTodos: Todo[] = data.map((item) => ({
+        id: item.id,
+        contactId: item.contact_id,
+        task: item.task,
+        dueDate: item.due_date,
+        completed: item.completed,
+        createdAt: item.created_at,
+      }));
+
+      setTodos(transformedTodos);
+
+      // If contacts were provided, update their todos
+      if (contacts) {
+        contacts.forEach(contact => {
+          contact.todos = transformedTodos.filter(todo => todo.contactId === contact.id);
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load to-dos",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addTodo = async (task: string, dueDate: Date | null = null) => {
+    if (!task.trim() || !user || !contactId) return;
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("contact_todos")
+        .insert({
+          contact_id: contactId,
+          user_id: user.id,
+          task,
+          due_date: dueDate ? format(dueDate, "yyyy-MM-dd") : null,
+          completed: false,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      const newTodo: Todo = {
+        id: data.id,
+        contactId: data.contact_id,
+        task: data.task,
+        dueDate: data.due_date,
+        completed: data.completed,
+        createdAt: data.created_at,
+      };
+
+      setTodos((prev) => [newTodo, ...prev]);
+      onTodoAdded?.(contactId, newTodo);
+
+      toast({
+        title: "To-do added",
+        description: "New to-do has been added successfully",
+      });
+
+      return newTodo;
+    } catch (error) {
+      console.error("Error adding todo:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add to-do",
+        variant: "destructive",
+      });
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleTodoCompletion = async (todoId: string, currentStatus: boolean) => {
+    if (!user) return;
+
+    const newStatus = !currentStatus;
+
+    try {
+      const { error } = await supabase
+        .from("contact_todos")
+        .update({ completed: newStatus })
+        .eq("id", todoId)
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      setTodos((prev) =>
+        prev.map((todo) =>
+          todo.id === todoId ? { ...todo, completed: newStatus } : todo
+        )
+      );
+
+      if (contactId) {
+        onTodoCompleted?.(contactId, todoId, newStatus);
+      }
+    } catch (error) {
+      console.error("Error updating todo:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update to-do status",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const deleteTodo = async (todoId: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from("contact_todos")
+        .delete()
+        .eq("id", todoId)
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      setTodos((prev) => prev.filter((t) => t.id !== todoId));
+      toast({ title: "Deleted", description: "To‑do removed" });
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast({
+        title: "Error",
+        description: "Could not delete to‑do",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const updateTodoDueDate = async (todoId: string, newDate: Date | null) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from("contact_todos")
+        .update({
+          due_date: newDate ? format(newDate, "yyyy-MM-dd") : null,
+        })
+        .eq("id", todoId)
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      setTodos((prev) =>
+        prev.map((todo) =>
+          todo.id === todoId
+            ? {
+                ...todo,
+                dueDate: newDate ? format(newDate, "yyyy-MM-dd") : null,
+              }
+            : todo
+        )
+      );
+
+      toast({
+        title: "Success",
+        description: "Due date updated successfully",
+      });
+    } catch (error) {
+      console.error("Error updating due date:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update due date",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleTodoAdded = (contactId: string, todo: Todo) => {
+    setTodos((prev) => [todo, ...prev]);
+    onTodoAdded?.(contactId, todo);
+  };
+
+  const handleTodoCompleted = (contactId: string, todoId: string, completed: boolean) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === todoId ? { ...todo, completed } : todo
+      )
+    );
+    onTodoCompleted?.(contactId, todoId, completed);
+  };
+
+  return {
+    todos,
+    loading,
+    fetchTodos,
+    addTodo,
+    toggleTodoCompletion,
+    deleteTodo,
+    updateTodoDueDate,
+    handleTodoAdded,
+    handleTodoCompleted,
+  };
+}
+</file>
+
+<file path="src/main.tsx">
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "@fontsource-variable/outfit";
+import "./index.css";
+
+createRoot(document.getElementById("root")!).render(<App />);
+</file>
+
+<file path="src/pages/Auth.tsx">
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
+
+const Auth = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { error } = isLogin
+        ? await signIn(email, password)
+        : await signUp(email, password);
+
+      if (error) {
+        toast({
+          title: "Authentication error",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else if (!isLogin) {
+        toast({
+          title: "Account created",
+          description: "Please check your email to confirm your account.",
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-800">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">
+            {isLogin ? "Sign In" : "Create Account"}
+          </CardTitle>
+          <CardDescription>
+            {isLogin
+              ? "Enter your email and password to access your account"
+              : "Create a new account to get started"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4"
+          >
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="your.email@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+            >
+              {loading
+                ? "Processing..."
+                : isLogin
+                ? "Sign In"
+                : "Create Account"}
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter>
+          <Button
+            variant="link"
+            className="w-full"
+            onClick={() => setIsLogin(!isLogin)}
+          >
+            {isLogin
+              ? "Don't have an account? Sign up"
+              : "Already have an account? Sign in"}
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+};
+
+export default Auth;
+</file>
+
+<file path="src/pages/Settings.tsx">
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Header } from "@/components/layout/Header";
+import { Sidebar } from "@/components/layout/Sidebar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/client";
+
+export const Settings = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const [displayName, setDisplayName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user?.user_metadata?.display_name) {
+      setDisplayName(user.user_metadata.display_name);
+    }
+  }, [user]);
+
+  const updateDisplayName = async () => {
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        data: { display_name: displayName },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Your display name has been updated.",
+      });
+    } catch (error) {
+      console.error("Error updating display name:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update display name",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteAccount = async () => {
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.rpc("delete_user");
+
+      if (error) throw error;
+
+      await signOut();
+      navigate("/auth");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete account",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <Header />
+        <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-800 overflow-y-auto">
+          <div className="container mx-auto max-w-2xl">
+            <h1 className="text-3xl font-bold mb-8">Settings</h1>
+
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle>Profile Settings</CardTitle>
+                <CardDescription>
+                  Update your profile information
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="displayName">Display Name</Label>
+                    <Input
+                      id="displayName"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      placeholder="Enter your display name"
+                    />
+                  </div>
+                  <Button
+                    onClick={updateDisplayName}
+                    disabled={isLoading}
+                  >
+                    Save Changes
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-destructive/5">
+              <CardHeader>
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                <CardDescription>Irreversible actions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive">Delete Account</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove all of your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={deleteAccount}
+                        className="bg-destructive hover:bg-destructive/90"
+                      >
+                        Delete Account
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/services/contacts.ts">
+import { supabase } from "@/lib/client";
+import type { Contact, ContactTag } from "@/lib/types";
+
+// async allows for the use of await inside the function and lets the function return a Promise
+// await pauses the execution of the function until the Promise is resolved
+// Promise represents the eventual completion (or failure) of an asynchronous operation and its resulting value
+export async function fetchContacts(userId: string): Promise<Contact[]> {
+  // this const returns the data and error from the supabase query
+  const { data, error } = await supabase
+    .from("contacts") // specify the table name to query
+    .select("*") // select all columns in the table
+    .eq("user_id", userId); // filter the results to only include contacts for the given userId
+  if (error) throw error;
+  return (
+    // turn the raw data into a structured Contact object
+    data?.map(item => ({
+      id: item.id,
+      name: item.name,
+      email: item.email,
+      role: item.role || "", // default to empty string if role is null
+      company: item.company || "",
+      tags: item.tags as ContactTag[], // cast the tags to ContactTag[]
+      dateOfContact: item.dateofcontact,
+      status: item.status as Contact["status"],
+      todos: [] // initialize todos as an empty array
+    })) ?? [] // if data is null or undefined, return an empty array
+  );
+}
+
+
+export async function createContact(
+  userId: string,
+  // Omit removes the id property from the Contact type
+  // this is useful when creating a new contact because the id will be generated by the database
+  newData: Omit<Contact, "id"> 
+): Promise<Contact> {
+  const { data, error } = await supabase
+    .from("contacts")
+    .insert({
+      user_id: userId,
+      name: newData.name,
+      email: newData.email,
+      role: newData.role || null,
+      company: newData.company || null,
+      tags: newData.tags,
+      dateofcontact: newData.dateOfContact,
+      status: newData.status
+    })
+    .select()
+    .single(); // select the newly created contact and return it as a single object
+  if (error) throw error;
+  return {
+    id: data.id,
+    name: data.name,
+    email: data.email,
+    role: data.role || "",
+    company: data.company || "",
+    tags: data.tags as ContactTag[],
+    dateOfContact: data.dateofcontact,
+    status: data.status as Contact["status"],
+    todos: []
+  };
+}
+
+
+export async function updateContact(
+  userId: string,
+  updated: Contact
+): Promise<void> { // void indicates that the function does not return a value but still does something that takes time
+  const { error } = await supabase
+    .from("contacts")
+    .update({
+      name: updated.name,
+      email: updated.email,
+      role: updated.role || null,
+      company: updated.company || null,
+      tags: updated.tags,
+      dateofcontact: updated.dateOfContact,
+      status: updated.status,
+      updated_at: new Date().toISOString() // set the updated_at field to the current date and time
+    })
+    .eq("id", updated.id) 
+    .eq("user_id", userId);
+  if (error) throw error;
+}
+
+
+export async function deleteContacts(
+  userId: string,
+  ids: string[]
+): Promise<void> {
+  const { error } = await supabase
+    .from("contacts")
+    .delete()
+    .in("id", ids)
+    .eq("user_id", userId);
+  if (error) throw error;
+}
+</file>
+
+<file path="vite.config.ts">
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+import { componentTagger } from "lovable-tagger";
+
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => ({
+  server: {
+    host: "::",
+    port: 8080,
+    historyApiFallback: true
+  },
+  plugins: [
+    react(),
+    mode === 'development' &&
+    componentTagger(),
+  ].filter(Boolean),
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+}));
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>networking-app</title>
+    <meta name="description" content="networking app for students v1" />
+    <meta name="author" content="andy" />
+
+    <meta property="og:title" content="networking-app" />
+    <meta property="og:description" content="networking app for students v1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="README.md">
+# Networking App
+
+A modern web application for managing professional contacts, tasks, and networking relationships. Built with React, TypeScript, and Supabase.
+
+## Architecture
+
+### Frontend
+
+- **Framework**: React with TypeScript
+- **State Management**: React Context API for global state
+- **Routing**: React Router for navigation
+- **UI Components**: Custom components built with Tailwind CSS
+- **Data Fetching**: Supabase client for real-time database operations
+
+### Backend
+
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Real-time Updates**: Supabase Realtime subscriptions
+- **Storage**: Supabase Storage for file attachments
+
+## Core Features
+
+### Contact Management
+
+- Create, read, update, and delete contacts
+- Add custom tags to contacts
+- Track contact status (Reached Out, Responded, Chatted)
+- Group contacts into custom categories
+- Add notes and todos to contacts
+
+### Todo System
+
+- Create todos associated with contacts
+- Set due dates and completion status
+- View all todos across contacts
+- Filter and sort todos
+- Real-time updates for todo status
+
+### Group Management
+
+- Create and manage contact groups
+- Add/remove contacts from groups
+- View group-specific contact lists
+- Group-level operations
+
+## Data Flow
+
+### Authentication Flow
+
+1. User signs in/up through Supabase Auth
+2. Auth state is managed through AuthContext
+3. Protected routes ensure authenticated access
+4. Session persistence across page reloads
+
+### Contact Management Flow
+
+1. Contacts are fetched on initial load
+2. Real-time updates sync changes across clients
+3. Contact data includes todos, notes, and tags
+4. Changes are immediately reflected in the UI
+
+### Todo Management Flow
+
+1. Todos are associated with specific contacts
+2. Global todo view shows all todos across contacts
+3. Todo updates sync in real-time
+4. Due dates and completion status are tracked
+
+## Testing
+
+### Unit Tests
+
+- Component rendering tests
+- State management tests
+- Utility function tests
+
+### Integration Tests
+
+- Authentication flows
+- CRUD operations
+- Real-time updates
+
+### End-to-End Tests
+
+- User journeys
+- Critical paths
+- Edge cases
+
+## Development
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Supabase account and project
+
+### Environment Setup
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create a `.env` file with Supabase credentials
+4. Start the development server: `npm run dev`
+
+### Available Scripts
+
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run test`: Run tests
+- `npm run lint`: Run linter
+- `npm run format`: Format code
+
+## Deployment
+
+### Production Build
+
+1. Run `npm run build`
+2. Deploy the `dist` directory to your hosting service
+3. Configure environment variables
+4. Set up Supabase project for production
+
+### Environment Variables
+
+- `VITE_SUPABASE_URL`: Supabase project URL
+- `VITE_SUPABASE_ANON_KEY`: Supabase anonymous key
+- `VITE_API_URL`: API endpoint (if applicable)
+
+## Special Considerations
+
+### Security
+
+- All database operations are authenticated
+- Row-level security policies in Supabase
+- Protected routes for authenticated users
+- Secure storage of sensitive data
+
+### Performance
+
+- Lazy loading of components
+- Optimized database queries
+- Efficient state management
+- Caching strategies
+
+### Accessibility
+
+- ARIA labels and roles
+- Keyboard navigation
+- Screen reader support
+- Color contrast compliance
+
+### Browser Support
+
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- No IE11 support
+- Progressive enhancement
+
+## Contributing
+
+### Code Style
+
+- Follow TypeScript best practices
+- Use functional components
+- Implement proper error handling
+- Write meaningful comments
+
+### Git Workflow
+
+1. Create feature branch
+2. Make changes
+3. Write tests
+4. Submit pull request
+5. Code review
+6. Merge to main
+
+## Troubleshooting
+
+### Common Issues
+
+- Authentication problems
+- Real-time sync issues
+- Database connection errors
+- Build failures
+
+### Debugging
+
+- Check browser console
+- Verify environment variables
+- Test database connections
+- Monitor network requests
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Support
+
+For support, please:
+
+1. Check the documentation
+2. Search existing issues
+3. Create a new issue if needed
+4. Contact the maintainers
+
+## Acknowledgments
+
+- Supabase team for the backend infrastructure
+- React team for the frontend framework
+- All contributors to the project
+</file>
+
+<file path="src/components/layout/Header.tsx">
+import React from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
+import { LogOut } from "lucide-react";
+
+export const Header: React.FC = () => {
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
+  const getInitials = () => {
+    const displayName = user?.user_metadata?.display_name;
+    if (displayName) {
+      const parts = displayName.split(" ");
+      if (parts.length === 1) {
+        return parts[0].substring(0, 2).toUpperCase();
+      }
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    // Fall back to email initials if no display name
+    if (!user?.email) return "U";
+    const parts = user.email.split("@")[0].split(".");
+    if (parts.length === 1) {
+      return parts[0].substring(0, 2).toUpperCase();
+    }
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  };
+
+  return (
+    <header className="w-full bg-white dark:bg-gray-900 border-b px-6 py-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Outreach Dashboard
+        </h1>
+        <div className="flex items-center gap-4">
+          {user ? (
+            <>
+              <div className="text-right mr-2">
+                <div className="text-sm font-medium">Welcome back,</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  {user.user_metadata?.display_name || user.email}
+                </div>
+              </div>
+              <Avatar>
+                <AvatarFallback className="bg-primary text-white">
+                  {getInitials()}
+                </AvatarFallback>
+              </Avatar>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleSignOut}
+                title="Sign out"
+              >
+                <LogOut size={18} />
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => (window.location.href = "/auth")}
+            >
+              Sign In
+            </Button>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+};
+</file>
+
+<file path="src/components/ui/input.tsx">
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
+Input.displayName = "Input";
+
+export { Input };
+</file>
+
+<file path="src/hooks/useContacts.ts">
+import { useEffect } from 'react'
+import { useAuth } from "@/context/AuthContext";
+import { Contact } from "@/lib/types";
+import { toast } from "@/components/ui/use-toast";
+import { useTodos } from "./useTodos";
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import * as contactsService from '@/services/contacts';
+
+export function useContacts() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const { fetchTodos } = useTodos();
+
+  // Fetch contacts using React Query
+  const { 
+    data: contacts = [],  // rename data to contacts and default to an empty array
+    isLoading, 
+    isError 
+  } = useQuery({
+    queryKey: ['contacts', user?.id], // use user ID as part of the unique query key
+    queryFn: async () => {
+      if (!user) throw new Error("User not authenticated");
+      return await contactsService.fetchContacts(user.id);
+    },
+    enabled: !!user, // only run the query if user is authenticated
+  });
+  
+  // Fetch todos when the contacts array changes
+  useEffect(() => {
+    if (contacts && contacts.length > 0) {
+      fetchTodos(contacts);
+    }
+  }, [contacts, fetchTodos]);
+  
+  // Handle errors in fetching contacts
+  useEffect(() => {
+    if (isError) {
+      console.error("Error fetching contacts");
+      toast({
+        title: "Error",
+        description: "Failed to load your contacts",
+        variant: "destructive",
+      });
+    }
+  }, [isError]);
+
+  // Mutation for adding a contact
+  const addContactMutation = useMutation({ // useMutation is a hook from react-query, used for actions that change data
+    mutationFn: async (newContactData: Omit<Contact, "id">) => { // remove the id property from the Contact type
+      if (!user) throw new Error("User not authenticated");
+      return await contactsService.createContact(user.id, newContactData);
+    },
+    // runs after the mutation is successful
+    onSuccess: (newContact: Contact) => {
+      queryClient.setQueryData(['contacts', user?.id], 
+        // receives the previous data (oldContacts) and returns the new data
+        // the new data is an array with the new contact at the beginning and the old contacts after
+        // the old contacts are optional, so we use the || operator to return an empty array if they are undefined
+        (oldContacts: Contact[] | undefined) => [newContact, ...(oldContacts || [])]);
+      
+      toast({
+        title: "Contact added",
+        description: `${newContact.name} has been added to your contacts.`,
+      });
+    },
+    onError: (error) => {
+      console.error("Error adding contact:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add the contact",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation for updating a contact
+  const updateContactMutation = useMutation({
+    mutationFn: async (updatedContact: Contact) => {
+      if (!user) throw new Error("User not authenticated");
+      await contactsService.updateContact(user.id, updatedContact); // await waits until the promise is resolved then moves on to the next line
+      return updatedContact; // since contactsService.updateContact returns void, we must return the updated contact here
+    },
+    onSuccess: (updatedContact: Contact) => {
+      queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) =>
+        oldContacts?.map(contact => 
+          // if the contact id is the same as the updated contact id, return the updated contact. otherwise, return the old contact
+          contact.id === updatedContact.id ? updatedContact : contact
+        ) || []// return empty array if oldContacts is undefined
+      );
+      
+      toast({
+        title: "Contact updated",
+        description: `${updatedContact.name} has been updated.`,
+      });
+    },
+    onError: (error) => {
+      console.error("Error updating contact:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update the contact",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation for deleting contacts
+  const deleteContactsMutation = useMutation({
+    mutationFn: async (contactIds: string[]) => {
+      if (!user) throw new Error("User not authenticated");
+      await contactsService.deleteContacts(user.id, contactIds);
+      return contactIds; // Return the deleted IDs to fix the void error
+    },
+    onSuccess: (deletedIds: string[]) => {
+      queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) =>
+        oldContacts?.filter(contact => !deletedIds.includes(contact.id)) || [] // !deletedIds.includes(contact.id) filters out the deleted contacts
+      );
+      
+      toast({
+        title: "Contacts deleted",
+        description: `${deletedIds.length} contact(s) have been deleted.`,
+      });
+    },
+    onError: (error) => {
+      console.error("Error deleting contacts:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete contacts",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
+
+  const selectContact = (contact: Contact) => {
+    setSelectedContacts(prev => {
+      const isSelected = prev.some(c => c.id === contact.id);
+      if (isSelected) {
+        return prev.filter(c => c.id !== contact.id);
+      } else {
+        return [...prev, contact];
+      }
+    });
+  };
+
+  const clearSelectedContacts = () => {
+    setSelectedContacts([]);
+  };
+
+  return {
+    contacts,
+    isLoading,
+    isError,
+    addContact: addContactMutation.mutate,
+    updateContact: updateContactMutation.mutate,
+    deleteContacts: deleteContactsMutation.mutate,
+    selectedContacts,
+    selectContact,
+    clearSelectedContacts,
+  };
+}
+</file>
+
+<file path="src/index.css">
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 240 71% 60%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 258 60% 48%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 240 71% 60%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 71% 60%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 240 71% 60%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 240 71% 60%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 258 60% 48%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 240 71% 60%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 240 71% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 240 71% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    @apply font-sans;
+  }
+}
+
+/* Custom styles for the project */
+.active-sidebar-item {
+  @apply bg-outreach-lightPurple text-white;
+}
+
+.sidebar-item:hover:not(.active-sidebar-item) {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+</file>
+
+<file path="src/pages/Todos.tsx">
+import React, { useState, useEffect } from "react";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header";
+import { Contact, Todo } from "@/lib/types";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "@/components/ui/use-toast";
+import { TodoPanel } from "@/components/contacts/TodoPanel";
+import { TodoTable } from "@/components/todos/TodoTable";
+import { useTodos } from "@/hooks/useTodos";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  isWithinInterval,
+} from "date-fns";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+
+const Todos = () => {
+  const { user } = useAuth();
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(false);
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
+  const [newTask, setNewTask] = useState("");
+  const [selectedContactId, setSelectedContactId] = useState<string>("");
+  const [dueDate, setDueDate] = useState<Date | null>(null);
+  const [completionFilter, setCompletionFilter] = useState<
+    "all" | "completed" | "not-completed"
+  >("all");
+  const [dueDateFilter, setDueDateFilter] = useState<
+    "all" | "this-week" | "this-month"
+  >("all");
+
+  const {
+    todos,
+    loading,
+    fetchTodos,
+    toggleTodoCompletion,
+    updateTodoDueDate,
+  } = useTodos();
+
+  const { addTodo: addTodoForContact } = useTodos({
+    contactId: selectedContactId,
+  });
+
+  const filteredTodos = todos.filter((todo) => {
+    // First filter by completion status
+    if (completionFilter === "completed" && !todo.completed) return false;
+    if (completionFilter === "not-completed" && todo.completed) return false;
+
+    // Then filter by due date
+    if (dueDateFilter === "all") return true;
+    if (!todo.dueDate) return false;
+
+    const todoDate = new Date(todo.dueDate);
+    const now = new Date();
+
+    if (dueDateFilter === "this-week") {
+      const weekStart = startOfWeek(now);
+      const weekEnd = endOfWeek(now);
+      return isWithinInterval(todoDate, { start: weekStart, end: weekEnd });
+    }
+
+    if (dueDateFilter === "this-month") {
+      const monthStart = startOfMonth(now);
+      const monthEnd = endOfMonth(now);
+      return isWithinInterval(todoDate, { start: monthStart, end: monthEnd });
+    }
+
+    return true;
+  });
+
+  useEffect(() => {
+    if (user) {
+      fetchTodos();
+      fetchContacts();
+    }
+  }, [user]);
+
+  const fetchContacts = async () => {
+    if (!user) return;
+
+    try {
+      const { data: contactsData, error: contactsError } = await supabase
+        .from("contacts")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (contactsError) throw contactsError;
+
+      const transformedContacts: Contact[] = contactsData.map((contact) => ({
+        id: contact.id,
+        name: contact.name,
+        email: contact.email,
+        role: contact.role || "",
+        company: contact.company || "",
+        tags: contact.tags as string[],
+        dateOfContact: contact.dateofcontact,
+        status: contact.status as Contact["status"],
+      }));
+
+      setContacts(transformedContacts);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load contacts",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleOpenTodoPanel = (contactId: string) => {
+    const contact = contacts.find((c) => c.id === contactId);
+    if (contact) {
+      setSelectedContact(contact);
+      setIsTodoPanelOpen(true);
+    }
+  };
+
+  const handleTodoAdded = (contactId: string, todo: Todo) => {
+    fetchTodos();
+  };
+
+  const handleTodoCompleted = (
+    contactId: string,
+    todoId: string,
+    completed: boolean
+  ) => {
+    fetchTodos();
+  };
+
+  const handleAddTask = async () => {
+    if (!newTask.trim() || !selectedContactId || !dueDate) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const added = await addTodoForContact(newTask, dueDate);
+    if (added) {
+      setNewTask("");
+      setSelectedContactId("");
+      setDueDate(null);
+      setIsAddTaskModalOpen(false);
+      fetchTodos();
+    }
+  };
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <Header />
+        <main className="flex-1 p-6 bg-gray-50 dark:bg-gray-800 overflow-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold">All Todos</h1>
+            <div className="flex items-center gap-2">
+              <Select
+                value={completionFilter}
+                onValueChange={(value: "all" | "completed" | "not-completed") =>
+                  setCompletionFilter(value)
+                }
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Tasks</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="not-completed">Not Completed</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select
+                value={dueDateFilter}
+                onValueChange={(value: "all" | "this-week" | "this-month") =>
+                  setDueDateFilter(value)
+                }
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by due date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Due Dates</SelectItem>
+                  <SelectItem value="this-week">Due This Week</SelectItem>
+                  <SelectItem value="this-month">Due This Month</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button onClick={() => setIsAddTaskModalOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add New Task
+              </Button>
+            </div>
+          </div>
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
+              <TodoTable
+                todos={filteredTodos}
+                contacts={contacts}
+                onToggleCompletion={toggleTodoCompletion}
+                onUpdateDueDate={updateTodoDueDate}
+                onOpenTodoPanel={handleOpenTodoPanel}
+              />
+            </div>
+          )}
+        </main>
+      </div>
+
+      <TodoPanel
+        open={isTodoPanelOpen}
+        onClose={() => setIsTodoPanelOpen(false)}
+        contact={selectedContact}
+        onTodoAdded={handleTodoAdded}
+        onTodoCompleted={handleTodoCompleted}
+      />
+
+      <Dialog
+        open={isAddTaskModalOpen}
+        onOpenChange={setIsAddTaskModalOpen}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add New Task</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Task Name</label>
+              <Input
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                placeholder="Enter task name"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Contact</label>
+              <Select
+                value={selectedContactId}
+                onValueChange={setSelectedContactId}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a contact" />
+                </SelectTrigger>
+                <SelectContent>
+                  {contacts.map((contact) => (
+                    <SelectItem
+                      key={contact.id}
+                      value={contact.id}
+                    >
+                      {contact.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Due Date</label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !dueDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {dueDate ? format(dueDate, "PPP") : "Select due date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={dueDate as Date}
+                    onSelect={setDueDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsAddTaskModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleAddTask}>Add Task</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default Todos;
+</file>
+
+<file path="tailwind.config.ts">
+import type { Config } from "tailwindcss";
+
+export default {
+	darkMode: ["class"],
+	content: [
+		"./pages/**/*.{ts,tsx}",
+		"./components/**/*.{ts,tsx}",
+		"./app/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}",
+	],
+	prefix: "",
+	theme: {
+		container: {
+			center: true,
+			padding: '2rem',
+			screens: {
+				'2xl': '1400px'
+			}
+		},
+		extend: {
+			fontFamily: {
+				sans: ['Outfit', 'sans-serif'],
+			},
+			colors: {
+				border: 'hsl(var(--border))',
+				input: 'hsl(var(--input))',
+				ring: 'hsl(var(--ring))',
+				background: 'hsl(var(--background))',
+				foreground: 'hsl(var(--foreground))',
+				primary: {
+					DEFAULT: 'hsl(var(--primary))',
+					foreground: 'hsl(var(--primary-foreground))'
+				},
+				secondary: {
+					DEFAULT: 'hsl(var(--secondary))',
+					foreground: 'hsl(var(--secondary-foreground))'
+				},
+				destructive: {
+					DEFAULT: 'hsl(var(--destructive))',
+					foreground: 'hsl(var(--destructive-foreground))'
+				},
+				muted: {
+					DEFAULT: 'hsl(var(--muted))',
+					foreground: 'hsl(var(--muted-foreground))'
+				},
+				accent: {
+					DEFAULT: 'hsl(var(--accent))',
+					foreground: 'hsl(var(--accent-foreground))'
+				},
+				popover: {
+					DEFAULT: 'hsl(var(--popover))',
+					foreground: 'hsl(var(--popover-foreground))'
+				},
+				card: {
+					DEFAULT: 'hsl(var(--card))',
+					foreground: 'hsl(var(--card-foreground))'
+				},
+				sidebar: {
+					DEFAULT: 'hsl(var(--sidebar-background))',
+					foreground: 'hsl(var(--sidebar-foreground))',
+					primary: 'hsl(var(--sidebar-primary))',
+					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+					accent: 'hsl(var(--sidebar-accent))',
+					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+					border: 'hsl(var(--sidebar-border))',
+					ring: 'hsl(var(--sidebar-ring))'
+				},
+				outreach: {
+					blue: '#4361ee',
+					purple: '#6930c3',
+					lightPurple: '#9775fa',
+					light: '#f8f9fa',
+					dark: '#212529'
+				}
+			},
+			borderRadius: {
+				lg: 'var(--radius)',
+				md: 'calc(var(--radius) - 2px)',
+				sm: 'calc(var(--radius) - 4px)'
+			},
+			keyframes: {
+				'accordion-down': {
+					from: {
+						height: '0'
+					},
+					to: {
+						height: 'var(--radix-accordion-content-height)'
+					}
+				},
+				'accordion-up': {
+					from: {
+						height: 'var(--radix-accordion-content-height)'
+					},
+					to: {
+						height: '0'
+					}
+				}
+			},
+			animation: {
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out'
+			}
+		}
+	},
+	plugins: [require("tailwindcss-animate")],
+} satisfies Config;
+</file>
+
+<file path="src/components/contacts/TodoPanel.tsx">
+import React, { useState, useEffect } from "react";
+import { Contact, Todo } from "@/lib/types";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  CalendarIcon,
+  Save,
+  CheckCircle2,
+  Circle,
+  X,
+  Plus,
+  Bold as BoldIcon,
+  Italic as ItalicIcon,
+  Underline as UnderlineIcon,
+  Link as LinkIcon,
+} from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { toast } from "@/components/ui/use-toast";
+import { useEditor, EditorContent } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
+import Bold from "@tiptap/extension-bold";
+import Italic from "@tiptap/extension-italic";
+import Underline from "@tiptap/extension-underline";
+import Link from "@tiptap/extension-link";
+import { useTodos } from "@/hooks/useTodos";
+
+interface ContactNote {
+  id: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface TodoPanelProps {
+  open: boolean;
+  onClose: () => void;
+  contact: Contact | null;
+  onTodoAdded: (contactId: string, todo: Todo) => void;
+  onTodoCompleted: (
+    contactId: string,
+    todoId: string,
+    completed: boolean
+  ) => void;
+}
+
+export const TodoPanel: React.FC<TodoPanelProps> = ({
+  open,
+  onClose,
+  contact,
+  onTodoAdded,
+  onTodoCompleted,
+}) => {
+  const { user } = useAuth();
+  const [newTodo, setNewTodo] = useState("");
+  const [dueDate, setDueDate] = useState<Date | null>(null);
+  const [note, setNote] = useState<ContactNote | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const {
+    todos,
+    loading: todosLoading,
+    fetchTodos,
+    addTodo,
+    toggleTodoCompletion,
+    deleteTodo,
+  } = useTodos({
+    contactId: contact?.id,
+    onTodoAdded,
+    onTodoCompleted,
+  });
+
+  const editor = useEditor({
+    extensions: [StarterKit, Bold, Italic, Underline, Link],
+    content: "",
+  });
+
+  useEffect(() => {
+    if (open && contact && user) {
+      fetchTodos();
+      fetchNote();
+    }
+  }, [open, contact, user]);
+
+  const fetchNote = async () => {
+    if (!contact || !user) return;
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("contact_notes")
+        .select("*")
+        .eq("contact_id", contact.id)
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        setNote(data as ContactNote);
+        editor?.commands.setContent(data.content);
+      } else {
+        setNote(null);
+        editor?.commands.setContent("");
+      }
+    } catch (error) {
+      console.error("Error fetching note:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load notes",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddTodo = async () => {
+    if (!newTodo.trim() || !contact || !dueDate) {
+      toast({
+        title: "Error",
+        description: "Please enter a task and select a due date",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const added = await addTodo(newTodo, dueDate);
+    if (added) {
+      setNewTodo("");
+      setDueDate(null);
+    }
+  };
+
+  const saveNote = async () => {
+    if (!contact || !user || !editor) return;
+
+    const content = editor.getHTML();
+
+    setLoading(true);
+    try {
+      if (note) {
+        // Update existing note
+        const { error } = await supabase
+          .from("contact_notes")
+          .update({
+            content,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", note.id);
+
+        if (error) throw error;
+      } else {
+        // Create new note
+        const { error } = await supabase.from("contact_notes").insert({
+          contact_id: contact.id,
+          user_id: user.id,
+          content,
+        });
+
+        if (error) throw error;
+      }
+
+      toast({
+        title: "Success",
+        description: "Notes saved successfully",
+      });
+
+      // Refresh the note data
+      fetchNote();
+    } catch (error) {
+      console.error("Error saving note:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save notes",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Sheet
+      open={open}
+      onOpenChange={(isOpen) => !isOpen && onClose()}
+    >
+      <SheetContent className="overflow-y-auto">
+        <SheetHeader>
+          <SheetTitle>
+            {contact ? `To-dos for ${contact.name}` : "Loading..."}
+          </SheetTitle>
+          <SheetDescription>
+            Add and manage to-dos for this contact
+          </SheetDescription>
+        </SheetHeader>
+
+        {contact && (
+          <div className="py-4 space-y-6">
+            {/* Add new to-do section */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium">Add a new to-do</h3>
+              <div className="flex gap-2">
+                <Input
+                  value={newTodo}
+                  onChange={(e) => setNewTodo(e.target.value)}
+                  placeholder="Enter a task..."
+                  className="flex-1"
+                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-[160px] justify-start text-left font-normal pl-3",
+                        !dueDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="h-4 w-4" />
+                      {dueDate ? format(dueDate, "PPP") : "Select due date*"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={dueDate as Date}
+                      onSelect={setDueDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <Button
+                  onClick={handleAddTodo}
+                  disabled={!newTodo.trim() || !dueDate || loading}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                * Due date is required
+              </p>
+            </div>
+
+            {/* To-do list section */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium">To-do List</h3>
+              {todos.length === 0 ? (
+                <p className="text-sm text-muted-foreground">No to-dos yet</p>
+              ) : (
+                <div className="space-y-2">
+                  {todos.map((todo) => (
+                    <div
+                      key={todo.id}
+                      className={cn(
+                        "flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800",
+                        todo.completed && "line-through text-muted-foreground"
+                      )}
+                    >
+                      {/* checkbox toggle */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={() =>
+                          toggleTodoCompletion(todo.id, todo.completed)
+                        }
+                      >
+                        {todo.completed ? (
+                          <CheckCircle2 className="h-5 w-5 text-green-500" />
+                        ) : (
+                          <Circle className="h-5 w-5" />
+                        )}
+                      </Button>
+
+                      {/* task text */}
+                      <div className="flex-1">
+                        <p className="text-sm">{todo.task}</p>
+                        {todo.dueDate && (
+                          <p className="text-xs text-muted-foreground">
+                            Due:{" "}
+                            {format(
+                              new Date(`${todo.dueDate}T00:00:00`),
+                              "MMM d, yyyy"
+                            )}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* delete "X" */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 text-muted-foreground"
+                        onClick={() => deleteTodo(todo.id)}
+                        aria-label="Delete to‑do"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Notes section */}
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-sm font-medium">Notes</h3>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={saveNote}
+                  disabled={loading}
+                  className="flex gap-2"
+                >
+                  <Save className="h-4 w-4" />
+                  Save Notes
+                </Button>
+              </div>
+              <div className="border rounded-md p-1">
+                <div className="flex border-b p-2 gap-2">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => editor?.chain().focus().toggleBold().run()}
+                    className={editor?.isActive("bold") ? "bg-accent" : ""}
+                    title="Bold"
+                  >
+                    <BoldIcon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => editor?.chain().focus().toggleItalic().run()}
+                    className={editor?.isActive("italic") ? "bg-accent" : ""}
+                    title="Italic"
+                  >
+                    <ItalicIcon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() =>
+                      editor?.chain().focus().toggleUnderline().run()
+                    }
+                    className={editor?.isActive("underline") ? "bg-accent" : ""}
+                    title="Underline"
+                  >
+                    <UnderlineIcon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => {
+                      const url = window.prompt("Enter URL");
+                      if (url) {
+                        editor?.chain().focus().setLink({ href: url }).run();
+                      }
+                    }}
+                    className={editor?.isActive("link") ? "bg-accent" : ""}
+                    title="Insert Link"
+                  >
+                    <LinkIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="min-h-[300px] p-3">
+                  <EditorContent
+                    editor={editor}
+                    className="h-full [&_div.ProseMirror]:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <SheetFooter>
+          <Button
+            variant="outline"
+            onClick={onClose}
+          >
+            Close
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+};
+</file>
+
+<file path="src/components/layout/Sidebar.tsx">
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Logo } from "@/components/icons/Logo";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  LayoutDashboard,
+  Bell,
+  Settings,
+  Users,
+  ChevronLeft,
+  ChevronRight,
+  Home,
+  ClipboardList,
+} from "lucide-react";
+import { ContactGroup } from "@/lib/types";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/context/AuthContext";
+
+interface SidebarProps {
+  className?: string;
+}
+
+interface NavItem {
+  icon: React.ElementType;
+  label: string;
+  isActive: boolean;
+  path?: string;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [contactGroups, setContactGroups] = useState<ContactGroup[]>([]);
+
+  const navItems: NavItem[] = [
+    {
+      icon: Home,
+      label: "Contacts",
+      isActive: location.pathname === "/",
+      path: "/",
+    },
+    {
+      icon: ClipboardList,
+      label: "Todos",
+      isActive: location.pathname === "/todos",
+      path: "/todos",
+    },
+    {
+      icon: Users,
+      label: "Groups",
+      isActive: location.pathname.startsWith("/groups"),
+      path: "/groups",
+    },
+    {
+      icon: Settings,
+      label: "Settings",
+      isActive: location.pathname === "/settings",
+      path: "/settings",
+    },
+  ];
+
+  useEffect(() => {
+    if (user) {
+      fetchContactGroups();
+    } else {
+      setContactGroups([]);
+    }
+  }, [user]);
+
+  const fetchContactGroups = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("contact_groups")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      const transformedGroups: ContactGroup[] = data.map((item) => ({
+        id: item.id,
+        name: item.name,
+        userId: item.user_id,
+        createdAt: item.created_at,
+      }));
+
+      setContactGroups(transformedGroups);
+    } catch (error) {
+      console.error("Error fetching contact groups:", error);
+    }
+  };
+
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  const handleNavigation = (path?: string) => {
+    if (path) {
+      navigate(path);
+    }
+  };
+
+  const isGroupActive = (groupId: string) => {
+    return location.pathname === `/groups/${groupId}`;
+  };
+
+  return (
+    <div
+      className={`${className} relative bg-white dark:bg-gray-900 h-screen shadow-sm flex flex-col transition-all duration-300 ${
+        isCollapsed ? "w-16" : "w-64"
+      }`}
+    >
+      <div className="p-4 flex items-center justify-between">
+        {!isCollapsed && <Logo />}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggleSidebar}
+          className="absolute -right-3 top-6 bg-white dark:bg-gray-900 rounded-full shadow-sm border z-10"
+        >
+          {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+        </Button>
+      </div>
+      <Separator />
+      <div className="flex-1 py-6 overflow-y-auto">
+        <nav className="px-2 space-y-1">
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation(item.path);
+              }}
+              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+                item.isActive
+                  ? "bg-gray-100 dark:bg-gray-800 text-primary"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+              }`}
+            >
+              <item.icon size={20} />
+              {!isCollapsed && <span>{item.label}</span>}
+            </a>
+          ))}
+        </nav>
+
+        {/* Contact Groups Section */}
+        {contactGroups.length > 0 && (
+          <div className="mt-6">
+            {!isCollapsed && (
+              <div className="px-3 mb-2">
+                <h3 className="text-xs uppercase font-semibold text-gray-500 dark:text-gray-400">
+                  Contact Groups
+                </h3>
+              </div>
+            )}
+            <nav className="px-2 space-y-1">
+              {contactGroups.map((group) => (
+                <a
+                  key={group.id}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavigation(`/groups/${group.id}`);
+                  }}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+                    isGroupActive(group.id)
+                      ? "bg-gray-100 dark:bg-gray-800 text-primary"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  <Users size={20} />
+                  {!isCollapsed && <span>{group.name}</span>}
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
+      </div>
+      <div className="p-4">
+        {!isCollapsed && (
+          <div className="text-xs text-gray-500 dark:text-gray-400">
+            Made with ❤️ by{" "}
+            <a
+              href="https://www.linkedin.com/in/aliu24/"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Andy Liu
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/App.tsx">
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import GroupContacts from "./pages/GroupContacts";
+import Auth from "./pages/Auth";
+import NotFound from "./pages/NotFound";
+import { Settings } from "./pages/Settings";
+import Todos from "./pages/Todos";
+import { AuthProvider } from "@/context/AuthContext";
+import { TagProvider } from "@/context/TagContext";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <HashRouter>
+        <AuthProvider>
+          <TagProvider>
+            <Routes>
+              <Route
+                path="/auth"
+                element={<Auth />}
+              />
+
+              {/* Protected routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route
+                  path="/"
+                  element={<Index />}
+                />
+                <Route
+                  path="/groups/:groupId"
+                  element={<GroupContacts />}
+                />
+                <Route
+                  path="/settings"
+                  element={<Settings />}
+                />
+                <Route
+                  path="/todos"
+                  element={<Todos />}
+                />
+                {/* Add other protected routes here */}
+              </Route>
+
+              {/* Catch-all route */}
+              <Route
+                path="*"
+                element={<NotFound />}
+              />
+            </Routes>
+          </TagProvider>
+        </AuthProvider>
+      </HashRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;
+</file>
+
+<file path="src/components/contacts/ContactTableHeader.tsx">
+import React from "react";
+import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ContactTag } from "@/lib/types";
+import { ArrowUp, ArrowDown, Filter } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+interface ContactTableHeaderProps {
+  onSort: (key: string, direction: "asc" | "desc" | "default") => void;
+  sortKey: string;
+  sortDirection: "asc" | "desc" | "default";
+  onFilterByTag: (tag: ContactTag | null) => void;
+  activeTagFilter: ContactTag | null;
+  availableTags: ContactTag[];
+  hasCheckboxColumn?: boolean;
+}
+
+export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
+  onSort,
+  sortKey,
+  sortDirection,
+  onFilterByTag,
+  activeTagFilter,
+  availableTags,
+  hasCheckboxColumn = false,
+}) => {
+  const handleSortClick = (key: string) => {
+    if (sortKey === key) {
+      // Cycle through sort directions: default -> asc -> desc -> default
+      if (sortDirection === "default") {
+        onSort(key, "asc");
+      } else if (sortDirection === "asc") {
+        onSort(key, "desc");
+      } else {
+        onSort(key, "default");
+      }
+    } else {
+      // New column, start with ascending
+      onSort(key, "asc");
+    }
+  };
+
+  const renderSortIndicator = (key: string) => {
+    if (sortKey !== key) return null;
+
+    if (sortDirection === "asc") {
+      return <ArrowUp className="ml-2 h-4 w-4 text-blue-500" />;
+    } else if (sortDirection === "desc") {
+      return <ArrowDown className="ml-2 h-4 w-4 text-blue-500" />;
+    }
+    return null;
+  };
+
+  return (
+    <TableHeader>
+      <TableRow>
+        {hasCheckboxColumn && <TableHead className="w-10"></TableHead>}
+        <TableHead
+          className="w-[200px] cursor-pointer"
+          onClick={() => handleSortClick("name")}
+        >
+          <div className="flex items-center">
+            Person
+            {renderSortIndicator("name")}
+          </div>
+        </TableHead>
+        <TableHead>Email</TableHead>
+        <TableHead>Role</TableHead>
+        <TableHead
+          className="cursor-pointer"
+          onClick={() => handleSortClick("company")}
+        >
+          <div className="flex items-center">
+            Company
+            {renderSortIndicator("company")}
+          </div>
+        </TableHead>
+        <TableHead>
+          <div className="flex items-center">
+            Tags
+            <DropdownMenu>
+              <DropdownMenuTrigger className="ml-2">
+                <Filter className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuCheckboxItem
+                  checked={activeTagFilter === null}
+                  onCheckedChange={() => onFilterByTag(null)}
+                >
+                  All Tags
+                </DropdownMenuCheckboxItem>
+                {availableTags.map((tag) => (
+                  <DropdownMenuCheckboxItem
+                    key={tag}
+                    checked={activeTagFilter === tag}
+                    onCheckedChange={() => onFilterByTag(tag)}
+                  >
+                    {tag}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </TableHead>
+        <TableHead
+          className="cursor-pointer"
+          onClick={() => handleSortClick("dateOfContact")}
+        >
+          <div className="flex items-center ml-4">
+            Last Contacted
+            {renderSortIndicator("dateOfContact")}
+          </div>
+        </TableHead>
+        <TableHead>
+          <div className="flex items-center ml-4">To-do</div>
+        </TableHead>
+        <TableHead
+          className="cursor-pointer"
+          onClick={() => handleSortClick("status")}
+        >
+          <div className="flex items-center ml-4">
+            Status
+            {renderSortIndicator("status")}
+          </div>
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+};
+</file>
+
+<file path="src/context/AuthContext.tsx">
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Session, User } from "@supabase/supabase-js";
+import { supabase } from "@/lib/client";
+import { useNavigate, useLocation } from "react-router-dom";
+
+type AuthContextType = {
+  session: Session | null;
+  user: User | null;
+  loading: boolean;
+  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signOut: () => Promise<void>;
+};
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check for existing session
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+      setUser(data.session?.user ?? null);
+      setLoading(false);
+    };
+
+    checkSession();
+
+    // Set up auth state listener
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+
+      // Only navigate on explicit sign in/out events
+      if (event === "SIGNED_IN" && location.pathname === "/auth") {
+        navigate("/");
+      } else if (event === "SIGNED_OUT") {
+        navigate("/auth");
+      }
+
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, location]);
+
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    return { error };
+  };
+
+  const signUp = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signUp({ email, password });
+    return { error };
+  };
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{ session, user, loading, signIn, signUp, signOut }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+</file>
+
+<file path="src/pages/GroupContacts.tsx">
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header";
+import { ContactTable } from "@/components/contacts/ContactTable";
+import { Contact, ContactTag, ContactGroup } from "@/lib/types";
+import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Trash2, Pencil, Save, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+
+const GroupContacts = () => {
+  const { groupId } = useParams<{ groupId: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [groupInfo, setGroupInfo] = useState<ContactGroup | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
+  const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
+  const [contactForNotes, setContactForNotes] = useState<Contact | null>(null);
+  const [sortKey, setSortKey] = useState<string>("");
+  const [sortDirection, setSortDirection] = useState<
+    "asc" | "desc" | "default"
+  >("default");
+  const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(
+    null
+  );
+  const [loading, setLoading] = useState(true);
+  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
+
+  // New states for group renaming
+  const [editingGroupName, setEditingGroupName] = useState(false);
+  const [newGroupName, setNewGroupName] = useState("");
+
+  // New state for deletion confirmation
+  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+
+  // Fetch group info and contacts
+  useEffect(() => {
+    if (user && groupId) {
+      fetchGroupInfo();
+      fetchGroupContacts();
+    } else {
+      setContacts([]);
+      setLoading(false);
+    }
+  }, [user, groupId]);
+
+  const fetchGroupInfo = async () => {
+    if (!user || !groupId) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("contact_groups")
+        .select("*")
+        .eq("id", groupId)
+        .eq("user_id", user.id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      setGroupInfo({
+        id: data.id,
+        name: data.name,
+        userId: data.user_id,
+        createdAt: data.created_at,
+      });
+
+      // Initialize newGroupName with current name
+      setNewGroupName(data.name);
+    } catch (error) {
+      console.error("Error fetching group info:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load group information",
+        variant: "destructive",
+      });
+      // Navigate back to home if group not found
+      navigate("/");
+    }
+  };
+
+  const fetchGroupContacts = async () => {
+    if (!user || !groupId) return;
+
+    setLoading(true);
+    try {
+      // Get contact IDs in this group
+      const { data: memberData, error: memberError } = await supabase
+        .from("contact_group_members")
+        .select("contact_id")
+        .eq("group_id", groupId);
+
+      if (memberError) {
+        throw memberError;
+      }
+
+      if (memberData.length === 0) {
+        setContacts([]);
+        setLoading(false);
+        return;
+      }
+
+      // Get contact details
+      const contactIds = memberData.map((member) => member.contact_id);
+      const { data: contactsData, error: contactsError } = await supabase
+        .from("contacts")
+        .select("*")
+        .in("id", contactIds)
+        .eq("user_id", user.id);
+
+      if (contactsError) {
+        throw contactsError;
+      }
+
+      // Transform database data to match our Contact type
+      const transformedContacts: Contact[] = contactsData.map((item) => ({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        role: item.role || "",
+        company: item.company || "",
+        tags: item.tags as ContactTag[],
+        dateOfContact: item.dateofcontact,
+        status: item.status as Contact["status"],
+      }));
+
+      setContacts(transformedContacts);
+    } catch (error) {
+      console.error("Error fetching group contacts:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load contacts in this group",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // New function to handle group name update
+  const updateGroupName = async () => {
+    if (!user || !groupId || !newGroupName.trim()) return;
+
+    try {
+      const { error } = await supabase
+        .from("contact_groups")
+        .update({ name: newGroupName.trim() })
+        .eq("id", groupId)
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      // Update local state
+      if (groupInfo) {
+        setGroupInfo({
+          ...groupInfo,
+          name: newGroupName.trim(),
+        });
+      }
+
+      toast({
+        title: "Group updated",
+        description: "Group name has been updated successfully.",
+      });
+    } catch (error) {
+      console.error("Error updating group name:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update group name",
+        variant: "destructive",
+      });
+    } finally {
+      setEditingGroupName(false);
+    }
+  };
+
+  // New function to handle removing contacts from group
+  const removeContactsFromGroup = async () => {
+    if (!user || !groupId || selectedContacts.length === 0) return;
+
+    try {
+      const contactIds = selectedContacts.map((contact) => contact.id);
+
+      const { error } = await supabase
+        .from("contact_group_members")
+        .delete()
+        .eq("group_id", groupId)
+        .in("contact_id", contactIds);
+
+      if (error) throw error;
+
+      // Update local state
+      setContacts(
+        contacts.filter((contact) => !contactIds.includes(contact.id))
+      );
+      setSelectedContacts([]);
+
+      toast({
+        title: "Contacts removed",
+        description: `${contactIds.length} contact(s) removed from group.`,
+      });
+    } catch (error) {
+      console.error("Error removing contacts from group:", error);
+      toast({
+        title: "Error",
+        description: "Failed to remove contacts from group",
+        variant: "destructive",
+      });
+    } finally {
+      setShowRemoveDialog(false);
+    }
+  };
+
+  const handleEditContact = (contact: Contact) => {
+    setContactToEdit(contact);
+    setIsEditModalOpen(true);
+  };
+
+  const handleViewNotes = (contact: Contact) => {
+    setContactForNotes(contact);
+    setIsNotesModalOpen(true);
+  };
+
+  const handleUpdateContact = async (updatedContact: Contact) => {
+    if (!user) return;
+
+    try {
+      // Update in Supabase
+      const { error } = await supabase
+        .from("contacts")
+        .update({
+          name: updatedContact.name,
+          email: updatedContact.email,
+          role: updatedContact.role,
+          company: updatedContact.company,
+          tags: updatedContact.tags,
+          dateofcontact: updatedContact.dateOfContact,
+          status: updatedContact.status,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", updatedContact.id)
+        .eq("user_id", user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      // Update local state
+      const updatedContacts = contacts.map((contact) =>
+        contact.id === updatedContact.id ? updatedContact : contact
+      );
+
+      setContacts(updatedContacts);
+
+      toast({
+        title: "Contact updated",
+        description: `${updatedContact.name} has been updated.`,
+      });
+    } catch (error) {
+      console.error("Error updating contact:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update the contact",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSort = (key: string, direction: "asc" | "desc" | "default") => {
+    setSortKey(key);
+    setSortDirection(direction);
+  };
+
+  const handleFilterByTag = (tag: ContactTag | null) => {
+    setActiveTagFilter(tag);
+  };
+
+  const handleSelectContact = (contact: Contact) => {
+    const isSelected = selectedContacts.some((c) => c.id === contact.id);
+    if (!isSelected) {
+      setSelectedContacts((prev) => [...prev, contact]);
+    } else {
+      setSelectedContacts((prev) => prev.filter((c) => c.id !== contact.id));
+    }
+  };
+
+  // Apply sorting and filtering
+  const filteredAndSortedContacts = React.useMemo(() => {
+    // First apply tag filtering
+    const filtered = activeTagFilter
+      ? contacts.filter((contact) => contact.tags.includes(activeTagFilter))
+      : contacts;
+
+    // Then apply sorting
+    if (sortKey && sortDirection !== "default") {
+      return [...filtered].sort((a, b) => {
+        const aValue = a[sortKey as keyof Contact];
+        const bValue = b[sortKey as keyof Contact];
+
+        // Handle different types of values
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          // For dates, convert to timestamp first
+          if (sortKey === "dateOfContact") {
+            const aDate = new Date(aValue).getTime();
+            const bDate = new Date(bValue).getTime();
+            return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
+          }
+
+          // For normal strings
+          return sortDirection === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+
+        // Fallback for non-string values
+        return 0;
+      });
+    }
+
+    return filtered;
+  }, [contacts, sortKey, sortDirection, activeTagFilter]);
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Header />
+        <main className="flex-1 overflow-auto p-6 bg-gray-50 dark:bg-gray-800">
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/")}
+                className="gap-1"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
+            </div>
+            <div className="flex justify-between items-center">
+              <div>
+                {editingGroupName ? (
+                  <div className="flex gap-2 items-center">
+                    <Input
+                      value={newGroupName}
+                      onChange={(e) => setNewGroupName(e.target.value)}
+                      className="text-xl font-semibold w-64"
+                      autoFocus
+                    />
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={updateGroupName}
+                      disabled={!newGroupName.trim()}
+                    >
+                      <Save className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        setEditingGroupName(false);
+                        setNewGroupName(groupInfo?.name || "");
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <h2 className="text-2xl font-semibold group flex items-center gap-2">
+                    {groupInfo?.name || "Group"}
+                    <Pencil
+                      className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      onClick={() => setEditingGroupName(true)}
+                    />
+                  </h2>
+                )}
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {contacts.length} contacts in this group
+                </p>
+              </div>
+
+              {selectedContacts.length > 0 && (
+                <Button
+                  variant="destructive"
+                  className="gap-1"
+                  onClick={() => setShowRemoveDialog(true)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Remove from Group
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
+              <ContactTable
+                contacts={filteredAndSortedContacts}
+                onSort={handleSort}
+                sortKey={sortKey}
+                sortDirection={sortDirection}
+                onFilterByTag={handleFilterByTag}
+                activeTagFilter={activeTagFilter}
+                onEditContact={handleEditContact}
+                onUpdateContact={handleUpdateContact}
+                selectedContacts={selectedContacts}
+                onSelectContact={handleSelectContact}
+              />
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* Modals */}
+
+      {/* Remove confirmation dialog */}
+      <AlertDialog
+        open={showRemoveDialog}
+        onOpenChange={setShowRemoveDialog}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove contacts from group</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to remove {selectedContacts.length}{" "}
+              contact(s) from this group? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={removeContactsFromGroup}>
+              Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
+
+export default GroupContacts;
+</file>
+
+<file path="src/components/contacts/NewContactModal.tsx">
+import React, { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Contact, ContactStatus } from "@/lib/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { X, Plus } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { getTagColor } from "./contact-utils";
+import { useTags } from "@/context/TagContext";
+
+interface NewContactModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (data: Omit<Contact, "id">) => void;
+}
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  role: z.string().optional(),
+  company: z.string().optional(),
+  dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+    message: "Date must be in YYYY-MM-DD format.",
+  }),
+  status: z.enum(["Reached Out", "Responded", "Chatted"] as const),
+  tags: z.array(z.string()).optional().default([]),
+});
+
+export const NewContactModal: React.FC<NewContactModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
+  const { availableTags, addTag } = useTags();
+  const [newTagInput, setNewTagInput] = useState("");
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      role: "",
+      company: "",
+      dateOfContact: new Date().toISOString().split("T")[0],
+      status: "Reached Out",
+      tags: [],
+    },
+  });
+
+  const addNewTag = () => {
+    if (
+      newTagInput.trim() !== "" &&
+      !availableTags.includes(newTagInput.trim())
+    ) {
+      const newTag = newTagInput.trim();
+      addTag(newTag);
+
+      const currentTags = form.getValues("tags") || [];
+      if (!currentTags.includes(newTag)) {
+        form.setValue("tags", [...currentTags, newTag], {
+          shouldValidate: true,
+        });
+      }
+
+      setNewTagInput("");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addNewTag();
+    }
+  };
+
+  const selectedTags = form.watch("tags") || [];
+
+  const toggleTagSelection = (tag: string) => {
+    const currentTags = [...selectedTags];
+    const tagIndex = currentTags.indexOf(tag);
+
+    if (tagIndex > -1) {
+      currentTags.splice(tagIndex, 1);
+    } else {
+      currentTags.push(tag);
+    }
+
+    form.setValue("tags", currentTags, { shouldValidate: true });
+  };
+
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    // Make sure all required fields are present
+    const contactData: Omit<Contact, "id"> = {
+      name: values.name,
+      email: values.email,
+      role: values.role,
+      company: values.company,
+      tags: values.tags || [],
+      dateOfContact: values.dateOfContact,
+      status: values.status,
+    };
+
+    onSubmit(contactData);
+    form.reset();
+    onClose();
+  };
+
+  return (
+    <Dialog
+      open={isOpen}
+      onOpenChange={onClose}
+    >
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add New Contact</DialogTitle>
+          <DialogDescription>
+            Add details about your new professional contact.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="john.doe@example.com"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Software Engineer"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="company"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Tech Corp"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tags</FormLabel>
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-2">
+                      {selectedTags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          className={`${getTagColor(
+                            tag
+                          )} cursor-pointer flex items-center gap-1 px-2 py-1`}
+                          onClick={() => toggleTagSelection(tag)}
+                        >
+                          {tag}
+                          <X className="h-3 w-3" />
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        placeholder="Add a tag"
+                        value={newTagInput}
+                        onChange={(e) => setNewTagInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        className="flex-1"
+                      />
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        onClick={addNewTag}
+                        disabled={!newTagInput.trim()}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    {availableTags.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Available tags:
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {availableTags.map(
+                            (tag) =>
+                              !selectedTags.includes(tag) && (
+                                <Badge
+                                  key={tag}
+                                  className={`${getTagColor(
+                                    tag
+                                  )} cursor-pointer opacity-70 hover:opacity-100`}
+                                  variant="outline"
+                                  onClick={() => toggleTagSelection(tag)}
+                                >
+                                  {tag}
+                                </Badge>
+                              )
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="dateOfContact"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date of Contact</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Status</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Reached Out">Reached Out</SelectItem>
+                      <SelectItem value="Responded">Responded</SelectItem>
+                      <SelectItem value="Chatted">Chatted</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Add Contact</Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+</file>
+
+<file path="src/lib/types.ts">
+export type ContactStatus = 'Reached Out' | 'Responded' | 'Chatted';
+
+export type ContactTag = string;
+
+export interface Todo {
+  id: string;
+  contactId: string;
+  task: string;
+  dueDate: string | null;
+  completed: boolean;
+  createdAt: string;
+}
+
+export interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  role?: string;
+  company?: string;
+  tags: ContactTag[];
+  dateOfContact: string;
+  status: ContactStatus;
+  todos?: Todo[];
+}
+
+export interface ContactGroup {
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: string;
+}
+
+export interface ContactGroupMember {
+  id: string;
+  contactId: string;
+  groupId: string;
+  createdAt: string;
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "vite_react_shadcn_ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.2.5",
+    "@fontsource-variable/outfit": "^5.2.5",
+    "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-alert-dialog": "^1.1.1",
+    "@radix-ui/react-aspect-ratio": "^1.1.0",
+    "@radix-ui/react-avatar": "^1.1.0",
+    "@radix-ui/react-checkbox": "^1.1.1",
+    "@radix-ui/react-collapsible": "^1.1.0",
+    "@radix-ui/react-context-menu": "^2.2.1",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-hover-card": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-menubar": "^1.1.1",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
+    "@radix-ui/react-popover": "^1.1.1",
+    "@radix-ui/react-progress": "^1.1.0",
+    "@radix-ui/react-radio-group": "^1.2.0",
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slider": "^1.2.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.1",
+    "@radix-ui/react-toggle": "^1.1.0",
+    "@radix-ui/react-toggle-group": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.4",
+    "@supabase/supabase-js": "^2.49.4",
+    "@tanstack/react-query": "^5.75.5",
+    "@tiptap/extension-bold": "^2.12.0",
+    "@tiptap/extension-italic": "^2.12.0",
+    "@tiptap/extension-link": "^2.12.0",
+    "@tiptap/extension-underline": "^2.12.0",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
+    "@types/uuid": "^10.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
+    "date-fns": "^3.6.0",
+    "embla-carousel-react": "^8.3.0",
+    "input-otp": "^1.2.4",
+    "lucide-react": "^0.462.0",
+    "next-themes": "^0.3.0",
+    "react": "^18.3.1",
+    "react-day-picker": "^8.10.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.56.2",
+    "react-resizable-panels": "^2.1.3",
+    "react-router-dom": "^6.26.2",
+    "recharts": "^2.12.7",
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.1.0",
+    "vaul": "^0.9.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^22.5.5",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "lovable-tagger": "^1.1.7",
+    "postcss": "^8.4.47",
+    "supabase": "^2.22.6",
+    "tailwindcss": "^3.4.11",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.1",
+    "vite": "^5.4.1"
+  }
+}
+</file>
+
+<file path="src/components/contacts/ContactTableRow.tsx">
+import React, { useState, useRef, useEffect } from "react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Contact, ContactStatus, Todo } from "@/lib/types";
+import { Badge } from "@/components/ui/badge";
+import { StickyNote, CheckCircle2, Circle, ClipboardList } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { getStatusColor, getTagColor, formatDate } from "./contact-utils";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { X, Plus } from "lucide-react";
+import { useTags } from "@/context/TagContext";
+
+interface ContactTableRowProps {
+  contact: Contact;
+  onEditContact: (contact: Contact) => void;
+  onUpdateContact: (contact: Contact) => void;
+  isSelected: boolean;
+  onSelectContact: (contact: Contact) => void;
+  onOpenTodoPanel?: (contact: Contact) => void;
+}
+
+export const ContactTableRow: React.FC<ContactTableRowProps> = ({
+  contact,
+  onEditContact,
+  onUpdateContact,
+  isSelected,
+  onSelectContact,
+  onOpenTodoPanel,
+}) => {
+  // State for each editable field
+  const [name, setName] = useState(contact.name);
+  const [email, setEmail] = useState(contact.email);
+  const [role, setRole] = useState(contact.role || "");
+  const [company, setCompany] = useState(contact.company || "");
+  const [date, setDate] = useState<Date>(() => {
+    return new Date(`${contact.dateOfContact}T00:00:00`);
+  });
+  const [status, setStatus] = useState<ContactStatus>(contact.status);
+  const [tags, setTags] = useState<string[]>(contact.tags);
+  const [newTagInput, setNewTagInput] = useState("");
+
+  // Refs for handling blur events
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const roleInputRef = useRef<HTMLInputElement>(null);
+  const companyInputRef = useRef<HTMLInputElement>(null);
+
+  // Use the shared tags context
+  const { availableTags, addTag } = useTags();
+
+  // Update local state when contact prop changes
+  useEffect(() => {
+    setName(contact.name);
+    setEmail(contact.email);
+    setRole(contact.role || "");
+    setCompany(contact.company || "");
+    setDate(new Date(`${contact.dateOfContact}T00:00:00`));
+    setStatus(contact.status);
+    setTags(contact.tags);
+  }, [contact]);
+
+  // Handle field updates
+  const handleUpdate = (updates: Partial<Contact>) => {
+    // Only trigger update if something changed
+    onUpdateContact({
+      ...contact,
+      ...updates,
+    });
+  };
+
+  const handleTagManagement = (selectedTag: string) => {
+    let updatedTags: string[];
+    if (tags.includes(selectedTag)) {
+      updatedTags = tags.filter((tag) => tag !== selectedTag);
+    } else {
+      updatedTags = [...tags, selectedTag];
+    }
+
+    setTags(updatedTags);
+    handleUpdate({ tags: updatedTags });
+  };
+
+  const handleAddNewTag = () => {
+    if (newTagInput.trim() && !tags.includes(newTagInput.trim())) {
+      const newTag = newTagInput.trim();
+      const updatedTags = [...tags, newTag];
+      setTags(updatedTags);
+      handleUpdate({ tags: updatedTags });
+      setNewTagInput("");
+
+      // Add the new tag to the global available tags
+      addTag(newTag);
+    }
+  };
+
+  const handleOpenTodoPanel = () => {
+    if (onOpenTodoPanel) {
+      onOpenTodoPanel(contact);
+    }
+  };
+
+  // Find the most recent incomplete todo
+  const getLatestTodo = (): Todo | null => {
+    if (!contact.todos || contact.todos.length === 0) {
+      return null;
+    }
+
+    // First look for incomplete todos
+    const incompleteTodos = contact.todos.filter((todo) => !todo.completed);
+
+    if (incompleteTodos.length > 0) {
+      // Sort by due date (if available) or creation date
+      return incompleteTodos.sort((a, b) => {
+        // If both have due dates, compare them
+        if (a.dueDate && b.dueDate) {
+          return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+        }
+        // If only one has a due date, it comes first
+        if (a.dueDate) return -1;
+        if (b.dueDate) return 1;
+        // If neither has due dates, sort by created date (newest first)
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      })[0]; // Get the first one (earliest due date or most recent)
+    }
+
+    // If no incomplete todos, return the most recently completed one
+    return contact.todos.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )[0];
+  };
+
+  const latestTodo = getLatestTodo();
+
+  return (
+    <TableRow>
+      <TableCell className="w-10 px-4">
+        <Checkbox
+          checked={isSelected}
+          onCheckedChange={() => {
+            onSelectContact(contact);
+          }}
+          aria-label={`Select ${contact.name}`}
+          className="flex h-4 w-4"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={nameInputRef}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onBlur={() => {
+            if (name !== contact.name) {
+              handleUpdate({ name });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={emailInputRef}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onBlur={() => {
+            if (email !== contact.email) {
+              handleUpdate({ email });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={roleInputRef}
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          onBlur={() => {
+            if (role !== contact.role) {
+              handleUpdate({ role });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+          placeholder="-"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={companyInputRef}
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          onBlur={() => {
+            if (company !== contact.company) {
+              handleUpdate({ company });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+          placeholder="-"
+        />
+      </TableCell>
+      <TableCell className="py-2">
+        <Popover>
+          <div className="flex flex-wrap gap-1 min-h-[24px] group">
+            {tags.map((tag) => (
+              <Badge
+                key={tag}
+                variant="outline"
+                className={cn(getTagColor(tag), "gap-1 pr-1")}
+              >
+                {tag}
+                <button
+                  className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleTagManagement(tag);
+                    }
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  onClick={() => handleTagManagement(tag)}
+                >
+                  <X className="h-3 w-3 hover:text-destructive" />
+                  <span className="sr-only">Remove {tag} tag</span>
+                </button>
+              </Badge>
+            ))}
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="h-7 w-7 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <Plus
+                  color="black"
+                  className="h-4 w-4"
+                />
+              </Button>
+            </PopoverTrigger>
+          </div>
+          <PopoverContent
+            className="w-[200px] p-2"
+            align="start"
+          >
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add new tag"
+                  value={newTagInput}
+                  onChange={(e) => setNewTagInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && newTagInput.trim()) {
+                      handleAddNewTag();
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleAddNewTag}
+                  disabled={!newTagInput.trim()}
+                >
+                  Add
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {availableTags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className={cn(
+                      getTagColor(tag),
+                      "cursor-pointer",
+                      tags.includes(tag)
+                        ? "opacity-100"
+                        : "opacity-70 hover:opacity-100"
+                    )}
+                    onClick={() => handleTagManagement(tag)}
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </TableCell>
+      <TableCell className="min-w-0">
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className={cn(
+                "ml-4 flex h-6 items-center justify-center gap-1 rounded-md border bg-background px-2 text-sm",
+                "hover:bg-gray-100 dark:hover:bg-gray-800"
+              )}
+            >
+              <CalendarIcon className="h-3 w-3" />
+              <span className="hidden sm:inline">
+                {format(date, "MMM d, yyyy")}
+              </span>
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={(newDate) => {
+                if (newDate) {
+                  setDate(newDate);
+                  const formattedDate = format(newDate, "yyyy-MM-dd");
+                  handleUpdate({ dateOfContact: formattedDate });
+                }
+              }}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+      </TableCell>
+      <TableCell>
+        <button
+          className="w-full flex items-center gap-2 h-6 px-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer"
+          onClick={handleOpenTodoPanel}
+        >
+          <ClipboardList className="h-4 w-4 text-blue-500" />
+          {latestTodo ? (
+            <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+              {latestTodo.completed ? (
+                <span className="text-gray-400 line-through">
+                  {latestTodo.task}
+                </span>
+              ) : (
+                <span>{latestTodo.task}</span>
+              )}
+            </div>
+          ) : (
+            <span className="text-gray-400">Add to-do</span>
+          )}
+        </button>
+      </TableCell>
+      <TableCell className="!py-2 px-4 text-center">
+        <div className="ml-4">
+          <Select
+            value={status}
+            onValueChange={(value: ContactStatus) => {
+              setStatus(value);
+              handleUpdate({ status: value });
+            }}
+          >
+            <SelectTrigger
+              className={cn(
+                "h-6 border-none w-[140px] focus:ring-0",
+                getStatusColor(status)
+              )}
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Reached Out">Reached Out</SelectItem>
+              <SelectItem value="Responded">Responded</SelectItem>
+              <SelectItem value="Chatted">Chatted</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+};
+</file>
+
+<file path="src/components/contacts/ContactTable.tsx">
+import React from "react";
+import { Table, TableBody } from "@/components/ui/table";
+import { Contact } from "@/lib/types";
+import { ContactTableHeader } from "./ContactTableHeader";
+import { ContactTableRow } from "./ContactTableRow";
+import { ContactEmptyState } from "./ContactEmptyState";
+
+interface ContactTableProps {
+  contacts: Contact[];
+  onSort: (key: string, direction: "asc" | "desc" | "default") => void;
+  sortKey: string;
+  sortDirection: "asc" | "desc" | "default";
+  onFilterByTag: (tag: string | null) => void;
+  activeTagFilter: string | null;
+  onEditContact: (contact: Contact) => void;
+  onUpdateContact: (contact: Contact) => void;
+  selectedContacts: Contact[];
+  onSelectContact: (contact: Contact) => void;
+  onOpenTodoPanel?: (contact: Contact) => void;
+}
+
+export const ContactTable: React.FC<ContactTableProps> = ({
+  contacts,
+  onSort,
+  sortKey,
+  sortDirection,
+  onFilterByTag,
+  activeTagFilter,
+  onEditContact,
+  onUpdateContact,
+  selectedContacts,
+  onSelectContact,
+  onOpenTodoPanel,
+}) => {
+  // Get all unique tags from contacts for filter dropdown
+  const allTags = Array.from(
+    new Set(contacts.flatMap((contact) => contact.tags))
+  );
+
+  return (
+    // outer wrapper enables horizontal scrolling when needed
+    <div className="rounded-md border overflow-x-auto">
+      {/* inner wrapper forces table to its full content width */}
+      <div className="min-w-max">
+        <Table className="w-full table-auto whitespace-nowrap">
+          <ContactTableHeader
+            onSort={onSort}
+            sortKey={sortKey}
+            sortDirection={sortDirection}
+            onFilterByTag={onFilterByTag}
+            activeTagFilter={activeTagFilter}
+            availableTags={allTags}
+            hasCheckboxColumn={true}
+          />
+          <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
+            {contacts.length === 0 ? (
+              <ContactEmptyState />
+            ) : (
+              contacts.map((contact) => (
+                <ContactTableRow
+                  key={contact.id}
+                  contact={contact}
+                  onEditContact={onEditContact}
+                  onUpdateContact={onUpdateContact}
+                  isSelected={selectedContacts.some((c) => c.id === contact.id)}
+                  onSelectContact={onSelectContact}
+                  onOpenTodoPanel={onOpenTodoPanel}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/pages/Index.tsx">
+import React, { useState } from "react";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header";
+import { ContactTable } from "@/components/contacts/ContactTable";
+import { NewContactModal } from "@/components/contacts/NewContactModal";
+import { AddToGroupModal } from "@/components/contacts/AddToGroupModal";
+import { Contact, Todo } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { UserPlus, Trash2, Tag } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { TagManagementModal } from "@/components/contacts/TagManagementModal";
+import { TodoPanel } from "@/components/contacts/TodoPanel";
+import { useContacts } from "@/hooks/useContacts";
+import { useContactFilters } from "@/hooks/useContactFilters";
+import { useTodos } from "@/hooks/useTodos";
+import { Plus } from "lucide-react";
+
+const Index = () => {
+  // Contact management
+  const {
+    contacts,
+    isLoading,
+    isError,
+    addContact,
+    updateContact,
+    deleteContacts,
+    selectedContacts,
+    selectContact,
+    clearSelectedContacts,
+  } = useContacts();
+
+  // Sorting and filtering
+  const {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    handleSort,
+    handleFilterByTag,
+    filteredAndSortedContacts,
+  } = useContactFilters(contacts);
+
+  // Todo management
+  const { handleTodoAdded, handleTodoCompleted } = useTodos();
+
+  // Modal states
+  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddToGroupModalOpen, setIsAddToGroupModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isTagManagementOpen, setIsTagManagementOpen] = useState(false);
+  const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(false);
+
+  // Selected contact states
+  const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
+  const [contactForTodos, setContactForTodos] = useState<Contact | null>(null);
+
+  const handleEditContact = (contact: Contact) => {
+    setContactToEdit(contact);
+    setIsEditModalOpen(true);
+  };
+
+  const handleOpenTodoPanel = (contact: Contact) => {
+    setContactForTodos(contact);
+    setIsTodoPanelOpen(true);
+  };
+
+  const handleDeleteSelectedContacts = async () => {
+    if (selectedContacts.length === 0) return;
+    await deleteContacts(selectedContacts.map((c) => c.id));
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleGroupAdded = () => {
+    setIsAddToGroupModalOpen(false);
+  };
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Header />
+        <main className="flex-1 overflow-auto p-6 bg-gray-50 dark:bg-gray-800">
+          <div className="mb-6 flex justify-between items-center">
+            <div>
+              <h2 className="text-2xl font-semibold">Contacts</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Manage your professional network
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setIsTagManagementOpen(true)}
+                className="gap-1"
+              >
+                <Tag className="h-4 w-4" />
+                Manage Tags
+              </Button>
+              {selectedContacts.length > 0 && (
+                <>
+                  <Button
+                    onClick={() => setIsDeleteDialogOpen(true)}
+                    variant="outline"
+                    className="gap-1 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Delete ({selectedContacts.length})
+                  </Button>
+                  <Button
+                    onClick={() => setIsAddToGroupModalOpen(true)}
+                    variant="outline"
+                    className="gap-1"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    Add to Group ({selectedContacts.length})
+                  </Button>
+                </>
+              )}
+              <Button
+                onClick={() => setIsNewModalOpen(true)}
+                className="hover:bg/90"
+              >
+                <Plus className="mr-2 h-4 w-4" /> New Contact
+              </Button>
+            </div>
+          </div>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
+              <ContactTable
+                contacts={filteredAndSortedContacts}
+                onSort={handleSort}
+                sortKey={sortKey}
+                sortDirection={sortDirection}
+                onFilterByTag={handleFilterByTag}
+                activeTagFilter={activeTagFilter}
+                onEditContact={handleEditContact}
+                onUpdateContact={updateContact}
+                selectedContacts={selectedContacts}
+                onSelectContact={selectContact}
+                onOpenTodoPanel={handleOpenTodoPanel}
+              />
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* Modals */}
+      <NewContactModal
+        isOpen={isNewModalOpen}
+        onClose={() => setIsNewModalOpen(false)}
+        onSubmit={addContact}
+      />
+
+      <AddToGroupModal
+        isOpen={isAddToGroupModalOpen}
+        onClose={() => setIsAddToGroupModalOpen(false)}
+        selectedContacts={selectedContacts}
+        onGroupAdded={handleGroupAdded}
+      />
+
+      <TagManagementModal
+        isOpen={isTagManagementOpen}
+        onClose={() => setIsTagManagementOpen(false)}
+      />
+
+      <TodoPanel
+        open={isTodoPanelOpen}
+        onClose={() => setIsTodoPanelOpen(false)}
+        contact={contactForTodos}
+        onTodoAdded={handleTodoAdded}
+        onTodoCompleted={handleTodoCompleted}
+      />
+
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete contacts</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete {selectedContacts.length}{" "}
+              contact(s)? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteSelectedContacts}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
+
+export default Index;
+</file>
+
+</files>
+````
+
+## File: src/App.css
+````css
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+````
+
+## File: src/components/ui/accordion.tsx
+````typescript
+import * as React from "react"
+import * as AccordionPrimitive from "@radix-ui/react-accordion"
+import { ChevronDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Accordion = AccordionPrimitive.Root
+
+const AccordionItem = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
+>(({ className, ...props }, ref) => (
+  <AccordionPrimitive.Item
+    ref={ref}
+    className={cn("border-b", className)}
+    {...props}
+  />
+))
+AccordionItem.displayName = "AccordionItem"
+
+const AccordionTrigger = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Header className="flex">
+    <AccordionPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+    </AccordionPrimitive.Trigger>
+  </AccordionPrimitive.Header>
+))
+AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
+
+const AccordionContent = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Content
+    ref={ref}
+    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    {...props}
+  >
+    <div className={cn("pb-4 pt-0", className)}>{children}</div>
+  </AccordionPrimitive.Content>
+))
+
+AccordionContent.displayName = AccordionPrimitive.Content.displayName
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+````
+
+## File: src/components/ui/alert-dialog.tsx
+````typescript
+import * as React from "react"
+import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
+
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
+
+const AlertDialog = AlertDialogPrimitive.Root
+
+const AlertDialogTrigger = AlertDialogPrimitive.Trigger
+
+const AlertDialogPortal = AlertDialogPrimitive.Portal
+
+const AlertDialogOverlay = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Overlay
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+    ref={ref}
+  />
+))
+AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
+
+const AlertDialogContent = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPortal>
+    <AlertDialogOverlay />
+    <AlertDialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        className
+      )}
+      {...props}
+    />
+  </AlertDialogPortal>
+))
+AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
+
+const AlertDialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-2 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+)
+AlertDialogHeader.displayName = "AlertDialogHeader"
+
+const AlertDialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+)
+AlertDialogFooter.displayName = "AlertDialogFooter"
+
+const AlertDialogTitle = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Title
+    ref={ref}
+    className={cn("text-lg font-semibold", className)}
+    {...props}
+  />
+))
+AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
+
+const AlertDialogDescription = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+AlertDialogDescription.displayName =
+  AlertDialogPrimitive.Description.displayName
+
+const AlertDialogAction = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Action>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Action
+    ref={ref}
+    className={cn(buttonVariants(), className)}
+    {...props}
+  />
+))
+AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName
+
+const AlertDialogCancel = React.forwardRef<
+  React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
+>(({ className, ...props }, ref) => (
+  <AlertDialogPrimitive.Cancel
+    ref={ref}
+    className={cn(
+      buttonVariants({ variant: "outline" }),
+      "mt-2 sm:mt-0",
+      className
+    )}
+    {...props}
+  />
+))
+AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
+
+export {
+  AlertDialog,
+  AlertDialogPortal,
+  AlertDialogOverlay,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+}
+````
+
+## File: src/components/ui/alert.tsx
+````typescript
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const alertVariants = cva(
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-background text-foreground",
+        destructive:
+          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="alert"
+    className={cn(alertVariants({ variant }), className)}
+    {...props}
+  />
+))
+Alert.displayName = "Alert"
+
+const AlertTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h5
+    ref={ref}
+    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    {...props}
+  />
+))
+AlertTitle.displayName = "AlertTitle"
+
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
+))
+AlertDescription.displayName = "AlertDescription"
+
+export { Alert, AlertTitle, AlertDescription }
+````
+
+## File: src/components/ui/aspect-ratio.tsx
+````typescript
+import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
+
+const AspectRatio = AspectRatioPrimitive.Root
+
+export { AspectRatio }
+````
+
+## File: src/components/ui/avatar-with-initial.tsx
+````typescript
+import React from 'react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+
+interface AvatarWithInitialProps {
+  name: string;
+  className?: string;
+}
+
+const getInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(part => part.charAt(0))
+    .join('')
+    .toUpperCase()
+    .substring(0, 2);
+};
+
+const getRandomColor = (name: string): string => {
+  const colors = [
+    'bg-blue-500',
+    'bg-purple-500',
+    'bg-green-500',
+    'bg-yellow-500',
+    'bg-red-500',
+    'bg-pink-500',
+    'bg-indigo-500',
+  ];
+  
+  const index = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length;
+  return colors[index];
+};
+
+export const AvatarWithInitial: React.FC<AvatarWithInitialProps> = ({ 
+  name,
+  className = ''
+}) => {
+  const initials = getInitials(name);
+  const bgColor = getRandomColor(name);
+  
+  return (
+    <Avatar className={className}>
+      <AvatarFallback className={`${bgColor} text-white`}>
+        {initials}
+      </AvatarFallback>
+    </Avatar>
+  );
+};
+````
+
+## File: src/components/ui/avatar.tsx
+````typescript
+import * as React from "react"
+import * as AvatarPrimitive from "@radix-ui/react-avatar"
+
+import { cn } from "@/lib/utils"
+
+const Avatar = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      className
+    )}
+    {...props}
+  />
+))
+Avatar.displayName = AvatarPrimitive.Root.displayName
+
+const AvatarImage = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Image>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Image
+    ref={ref}
+    className={cn("aspect-square h-full w-full", className)}
+    {...props}
+  />
+))
+AvatarImage.displayName = AvatarPrimitive.Image.displayName
+
+const AvatarFallback = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Fallback>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Fallback
+    ref={ref}
+    className={cn(
+      "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      className
+    )}
+    {...props}
+  />
+))
+AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
+
+export { Avatar, AvatarImage, AvatarFallback }
+````
+
+## File: src/components/ui/badge.tsx
+````typescript
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const badgeVariants = cva(
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  {
+    variants: {
+      variant: {
+        default:
+          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+        secondary:
+          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        destructive:
+          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+        outline: "text-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+  )
+}
+
+export { Badge, badgeVariants }
+````
+
+## File: src/components/ui/breadcrumb.tsx
+````typescript
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { ChevronRight, MoreHorizontal } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Breadcrumb = React.forwardRef<
+  HTMLElement,
+  React.ComponentPropsWithoutRef<"nav"> & {
+    separator?: React.ReactNode
+  }
+>(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
+Breadcrumb.displayName = "Breadcrumb"
+
+const BreadcrumbList = React.forwardRef<
+  HTMLOListElement,
+  React.ComponentPropsWithoutRef<"ol">
+>(({ className, ...props }, ref) => (
+  <ol
+    ref={ref}
+    className={cn(
+      "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+      className
+    )}
+    {...props}
+  />
+))
+BreadcrumbList.displayName = "BreadcrumbList"
+
+const BreadcrumbItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentPropsWithoutRef<"li">
+>(({ className, ...props }, ref) => (
+  <li
+    ref={ref}
+    className={cn("inline-flex items-center gap-1.5", className)}
+    {...props}
+  />
+))
+BreadcrumbItem.displayName = "BreadcrumbItem"
+
+const BreadcrumbLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentPropsWithoutRef<"a"> & {
+    asChild?: boolean
+  }
+>(({ asChild, className, ...props }, ref) => {
+  const Comp = asChild ? Slot : "a"
+
+  return (
+    <Comp
+      ref={ref}
+      className={cn("transition-colors hover:text-foreground", className)}
+      {...props}
+    />
+  )
+})
+BreadcrumbLink.displayName = "BreadcrumbLink"
+
+const BreadcrumbPage = React.forwardRef<
+  HTMLSpanElement,
+  React.ComponentPropsWithoutRef<"span">
+>(({ className, ...props }, ref) => (
+  <span
+    ref={ref}
+    role="link"
+    aria-disabled="true"
+    aria-current="page"
+    className={cn("font-normal text-foreground", className)}
+    {...props}
+  />
+))
+BreadcrumbPage.displayName = "BreadcrumbPage"
+
+const BreadcrumbSeparator = ({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<"li">) => (
+  <li
+    role="presentation"
+    aria-hidden="true"
+    className={cn("[&>svg]:size-3.5", className)}
+    {...props}
+  >
+    {children ?? <ChevronRight />}
+  </li>
+)
+BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
+
+const BreadcrumbEllipsis = ({
+  className,
+  ...props
+}: React.ComponentProps<"span">) => (
+  <span
+    role="presentation"
+    aria-hidden="true"
+    className={cn("flex h-9 w-9 items-center justify-center", className)}
+    {...props}
+  >
+    <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only">More</span>
+  </span>
+)
+BreadcrumbEllipsis.displayName = "BreadcrumbElipssis"
+
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+}
+````
+
+## File: src/components/ui/button.tsx
+````typescript
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
+````
+
+## File: src/components/ui/calendar.tsx
+````typescript
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+
+function Calendar({
+  className,
+  classNames,
+  showOutsideDays = true,
+  ...props
+}: CalendarProps) {
+  return (
+    <DayPicker
+      showOutsideDays={showOutsideDays}
+      className={cn("p-3", className)}
+      classNames={{
+        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+        month: "space-y-4",
+        caption: "flex justify-center pt-1 relative items-center",
+        caption_label: "text-sm font-medium",
+        nav: "space-x-1 flex items-center",
+        nav_button: cn(
+          buttonVariants({ variant: "outline" }),
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+        ),
+        nav_button_previous: "absolute left-1",
+        nav_button_next: "absolute right-1",
+        table: "w-full border-collapse space-y-1",
+        head_row: "flex",
+        head_cell:
+          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+        row: "flex w-full mt-2",
+        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+        day: cn(
+          buttonVariants({ variant: "ghost" }),
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
+        ),
+        day_range_end: "day-range-end",
+        day_selected:
+          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+        day_today: "bg-accent text-accent-foreground",
+        day_outside:
+          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
+        day_disabled: "text-muted-foreground opacity-50",
+        day_range_middle:
+          "aria-selected:bg-accent aria-selected:text-accent-foreground",
+        day_hidden: "invisible",
+        ...classNames,
+      }}
+      components={{
+        IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
+        IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
+      }}
+      {...props}
+    />
+  );
+}
+Calendar.displayName = "Calendar";
+
+export { Calendar };
+````
+
+## File: src/components/ui/card.tsx
+````typescript
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      className
+    )}
+    {...props}
+  />
+))
+Card.displayName = "Card"
+
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    {...props}
+  />
+))
+CardHeader.displayName = "CardHeader"
+
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      "text-2xl font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+CardTitle.displayName = "CardTitle"
+
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+CardDescription.displayName = "CardDescription"
+
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+))
+CardContent.displayName = "CardContent"
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+))
+CardFooter.displayName = "CardFooter"
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+````
+
+## File: src/components/ui/carousel.tsx
+````typescript
+import * as React from "react"
+import useEmblaCarousel, {
+  type UseEmblaCarouselType,
+} from "embla-carousel-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+
+type CarouselApi = UseEmblaCarouselType[1]
+type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
+type CarouselOptions = UseCarouselParameters[0]
+type CarouselPlugin = UseCarouselParameters[1]
+
+type CarouselProps = {
+  opts?: CarouselOptions
+  plugins?: CarouselPlugin
+  orientation?: "horizontal" | "vertical"
+  setApi?: (api: CarouselApi) => void
+}
+
+type CarouselContextProps = {
+  carouselRef: ReturnType<typeof useEmblaCarousel>[0]
+  api: ReturnType<typeof useEmblaCarousel>[1]
+  scrollPrev: () => void
+  scrollNext: () => void
+  canScrollPrev: boolean
+  canScrollNext: boolean
+} & CarouselProps
+
+const CarouselContext = React.createContext<CarouselContextProps | null>(null)
+
+function useCarousel() {
+  const context = React.useContext(CarouselContext)
+
+  if (!context) {
+    throw new Error("useCarousel must be used within a <Carousel />")
+  }
+
+  return context
+}
+
+const Carousel = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & CarouselProps
+>(
+  (
+    {
+      orientation = "horizontal",
+      opts,
+      setApi,
+      plugins,
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const [carouselRef, api] = useEmblaCarousel(
+      {
+        ...opts,
+        axis: orientation === "horizontal" ? "x" : "y",
+      },
+      plugins
+    )
+    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
+    const [canScrollNext, setCanScrollNext] = React.useState(false)
+
+    const onSelect = React.useCallback((api: CarouselApi) => {
+      if (!api) {
+        return
+      }
+
+      setCanScrollPrev(api.canScrollPrev())
+      setCanScrollNext(api.canScrollNext())
+    }, [])
+
+    const scrollPrev = React.useCallback(() => {
+      api?.scrollPrev()
+    }, [api])
+
+    const scrollNext = React.useCallback(() => {
+      api?.scrollNext()
+    }, [api])
+
+    const handleKeyDown = React.useCallback(
+      (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault()
+          scrollPrev()
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault()
+          scrollNext()
+        }
+      },
+      [scrollPrev, scrollNext]
+    )
+
+    React.useEffect(() => {
+      if (!api || !setApi) {
+        return
+      }
+
+      setApi(api)
+    }, [api, setApi])
+
+    React.useEffect(() => {
+      if (!api) {
+        return
+      }
+
+      onSelect(api)
+      api.on("reInit", onSelect)
+      api.on("select", onSelect)
+
+      return () => {
+        api?.off("select", onSelect)
+      }
+    }, [api, onSelect])
+
+    return (
+      <CarouselContext.Provider
+        value={{
+          carouselRef,
+          api: api,
+          opts,
+          orientation:
+            orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+          scrollPrev,
+          scrollNext,
+          canScrollPrev,
+          canScrollNext,
+        }}
+      >
+        <div
+          ref={ref}
+          onKeyDownCapture={handleKeyDown}
+          className={cn("relative", className)}
+          role="region"
+          aria-roledescription="carousel"
+          {...props}
+        >
+          {children}
+        </div>
+      </CarouselContext.Provider>
+    )
+  }
+)
+Carousel.displayName = "Carousel"
+
+const CarouselContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const { carouselRef, orientation } = useCarousel()
+
+  return (
+    <div ref={carouselRef} className="overflow-hidden">
+      <div
+        ref={ref}
+        className={cn(
+          "flex",
+          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+          className
+        )}
+        {...props}
+      />
+    </div>
+  )
+})
+CarouselContent.displayName = "CarouselContent"
+
+const CarouselItem = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const { orientation } = useCarousel()
+
+  return (
+    <div
+      ref={ref}
+      role="group"
+      aria-roledescription="slide"
+      className={cn(
+        "min-w-0 shrink-0 grow-0 basis-full",
+        orientation === "horizontal" ? "pl-4" : "pt-4",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+CarouselItem.displayName = "CarouselItem"
+
+const CarouselPrevious = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+
+  return (
+    <Button
+      ref={ref}
+      variant={variant}
+      size={size}
+      className={cn(
+        "absolute  h-8 w-8 rounded-full",
+        orientation === "horizontal"
+          ? "-left-12 top-1/2 -translate-y-1/2"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      <ArrowLeft className="h-4 w-4" />
+      <span className="sr-only">Previous slide</span>
+    </Button>
+  )
+})
+CarouselPrevious.displayName = "CarouselPrevious"
+
+const CarouselNext = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+  const { orientation, scrollNext, canScrollNext } = useCarousel()
+
+  return (
+    <Button
+      ref={ref}
+      variant={variant}
+      size={size}
+      className={cn(
+        "absolute h-8 w-8 rounded-full",
+        orientation === "horizontal"
+          ? "-right-12 top-1/2 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollNext}
+      onClick={scrollNext}
+      {...props}
+    >
+      <ArrowRight className="h-4 w-4" />
+      <span className="sr-only">Next slide</span>
+    </Button>
+  )
+})
+CarouselNext.displayName = "CarouselNext"
+
+export {
+  type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+}
+````
+
+## File: src/components/ui/chart.tsx
+````typescript
+import * as React from "react"
+import * as RechartsPrimitive from "recharts"
+
+import { cn } from "@/lib/utils"
+
+// Format: { THEME_NAME: CSS_SELECTOR }
+const THEMES = { light: "", dark: ".dark" } as const
+
+export type ChartConfig = {
+  [k in string]: {
+    label?: React.ReactNode
+    icon?: React.ComponentType
+  } & (
+    | { color?: string; theme?: never }
+    | { color?: never; theme: Record<keyof typeof THEMES, string> }
+  )
+}
+
+type ChartContextProps = {
+  config: ChartConfig
+}
+
+const ChartContext = React.createContext<ChartContextProps | null>(null)
+
+function useChart() {
+  const context = React.useContext(ChartContext)
+
+  if (!context) {
+    throw new Error("useChart must be used within a <ChartContainer />")
+  }
+
+  return context
+}
+
+const ChartContainer = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    config: ChartConfig
+    children: React.ComponentProps<
+      typeof RechartsPrimitive.ResponsiveContainer
+    >["children"]
+  }
+>(({ id, className, children, config, ...props }, ref) => {
+  const uniqueId = React.useId()
+  const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
+
+  return (
+    <ChartContext.Provider value={{ config }}>
+      <div
+        data-chart={chartId}
+        ref={ref}
+        className={cn(
+          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          className
+        )}
+        {...props}
+      >
+        <ChartStyle id={chartId} config={config} />
+        <RechartsPrimitive.ResponsiveContainer>
+          {children}
+        </RechartsPrimitive.ResponsiveContainer>
+      </div>
+    </ChartContext.Provider>
+  )
+})
+ChartContainer.displayName = "Chart"
+
+const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+  const colorConfig = Object.entries(config).filter(
+    ([_, config]) => config.theme || config.color
+  )
+
+  if (!colorConfig.length) {
+    return null
+  }
+
+  return (
+    <style
+      dangerouslySetInnerHTML={{
+        __html: Object.entries(THEMES)
+          .map(
+            ([theme, prefix]) => `
+${prefix} [data-chart=${id}] {
+${colorConfig
+  .map(([key, itemConfig]) => {
+    const color =
+      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+      itemConfig.color
+    return color ? `  --color-${key}: ${color};` : null
+  })
+  .join("\n")}
+}
+`
+          )
+          .join("\n"),
+      }}
+    />
+  )
+}
+
+const ChartTooltip = RechartsPrimitive.Tooltip
+
+const ChartTooltipContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+    React.ComponentProps<"div"> & {
+      hideLabel?: boolean
+      hideIndicator?: boolean
+      indicator?: "line" | "dot" | "dashed"
+      nameKey?: string
+      labelKey?: string
+    }
+>(
+  (
+    {
+      active,
+      payload,
+      className,
+      indicator = "dot",
+      hideLabel = false,
+      hideIndicator = false,
+      label,
+      labelFormatter,
+      labelClassName,
+      formatter,
+      color,
+      nameKey,
+      labelKey,
+    },
+    ref
+  ) => {
+    const { config } = useChart()
+
+    const tooltipLabel = React.useMemo(() => {
+      if (hideLabel || !payload?.length) {
+        return null
+      }
+
+      const [item] = payload
+      const key = `${labelKey || item.dataKey || item.name || "value"}`
+      const itemConfig = getPayloadConfigFromPayload(config, item, key)
+      const value =
+        !labelKey && typeof label === "string"
+          ? config[label as keyof typeof config]?.label || label
+          : itemConfig?.label
+
+      if (labelFormatter) {
+        return (
+          <div className={cn("font-medium", labelClassName)}>
+            {labelFormatter(value, payload)}
+          </div>
+        )
+      }
+
+      if (!value) {
+        return null
+      }
+
+      return <div className={cn("font-medium", labelClassName)}>{value}</div>
+    }, [
+      label,
+      labelFormatter,
+      payload,
+      hideLabel,
+      labelClassName,
+      config,
+      labelKey,
+    ])
+
+    if (!active || !payload?.length) {
+      return null
+    }
+
+    const nestLabel = payload.length === 1 && indicator !== "dot"
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+          className
+        )}
+      >
+        {!nestLabel ? tooltipLabel : null}
+        <div className="grid gap-1.5">
+          {payload.map((item, index) => {
+            const key = `${nameKey || item.name || item.dataKey || "value"}`
+            const itemConfig = getPayloadConfigFromPayload(config, item, key)
+            const indicatorColor = color || item.payload.fill || item.color
+
+            return (
+              <div
+                key={item.dataKey}
+                className={cn(
+                  "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
+                  indicator === "dot" && "items-center"
+                )}
+              >
+                {formatter && item?.value !== undefined && item.name ? (
+                  formatter(item.value, item.name, item, index, item.payload)
+                ) : (
+                  <>
+                    {itemConfig?.icon ? (
+                      <itemConfig.icon />
+                    ) : (
+                      !hideIndicator && (
+                        <div
+                          className={cn(
+                            "shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]",
+                            {
+                              "h-2.5 w-2.5": indicator === "dot",
+                              "w-1": indicator === "line",
+                              "w-0 border-[1.5px] border-dashed bg-transparent":
+                                indicator === "dashed",
+                              "my-0.5": nestLabel && indicator === "dashed",
+                            }
+                          )}
+                          style={
+                            {
+                              "--color-bg": indicatorColor,
+                              "--color-border": indicatorColor,
+                            } as React.CSSProperties
+                          }
+                        />
+                      )
+                    )}
+                    <div
+                      className={cn(
+                        "flex flex-1 justify-between leading-none",
+                        nestLabel ? "items-end" : "items-center"
+                      )}
+                    >
+                      <div className="grid gap-1.5">
+                        {nestLabel ? tooltipLabel : null}
+                        <span className="text-muted-foreground">
+                          {itemConfig?.label || item.name}
+                        </span>
+                      </div>
+                      {item.value && (
+                        <span className="font-mono font-medium tabular-nums text-foreground">
+                          {item.value.toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+)
+ChartTooltipContent.displayName = "ChartTooltip"
+
+const ChartLegend = RechartsPrimitive.Legend
+
+const ChartLegendContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> &
+    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+      hideIcon?: boolean
+      nameKey?: string
+    }
+>(
+  (
+    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
+    ref
+  ) => {
+    const { config } = useChart()
+
+    if (!payload?.length) {
+      return null
+    }
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "flex items-center justify-center gap-4",
+          verticalAlign === "top" ? "pb-3" : "pt-3",
+          className
+        )}
+      >
+        {payload.map((item) => {
+          const key = `${nameKey || item.dataKey || "value"}`
+          const itemConfig = getPayloadConfigFromPayload(config, item, key)
+
+          return (
+            <div
+              key={item.value}
+              className={cn(
+                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
+              )}
+            >
+              {itemConfig?.icon && !hideIcon ? (
+                <itemConfig.icon />
+              ) : (
+                <div
+                  className="h-2 w-2 shrink-0 rounded-[2px]"
+                  style={{
+                    backgroundColor: item.color,
+                  }}
+                />
+              )}
+              {itemConfig?.label}
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+)
+ChartLegendContent.displayName = "ChartLegend"
+
+// Helper to extract item config from a payload.
+function getPayloadConfigFromPayload(
+  config: ChartConfig,
+  payload: unknown,
+  key: string
+) {
+  if (typeof payload !== "object" || payload === null) {
+    return undefined
+  }
+
+  const payloadPayload =
+    "payload" in payload &&
+    typeof payload.payload === "object" &&
+    payload.payload !== null
+      ? payload.payload
+      : undefined
+
+  let configLabelKey: string = key
+
+  if (
+    key in payload &&
+    typeof payload[key as keyof typeof payload] === "string"
+  ) {
+    configLabelKey = payload[key as keyof typeof payload] as string
+  } else if (
+    payloadPayload &&
+    key in payloadPayload &&
+    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
+  ) {
+    configLabelKey = payloadPayload[
+      key as keyof typeof payloadPayload
+    ] as string
+  }
+
+  return configLabelKey in config
+    ? config[configLabelKey]
+    : config[key as keyof typeof config]
+}
+
+export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+}
+````
+
+## File: src/components/ui/checkbox.tsx
+````typescript
+import * as React from "react"
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
+import { Check } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Checkbox = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
+    className={cn(
+      "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+      className
+    )}
+    {...props}
+  >
+    <CheckboxPrimitive.Indicator
+      className={cn("flex items-center justify-center text-current")}
+    >
+      <Check className="h-4 w-4" />
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+))
+Checkbox.displayName = CheckboxPrimitive.Root.displayName
+
+export { Checkbox }
+````
+
+## File: src/components/ui/collapsible.tsx
+````typescript
+import * as CollapsiblePrimitive from "@radix-ui/react-collapsible"
+
+const Collapsible = CollapsiblePrimitive.Root
+
+const CollapsibleTrigger = CollapsiblePrimitive.CollapsibleTrigger
+
+const CollapsibleContent = CollapsiblePrimitive.CollapsibleContent
+
+export { Collapsible, CollapsibleTrigger, CollapsibleContent }
+````
+
+## File: src/components/ui/command.tsx
+````typescript
+import * as React from "react"
+import { type DialogProps } from "@radix-ui/react-dialog"
+import { Command as CommandPrimitive } from "cmdk"
+import { Search } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+
+const Command = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive
+    ref={ref}
+    className={cn(
+      "flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+Command.displayName = CommandPrimitive.displayName
+
+interface CommandDialogProps extends DialogProps {}
+
+const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+  return (
+    <Dialog {...props}>
+      <DialogContent className="overflow-hidden p-0 shadow-lg">
+        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+          {children}
+        </Command>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+const CommandInput = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Input>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
+>(({ className, ...props }, ref) => (
+  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+    <CommandPrimitive.Input
+      ref={ref}
+      className={cn(
+        "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
+      {...props}
+    />
+  </div>
+))
+
+CommandInput.displayName = CommandPrimitive.Input.displayName
+
+const CommandList = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.List
+    ref={ref}
+    className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
+    {...props}
+  />
+))
+
+CommandList.displayName = CommandPrimitive.List.displayName
+
+const CommandEmpty = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Empty>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
+>((props, ref) => (
+  <CommandPrimitive.Empty
+    ref={ref}
+    className="py-6 text-center text-sm"
+    {...props}
+  />
+))
+
+CommandEmpty.displayName = CommandPrimitive.Empty.displayName
+
+const CommandGroup = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Group>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Group
+    ref={ref}
+    className={cn(
+      "overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+
+CommandGroup.displayName = CommandPrimitive.Group.displayName
+
+const CommandSeparator = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 h-px bg-border", className)}
+    {...props}
+  />
+))
+CommandSeparator.displayName = CommandPrimitive.Separator.displayName
+
+const CommandItem = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50",
+      className
+    )}
+    {...props}
+  />
+))
+
+CommandItem.displayName = CommandPrimitive.Item.displayName
+
+const CommandShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+CommandShortcut.displayName = "CommandShortcut"
+
+export {
+  Command,
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+  CommandSeparator,
+}
+````
+
+## File: src/components/ui/context-menu.tsx
+````typescript
+import * as React from "react"
+import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
+import { Check, ChevronRight, Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const ContextMenu = ContextMenuPrimitive.Root
+
+const ContextMenuTrigger = ContextMenuPrimitive.Trigger
+
+const ContextMenuGroup = ContextMenuPrimitive.Group
+
+const ContextMenuPortal = ContextMenuPrimitive.Portal
+
+const ContextMenuSub = ContextMenuPrimitive.Sub
+
+const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup
+
+const ContextMenuSubTrigger = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.SubTrigger>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubTrigger> & {
+    inset?: boolean
+  }
+>(({ className, inset, children, ...props }, ref) => (
+  <ContextMenuPrimitive.SubTrigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRight className="ml-auto h-4 w-4" />
+  </ContextMenuPrimitive.SubTrigger>
+))
+ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName
+
+const ContextMenuSubContent = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.SubContent>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubContent>
+>(({ className, ...props }, ref) => (
+  <ContextMenuPrimitive.SubContent
+    ref={ref}
+    className={cn(
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+ContextMenuSubContent.displayName = ContextMenuPrimitive.SubContent.displayName
+
+const ContextMenuContent = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <ContextMenuPrimitive.Portal>
+    <ContextMenuPrimitive.Content
+      ref={ref}
+      className={cn(
+        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </ContextMenuPrimitive.Portal>
+))
+ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName
+
+const ContextMenuItem = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <ContextMenuPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+ContextMenuItem.displayName = ContextMenuPrimitive.Item.displayName
+
+const ContextMenuCheckboxItem = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.CheckboxItem>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.CheckboxItem>
+>(({ className, children, checked, ...props }, ref) => (
+  <ContextMenuPrimitive.CheckboxItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    checked={checked}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <ContextMenuPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </ContextMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </ContextMenuPrimitive.CheckboxItem>
+))
+ContextMenuCheckboxItem.displayName =
+  ContextMenuPrimitive.CheckboxItem.displayName
+
+const ContextMenuRadioItem = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.RadioItem>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.RadioItem>
+>(({ className, children, ...props }, ref) => (
+  <ContextMenuPrimitive.RadioItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <ContextMenuPrimitive.ItemIndicator>
+        <Circle className="h-2 w-2 fill-current" />
+      </ContextMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </ContextMenuPrimitive.RadioItem>
+))
+ContextMenuRadioItem.displayName = ContextMenuPrimitive.RadioItem.displayName
+
+const ContextMenuLabel = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Label> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <ContextMenuPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2 py-1.5 text-sm font-semibold text-foreground",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+ContextMenuLabel.displayName = ContextMenuPrimitive.Label.displayName
+
+const ContextMenuSeparator = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <ContextMenuPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-border", className)}
+    {...props}
+  />
+))
+ContextMenuSeparator.displayName = ContextMenuPrimitive.Separator.displayName
+
+const ContextMenuShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+ContextMenuShortcut.displayName = "ContextMenuShortcut"
+
+export {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuGroup,
+  ContextMenuPortal,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuRadioGroup,
+}
+````
+
+## File: src/components/ui/dialog.tsx
+````typescript
+import * as React from "react"
+import * as DialogPrimitive from "@radix-ui/react-dialog"
+import { X } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Dialog = DialogPrimitive.Root
+
+const DialogTrigger = DialogPrimitive.Trigger
+
+const DialogPortal = DialogPrimitive.Portal
+
+const DialogClose = DialogPrimitive.Close
+
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    ref={ref}
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+  />
+))
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </DialogPrimitive.Close>
+    </DialogPrimitive.Content>
+  </DialogPortal>
+))
+DialogContent.displayName = DialogPrimitive.Content.displayName
+
+const DialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-1.5 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+)
+DialogHeader.displayName = "DialogHeader"
+
+const DialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+)
+DialogFooter.displayName = "DialogFooter"
+
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+DialogTitle.displayName = DialogPrimitive.Title.displayName
+
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+DialogDescription.displayName = DialogPrimitive.Description.displayName
+
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+}
+````
+
+## File: src/components/ui/drawer.tsx
+````typescript
+import * as React from "react"
+import { Drawer as DrawerPrimitive } from "vaul"
+
+import { cn } from "@/lib/utils"
+
+const Drawer = ({
+  shouldScaleBackground = true,
+  ...props
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
+  <DrawerPrimitive.Root
+    shouldScaleBackground={shouldScaleBackground}
+    {...props}
+  />
+)
+Drawer.displayName = "Drawer"
+
+const DrawerTrigger = DrawerPrimitive.Trigger
+
+const DrawerPortal = DrawerPrimitive.Portal
+
+const DrawerClose = DrawerPrimitive.Close
+
+const DrawerOverlay = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Overlay
+    ref={ref}
+    className={cn("fixed inset-0 z-50 bg-black/80", className)}
+    {...props}
+  />
+))
+DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
+
+const DrawerContent = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DrawerPortal>
+    <DrawerOverlay />
+    <DrawerPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background",
+        className
+      )}
+      {...props}
+    >
+      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      {children}
+    </DrawerPrimitive.Content>
+  </DrawerPortal>
+))
+DrawerContent.displayName = "DrawerContent"
+
+const DrawerHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)}
+    {...props}
+  />
+)
+DrawerHeader.displayName = "DrawerHeader"
+
+const DrawerFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+    {...props}
+  />
+)
+DrawerFooter.displayName = "DrawerFooter"
+
+const DrawerTitle = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+DrawerTitle.displayName = DrawerPrimitive.Title.displayName
+
+const DrawerDescription = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+DrawerDescription.displayName = DrawerPrimitive.Description.displayName
+
+export {
+  Drawer,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+}
+````
+
+## File: src/components/ui/dropdown-menu.tsx
+````typescript
+import * as React from "react"
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
+import { Check, ChevronRight, Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const DropdownMenu = DropdownMenuPrimitive.Root
+
+const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
+
+const DropdownMenuGroup = DropdownMenuPrimitive.Group
+
+const DropdownMenuPortal = DropdownMenuPrimitive.Portal
+
+const DropdownMenuSub = DropdownMenuPrimitive.Sub
+
+const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
+
+const DropdownMenuSubTrigger = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+    inset?: boolean
+  }
+>(({ className, inset, children, ...props }, ref) => (
+  <DropdownMenuPrimitive.SubTrigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRight className="ml-auto h-4 w-4" />
+  </DropdownMenuPrimitive.SubTrigger>
+))
+DropdownMenuSubTrigger.displayName =
+  DropdownMenuPrimitive.SubTrigger.displayName
+
+const DropdownMenuSubContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
+>(({ className, ...props }, ref) => (
+  <DropdownMenuPrimitive.SubContent
+    ref={ref}
+    className={cn(
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+DropdownMenuSubContent.displayName =
+  DropdownMenuPrimitive.SubContent.displayName
+
+const DropdownMenuContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <DropdownMenuPrimitive.Portal>
+    <DropdownMenuPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </DropdownMenuPrimitive.Portal>
+))
+DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
+
+const DropdownMenuItem = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <DropdownMenuPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName
+
+const DropdownMenuCheckboxItem = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
+>(({ className, children, checked, ...props }, ref) => (
+  <DropdownMenuPrimitive.CheckboxItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    checked={checked}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <DropdownMenuPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </DropdownMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </DropdownMenuPrimitive.CheckboxItem>
+))
+DropdownMenuCheckboxItem.displayName =
+  DropdownMenuPrimitive.CheckboxItem.displayName
+
+const DropdownMenuRadioItem = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
+>(({ className, children, ...props }, ref) => (
+  <DropdownMenuPrimitive.RadioItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <DropdownMenuPrimitive.ItemIndicator>
+        <Circle className="h-2 w-2 fill-current" />
+      </DropdownMenuPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </DropdownMenuPrimitive.RadioItem>
+))
+DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName
+
+const DropdownMenuLabel = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <DropdownMenuPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2 py-1.5 text-sm font-semibold",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName
+
+const DropdownMenuSeparator = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <DropdownMenuPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    {...props}
+  />
+))
+DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName
+
+const DropdownMenuShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn("ml-auto text-xs tracking-widest opacity-60", className)}
+      {...props}
+    />
+  )
+}
+DropdownMenuShortcut.displayName = "DropdownMenuShortcut"
+
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuRadioGroup,
+}
+````
+
+## File: src/components/ui/form.tsx
+````typescript
+import * as React from "react"
+import * as LabelPrimitive from "@radix-ui/react-label"
+import { Slot } from "@radix-ui/react-slot"
+import {
+  Controller,
+  ControllerProps,
+  FieldPath,
+  FieldValues,
+  FormProvider,
+  useFormContext,
+} from "react-hook-form"
+
+import { cn } from "@/lib/utils"
+import { Label } from "@/components/ui/label"
+
+const Form = FormProvider
+
+type FormFieldContextValue<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = {
+  name: TName
+}
+
+const FormFieldContext = React.createContext<FormFieldContextValue>(
+  {} as FormFieldContextValue
+)
+
+const FormField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+  ...props
+}: ControllerProps<TFieldValues, TName>) => {
+  return (
+    <FormFieldContext.Provider value={{ name: props.name }}>
+      <Controller {...props} />
+    </FormFieldContext.Provider>
+  )
+}
+
+const useFormField = () => {
+  const fieldContext = React.useContext(FormFieldContext)
+  const itemContext = React.useContext(FormItemContext)
+  const { getFieldState, formState } = useFormContext()
+
+  const fieldState = getFieldState(fieldContext.name, formState)
+
+  if (!fieldContext) {
+    throw new Error("useFormField should be used within <FormField>")
+  }
+
+  const { id } = itemContext
+
+  return {
+    id,
+    name: fieldContext.name,
+    formItemId: `${id}-form-item`,
+    formDescriptionId: `${id}-form-item-description`,
+    formMessageId: `${id}-form-item-message`,
+    ...fieldState,
+  }
+}
+
+type FormItemContextValue = {
+  id: string
+}
+
+const FormItemContext = React.createContext<FormItemContextValue>(
+  {} as FormItemContextValue
+)
+
+const FormItem = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const id = React.useId()
+
+  return (
+    <FormItemContext.Provider value={{ id }}>
+      <div ref={ref} className={cn("space-y-2", className)} {...props} />
+    </FormItemContext.Provider>
+  )
+})
+FormItem.displayName = "FormItem"
+
+const FormLabel = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+>(({ className, ...props }, ref) => {
+  const { error, formItemId } = useFormField()
+
+  return (
+    <Label
+      ref={ref}
+      className={cn(error && "text-destructive", className)}
+      htmlFor={formItemId}
+      {...props}
+    />
+  )
+})
+FormLabel.displayName = "FormLabel"
+
+const FormControl = React.forwardRef<
+  React.ElementRef<typeof Slot>,
+  React.ComponentPropsWithoutRef<typeof Slot>
+>(({ ...props }, ref) => {
+  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+
+  return (
+    <Slot
+      ref={ref}
+      id={formItemId}
+      aria-describedby={
+        !error
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
+      }
+      aria-invalid={!!error}
+      {...props}
+    />
+  )
+})
+FormControl.displayName = "FormControl"
+
+const FormDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => {
+  const { formDescriptionId } = useFormField()
+
+  return (
+    <p
+      ref={ref}
+      id={formDescriptionId}
+      className={cn("text-sm text-muted-foreground", className)}
+      {...props}
+    />
+  )
+})
+FormDescription.displayName = "FormDescription"
+
+const FormMessage = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, children, ...props }, ref) => {
+  const { error, formMessageId } = useFormField()
+  const body = error ? String(error?.message) : children
+
+  if (!body) {
+    return null
+  }
+
+  return (
+    <p
+      ref={ref}
+      id={formMessageId}
+      className={cn("text-sm font-medium text-destructive", className)}
+      {...props}
+    >
+      {body}
+    </p>
+  )
+})
+FormMessage.displayName = "FormMessage"
+
+export {
+  useFormField,
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormField,
+}
+````
+
+## File: src/components/ui/hover-card.tsx
+````typescript
+import * as React from "react"
+import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
+
+import { cn } from "@/lib/utils"
+
+const HoverCard = HoverCardPrimitive.Root
+
+const HoverCardTrigger = HoverCardPrimitive.Trigger
+
+const HoverCardContent = React.forwardRef<
+  React.ElementRef<typeof HoverCardPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Content>
+>(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+  <HoverCardPrimitive.Content
+    ref={ref}
+    align={align}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+HoverCardContent.displayName = HoverCardPrimitive.Content.displayName
+
+export { HoverCard, HoverCardTrigger, HoverCardContent }
+````
+
+## File: src/components/ui/input-otp.tsx
+````typescript
+import * as React from "react"
+import { OTPInput, OTPInputContext } from "input-otp"
+import { Dot } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const InputOTP = React.forwardRef<
+  React.ElementRef<typeof OTPInput>,
+  React.ComponentPropsWithoutRef<typeof OTPInput>
+>(({ className, containerClassName, ...props }, ref) => (
+  <OTPInput
+    ref={ref}
+    containerClassName={cn(
+      "flex items-center gap-2 has-[:disabled]:opacity-50",
+      containerClassName
+    )}
+    className={cn("disabled:cursor-not-allowed", className)}
+    {...props}
+  />
+))
+InputOTP.displayName = "InputOTP"
+
+const InputOTPGroup = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("flex items-center", className)} {...props} />
+))
+InputOTPGroup.displayName = "InputOTPGroup"
+
+const InputOTPSlot = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div"> & { index: number }
+>(({ index, className, ...props }, ref) => {
+  const inputOTPContext = React.useContext(OTPInputContext)
+  const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+        isActive && "z-10 ring-2 ring-ring ring-offset-background",
+        className
+      )}
+      {...props}
+    >
+      {char}
+      {hasFakeCaret && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+        </div>
+      )}
+    </div>
+  )
+})
+InputOTPSlot.displayName = "InputOTPSlot"
+
+const InputOTPSeparator = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
+>(({ ...props }, ref) => (
+  <div ref={ref} role="separator" {...props}>
+    <Dot />
+  </div>
+))
+InputOTPSeparator.displayName = "InputOTPSeparator"
+
+export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+````
+
+## File: src/components/ui/label.tsx
+````typescript
+import * as React from "react"
+import * as LabelPrimitive from "@radix-ui/react-label"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const labelVariants = cva(
+  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+)
+
+const Label = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
+    VariantProps<typeof labelVariants>
+>(({ className, ...props }, ref) => (
+  <LabelPrimitive.Root
+    ref={ref}
+    className={cn(labelVariants(), className)}
+    {...props}
+  />
+))
+Label.displayName = LabelPrimitive.Root.displayName
+
+export { Label }
+````
+
+## File: src/components/ui/Logo.tsx
+````typescript
+import React from 'react';
+
+export const Logo: React.FC = () => {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="h-8 w-8 rounded-full bg-outreach-blue flex items-center justify-center">
+        <div className="h-3 w-3 rounded-full bg-white"></div>
+      </div>
+      <span className="font-semibold text-lg">OutreachBuddy</span>
+    </div>
+  );
+};
+````
+
+## File: src/components/ui/menubar.tsx
+````typescript
+import * as React from "react"
+import * as MenubarPrimitive from "@radix-ui/react-menubar"
+import { Check, ChevronRight, Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const MenubarMenu = MenubarPrimitive.Menu
+
+const MenubarGroup = MenubarPrimitive.Group
+
+const MenubarPortal = MenubarPrimitive.Portal
+
+const MenubarSub = MenubarPrimitive.Sub
+
+const MenubarRadioGroup = MenubarPrimitive.RadioGroup
+
+const Menubar = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "flex h-10 items-center space-x-1 rounded-md border bg-background p-1",
+      className
+    )}
+    {...props}
+  />
+))
+Menubar.displayName = MenubarPrimitive.Root.displayName
+
+const MenubarTrigger = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarTrigger.displayName = MenubarPrimitive.Trigger.displayName
+
+const MenubarSubTrigger = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.SubTrigger>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> & {
+    inset?: boolean
+  }
+>(({ className, inset, children, ...props }, ref) => (
+  <MenubarPrimitive.SubTrigger
+    ref={ref}
+    className={cn(
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRight className="ml-auto h-4 w-4" />
+  </MenubarPrimitive.SubTrigger>
+))
+MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName
+
+const MenubarSubContent = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.SubContent>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.SubContent
+    ref={ref}
+    className={cn(
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName
+
+const MenubarContent = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>
+>(
+  (
+    { className, align = "start", alignOffset = -4, sideOffset = 8, ...props },
+    ref
+  ) => (
+    <MenubarPrimitive.Portal>
+      <MenubarPrimitive.Content
+        ref={ref}
+        align={align}
+        alignOffset={alignOffset}
+        sideOffset={sideOffset}
+        className={cn(
+          "z-50 min-w-[12rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          className
+        )}
+        {...props}
+      />
+    </MenubarPrimitive.Portal>
+  )
+)
+MenubarContent.displayName = MenubarPrimitive.Content.displayName
+
+const MenubarItem = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <MenubarPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarItem.displayName = MenubarPrimitive.Item.displayName
+
+const MenubarCheckboxItem = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.CheckboxItem>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem>
+>(({ className, children, checked, ...props }, ref) => (
+  <MenubarPrimitive.CheckboxItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    checked={checked}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <MenubarPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </MenubarPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </MenubarPrimitive.CheckboxItem>
+))
+MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName
+
+const MenubarRadioItem = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.RadioItem>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem>
+>(({ className, children, ...props }, ref) => (
+  <MenubarPrimitive.RadioItem
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <MenubarPrimitive.ItemIndicator>
+        <Circle className="h-2 w-2 fill-current" />
+      </MenubarPrimitive.ItemIndicator>
+    </span>
+    {children}
+  </MenubarPrimitive.RadioItem>
+))
+MenubarRadioItem.displayName = MenubarPrimitive.RadioItem.displayName
+
+const MenubarLabel = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> & {
+    inset?: boolean
+  }
+>(({ className, inset, ...props }, ref) => (
+  <MenubarPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2 py-1.5 text-sm font-semibold",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  />
+))
+MenubarLabel.displayName = MenubarPrimitive.Label.displayName
+
+const MenubarSeparator = React.forwardRef<
+  React.ElementRef<typeof MenubarPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <MenubarPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    {...props}
+  />
+))
+MenubarSeparator.displayName = MenubarPrimitive.Separator.displayName
+
+const MenubarShortcut = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+MenubarShortcut.displayname = "MenubarShortcut"
+
+export {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+  MenubarSeparator,
+  MenubarLabel,
+  MenubarCheckboxItem,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarPortal,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarGroup,
+  MenubarSub,
+  MenubarShortcut,
+}
+````
+
+## File: src/components/ui/navigation-menu.tsx
+````typescript
+import * as React from "react"
+import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
+import { cva } from "class-variance-authority"
+import { ChevronDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const NavigationMenu = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative z-10 flex max-w-max flex-1 items-center justify-center",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <NavigationMenuViewport />
+  </NavigationMenuPrimitive.Root>
+))
+NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
+
+const NavigationMenuList = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.List
+    ref={ref}
+    className={cn(
+      "group flex flex-1 list-none items-center justify-center space-x-1",
+      className
+    )}
+    {...props}
+  />
+))
+NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
+
+const NavigationMenuItem = NavigationMenuPrimitive.Item
+
+const navigationMenuTriggerStyle = cva(
+  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+)
+
+const NavigationMenuTrigger = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <NavigationMenuPrimitive.Trigger
+    ref={ref}
+    className={cn(navigationMenuTriggerStyle(), "group", className)}
+    {...props}
+  >
+    {children}{" "}
+    <ChevronDown
+      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+      aria-hidden="true"
+    />
+  </NavigationMenuPrimitive.Trigger>
+))
+NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName
+
+const NavigationMenuContent = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.Content
+    ref={ref}
+    className={cn(
+      "left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto ",
+      className
+    )}
+    {...props}
+  />
+))
+NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
+
+const NavigationMenuLink = NavigationMenuPrimitive.Link
+
+const NavigationMenuViewport = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
+>(({ className, ...props }, ref) => (
+  <div className={cn("absolute left-0 top-full flex justify-center")}>
+    <NavigationMenuPrimitive.Viewport
+      className={cn(
+        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+        className
+      )}
+      ref={ref}
+      {...props}
+    />
+  </div>
+))
+NavigationMenuViewport.displayName =
+  NavigationMenuPrimitive.Viewport.displayName
+
+const NavigationMenuIndicator = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Indicator>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Indicator>
+>(({ className, ...props }, ref) => (
+  <NavigationMenuPrimitive.Indicator
+    ref={ref}
+    className={cn(
+      "top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in",
+      className
+    )}
+    {...props}
+  >
+    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+  </NavigationMenuPrimitive.Indicator>
+))
+NavigationMenuIndicator.displayName =
+  NavigationMenuPrimitive.Indicator.displayName
+
+export {
+  navigationMenuTriggerStyle,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+}
+````
+
+## File: src/components/ui/pagination.tsx
+````typescript
+import * as React from "react"
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { ButtonProps, buttonVariants } from "@/components/ui/button"
+
+const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
+  <nav
+    role="navigation"
+    aria-label="pagination"
+    className={cn("mx-auto flex w-full justify-center", className)}
+    {...props}
+  />
+)
+Pagination.displayName = "Pagination"
+
+const PaginationContent = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<"ul">
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    className={cn("flex flex-row items-center gap-1", className)}
+    {...props}
+  />
+))
+PaginationContent.displayName = "PaginationContent"
+
+const PaginationItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<"li">
+>(({ className, ...props }, ref) => (
+  <li ref={ref} className={cn("", className)} {...props} />
+))
+PaginationItem.displayName = "PaginationItem"
+
+type PaginationLinkProps = {
+  isActive?: boolean
+} & Pick<ButtonProps, "size"> &
+  React.ComponentProps<"a">
+
+const PaginationLink = ({
+  className,
+  isActive,
+  size = "icon",
+  ...props
+}: PaginationLinkProps) => (
+  <a
+    aria-current={isActive ? "page" : undefined}
+    className={cn(
+      buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      }),
+      className
+    )}
+    {...props}
+  />
+)
+PaginationLink.displayName = "PaginationLink"
+
+const PaginationPrevious = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to previous page"
+    size="default"
+    className={cn("gap-1 pl-2.5", className)}
+    {...props}
+  >
+    <ChevronLeft className="h-4 w-4" />
+    <span>Previous</span>
+  </PaginationLink>
+)
+PaginationPrevious.displayName = "PaginationPrevious"
+
+const PaginationNext = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to next page"
+    size="default"
+    className={cn("gap-1 pr-2.5", className)}
+    {...props}
+  >
+    <span>Next</span>
+    <ChevronRight className="h-4 w-4" />
+  </PaginationLink>
+)
+PaginationNext.displayName = "PaginationNext"
+
+const PaginationEllipsis = ({
+  className,
+  ...props
+}: React.ComponentProps<"span">) => (
+  <span
+    aria-hidden
+    className={cn("flex h-9 w-9 items-center justify-center", className)}
+    {...props}
+  >
+    <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only">More pages</span>
+  </span>
+)
+PaginationEllipsis.displayName = "PaginationEllipsis"
+
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+}
+````
+
+## File: src/components/ui/popover.tsx
+````typescript
+import * as React from "react"
+import * as PopoverPrimitive from "@radix-ui/react-popover"
+
+import { cn } from "@/lib/utils"
+
+const Popover = PopoverPrimitive.Root
+
+const PopoverTrigger = PopoverPrimitive.Trigger
+
+const PopoverContent = React.forwardRef<
+  React.ElementRef<typeof PopoverPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
+>(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+  <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Content
+      ref={ref}
+      align={align}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </PopoverPrimitive.Portal>
+))
+PopoverContent.displayName = PopoverPrimitive.Content.displayName
+
+export { Popover, PopoverTrigger, PopoverContent }
+````
+
+## File: src/components/ui/progress.tsx
+````typescript
+import * as React from "react"
+import * as ProgressPrimitive from "@radix-ui/react-progress"
+
+import { cn } from "@/lib/utils"
+
+const Progress = React.forwardRef<
+  React.ElementRef<typeof ProgressPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
+>(({ className, value, ...props }, ref) => (
+  <ProgressPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative h-4 w-full overflow-hidden rounded-full bg-secondary",
+      className
+    )}
+    {...props}
+  >
+    <ProgressPrimitive.Indicator
+      className="h-full w-full flex-1 bg-primary transition-all"
+      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+    />
+  </ProgressPrimitive.Root>
+))
+Progress.displayName = ProgressPrimitive.Root.displayName
+
+export { Progress }
+````
+
+## File: src/components/ui/resizable.tsx
+````typescript
+import { GripVertical } from "lucide-react"
+import * as ResizablePrimitive from "react-resizable-panels"
+
+import { cn } from "@/lib/utils"
+
+const ResizablePanelGroup = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
+  <ResizablePrimitive.PanelGroup
+    className={cn(
+      "flex h-full w-full data-[panel-group-direction=vertical]:flex-col",
+      className
+    )}
+    {...props}
+  />
+)
+
+const ResizablePanel = ResizablePrimitive.Panel
+
+const ResizableHandle = ({
+  withHandle,
+  className,
+  ...props
+}: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & {
+  withHandle?: boolean
+}) => (
+  <ResizablePrimitive.PanelResizeHandle
+    className={cn(
+      "relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-y-1/2 data-[panel-group-direction=vertical]:after:translate-x-0 [&[data-panel-group-direction=vertical]>div]:rotate-90",
+      className
+    )}
+    {...props}
+  >
+    {withHandle && (
+      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border">
+        <GripVertical className="h-2.5 w-2.5" />
+      </div>
+    )}
+  </ResizablePrimitive.PanelResizeHandle>
+)
+
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
+````
+
+## File: src/components/ui/scroll-area.tsx
+````typescript
+import * as React from "react"
+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
+
+import { cn } from "@/lib/utils"
+
+const ScrollArea = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
+>(({ className, children, ...props }, ref) => (
+  <ScrollAreaPrimitive.Root
+    ref={ref}
+    className={cn("relative overflow-hidden", className)}
+    {...props}
+  >
+    <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
+      {children}
+    </ScrollAreaPrimitive.Viewport>
+    <ScrollBar />
+    <ScrollAreaPrimitive.Corner />
+  </ScrollAreaPrimitive.Root>
+))
+ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
+
+const ScrollBar = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
+>(({ className, orientation = "vertical", ...props }, ref) => (
+  <ScrollAreaPrimitive.ScrollAreaScrollbar
+    ref={ref}
+    orientation={orientation}
+    className={cn(
+      "flex touch-none select-none transition-colors",
+      orientation === "vertical" &&
+        "h-full w-2.5 border-l border-l-transparent p-[1px]",
+      orientation === "horizontal" &&
+        "h-2.5 flex-col border-t border-t-transparent p-[1px]",
+      className
+    )}
+    {...props}
+  >
+    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
+  </ScrollAreaPrimitive.ScrollAreaScrollbar>
+))
+ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
+
+export { ScrollArea, ScrollBar }
+````
+
+## File: src/components/ui/select.tsx
+````typescript
+import * as React from "react"
+import * as SelectPrimitive from "@radix-ui/react-select"
+import { Check, ChevronDown, ChevronUp } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Select = SelectPrimitive.Root
+
+const SelectGroup = SelectPrimitive.Group
+
+const SelectValue = SelectPrimitive.Value
+
+const SelectTrigger = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <SelectPrimitive.Icon asChild>
+      <ChevronDown className="h-4 w-4 opacity-50" />
+    </SelectPrimitive.Icon>
+  </SelectPrimitive.Trigger>
+))
+SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
+
+const SelectScrollUpButton = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollUpButton
+    ref={ref}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1",
+      className
+    )}
+    {...props}
+  >
+    <ChevronUp className="h-4 w-4" />
+  </SelectPrimitive.ScrollUpButton>
+))
+SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
+
+const SelectScrollDownButton = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollDownButton
+    ref={ref}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1",
+      className
+    )}
+    {...props}
+  >
+    <ChevronDown className="h-4 w-4" />
+  </SelectPrimitive.ScrollDownButton>
+))
+SelectScrollDownButton.displayName =
+  SelectPrimitive.ScrollDownButton.displayName
+
+const SelectContent = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
+>(({ className, children, position = "popper", ...props }, ref) => (
+  <SelectPrimitive.Portal>
+    <SelectPrimitive.Content
+      ref={ref}
+      className={cn(
+        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        position === "popper" &&
+          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+        className
+      )}
+      position={position}
+      {...props}
+    >
+      <SelectScrollUpButton />
+      <SelectPrimitive.Viewport
+        className={cn(
+          "p-1",
+          position === "popper" &&
+            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+        )}
+      >
+        {children}
+      </SelectPrimitive.Viewport>
+      <SelectScrollDownButton />
+    </SelectPrimitive.Content>
+  </SelectPrimitive.Portal>
+))
+SelectContent.displayName = SelectPrimitive.Content.displayName
+
+const SelectLabel = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.Label
+    ref={ref}
+    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+    {...props}
+  />
+))
+SelectLabel.displayName = SelectPrimitive.Label.displayName
+
+const SelectItem = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <SelectPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </SelectPrimitive.ItemIndicator>
+    </span>
+
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+  </SelectPrimitive.Item>
+))
+SelectItem.displayName = SelectPrimitive.Item.displayName
+
+const SelectSeparator = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.Separator
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    {...props}
+  />
+))
+SelectSeparator.displayName = SelectPrimitive.Separator.displayName
+
+export {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+}
+````
+
+## File: src/components/ui/separator.tsx
+````typescript
+import * as React from "react"
+import * as SeparatorPrimitive from "@radix-ui/react-separator"
+
+import { cn } from "@/lib/utils"
+
+const Separator = React.forwardRef<
+  React.ElementRef<typeof SeparatorPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
+>(
+  (
+    { className, orientation = "horizontal", decorative = true, ...props },
+    ref
+  ) => (
+    <SeparatorPrimitive.Root
+      ref={ref}
+      decorative={decorative}
+      orientation={orientation}
+      className={cn(
+        "shrink-0 bg-border",
+        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+        className
+      )}
+      {...props}
+    />
+  )
+)
+Separator.displayName = SeparatorPrimitive.Root.displayName
+
+export { Separator }
+````
+
+## File: src/components/ui/sidebar.tsx
+````typescript
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { VariantProps, cva } from "class-variance-authority"
+import { PanelLeft } from "lucide-react"
+
+import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Separator } from "@/components/ui/separator"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+const SIDEBAR_COOKIE_NAME = "sidebar:state"
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
+const SIDEBAR_WIDTH = "16rem"
+const SIDEBAR_WIDTH_MOBILE = "18rem"
+const SIDEBAR_WIDTH_ICON = "3rem"
+const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+
+type SidebarContext = {
+  state: "expanded" | "collapsed"
+  open: boolean
+  setOpen: (open: boolean) => void
+  openMobile: boolean
+  setOpenMobile: (open: boolean) => void
+  isMobile: boolean
+  toggleSidebar: () => void
+}
+
+const SidebarContext = React.createContext<SidebarContext | null>(null)
+
+function useSidebar() {
+  const context = React.useContext(SidebarContext)
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider.")
+  }
+
+  return context
+}
+
+const SidebarProvider = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    defaultOpen?: boolean
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
+  }
+>(
+  (
+    {
+      defaultOpen = true,
+      open: openProp,
+      onOpenChange: setOpenProp,
+      className,
+      style,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const isMobile = useIsMobile()
+    const [openMobile, setOpenMobile] = React.useState(false)
+
+    // This is the internal state of the sidebar.
+    // We use openProp and setOpenProp for control from outside the component.
+    const [_open, _setOpen] = React.useState(defaultOpen)
+    const open = openProp ?? _open
+    const setOpen = React.useCallback(
+      (value: boolean | ((value: boolean) => boolean)) => {
+        const openState = typeof value === "function" ? value(open) : value
+        if (setOpenProp) {
+          setOpenProp(openState)
+        } else {
+          _setOpen(openState)
+        }
+
+        // This sets the cookie to keep the sidebar state.
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      },
+      [setOpenProp, open]
+    )
+
+    // Helper to toggle the sidebar.
+    const toggleSidebar = React.useCallback(() => {
+      return isMobile
+        ? setOpenMobile((open) => !open)
+        : setOpen((open) => !open)
+    }, [isMobile, setOpen, setOpenMobile])
+
+    // Adds a keyboard shortcut to toggle the sidebar.
+    React.useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (
+          event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
+          (event.metaKey || event.ctrlKey)
+        ) {
+          event.preventDefault()
+          toggleSidebar()
+        }
+      }
+
+      window.addEventListener("keydown", handleKeyDown)
+      return () => window.removeEventListener("keydown", handleKeyDown)
+    }, [toggleSidebar])
+
+    // We add a state so that we can do data-state="expanded" or "collapsed".
+    // This makes it easier to style the sidebar with Tailwind classes.
+    const state = open ? "expanded" : "collapsed"
+
+    const contextValue = React.useMemo<SidebarContext>(
+      () => ({
+        state,
+        open,
+        setOpen,
+        isMobile,
+        openMobile,
+        setOpenMobile,
+        toggleSidebar,
+      }),
+      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+    )
+
+    return (
+      <SidebarContext.Provider value={contextValue}>
+        <TooltipProvider delayDuration={0}>
+          <div
+            style={
+              {
+                "--sidebar-width": SIDEBAR_WIDTH,
+                "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+                ...style,
+              } as React.CSSProperties
+            }
+            className={cn(
+              "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+              className
+            )}
+            ref={ref}
+            {...props}
+          >
+            {children}
+          </div>
+        </TooltipProvider>
+      </SidebarContext.Provider>
+    )
+  }
+)
+SidebarProvider.displayName = "SidebarProvider"
+
+const Sidebar = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    side?: "left" | "right"
+    variant?: "sidebar" | "floating" | "inset"
+    collapsible?: "offcanvas" | "icon" | "none"
+  }
+>(
+  (
+    {
+      side = "left",
+      variant = "sidebar",
+      collapsible = "offcanvas",
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+
+    if (collapsible === "none") {
+      return (
+        <div
+          className={cn(
+            "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground",
+            className
+          )}
+          ref={ref}
+          {...props}
+        >
+          {children}
+        </div>
+      )
+    }
+
+    if (isMobile) {
+      return (
+        <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+          <SheetContent
+            data-sidebar="sidebar"
+            data-mobile="true"
+            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            style={
+              {
+                "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              } as React.CSSProperties
+            }
+            side={side}
+          >
+            <div className="flex h-full w-full flex-col">{children}</div>
+          </SheetContent>
+        </Sheet>
+      )
+    }
+
+    return (
+      <div
+        ref={ref}
+        className="group peer hidden md:block text-sidebar-foreground"
+        data-state={state}
+        data-collapsible={state === "collapsed" ? collapsible : ""}
+        data-variant={variant}
+        data-side={side}
+      >
+        {/* This is what handles the sidebar gap on desktop */}
+        <div
+          className={cn(
+            "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
+            "group-data-[collapsible=offcanvas]:w-0",
+            "group-data-[side=right]:rotate-180",
+            variant === "floating" || variant === "inset"
+              ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
+              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
+          )}
+        />
+        <div
+          className={cn(
+            "duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex",
+            side === "left"
+              ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
+              : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+            // Adjust the padding for floating and inset variants.
+            variant === "floating" || variant === "inset"
+              ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
+              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
+            className
+          )}
+          {...props}
+        >
+          <div
+            data-sidebar="sidebar"
+            className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    )
+  }
+)
+Sidebar.displayName = "Sidebar"
+
+const SidebarTrigger = React.forwardRef<
+  React.ElementRef<typeof Button>,
+  React.ComponentProps<typeof Button>
+>(({ className, onClick, ...props }, ref) => {
+  const { toggleSidebar } = useSidebar()
+
+  return (
+    <Button
+      ref={ref}
+      data-sidebar="trigger"
+      variant="ghost"
+      size="icon"
+      className={cn("h-7 w-7", className)}
+      onClick={(event) => {
+        onClick?.(event)
+        toggleSidebar()
+      }}
+      {...props}
+    >
+      <PanelLeft />
+      <span className="sr-only">Toggle Sidebar</span>
+    </Button>
+  )
+})
+SidebarTrigger.displayName = "SidebarTrigger"
+
+const SidebarRail = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button">
+>(({ className, ...props }, ref) => {
+  const { toggleSidebar } = useSidebar()
+
+  return (
+    <button
+      ref={ref}
+      data-sidebar="rail"
+      aria-label="Toggle Sidebar"
+      tabIndex={-1}
+      onClick={toggleSidebar}
+      title="Toggle Sidebar"
+      className={cn(
+        "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
+        "[[data-side=left]_&]:cursor-w-resize [[data-side=right]_&]:cursor-e-resize",
+        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+        "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar",
+        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
+        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarRail.displayName = "SidebarRail"
+
+const SidebarInset = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"main">
+>(({ className, ...props }, ref) => {
+  return (
+    <main
+      ref={ref}
+      className={cn(
+        "relative flex min-h-svh flex-1 flex-col bg-background",
+        "peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarInset.displayName = "SidebarInset"
+
+const SidebarInput = React.forwardRef<
+  React.ElementRef<typeof Input>,
+  React.ComponentProps<typeof Input>
+>(({ className, ...props }, ref) => {
+  return (
+    <Input
+      ref={ref}
+      data-sidebar="input"
+      className={cn(
+        "h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarInput.displayName = "SidebarInput"
+
+const SidebarHeader = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="header"
+      className={cn("flex flex-col gap-2 p-2", className)}
+      {...props}
+    />
+  )
+})
+SidebarHeader.displayName = "SidebarHeader"
+
+const SidebarFooter = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="footer"
+      className={cn("flex flex-col gap-2 p-2", className)}
+      {...props}
+    />
+  )
+})
+SidebarFooter.displayName = "SidebarFooter"
+
+const SidebarSeparator = React.forwardRef<
+  React.ElementRef<typeof Separator>,
+  React.ComponentProps<typeof Separator>
+>(({ className, ...props }, ref) => {
+  return (
+    <Separator
+      ref={ref}
+      data-sidebar="separator"
+      className={cn("mx-2 w-auto bg-sidebar-border", className)}
+      {...props}
+    />
+  )
+})
+SidebarSeparator.displayName = "SidebarSeparator"
+
+const SidebarContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="content"
+      className={cn(
+        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarContent.displayName = "SidebarContent"
+
+const SidebarGroup = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      data-sidebar="group"
+      className={cn("relative flex w-full min-w-0 flex-col p-2", className)}
+      {...props}
+    />
+  )
+})
+SidebarGroup.displayName = "SidebarGroup"
+
+const SidebarGroupLabel = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & { asChild?: boolean }
+>(({ className, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "div"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="group-label"
+      className={cn(
+        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarGroupLabel.displayName = "SidebarGroupLabel"
+
+const SidebarGroupAction = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & { asChild?: boolean }
+>(({ className, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "button"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="group-action"
+      className={cn(
+        "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        // Increases the hit area of the button on mobile.
+        "after:absolute after:-inset-2 after:md:hidden",
+        "group-data-[collapsible=icon]:hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarGroupAction.displayName = "SidebarGroupAction"
+
+const SidebarGroupContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    data-sidebar="group-content"
+    className={cn("w-full text-sm", className)}
+    {...props}
+  />
+))
+SidebarGroupContent.displayName = "SidebarGroupContent"
+
+const SidebarMenu = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<"ul">
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    data-sidebar="menu"
+    className={cn("flex w-full min-w-0 flex-col gap-1", className)}
+    {...props}
+  />
+))
+SidebarMenu.displayName = "SidebarMenu"
+
+const SidebarMenuItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<"li">
+>(({ className, ...props }, ref) => (
+  <li
+    ref={ref}
+    data-sidebar="menu-item"
+    className={cn("group/menu-item relative", className)}
+    {...props}
+  />
+))
+SidebarMenuItem.displayName = "SidebarMenuItem"
+
+const sidebarMenuButtonVariants = cva(
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        outline:
+          "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+      },
+      size: {
+        default: "h-8 text-sm",
+        sm: "h-7 text-xs",
+        lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+const SidebarMenuButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    asChild?: boolean
+    isActive?: boolean
+    tooltip?: string | React.ComponentProps<typeof TooltipContent>
+  } & VariantProps<typeof sidebarMenuButtonVariants>
+>(
+  (
+    {
+      asChild = false,
+      isActive = false,
+      variant = "default",
+      size = "default",
+      tooltip,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : "button"
+    const { isMobile, state } = useSidebar()
+
+    const button = (
+      <Comp
+        ref={ref}
+        data-sidebar="menu-button"
+        data-size={size}
+        data-active={isActive}
+        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        {...props}
+      />
+    )
+
+    if (!tooltip) {
+      return button
+    }
+
+    if (typeof tooltip === "string") {
+      tooltip = {
+        children: tooltip,
+      }
+    }
+
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>{button}</TooltipTrigger>
+        <TooltipContent
+          side="right"
+          align="center"
+          hidden={state !== "collapsed" || isMobile}
+          {...tooltip}
+        />
+      </Tooltip>
+    )
+  }
+)
+SidebarMenuButton.displayName = "SidebarMenuButton"
+
+const SidebarMenuAction = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    asChild?: boolean
+    showOnHover?: boolean
+  }
+>(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "button"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="menu-action"
+      className={cn(
+        "absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground [&>svg]:size-4 [&>svg]:shrink-0",
+        // Increases the hit area of the button on mobile.
+        "after:absolute after:-inset-2 after:md:hidden",
+        "peer-data-[size=sm]/menu-button:top-1",
+        "peer-data-[size=default]/menu-button:top-1.5",
+        "peer-data-[size=lg]/menu-button:top-2.5",
+        "group-data-[collapsible=icon]:hidden",
+        showOnHover &&
+          "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarMenuAction.displayName = "SidebarMenuAction"
+
+const SidebarMenuBadge = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    data-sidebar="menu-badge"
+    className={cn(
+      "absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-sidebar-foreground select-none pointer-events-none",
+      "peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
+      "peer-data-[size=sm]/menu-button:top-1",
+      "peer-data-[size=default]/menu-button:top-1.5",
+      "peer-data-[size=lg]/menu-button:top-2.5",
+      "group-data-[collapsible=icon]:hidden",
+      className
+    )}
+    {...props}
+  />
+))
+SidebarMenuBadge.displayName = "SidebarMenuBadge"
+
+const SidebarMenuSkeleton = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div"> & {
+    showIcon?: boolean
+  }
+>(({ className, showIcon = false, ...props }, ref) => {
+  // Random width between 50 to 90%.
+  const width = React.useMemo(() => {
+    return `${Math.floor(Math.random() * 40) + 50}%`
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      data-sidebar="menu-skeleton"
+      className={cn("rounded-md h-8 flex gap-2 px-2 items-center", className)}
+      {...props}
+    >
+      {showIcon && (
+        <Skeleton
+          className="size-4 rounded-md"
+          data-sidebar="menu-skeleton-icon"
+        />
+      )}
+      <Skeleton
+        className="h-4 flex-1 max-w-[--skeleton-width]"
+        data-sidebar="menu-skeleton-text"
+        style={
+          {
+            "--skeleton-width": width,
+          } as React.CSSProperties
+        }
+      />
+    </div>
+  )
+})
+SidebarMenuSkeleton.displayName = "SidebarMenuSkeleton"
+
+const SidebarMenuSub = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<"ul">
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    data-sidebar="menu-sub"
+    className={cn(
+      "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5",
+      "group-data-[collapsible=icon]:hidden",
+      className
+    )}
+    {...props}
+  />
+))
+SidebarMenuSub.displayName = "SidebarMenuSub"
+
+const SidebarMenuSubItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<"li">
+>(({ ...props }, ref) => <li ref={ref} {...props} />)
+SidebarMenuSubItem.displayName = "SidebarMenuSubItem"
+
+const SidebarMenuSubButton = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentProps<"a"> & {
+    asChild?: boolean
+    size?: "sm" | "md"
+    isActive?: boolean
+  }
+>(({ asChild = false, size = "md", isActive, className, ...props }, ref) => {
+  const Comp = asChild ? Slot : "a"
+
+  return (
+    <Comp
+      ref={ref}
+      data-sidebar="menu-sub-button"
+      data-size={size}
+      data-active={isActive}
+      className={cn(
+        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
+        "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
+        size === "sm" && "text-xs",
+        size === "md" && "text-sm",
+        "group-data-[collapsible=icon]:hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+})
+SidebarMenuSubButton.displayName = "SidebarMenuSubButton"
+
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+}
+````
+
+## File: src/components/ui/skeleton.tsx
+````typescript
+import { cn } from "@/lib/utils"
+
+function Skeleton({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn("animate-pulse rounded-md bg-muted", className)}
+      {...props}
+    />
+  )
+}
+
+export { Skeleton }
+````
+
+## File: src/components/ui/slider.tsx
+````typescript
+import * as React from "react"
+import * as SliderPrimitive from "@radix-ui/react-slider"
+
+import { cn } from "@/lib/utils"
+
+const Slider = React.forwardRef<
+  React.ElementRef<typeof SliderPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <SliderPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex w-full touch-none select-none items-center",
+      className
+    )}
+    {...props}
+  >
+    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
+      <SliderPrimitive.Range className="absolute h-full bg-primary" />
+    </SliderPrimitive.Track>
+    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+  </SliderPrimitive.Root>
+))
+Slider.displayName = SliderPrimitive.Root.displayName
+
+export { Slider }
+````
+
+## File: src/components/ui/sonner.tsx
+````typescript
+import { useTheme } from "next-themes"
+import { Toaster as Sonner, toast } from "sonner"
+
+type ToasterProps = React.ComponentProps<typeof Sonner>
+
+const Toaster = ({ ...props }: ToasterProps) => {
+  const { theme = "system" } = useTheme()
+
+  return (
+    <Sonner
+      theme={theme as ToasterProps["theme"]}
+      className="toaster group"
+      toastOptions={{
+        classNames: {
+          toast:
+            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+          description: "group-[.toast]:text-muted-foreground",
+          actionButton:
+            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
+          cancelButton:
+            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+        },
+      }}
+      {...props}
+    />
+  )
+}
+
+export { Toaster, toast }
+````
+
+## File: src/components/ui/switch.tsx
+````typescript
+import * as React from "react"
+import * as SwitchPrimitives from "@radix-ui/react-switch"
+
+import { cn } from "@/lib/utils"
+
+const Switch = React.forwardRef<
+  React.ElementRef<typeof SwitchPrimitives.Root>,
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
+>(({ className, ...props }, ref) => (
+  <SwitchPrimitives.Root
+    className={cn(
+      "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+      className
+    )}
+    {...props}
+    ref={ref}
+  >
+    <SwitchPrimitives.Thumb
+      className={cn(
+        "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+      )}
+    />
+  </SwitchPrimitives.Root>
+))
+Switch.displayName = SwitchPrimitives.Root.displayName
+
+export { Switch }
+````
+
+## File: src/components/ui/table.tsx
+````typescript
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+const Table = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  <div className="relative w-full overflow-auto">
+    <table
+      ref={ref}
+      className={cn("w-full caption-bottom text-sm", className)}
+      {...props}
+    />
+  </div>
+))
+Table.displayName = "Table"
+
+const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+))
+TableHeader.displayName = "TableHeader"
+
+const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tbody
+    ref={ref}
+    className={cn("[&_tr:last-child]:border-0", className)}
+    {...props}
+  />
+))
+TableBody.displayName = "TableBody"
+
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableFooter.displayName = "TableFooter"
+
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(
+      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      className
+    )}
+    {...props}
+  />
+))
+TableRow.displayName = "TableRow"
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(
+      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableHead.displayName = "TableHead"
+
+const TableCell = React.forwardRef<
+  HTMLTableCellElement,
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <td
+    ref={ref}
+    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    {...props}
+  />
+))
+TableCell.displayName = "TableCell"
+
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
+>(({ className, ...props }, ref) => (
+  <caption
+    ref={ref}
+    className={cn("mt-4 text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+TableCaption.displayName = "TableCaption"
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+}
+````
+
+## File: src/components/ui/tabs.tsx
+````typescript
+import * as React from "react"
+import * as TabsPrimitive from "@radix-ui/react-tabs"
+
+import { cn } from "@/lib/utils"
+
+const Tabs = TabsPrimitive.Root
+
+const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List
+    ref={ref}
+    className={cn(
+      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+TabsList.displayName = TabsPrimitive.List.displayName
+
+const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+      className
+    )}
+    {...props}
+  />
+))
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+
+const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content
+    ref={ref}
+    className={cn(
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className
+    )}
+    {...props}
+  />
+))
+TabsContent.displayName = TabsPrimitive.Content.displayName
+
+export { Tabs, TabsList, TabsTrigger, TabsContent }
+````
+
+## File: src/components/ui/textarea.tsx
+````typescript
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+export interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <textarea
+        className={cn(
+          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Textarea.displayName = "Textarea"
+
+export { Textarea }
+````
+
+## File: src/components/ui/toast.tsx
+````typescript
+import * as React from "react"
+import * as ToastPrimitives from "@radix-ui/react-toast"
+import { cva, type VariantProps } from "class-variance-authority"
+import { X } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const ToastProvider = ToastPrimitives.Provider
+
+const ToastViewport = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Viewport>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Viewport
+    ref={ref}
+    className={cn(
+      "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
+      className
+    )}
+    {...props}
+  />
+))
+ToastViewport.displayName = ToastPrimitives.Viewport.displayName
+
+const toastVariants = cva(
+  "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
+  {
+    variants: {
+      variant: {
+        default: "border bg-background text-foreground",
+        destructive:
+          "destructive group border-destructive bg-destructive text-destructive-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+const Toast = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Root>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
+    VariantProps<typeof toastVariants>
+>(({ className, variant, ...props }, ref) => {
+  return (
+    <ToastPrimitives.Root
+      ref={ref}
+      className={cn(toastVariants({ variant }), className)}
+      {...props}
+    />
+  )
+})
+Toast.displayName = ToastPrimitives.Root.displayName
+
+const ToastAction = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Action>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Action
+    ref={ref}
+    className={cn(
+      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
+      className
+    )}
+    {...props}
+  />
+))
+ToastAction.displayName = ToastPrimitives.Action.displayName
+
+const ToastClose = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Close>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Close
+    ref={ref}
+    className={cn(
+      "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
+      className
+    )}
+    toast-close=""
+    {...props}
+  >
+    <X className="h-4 w-4" />
+  </ToastPrimitives.Close>
+))
+ToastClose.displayName = ToastPrimitives.Close.displayName
+
+const ToastTitle = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Title>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Title
+    ref={ref}
+    className={cn("text-sm font-semibold", className)}
+    {...props}
+  />
+))
+ToastTitle.displayName = ToastPrimitives.Title.displayName
+
+const ToastDescription = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Description>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Description
+    ref={ref}
+    className={cn("text-sm opacity-90", className)}
+    {...props}
+  />
+))
+ToastDescription.displayName = ToastPrimitives.Description.displayName
+
+type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
+
+type ToastActionElement = React.ReactElement<typeof ToastAction>
+
+export {
+  type ToastProps,
+  type ToastActionElement,
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+  ToastAction,
+}
+````
+
+## File: src/components/ui/toaster.tsx
+````typescript
+import { useToast } from "@/hooks/use-toast"
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@/components/ui/toast"
+
+export function Toaster() {
+  const { toasts } = useToast()
+
+  return (
+    <ToastProvider>
+      {toasts.map(function ({ id, title, description, action, ...props }) {
+        return (
+          <Toast key={id} {...props}>
+            <div className="grid gap-1">
+              {title && <ToastTitle>{title}</ToastTitle>}
+              {description && (
+                <ToastDescription>{description}</ToastDescription>
+              )}
+            </div>
+            {action}
+            <ToastClose />
+          </Toast>
+        )
+      })}
+      <ToastViewport />
+    </ToastProvider>
+  )
+}
+````
+
+## File: src/components/ui/toggle-group.tsx
+````typescript
+import * as React from "react"
+import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
+import { type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+import { toggleVariants } from "@/components/ui/toggle"
+
+const ToggleGroupContext = React.createContext<
+  VariantProps<typeof toggleVariants>
+>({
+  size: "default",
+  variant: "default",
+})
+
+const ToggleGroup = React.forwardRef<
+  React.ElementRef<typeof ToggleGroupPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> &
+    VariantProps<typeof toggleVariants>
+>(({ className, variant, size, children, ...props }, ref) => (
+  <ToggleGroupPrimitive.Root
+    ref={ref}
+    className={cn("flex items-center justify-center gap-1", className)}
+    {...props}
+  >
+    <ToggleGroupContext.Provider value={{ variant, size }}>
+      {children}
+    </ToggleGroupContext.Provider>
+  </ToggleGroupPrimitive.Root>
+))
+
+ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName
+
+const ToggleGroupItem = React.forwardRef<
+  React.ElementRef<typeof ToggleGroupPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> &
+    VariantProps<typeof toggleVariants>
+>(({ className, children, variant, size, ...props }, ref) => {
+  const context = React.useContext(ToggleGroupContext)
+
+  return (
+    <ToggleGroupPrimitive.Item
+      ref={ref}
+      className={cn(
+        toggleVariants({
+          variant: context.variant || variant,
+          size: context.size || size,
+        }),
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </ToggleGroupPrimitive.Item>
+  )
+})
+
+ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName
+
+export { ToggleGroup, ToggleGroupItem }
+````
+
+## File: src/components/ui/toggle.tsx
+````typescript
+import * as React from "react"
+import * as TogglePrimitive from "@radix-ui/react-toggle"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const toggleVariants = cva(
+  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-transparent",
+        outline:
+          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
+      },
+      size: {
+        default: "h-10 px-3",
+        sm: "h-9 px-2.5",
+        lg: "h-11 px-5",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+const Toggle = React.forwardRef<
+  React.ElementRef<typeof TogglePrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
+    VariantProps<typeof toggleVariants>
+>(({ className, variant, size, ...props }, ref) => (
+  <TogglePrimitive.Root
+    ref={ref}
+    className={cn(toggleVariants({ variant, size, className }))}
+    {...props}
+  />
+))
+
+Toggle.displayName = TogglePrimitive.Root.displayName
+
+export { Toggle, toggleVariants }
+````
+
+## File: src/components/ui/tooltip.tsx
+````typescript
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+
+import { cn } from "@/lib/utils"
+
+const TooltipProvider = TooltipPrimitive.Provider
+
+const Tooltip = TooltipPrimitive.Root
+
+const TooltipTrigger = TooltipPrimitive.Trigger
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+````
+
+## File: src/components/ui/use-toast.ts
+````typescript
+import { useToast, toast } from "@/hooks/use-toast";
+
+export { useToast, toast };
+````
+
+## File: src/features/auth/components/AuthSpinner.tsx
+````typescript
+import React from "react";
+
+interface AuthSpinnerProps {
+  message?: string;
+}
+
+export const AuthSpinner: React.FC<AuthSpinnerProps> = ({
+  message = "Authenticating...",
+}) => {
+  return (
+    <div className="flex flex-col items-center justify-center h-full">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+      <p className="text-sm text-muted-foreground">{message}</p>
+    </div>
+  );
+};
+````
+
+## File: src/features/auth/hooks/useAuth.ts
+````typescript
+import { useContext } from 'react';
+import { AuthContext, AuthContextType } from '../types';
+
+export type { AuthContextType };
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+````
+
+## File: src/features/auth/types/index.ts
+````typescript
+import { createContext } from 'react';
+import { Session, User } from '@supabase/supabase-js';
+
+export interface AuthContextType {
+  session: Session | null;
+  user: User | null;
+  loading: boolean;
+  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signOut: () => Promise<void>;
+  updateProfile: (displayName: string) => Promise<{ error: Error | null }>;
+  updatePassword: (newPassword: string) => Promise<{ error: Error | null }>;
+  resetPassword: (email: string) => Promise<{ error: Error | null }>;
+  signInWithOAuth: (provider: 'github' | 'google') => Promise<{ error: Error | null }>;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+````
+
+## File: src/features/auth/utils/auth-errors.ts
+````typescript
+import { AuthError } from "@supabase/supabase-js";
+
+/**
+ * Maps Supabase auth error codes to user-friendly messages
+ */
+export const getAuthErrorMessage = (error: AuthError | null): string => {
+  if (!error) return "";
+
+  // Common auth error messages
+  switch (error.message) {
+    case "Invalid login credentials":
+      return "The email or password you entered is incorrect.";
+    case "Email not confirmed":
+      return "Please check your email and confirm your account before logging in.";
+    case "User already registered":
+      return "An account with this email already exists.";
+    case "Password should be at least 6 characters":
+      return "Password must be at least 6 characters long.";
+    case "For security purposes, you can only request this once every 60 seconds":
+      return "Please wait a minute before requesting another password reset.";
+    case "Email rate limit exceeded":
+      return "Too many attempts. Please try again later.";
+    case "Network request failed":
+      return "Unable to connect to authentication service. Please check your internet connection.";
+    default:
+      // If it's an unknown error, return a generic message
+      return error.message || "An unexpected error occurred. Please try again.";
+  }
+};
+
+/**
+ * Handle common auth errors and return appropriate actions
+ */
+export const handleAuthError = (error: AuthError | null): { 
+  message: string;
+  action?: "retry" | "reset-password" | "contact-support";
+} => {
+  const message = getAuthErrorMessage(error);
+  
+  if (!error) return { message: "" };
+
+  // Determine suggested action based on error
+  if (error.message.includes("Invalid login credentials")) {
+    return {
+      message,
+      action: "reset-password"
+    };
+  }
+  
+  if (error.message.includes("rate limit") || error.message.includes("too many requests")) {
+    return {
+      message,
+      action: "retry"
+    };
+  }
+
+  if (error.status >= 500) {
+    return {
+      message: "Authentication service is currently unavailable. Please try again later.",
+      action: "contact-support"
+    };
+  }
+
+  return { message };
+};
+````
+
+## File: src/features/contacts/components/ContactEmptyState.tsx
+````typescript
+import React from 'react';
+import { TableCell, TableRow } from '@/components/ui/table';
+
+export const ContactEmptyState: React.FC = () => {
+  return (
+    <TableRow>
+      <TableCell colSpan={7} className="h-24 text-center">
+        No contacts found. Add your first contact to get started.
+      </TableCell>
+    </TableRow>
+  );
+};
+````
+
+## File: src/features/contacts/components/ContactTable.tsx
+````typescript
+import React from "react";
+import { Table, TableBody } from "@/components/ui/table";
+import { Contact } from "@/features/contacts/types";
+import { ContactTableHeader } from "./ContactTableHeader";
+import { ContactTableRow } from "./ContactTableRow";
+import { ContactEmptyState } from "./ContactEmptyState";
+
+interface ContactTableProps {
+  contacts: Contact[];
+  onSort: (key: string, direction: "asc" | "desc" | "default") => void;
+  sortKey: string;
+  sortDirection: "asc" | "desc" | "default";
+  onFilterByTag: (tag: string | null) => void;
+  activeTagFilter: string | null;
+  onEditContact: (contact: Contact) => void;
+  onUpdateContact: (contact: Contact) => void;
+  selectedContacts: Contact[];
+  onSelectContact: (contact: Contact) => void;
+  onOpenTodoPanel?: (contact: Contact) => void;
+}
+
+export const ContactTable: React.FC<ContactTableProps> = ({
+  contacts,
+  onSort,
+  sortKey,
+  sortDirection,
+  onFilterByTag,
+  activeTagFilter,
+  onEditContact,
+  onUpdateContact,
+  selectedContacts,
+  onSelectContact,
+  onOpenTodoPanel,
+}) => {
+  // Get all unique tags from contacts for filter dropdown
+  const allTags = Array.from(
+    new Set(contacts.flatMap((contact) => contact.tags))
+  );
+
+  return (
+    // outer wrapper enables horizontal scrolling when needed
+    <div className="rounded-md border overflow-x-auto">
+      {/* inner wrapper forces table to its full content width */}
+      <div className="min-w-max">
+        <Table className="w-full table-auto whitespace-nowrap">
+          <ContactTableHeader
+            onSort={onSort}
+            sortKey={sortKey}
+            sortDirection={sortDirection}
+            onFilterByTag={onFilterByTag}
+            activeTagFilter={activeTagFilter}
+            availableTags={allTags}
+            hasCheckboxColumn={true}
+          />
+          <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
+            {contacts.length === 0 ? (
+              <ContactEmptyState />
+            ) : (
+              contacts.map((contact) => (
+                <ContactTableRow
+                  key={contact.id}
+                  contact={contact}
+                  onEditContact={onEditContact}
+                  onUpdateContact={onUpdateContact}
+                  isSelected={selectedContacts.some((c) => c.id === contact.id)}
+                  onSelectContact={onSelectContact}
+                  onOpenTodoPanel={onOpenTodoPanel}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+};
+````
+
+## File: src/features/contacts/components/ContactTableHeader.tsx
+````typescript
+import React from "react";
+import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ContactTag } from "@/features/contacts/types";
+import { ArrowUp, ArrowDown, Filter } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+interface ContactTableHeaderProps {
+  onSort: (key: string, direction: "asc" | "desc" | "default") => void;
+  sortKey: string;
+  sortDirection: "asc" | "desc" | "default";
+  onFilterByTag: (tag: ContactTag | null) => void;
+  activeTagFilter: ContactTag | null;
+  availableTags: ContactTag[];
+  hasCheckboxColumn?: boolean;
+}
+
+export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
+  onSort,
+  sortKey,
+  sortDirection,
+  onFilterByTag,
+  activeTagFilter,
+  availableTags,
+  hasCheckboxColumn = false,
+}) => {
+  const handleSortClick = (key: string) => {
+    if (sortKey === key) {
+      // Cycle through sort directions: default -> asc -> desc -> default
+      if (sortDirection === "default") {
+        onSort(key, "asc");
+      } else if (sortDirection === "asc") {
+        onSort(key, "desc");
+      } else {
+        onSort(key, "default");
+      }
+    } else {
+      // New column, start with ascending
+      onSort(key, "asc");
+    }
+  };
+
+  const renderSortIndicator = (key: string) => {
+    if (sortKey !== key) return null;
+
+    if (sortDirection === "asc") {
+      return <ArrowUp className="ml-2 h-4 w-4 text-blue-500" />;
+    } else if (sortDirection === "desc") {
+      return <ArrowDown className="ml-2 h-4 w-4 text-blue-500" />;
+    }
+    return null;
+  };
+
+  return (
+    <TableHeader>
+      <TableRow>
+        {hasCheckboxColumn && <TableHead className="w-10"></TableHead>}
+        <TableHead
+          className="w-[200px] cursor-pointer"
+          onClick={() => handleSortClick("name")}
+        >
+          <div className="flex items-center">
+            Person
+            {renderSortIndicator("name")}
+          </div>
+        </TableHead>
+        <TableHead>Email</TableHead>
+        <TableHead>Role</TableHead>
+        <TableHead
+          className="cursor-pointer"
+          onClick={() => handleSortClick("company")}
+        >
+          <div className="flex items-center">
+            Company
+            {renderSortIndicator("company")}
+          </div>
+        </TableHead>
+        <TableHead>
+          <div className="flex items-center">
+            Tags
+            <DropdownMenu>
+              <DropdownMenuTrigger className="ml-2">
+                <Filter className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuCheckboxItem
+                  checked={activeTagFilter === null}
+                  onCheckedChange={() => onFilterByTag(null)}
+                >
+                  All Tags
+                </DropdownMenuCheckboxItem>
+                {availableTags.map((tag) => (
+                  <DropdownMenuCheckboxItem
+                    key={tag}
+                    checked={activeTagFilter === tag}
+                    onCheckedChange={() => onFilterByTag(tag)}
+                  >
+                    {tag}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </TableHead>
+        <TableHead
+          className="cursor-pointer"
+          onClick={() => handleSortClick("dateOfContact")}
+        >
+          <div className="flex items-center ml-4">
+            Last Contacted
+            {renderSortIndicator("dateOfContact")}
+          </div>
+        </TableHead>
+        <TableHead>
+          <div className="flex items-center ml-4">To-do</div>
+        </TableHead>
+        <TableHead
+          className="cursor-pointer"
+          onClick={() => handleSortClick("status")}
+        >
+          <div className="flex items-center ml-4">
+            Status
+            {renderSortIndicator("status")}
+          </div>
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+};
+````
+
+## File: src/features/contacts/hooks/useContactFilters.ts
+````typescript
+import { useState, useMemo } from 'react';
+import { Contact, ContactTag } from '../types';
+
+export function useContactFilters(contacts: Contact[]) {
+  const [sortKey, setSortKey] = useState<string>("");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | "default">("default");
+  const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(null);
+  
+  const handleSort = (key: string, direction: "asc" | "desc" | "default") => {
+    setSortKey(key);
+    setSortDirection(direction);
+  };
+
+  const handleFilterByTag = (tag: ContactTag | null) => {
+    setActiveTagFilter(tag);
+  };
+
+  // Apply sorting and filtering
+  const filteredAndSortedContacts = useMemo(() => {
+    // First apply tag filtering
+    const filtered = activeTagFilter
+      ? contacts.filter((contact) => contact.tags.includes(activeTagFilter))
+      : contacts;
+
+    // Then apply sorting
+    if (sortKey && sortDirection !== "default") {
+      return [...filtered].sort((a, b) => {
+        const aValue = a[sortKey as keyof Contact];
+        const bValue = b[sortKey as keyof Contact];
+
+        // Handle different types of values
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          // For dates, convert to timestamp first
+          if (sortKey === "dateOfContact") {
+            const aDate = new Date(aValue).getTime();
+            const bDate = new Date(bValue).getTime();
+            return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
+          }
+
+          // For normal strings
+          return sortDirection === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+
+        // Fallback for non-string values
+        return 0;
+      });
+    }
+
+    return filtered;
+  }, [contacts, sortKey, sortDirection, activeTagFilter]);
+
+  return {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    filteredAndSortedContacts,
+    handleSort,
+    handleFilterByTag
+  };
+}
+````
+
+## File: src/features/contacts/hooks/useContactGroup.ts
+````typescript
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { 
+  fetchContactGroup, 
+  fetchContactsInGroup, 
+  updateContactGroupName,
+  updateContact
+} from '../services/contactGroups';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { Contact, ContactGroup } from '../types';
+import { useContactGroupMembers } from './useContactGroupMembers';
+
+export function useContactGroup(groupId: string) {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  
+  const groupQuery = useQuery<ContactGroup | null>({
+    queryKey: ['contactGroup', groupId],
+    queryFn: () => fetchContactGroup(groupId, user?.id || ''),
+    enabled: !!user && !!groupId,
+  });
+
+  const contactsQuery = useQuery<Contact[]>({
+    queryKey: ['groupContacts', groupId],
+    queryFn: () => fetchContactsInGroup(groupId, user?.id || ''),
+    enabled: !!user && !!groupId,
+  });
+
+  const updateGroupMutation = useMutation({
+    mutationFn: (name: string) => 
+      updateContactGroupName(groupId, user?.id || '', name),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contactGroup', groupId] });
+      queryClient.invalidateQueries({ queryKey: ['contactGroups'] });
+    }
+  });
+
+  const updateContactMutation = useMutation({
+    mutationFn: (contact: Contact) => 
+      updateContact(contact, user?.id || ''),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['groupContacts', groupId] });
+    }
+  });
+
+  const { removeContactsFromGroup } = useContactGroupMembers();
+
+  return {
+    group: groupQuery.data,
+    contacts: contactsQuery.data || [],
+    isLoading: groupQuery.isLoading || contactsQuery.isLoading,
+    isError: groupQuery.isError || contactsQuery.isError,
+    updateGroupName: async (name: string): Promise<boolean> => {
+      return new Promise((resolve) => {
+        updateGroupMutation.mutate(name, {
+          onSuccess: (success) => resolve(success),
+          onError: () => resolve(false)
+        });
+      });
+    },
+    updateContact: async (contact: Contact): Promise<boolean> => {
+      return new Promise((resolve) => {
+        updateContactMutation.mutate(contact, {
+          onSuccess: (success) => resolve(success),
+          onError: () => resolve(false)
+        });
+      });
+    },
+    removeContacts: async (contactIds: string[]): Promise<boolean> => {
+      return removeContactsFromGroup({ 
+        groupId, 
+        contactIds 
+      });
+    },
+    isUpdatingGroup: updateGroupMutation.isPending,
+    isUpdatingContact: updateContactMutation.isPending
+  };
+}
+````
+
+## File: src/features/contacts/hooks/useContactGroupMembers.ts
+````typescript
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addContactsToGroup, removeContactsFromGroup } from '../services/contactGroupMembers';
+
+export function useContactGroupMembers() {
+  const queryClient = useQueryClient();
+
+  const addMutation = useMutation({
+    mutationFn: ({ groupId, contactIds }: { groupId: string; contactIds: string[] }) => 
+      addContactsToGroup(groupId, contactIds),
+    onSuccess: () => {
+      // Invalidate any queries that might be affected by this mutation
+      queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      queryClient.invalidateQueries({ queryKey: ['contactGroups'] });
+    }
+  });
+
+  const removeMutation = useMutation({
+    mutationFn: ({ groupId, contactIds }: { groupId: string; contactIds: string[] }) => 
+      removeContactsFromGroup(groupId, contactIds),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      queryClient.invalidateQueries({ queryKey: ['contactGroups'] });
+    }
+  });
+
+  return {
+    addContactsToGroup: async (params: { groupId: string; contactIds: string[] }): Promise<boolean> => {
+      return new Promise((resolve) => {
+        addMutation.mutate(params, {
+          onSuccess: (success) => resolve(success),
+          onError: () => resolve(false)
+        });
+      });
+    },
+    removeContactsFromGroup: async (params: { groupId: string; contactIds: string[] }): Promise<boolean> => {
+      return new Promise((resolve) => {
+        removeMutation.mutate(params, {
+          onSuccess: (success) => resolve(success),
+          onError: () => resolve(false)
+        });
+      });
+    },
+    isAddingContacts: addMutation.isPending,
+    isRemovingContacts: removeMutation.isPending
+  };
+}
+````
+
+## File: src/features/contacts/hooks/useContactGroups.ts
+````typescript
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchContactGroups, createContactGroup, updateContactGroup, deleteContactGroup } from '../services/contactGroups';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { ContactGroup } from '../types';
+
+export function useContactGroups() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  
+  const contactGroupsQuery = useQuery<ContactGroup[]>({
+    queryKey: ['contactGroups', user?.id],
+    queryFn: () => fetchContactGroups(user?.id || ''),
+    enabled: !!user,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
+  });
+
+  const createGroupMutation = useMutation({
+    mutationFn: (name: string) => createContactGroup(user?.id || '', name),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contactGroups', user?.id] });
+    }
+  });
+
+  const updateGroupMutation = useMutation({
+    mutationFn: ({ groupId, name }: { groupId: string; name: string }) => 
+      updateContactGroup(groupId, name),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contactGroups', user?.id] });
+    }
+  });
+
+  const deleteGroupMutation = useMutation({
+    mutationFn: (groupId: string) => deleteContactGroup(groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contactGroups', user?.id] });
+    }
+  });
+
+  return {
+    ...contactGroupsQuery,
+    createGroup: async (name: string): Promise<ContactGroup | null> => {
+      return new Promise((resolve) => {
+        createGroupMutation.mutate(name, {
+          onSuccess: (data) => resolve(data),
+          onError: () => resolve(null)
+        });
+      });
+    },
+    updateGroup: async (groupId: string, name: string): Promise<ContactGroup | null> => {
+      return new Promise((resolve) => {
+        updateGroupMutation.mutate({ groupId, name }, {
+          onSuccess: (data) => resolve(data),
+          onError: () => resolve(null)
+        });
+      });
+    },
+    deleteGroup: async (groupId: string): Promise<boolean> => {
+      return new Promise((resolve) => {
+        deleteGroupMutation.mutate(groupId, {
+          onSuccess: () => resolve(true),
+          onError: () => resolve(false)
+        });
+      });
+    },
+    isCreating: createGroupMutation.isPending,
+    isUpdating: updateGroupMutation.isPending,
+    isDeleting: deleteGroupMutation.isPending
+  };
+}
+````
+
+## File: src/features/contacts/hooks/useContactSelection.ts
+````typescript
+import { useState, useCallback } from 'react';
+import { Contact } from '../types';
+
+/**
+ * Hook for managing contact selection across components
+ * Provides methods to select, deselect, and clear selections
+ */
+export function useContactSelection() {
+  const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
+
+  // Toggle selection for a single contact
+  const toggleContactSelection = useCallback((contact: Contact) => {
+    setSelectedContacts(prev => {
+      const isSelected = prev.some(c => c.id === contact.id);
+      if (isSelected) {
+        // Remove from selection
+        return prev.filter(c => c.id !== contact.id);
+      } else {
+        // Add to selection
+        return [...prev, contact];
+      }
+    });
+  }, []);
+
+  // Select multiple contacts at once
+  const selectContacts = useCallback((contacts: Contact[]) => {
+    setSelectedContacts(prev => {
+      // Create a new set to avoid duplicates
+      const selectedIds = new Set(prev.map(c => c.id));
+      const newContacts = contacts.filter(c => !selectedIds.has(c.id));
+      
+      return [...prev, ...newContacts];
+    });
+  }, []);
+
+  // Deselect multiple contacts at once
+  const deselectContacts = useCallback((contacts: Contact[]) => {
+    const contactIds = new Set(contacts.map(c => c.id));
+    setSelectedContacts(prev => prev.filter(c => !contactIds.has(c.id)));
+  }, []);
+
+  // Check if a contact is selected
+  const isContactSelected = useCallback((contactId: string) => {
+    return selectedContacts.some(c => c.id === contactId);
+  }, [selectedContacts]);
+
+  // Clear all selections
+  const clearSelectedContacts = useCallback(() => {
+    setSelectedContacts([]);
+  }, []);
+
+  return {
+    selectedContacts,
+    toggleContactSelection,
+    selectContacts,
+    deselectContacts,
+    isContactSelected,
+    clearSelectedContacts,
+    selectionCount: selectedContacts.length
+  };
+}
+````
+
+## File: src/features/contacts/services/contactGroupMembers.ts
+````typescript
+import { supabase } from "@/lib/client";
+
+/**
+ * Add contacts to a group
+ */
+export async function addContactsToGroup(groupId: string, contactIds: string[]): Promise<boolean> {
+  if (!groupId || contactIds.length === 0) return false;
+
+  try {
+    const groupMembers = contactIds.map((contactId) => ({
+      contact_id: contactId,
+      group_id: groupId,
+    }));
+
+    const { error } = await supabase
+      .from("contact_group_members")
+      .insert(groupMembers);
+
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.error("Error adding contacts to group:", error);
+    return false;
+  }
+}
+
+/**
+ * Remove contacts from a group
+ */
+export async function removeContactsFromGroup(groupId: string, contactIds: string[]): Promise<boolean> {
+  if (!groupId || contactIds.length === 0) return false;
+
+  try {
+    const { error } = await supabase
+      .from("contact_group_members")
+      .delete()
+      .eq("group_id", groupId)
+      .in("contact_id", contactIds);
+
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.error("Error removing contacts from group:", error);
+    return false;
+  }
+}
+
+/**
+ * Get all contacts in a group
+ */
+export async function getContactsInGroup(groupId: string): Promise<string[]> {
+  if (!groupId) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from("contact_group_members")
+      .select("contact_id")
+      .eq("group_id", groupId);
+
+    if (error) throw error;
+    return data.map(item => item.contact_id);
+  } catch (error) {
+    console.error("Error getting contacts in group:", error);
+    return [];
+  }
+}
+````
+
+## File: src/features/contacts/services/contactGroups.ts
+````typescript
+import { supabase } from "@/lib/client";
+import { Contact, ContactGroup } from "@/features/contacts/types";
+
+// Fetch all contact groups for a user
+export async function fetchContactGroups(userId: string): Promise<ContactGroup[]> {
+  if (!userId) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from("contact_groups")
+      .select("*")
+      .eq("user_id", userId);
+
+    if (error) {
+      throw error;
+    }
+
+    return data.map((item) => ({
+      id: item.id,
+      name: item.name,
+      userId: item.user_id,
+      createdAt: item.created_at,
+    }));
+  } catch (error) {
+    console.error("Error fetching contact groups:", error);
+    return [];
+  }
+}
+
+// Create a new contact group
+export async function createContactGroup(userId: string, name: string): Promise<ContactGroup | null> {
+  if (!userId || !name) return null;
+
+  try {
+    const { data, error } = await supabase
+      .from("contact_groups")
+      .insert({ name, user_id: userId })
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return {
+      id: data.id,
+      name: data.name,
+      userId: data.user_id,
+      createdAt: data.created_at,
+    };
+  } catch (error) {
+    console.error("Error creating contact group:", error);
+    return null;
+  }
+}
+
+// Update a contact group
+export async function updateContactGroup(groupId: string, name: string): Promise<ContactGroup | null> {
+  if (!groupId || !name) return null;
+
+  try {
+    const { data, error } = await supabase
+      .from("contact_groups")
+      .update({ name })
+      .eq("id", groupId)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return {
+      id: data.id,
+      name: data.name,
+      userId: data.user_id,
+      createdAt: data.created_at,
+    };
+  } catch (error) {
+    console.error("Error updating contact group:", error);
+    return null;
+  }
+}
+
+// Delete a contact group
+export async function deleteContactGroup(groupId: string): Promise<boolean> {
+  if (!groupId) return false;
+
+  try {
+    const { error } = await supabase
+      .from("contact_groups")
+      .delete()
+      .eq("id", groupId);
+
+    if (error) {
+      throw error;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error deleting contact group:", error);
+    return false;
+  }
+}
+
+// Fetch a single contact group
+export async function fetchContactGroup(groupId: string, userId: string): Promise<ContactGroup | null> {
+  if (!userId || !groupId) return null;
+
+  try {
+    const { data, error } = await supabase
+      .from("contact_groups")
+      .select("*")
+      .eq("id", groupId)
+      .eq("user_id", userId)
+      .single();
+
+    if (error) throw error;
+
+    return {
+      id: data.id,
+      name: data.name,
+      userId: data.user_id,
+      createdAt: data.created_at,
+    };
+  } catch (error) {
+    console.error("Error fetching contact group:", error);
+    return null;
+  }
+}
+
+// fetch all contacts in a group
+export async function fetchContactsInGroup(groupId: string, userId: string): Promise<Contact[]> {
+  if (!userId || !groupId) return [];
+
+  try {
+    // Get contact IDs in this group
+    const { data: memberData, error: memberError } = await supabase
+      .from("contact_group_members")
+      .select("contact_id")
+      .eq("group_id", groupId);
+
+    if (memberError) throw memberError;
+
+    if (memberData.length === 0) {
+      return [];
+    }
+
+    // Get contact details
+    const contactIds = memberData.map((member) => member.contact_id);
+    const { data: contactsData, error: contactsError } = await supabase
+      .from("contacts")
+      .select("*")
+      .in("id", contactIds)
+      .eq("user_id", userId);
+
+    if (contactsError) throw contactsError;
+
+    // Transform database data to match our Contact type
+    return contactsData.map((item) => ({
+      id: item.id,
+      name: item.name,
+      email: item.email,
+      role: item.role || "",
+      company: item.company || "",
+      tags: item.tags,
+      dateOfContact: item.dateofcontact,
+      status: item.status as Contact['status'],
+    }));
+  } catch (error) {
+    console.error("Error fetching contacts in group:", error);
+    return [];
+  }
+}
+
+// Update contact group name
+export async function updateContactGroupName(
+  groupId: string, 
+  userId: string, 
+  name: string
+): Promise<boolean> {
+  if (!userId || !groupId || !name) return false;
+
+  try {
+    const { error } = await supabase
+      .from("contact_groups")
+      .update({ name: name.trim() })
+      .eq("id", groupId)
+      .eq("user_id", userId);
+
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.error("Error updating group name:", error);
+    return false;
+  }
+}
+
+/**
+ * Update a contact
+ */
+export async function updateContact(
+  contact: Contact,
+  userId: string
+): Promise<boolean> {
+  if (!userId || !contact.id) return false;
+
+  try {
+    const { error } = await supabase
+      .from("contacts")
+      .update({
+        name: contact.name,
+        email: contact.email,
+        role: contact.role,
+        company: contact.company,
+        tags: contact.tags,
+        dateofcontact: contact.dateOfContact,
+        status: contact.status,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", contact.id)
+      .eq("user_id", userId);
+
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.error("Error updating contact:", error);
+    return false;
+  }
+}
+````
+
+## File: src/features/contacts/services/contacts.ts
+````typescript
+import { supabase } from "@/lib/client";
+import type { Contact, ContactTag } from "@/features/contacts/types";
+
+// async allows for the use of await inside the function and lets the function return a Promise
+// await pauses the execution of the function until the Promise is resolved
+// Promise represents the eventual completion (or failure) of an asynchronous operation and its resulting value
+export async function fetchContacts(userId: string): Promise<Contact[]> {
+  // this const returns the data and error from the supabase query
+  const { data, error } = await supabase
+    .from("contacts") // specify the table name to query
+    .select("*") // select all columns in the table
+    .eq("user_id", userId); // filter the results to only include contacts for the given userId
+  if (error) throw error;
+  return (
+    // turn the raw data into a structured Contact object
+    data?.map(item => ({
+      id: item.id,
+      name: item.name,
+      email: item.email,
+      role: item.role || "", // default to empty string if role is null
+      company: item.company || "",
+      tags: item.tags as ContactTag[], // cast the tags to ContactTag[]
+      dateOfContact: item.dateofcontact,
+      status: item.status as Contact["status"],
+      todos: [] // initialize todos as an empty array
+    })) ?? [] // if data is null or undefined, return an empty array
+  );
+}
+
+
+export async function createContact(
+  userId: string,
+  // Omit removes the id property from the Contact type
+  // this is useful when creating a new contact because the id will be generated by the database
+  newData: Omit<Contact, "id"> 
+): Promise<Contact> {
+  const { data, error } = await supabase
+    .from("contacts")
+    .insert({
+      user_id: userId,
+      name: newData.name,
+      email: newData.email,
+      role: newData.role || null,
+      company: newData.company || null,
+      tags: newData.tags,
+      dateofcontact: newData.dateOfContact,
+      status: newData.status
+    })
+    .select()
+    .single(); // select the newly created contact and return it as a single object
+  if (error) throw error;
+  return {
+    id: data.id,
+    name: data.name,
+    email: data.email,
+    role: data.role || "",
+    company: data.company || "",
+    tags: data.tags as ContactTag[],
+    dateOfContact: data.dateofcontact,
+    status: data.status as Contact["status"],
+    todos: []
+  };
+}
+
+
+export async function updateContact(
+  userId: string,
+  updated: Contact
+): Promise<void> { // void indicates that the function does not return a value but still does something that takes time
+  const { error } = await supabase
+    .from("contacts")
+    .update({
+      name: updated.name,
+      email: updated.email,
+      role: updated.role || null,
+      company: updated.company || null,
+      tags: updated.tags,
+      dateofcontact: updated.dateOfContact,
+      status: updated.status,
+      updated_at: new Date().toISOString() // set the updated_at field to the current date and time
+    })
+    .eq("id", updated.id) 
+    .eq("user_id", userId);
+  if (error) throw error;
+}
+
+
+export async function deleteContacts(
+  userId: string,
+  ids: string[]
+): Promise<void> {
+  const { error } = await supabase
+    .from("contacts")
+    .delete()
+    .in("id", ids)
+    .eq("user_id", userId);
+  if (error) throw error;
+}
+````
+
+## File: src/features/contacts/types/index.ts
+````typescript
+import { Todo } from 'src/features/todos/types';
+
+export type ContactStatus = 'Reached Out' | 'Responded' | 'Chatted';
+
+export type ContactTag = string;
+
+export interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  role?: string;
+  company?: string;
+  tags: ContactTag[];
+  dateOfContact: string;
+  status: ContactStatus;
+  todos?: Todo[];
+}
+
+export interface ContactGroup {
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: string;
+}
+
+export interface ContactGroupMember {
+  id: string;
+  contactId: string;
+  groupId: string;
+  createdAt: string;
+}
+````
+
+## File: src/features/contacts/utils/contact-utils.ts
+````typescript
+/**
+ * Returns the appropriate CSS classes for contact status badges
+ */
+export const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'Reached Out':
+      return 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200';
+    case 'Responded':
+      return 'bg-blue-100 text-blue-800 hover:bg-blue-200';
+    case 'Chatted':
+      return 'bg-green-100 text-green-800 hover:bg-green-200';
+    default:
+      return 'bg-gray-100 text-gray-800 hover:bg-gray-200';
+  }
+};
+
+/**
+ * Returns the appropriate CSS classes for contact tag badges
+ * Using a hash function to generate consistent colors for the same tag
+ */
+export const getTagColor = (tag: string) => {
+  // Use a simple hash function to generate a consistent number from the tag
+  const hash = tag.split('').reduce((acc, char) => {
+    return char.charCodeAt(0) + ((acc << 5) - acc);
+  }, 0);
+  
+  // Use the hash to select from predefined color combinations
+  const colorIndex = Math.abs(hash) % 10;
+  
+  switch (colorIndex) {
+    case 0:
+      return 'bg-purple-100 text-purple-800 border-purple-200';
+    case 1:
+      return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+    case 2:
+      return 'bg-blue-100 text-blue-800 border-blue-200';
+    case 3:
+      return 'bg-cyan-100 text-cyan-800 border-cyan-200';
+    case 4:
+      return 'bg-teal-100 text-teal-800 border-teal-200';
+    case 5:
+      return 'bg-green-100 text-green-800 border-green-200';
+    case 6:
+      return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+    case 7:
+      return 'bg-orange-100 text-orange-800 border-orange-200';
+    case 8:
+      return 'bg-red-100 text-red-800 border-red-200';
+    case 9:
+      return 'bg-pink-100 text-pink-800 border-pink-200';
+    default:
+      return 'bg-gray-100 text-gray-800 border-gray-200';
+  }
+};
+
+/**
+ * Format date to a localized format
+ */
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(date);
+};
+````
+
+## File: src/features/tags/context/TagContext.tsx
+````typescript
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { supabase } from "@/lib/client";
+import { useAuth } from "../../auth/hooks/useAuth";
+import { useCallback } from "react";
+import { TagContext } from "../types";
+
+// Default available tags
+const DEFAULT_TAGS = ["Recruiter", "Alumni", "Employee"];
+
+export const TagProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const { user } = useAuth();
+  const [availableTags, setAvailableTags] = useState<string[]>(DEFAULT_TAGS);
+
+  // Fetch all unique tags from existing contacts
+  const fetchAllTags = useCallback(async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("tags")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error("Error fetching tags:", error);
+        return;
+      }
+
+      // Extract all tags and flatten the array
+      const allTags = data.reduce((acc: string[], item) => {
+        return [...acc, ...(item.tags || [])];
+      }, []);
+
+      // Remove duplicates and merge with default tags
+      const uniqueTags = [...new Set([...DEFAULT_TAGS, ...allTags])];
+      setAvailableTags(uniqueTags);
+    } catch (error) {
+      console.error("Error processing tags:", error);
+    }
+  }, [user]);
+
+  // Load tags when user changes
+  useEffect(() => {
+    if (user) {
+      fetchAllTags();
+    }
+  }, [user, fetchAllTags]);
+
+  // Check if a tag is a default tag
+  const isDefaultTag = (tag: string): boolean => {
+    return DEFAULT_TAGS.includes(tag);
+  };
+
+  // Add a new tag to the available tags list
+  const addTag = (tag: string) => {
+    if (!tag || availableTags.includes(tag)) return;
+
+    setAvailableTags((prev) => [...prev, tag]);
+  };
+
+  // Delete a tag from the available tags list
+  // Returns a Promise that resolves to true if deletion was successful
+  const deleteTag = async (tag: string): Promise<boolean> => {
+    // Don't allow deletion of default tags
+    if (isDefaultTag(tag)) {
+      console.warn(`Cannot delete default tag: ${tag}`);
+      return false;
+    }
+
+    try {
+      if (!user) return false;
+
+      // If the tag is in use by contacts, update those contacts
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("id, tags")
+        .eq("user_id", user.id)
+        .contains("tags", [tag]);
+
+      if (error) {
+        console.error("Error checking tag usage:", error);
+        return false;
+      }
+
+      // Update any contacts that use this tag
+      for (const contact of data || []) {
+        const updatedTags = contact.tags.filter((t: string) => t !== tag);
+
+        const { error: updateError } = await supabase
+          .from("contacts")
+          .update({ tags: updatedTags })
+          .eq("id", contact.id)
+          .eq("user_id", user.id);
+
+        if (updateError) {
+          console.error("Error updating contact tags:", updateError);
+          return false;
+        }
+      }
+
+      // Update local state
+      setAvailableTags((prev) => prev.filter((t) => t !== tag));
+      return true;
+    } catch (error) {
+      console.error("Error deleting tag:", error);
+      return false;
+    }
+  };
+
+  return (
+    <TagContext.Provider
+      value={{ availableTags, addTag, deleteTag, isDefaultTag }}
+    >
+      {children}
+    </TagContext.Provider>
+  );
+};
+
+// Custom hook to use the tag context
+````
+
+## File: src/features/tags/hooks/useTags.ts
+````typescript
+import { useContext } from "react";
+import { TagContext, TagContextType } from "../types";
+
+export type { TagContextType } from "../types";
+
+export const useTags = () => {
+  const context = useContext(TagContext);
+  if (context === undefined) {
+    throw new Error("useTags must be used within a TagProvider");
+  }
+  return context;
+};
+````
+
+## File: src/features/tags/types/index.ts
+````typescript
+import { createContext } from "react";
+
+export interface TagContextType {
+  availableTags: string[];
+  addTag: (tag: string) => void;
+  deleteTag: (tag: string) => Promise<boolean>;
+  isDefaultTag: (tag: string) => boolean;
+};
+
+export const TagContext = createContext<TagContextType | undefined>(undefined);
+````
+
+## File: src/features/todos/components/AddTaskDialog.tsx
+````typescript
+import React, { useState } from "react";
+import { Contact } from "@/features/contacts/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
+import { useTodos } from "../hooks/useTodos";
+
+interface AddTaskDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  contacts: Contact[];
+  onTaskAdded: () => void;
+}
+
+export function AddTaskDialog({
+  open,
+  onOpenChange,
+  contacts,
+  onTaskAdded,
+}: AddTaskDialogProps) {
+  const [newTask, setNewTask] = useState("");
+  const [selectedContactId, setSelectedContactId] = useState<string>("");
+  const [dueDate, setDueDate] = useState<Date | null>(null);
+
+  const { addTodo: addTodoForContact } = useTodos({
+    contactId: selectedContactId,
+  });
+
+  const handleAddTask = async () => {
+    if (!newTask.trim() || !selectedContactId || !dueDate) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const added = await addTodoForContact(newTask, dueDate);
+    if (added) {
+      // Reset form
+      setNewTask("");
+      setSelectedContactId("");
+      setDueDate(null);
+
+      // Close modal and notify parent
+      onOpenChange(false);
+      onTaskAdded();
+    }
+  };
+
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+    >
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add New Task</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Task Name</label>
+            <Input
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
+              placeholder="Enter task name"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Contact</label>
+            <Select
+              value={selectedContactId}
+              onValueChange={setSelectedContactId}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a contact" />
+              </SelectTrigger>
+              <SelectContent>
+                {contacts.map((contact) => (
+                  <SelectItem
+                    key={contact.id}
+                    value={contact.id}
+                  >
+                    {contact.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Due Date</label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !dueDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dueDate ? format(dueDate, "PPP") : "Select due date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={dueDate as Date}
+                  onSelect={setDueDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleAddTask}>Add Task</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+````
+
+## File: src/features/todos/components/TodoFilters.tsx
+````typescript
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus } from "lucide-react";
+import { CompletionFilter, DueDateFilter } from "../hooks/useTodoFilters";
+
+interface TodoFiltersProps {
+  completionFilter: CompletionFilter;
+  dueDateFilter: DueDateFilter;
+  onCompletionFilterChange: (value: CompletionFilter) => void;
+  onDueDateFilterChange: (value: DueDateFilter) => void;
+  onAddNewTask: () => void;
+}
+
+export function TodoFilters({
+  completionFilter,
+  dueDateFilter,
+  onCompletionFilterChange,
+  onDueDateFilterChange,
+  onAddNewTask,
+}: TodoFiltersProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <Select
+        value={completionFilter}
+        onValueChange={(value: CompletionFilter) =>
+          onCompletionFilterChange(value)
+        }
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Filter by status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Tasks</SelectItem>
+          <SelectItem value="completed">Completed</SelectItem>
+          <SelectItem value="not-completed">Not Completed</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select
+        value={dueDateFilter}
+        onValueChange={(value: DueDateFilter) => onDueDateFilterChange(value)}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Filter by due date" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Due Dates</SelectItem>
+          <SelectItem value="this-week">Due This Week</SelectItem>
+          <SelectItem value="this-month">Due This Month</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Button onClick={onAddNewTask}>
+        <Plus className="h-4 w-4 mr-2" />
+        Add New Task
+      </Button>
+    </div>
+  );
+}
+````
+
+## File: src/features/todos/components/TodoTable.tsx
+````typescript
+import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import {
+  CheckCircle2,
+  Circle,
+  CalendarIcon,
+  ArrowDown,
+  ArrowUp,
+} from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Todo } from "../types";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+
+type SortField = "status" | "contact" | "dueDate" | null;
+type SortOrder = "asc" | "desc" | null;
+
+interface TodoTableProps {
+  todos: Todo[];
+  contacts: { id: string; name: string }[];
+  onToggleCompletion: (todoId: string, completed: boolean) => void;
+  onUpdateDueDate: (todoId: string, date: Date | null) => void;
+  onOpenTodoPanel: (contactId: string) => void;
+}
+
+export const TodoTable: React.FC<TodoTableProps> = ({
+  todos,
+  contacts,
+  onToggleCompletion,
+  onUpdateDueDate,
+  onOpenTodoPanel,
+}) => {
+  const [sortField, setSortField] = useState<SortField>(null);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(null);
+
+  const getContactName = (contactId: string) => {
+    const contact = contacts.find((c) => c.id === contactId);
+    return contact?.name || "Unknown Contact";
+  };
+
+  const handleSort = (field: SortField) => {
+    // Cycle through: null -> asc -> desc -> null
+    if (sortField !== field) {
+      setSortField(field);
+      setSortOrder("asc");
+    } else {
+      if (sortOrder === null) {
+        setSortOrder("asc");
+      } else if (sortOrder === "asc") {
+        setSortOrder("desc");
+      } else {
+        setSortField(null);
+        setSortOrder(null);
+      }
+    }
+  };
+
+  const sortedTodos = [...todos];
+  if (sortField && sortOrder) {
+    sortedTodos.sort((a, b) => {
+      if (sortField === "status") {
+        // Sort by completion status
+        const comparison = Number(a.completed) - Number(b.completed);
+        return sortOrder === "asc" ? comparison : -comparison;
+      } else if (sortField === "contact") {
+        // Sort by contact name
+        const nameA = getContactName(a.contactId).toLowerCase();
+        const nameB = getContactName(b.contactId).toLowerCase();
+        const comparison = nameA.localeCompare(nameB);
+        return sortOrder === "asc" ? comparison : -comparison;
+      } else if (sortField === "dueDate") {
+        // Sort by due date (handle null values)
+        if (!a.dueDate && !b.dueDate) return 0;
+        if (!a.dueDate) return sortOrder === "asc" ? 1 : -1;
+        if (!b.dueDate) return sortOrder === "asc" ? -1 : 1;
+
+        const dateA = new Date(a.dueDate);
+        const dateB = new Date(b.dueDate);
+        const comparison = dateA.getTime() - dateB.getTime();
+        return sortOrder === "asc" ? comparison : -comparison;
+      }
+      return 0;
+    });
+  }
+
+  const renderSortIndicator = (field: SortField) => {
+    if (sortField !== field) return null;
+
+    return sortOrder === "asc" ? (
+      <ArrowUp className="ml-1 h-4 w-4 inline" />
+    ) : (
+      <ArrowDown className="ml-1 h-4 w-4 inline" />
+    );
+  };
+
+  return (
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead
+              className="w-[100px] cursor-pointer"
+              onClick={() => handleSort("status")}
+            >
+              Status {renderSortIndicator("status")}
+            </TableHead>
+            <TableHead>Task</TableHead>
+            <TableHead
+              className="cursor-pointer"
+              onClick={() => handleSort("contact")}
+            >
+              Contact {renderSortIndicator("contact")}
+            </TableHead>
+            <TableHead
+              className="cursor-pointer"
+              onClick={() => handleSort("dueDate")}
+            >
+              Due Date {renderSortIndicator("dueDate")}
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
+          {sortedTodos.length === 0 ? (
+            <TableRow>
+              <TableCell
+                colSpan={4}
+                className="h-24 text-center"
+              >
+                No todos found. Add some todos to get started.
+              </TableCell>
+            </TableRow>
+          ) : (
+            sortedTodos.map((todo) => (
+              <TableRow key={todo.id}>
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6"
+                    onClick={() => onToggleCompletion(todo.id, todo.completed)}
+                  >
+                    {todo.completed ? (
+                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    ) : (
+                      <Circle className="h-5 w-5" />
+                    )}
+                  </Button>
+                </TableCell>
+                <TableCell
+                  className={cn(
+                    todo.completed && "line-through text-muted-foreground",
+                    "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+                  )}
+                  onClick={() => onOpenTodoPanel(todo.contactId)}
+                >
+                  {todo.task}
+                </TableCell>
+                <TableCell>{getContactName(todo.contactId)}</TableCell>
+                <TableCell>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "flex h-6 items-center justify-center gap-1 rounded-md border bg-background px-2 text-sm",
+                          "hover:bg-gray-100 dark:hover:bg-gray-800"
+                        )}
+                      >
+                        <CalendarIcon className="h-3 w-3" />
+                        {todo.dueDate
+                          ? format(
+                              new Date(`${todo.dueDate}T00:00:00`),
+                              "MMM d, yyyy"
+                            )
+                          : "Set due date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-auto p-0"
+                      align="start"
+                    >
+                      <Calendar
+                        mode="single"
+                        selected={
+                          todo.dueDate
+                            ? new Date(`${todo.dueDate}T00:00:00`)
+                            : undefined
+                        }
+                        onSelect={(date) => onUpdateDueDate(todo.id, date)}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+````
+
+## File: src/features/todos/hooks/useTodoFilters.ts
+````typescript
+import { useState, useMemo } from "react";
+import { Todo } from "../types";
+import {
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  isWithinInterval,
+} from "date-fns";
+
+export type CompletionFilter = "all" | "completed" | "not-completed";
+export type DueDateFilter = "all" | "this-week" | "this-month";
+
+export function useTodoFilters(todos: Todo[]) {
+  const [completionFilter, setCompletionFilter] = useState<CompletionFilter>("all");
+  const [dueDateFilter, setDueDateFilter] = useState<DueDateFilter>("all");
+
+  const filteredTodos = useMemo(() => {
+    return todos.filter((todo) => {
+      // First filter by completion status
+      if (completionFilter === "completed" && !todo.completed) return false;
+      if (completionFilter === "not-completed" && todo.completed) return false;
+
+      // Then filter by due date
+      if (dueDateFilter === "all") return true;
+      if (!todo.dueDate) return false;
+
+      const todoDate = new Date(todo.dueDate);
+      const now = new Date();
+
+      if (dueDateFilter === "this-week") {
+        const weekStart = startOfWeek(now);
+        const weekEnd = endOfWeek(now);
+        return isWithinInterval(todoDate, { start: weekStart, end: weekEnd });
+      }
+
+      if (dueDateFilter === "this-month") {
+        const monthStart = startOfMonth(now);
+        const monthEnd = endOfMonth(now);
+        return isWithinInterval(todoDate, { start: monthStart, end: monthEnd });
+      }
+
+      return true;
+    });
+  }, [todos, completionFilter, dueDateFilter]);
+
+  return {
+    completionFilter,
+    setCompletionFilter,
+    dueDateFilter,
+    setDueDateFilter,
+    filteredTodos,
+  };
+}
+````
+
+## File: src/features/todos/types/index.ts
+````typescript
+export interface Todo {
+  id: string;
+  contactId: string;
+  task: string;
+  dueDate: string | null;
+  completed: boolean;
+  createdAt: string;
+}
+````
+
+## File: src/hooks/use-mobile.tsx
+````typescript
+import * as React from "react"
+
+const MOBILE_BREAKPOINT = 768
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
+    mql.addEventListener("change", onChange)
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+
+  return !!isMobile
+}
+````
+
+## File: src/hooks/use-toast.ts
+````typescript
+import * as React from "react"
+
+import type {
+  ToastActionElement,
+  ToastProps,
+} from "@/components/ui/toast"
+
+const TOAST_LIMIT = 1
+const TOAST_REMOVE_DELAY = 1000000
+
+type ToasterToast = ToastProps & {
+  id: string
+  title?: React.ReactNode
+  description?: React.ReactNode
+  action?: ToastActionElement
+}
+
+const actionTypes = {
+  ADD_TOAST: "ADD_TOAST",
+  UPDATE_TOAST: "UPDATE_TOAST",
+  DISMISS_TOAST: "DISMISS_TOAST",
+  REMOVE_TOAST: "REMOVE_TOAST",
+} as const
+
+let count = 0
+
+function genId() {
+  count = (count + 1) % Number.MAX_SAFE_INTEGER
+  return count.toString()
+}
+
+type ActionType = typeof actionTypes
+
+type Action =
+  | {
+      type: ActionType["ADD_TOAST"]
+      toast: ToasterToast
+    }
+  | {
+      type: ActionType["UPDATE_TOAST"]
+      toast: Partial<ToasterToast>
+    }
+  | {
+      type: ActionType["DISMISS_TOAST"]
+      toastId?: ToasterToast["id"]
+    }
+  | {
+      type: ActionType["REMOVE_TOAST"]
+      toastId?: ToasterToast["id"]
+    }
+
+interface State {
+  toasts: ToasterToast[]
+}
+
+const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+
+const addToRemoveQueue = (toastId: string) => {
+  if (toastTimeouts.has(toastId)) {
+    return
+  }
+
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId)
+    dispatch({
+      type: "REMOVE_TOAST",
+      toastId: toastId,
+    })
+  }, TOAST_REMOVE_DELAY)
+
+  toastTimeouts.set(toastId, timeout)
+}
+
+export const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "ADD_TOAST":
+      return {
+        ...state,
+        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
+      }
+
+    case "UPDATE_TOAST":
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
+        ),
+      }
+
+    case "DISMISS_TOAST": {
+      const { toastId } = action
+
+      // ! Side effects ! - This could be extracted into a dismissToast() action,
+      // but I'll keep it here for simplicity
+      if (toastId) {
+        addToRemoveQueue(toastId)
+      } else {
+        state.toasts.forEach((toast) => {
+          addToRemoveQueue(toast.id)
+        })
+      }
+
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === toastId || toastId === undefined
+            ? {
+                ...t,
+                open: false,
+              }
+            : t
+        ),
+      }
+    }
+    case "REMOVE_TOAST":
+      if (action.toastId === undefined) {
+        return {
+          ...state,
+          toasts: [],
+        }
+      }
+      return {
+        ...state,
+        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+      }
+  }
+}
+
+const listeners: Array<(state: State) => void> = []
+
+let memoryState: State = { toasts: [] }
+
+function dispatch(action: Action) {
+  memoryState = reducer(memoryState, action)
+  listeners.forEach((listener) => {
+    listener(memoryState)
+  })
+}
+
+type Toast = Omit<ToasterToast, "id">
+
+function toast({ ...props }: Toast) {
+  const id = genId()
+
+  const update = (props: ToasterToast) =>
+    dispatch({
+      type: "UPDATE_TOAST",
+      toast: { ...props, id },
+    })
+  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+
+  dispatch({
+    type: "ADD_TOAST",
+    toast: {
+      ...props,
+      id,
+      open: true,
+      onOpenChange: (open) => {
+        if (!open) dismiss()
+      },
+    },
+  })
+
+  return {
+    id: id,
+    dismiss,
+    update,
+  }
+}
+
+function useToast() {
+  const [state, setState] = React.useState<State>(memoryState)
+
+  React.useEffect(() => {
+    listeners.push(setState)
+    return () => {
+      const index = listeners.indexOf(setState)
+      if (index > -1) {
+        listeners.splice(index, 1)
+      }
+    }
+  }, [state])
+
+  return {
+    ...state,
+    toast,
+    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+  }
+}
+
+export { useToast, toast }
+````
+
+## File: src/lib/supabase.ts
+````typescript
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  public: {
+    Tables: {
+      contact_group_members: {
+        Row: {
+          contact_id: string
+          created_at: string
+          group_id: string
+          id: string
+        }
+        Insert: {
+          contact_id: string
+          created_at?: string
+          group_id: string
+          id?: string
+        }
+        Update: {
+          contact_id?: string
+          created_at?: string
+          group_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_group_members_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contact_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "contact_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contact_groups: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      contact_notes: {
+        Row: {
+          contact_id: string
+          content: string
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          contact_id: string
+          content: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          contact_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_notes_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contact_todos: {
+        Row: {
+          completed: boolean
+          contact_id: string
+          created_at: string | null
+          due_date: string | null
+          id: string
+          task: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          contact_id: string
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          task: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          contact_id?: string
+          created_at?: string | null
+          due_date?: string | null
+          id?: string
+          task?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_todos_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contacts: {
+        Row: {
+          company: string | null
+          created_at: string
+          dateofcontact: string
+          email: string
+          id: string
+          name: string
+          role: string | null
+          status: string
+          tags: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          dateofcontact: string
+          email: string
+          id?: string
+          name: string
+          role?: string | null
+          status: string
+          tags?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          dateofcontact?: string
+          email?: string
+          id?: string
+          name?: string
+          role?: string | null
+          status?: string
+          tags?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      delete_user: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DefaultSchema = Database[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof Database },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof Database },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof Database },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof Database },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {},
+  },
+} as const
+````
+
+## File: src/lib/utils.ts
+````typescript
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+````
+
+## File: src/pages/NotFound.tsx
+````typescript
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
+const NotFound = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    console.error(
+      "404 Error: User attempted to access non-existent route:",
+      location.pathname
+    );
+  }, [location.pathname]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">404</h1>
+        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
+        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
+          Return to Home
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default NotFound;
+````
+
+## File: src/vite-env.d.ts
+````typescript
+/// <reference types="vite/client" />
+````
+
+## File: supabase/.temp/cli-latest
+````
+v2.22.6
+````
+
+## File: supabase/config.toml
+````toml
+project_id = "dzdxbxqxjqaxpiuzbhdd"
+````
+
+## File: tsconfig.app.json
+````json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": false,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
+````
+
+## File: tsconfig.json
+````json
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noUnusedLocals": false,
+    "strictNullChecks": false
+  }
+}
+````
+
+## File: tsconfig.node.json
+````json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["vite.config.ts"]
+}
+````
+
+## File: src/components/ui/radio-group.tsx
+````typescript
+import * as React from "react"
+import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
+import { Circle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const RadioGroup = React.forwardRef<
+  React.ElementRef<typeof RadioGroupPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
+>(({ className, ...props }, ref) => {
+  return (
+    <RadioGroupPrimitive.Root
+      className={cn("grid gap-2", className)}
+      {...props}
+      ref={ref}
+    />
+  )
+})
+RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
+
+const RadioGroupItem = React.forwardRef<
+  React.ElementRef<typeof RadioGroupPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
+>(({ className, ...props }, ref) => {
+  return (
+    <RadioGroupPrimitive.Item
+      ref={ref}
+      className={cn(
+        "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
+      {...props}
+    >
+      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
+        <Circle className="h-2.5 w-2.5 fill-current text-current" />
+      </RadioGroupPrimitive.Indicator>
+    </RadioGroupPrimitive.Item>
+  )
+})
+RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
+
+export { RadioGroup, RadioGroupItem }
+````
+
+## File: src/components/ui/sheet.tsx
+````typescript
+import * as SheetPrimitive from "@radix-ui/react-dialog";
+import { cva, type VariantProps } from "class-variance-authority";
+import { X } from "lucide-react";
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+const Sheet = SheetPrimitive.Root;
+
+const SheetTrigger = SheetPrimitive.Trigger;
+
+const SheetClose = SheetPrimitive.Close;
+
+const SheetPortal = SheetPrimitive.Portal;
+
+const SheetOverlay = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Overlay
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+    ref={ref}
+  />
+));
+SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
+
+const sheetVariants = cva(
+  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  {
+    variants: {
+      side: {
+        top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        bottom:
+          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+        right:
+          "inset-y-0 right-0 h-full w-1/2 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
+      },
+    },
+    defaultVariants: {
+      side: "right",
+    },
+  }
+);
+
+interface SheetContentProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
+    VariantProps<typeof sheetVariants> {}
+
+const SheetContent = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Content>,
+  SheetContentProps
+>(({ side = "right", className, children, ...props }, ref) => (
+  <SheetPortal>
+    <SheetOverlay />
+    <SheetPrimitive.Content
+      ref={ref}
+      className={cn(sheetVariants({ side }), className)}
+      {...props}
+    >
+      {children}
+      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </SheetPrimitive.Close>
+    </SheetPrimitive.Content>
+  </SheetPortal>
+));
+SheetContent.displayName = SheetPrimitive.Content.displayName;
+
+const SheetHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-2 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+);
+SheetHeader.displayName = "SheetHeader";
+
+const SheetFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+);
+SheetFooter.displayName = "SheetFooter";
+
+const SheetTitle = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Title
+    ref={ref}
+    className={cn("text-lg font-semibold text-foreground", className)}
+    {...props}
+  />
+));
+SheetTitle.displayName = SheetPrimitive.Title.displayName;
+
+const SheetDescription = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+SheetDescription.displayName = SheetPrimitive.Description.displayName;
+
+export {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetOverlay,
+  SheetPortal,
+  SheetTitle,
+  SheetTrigger,
+};
+````
+
+## File: src/features/contacts/components/AddToGroupModal.tsx
+````typescript
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Contact } from "@/features/contacts/types";
+import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useContactGroups } from "@/features/contacts/hooks/useContactGroups";
+import { useContactGroupMembers } from "@/features/contacts/hooks/useContactGroupMembers";
+
+interface AddToGroupModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  selectedContacts: Contact[];
+  onGroupAdded: () => void;
+}
+
+export const AddToGroupModal: React.FC<AddToGroupModalProps> = ({
+  isOpen,
+  onClose,
+  selectedContacts,
+  onGroupAdded,
+}) => {
+  const { user } = useAuth();
+  const { data: groups = [], createGroup } = useContactGroups();
+  const { addContactsToGroup } = useContactGroupMembers();
+  const [newGroupName, setNewGroupName] = useState("");
+  const [selectedGroupId, setSelectedGroupId] = useState<string | "new">("new");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (groups.length > 0 && selectedGroupId === "new") {
+      setSelectedGroupId(groups[0].id);
+    }
+  }, [groups, selectedGroupId]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    if (selectedContacts.length === 0) {
+      toast({
+        title: "No contacts selected",
+        description: "Please select at least one contact to add to the group",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      let groupId = selectedGroupId;
+
+      // Create a new group if selected
+      if (selectedGroupId === "new" && newGroupName.trim()) {
+        const newGroup = await createGroup(newGroupName.trim());
+        if (newGroup) {
+          groupId = newGroup.id;
+        } else {
+          throw new Error("Failed to create group");
+        }
+      }
+
+      if (typeof groupId === "string" && groupId !== "new") {
+        // Add contacts to the group
+        const contactIds = selectedContacts.map((contact) => contact.id);
+        const success = await addContactsToGroup({
+          groupId,
+          contactIds,
+        });
+
+        if (success) {
+          toast({
+            title: "Success",
+            description: `${selectedContacts.length} contacts added to group`,
+          });
+          onGroupAdded();
+          onClose();
+        } else {
+          throw new Error("Failed to add contacts to group");
+        }
+      }
+    } catch (error) {
+      console.error("Error adding contacts to group:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add contacts to group",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Dialog
+      open={isOpen}
+      onOpenChange={onClose}
+    >
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Add to Group</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4 py-4">
+            <RadioGroup
+              value={selectedGroupId}
+              onValueChange={setSelectedGroupId}
+              className="gap-3"
+            >
+              {groups.map((group) => (
+                <div
+                  key={group.id}
+                  className="flex items-center space-x-2"
+                >
+                  <RadioGroupItem
+                    value={group.id}
+                    id={group.id}
+                  />
+                  <Label htmlFor={group.id}>{group.name}</Label>
+                </div>
+              ))}
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value="new"
+                  id="new-group"
+                />
+                <Label htmlFor="new-group">Create new group</Label>
+              </div>
+            </RadioGroup>
+
+            {selectedGroupId === "new" && (
+              <div className="space-y-2">
+                <Label htmlFor="group-name">Group Name</Label>
+                <Input
+                  id="group-name"
+                  value={newGroupName}
+                  onChange={(e) => setNewGroupName(e.target.value)}
+                  placeholder="Enter group name"
+                  required={selectedGroupId === "new"}
+                />
+              </div>
+            )}
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Adding..." : "Add to Group"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+````
+
+## File: src/features/contacts/components/NewContactModal.tsx
+````typescript
+import React, { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Contact } from "@/features/contacts/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { X, Plus } from "lucide-react";
+import { getTagColor } from "../utils/contact-utils";
+import { useTags } from "@/features/tags/hooks/useTags";
+
+interface NewContactModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (data: Omit<Contact, "id">) => void;
+}
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  role: z.string().optional(),
+  company: z.string().optional(),
+  dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+    message: "Date must be in YYYY-MM-DD format.",
+  }),
+  status: z.enum(["Reached Out", "Responded", "Chatted"] as const),
+  tags: z.array(z.string()).optional().default([]),
+});
+
+export const NewContactModal: React.FC<NewContactModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
+  const { availableTags, addTag } = useTags();
+  const [newTagInput, setNewTagInput] = useState("");
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      role: "",
+      company: "",
+      dateOfContact: new Date().toISOString().split("T")[0],
+      status: "Reached Out",
+      tags: [],
+    },
+  });
+
+  const addNewTag = () => {
+    if (
+      newTagInput.trim() !== "" &&
+      !availableTags.includes(newTagInput.trim())
+    ) {
+      const newTag = newTagInput.trim();
+      addTag(newTag);
+
+      const currentTags = form.getValues("tags") || [];
+      if (!currentTags.includes(newTag)) {
+        form.setValue("tags", [...currentTags, newTag], {
+          shouldValidate: true,
+        });
+      }
+
+      setNewTagInput("");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addNewTag();
+    }
+  };
+
+  const selectedTags = form.watch("tags") || [];
+
+  const toggleTagSelection = (tag: string) => {
+    const currentTags = [...selectedTags];
+    const tagIndex = currentTags.indexOf(tag);
+
+    if (tagIndex > -1) {
+      currentTags.splice(tagIndex, 1);
+    } else {
+      currentTags.push(tag);
+    }
+
+    form.setValue("tags", currentTags, { shouldValidate: true });
+  };
+
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    // Make sure all required fields are present
+    const contactData: Omit<Contact, "id"> = {
+      name: values.name,
+      email: values.email,
+      role: values.role,
+      company: values.company,
+      tags: values.tags || [],
+      dateOfContact: values.dateOfContact,
+      status: values.status,
+    };
+
+    onSubmit(contactData);
+    form.reset();
+    onClose();
+  };
+
+  return (
+    <Dialog
+      open={isOpen}
+      onOpenChange={onClose}
+    >
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add New Contact</DialogTitle>
+          <DialogDescription>
+            Add details about your new professional contact.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="john.doe@example.com"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Software Engineer"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="company"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Tech Corp"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tags</FormLabel>
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-2">
+                      {selectedTags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          className={`${getTagColor(
+                            tag
+                          )} cursor-pointer flex items-center gap-1 px-2 py-1`}
+                          onClick={() => toggleTagSelection(tag)}
+                        >
+                          {tag}
+                          <X className="h-3 w-3" />
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        placeholder="Add a tag"
+                        value={newTagInput}
+                        onChange={(e) => setNewTagInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        className="flex-1"
+                      />
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        onClick={addNewTag}
+                        disabled={!newTagInput.trim()}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    {availableTags.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Available tags:
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {availableTags.map(
+                            (tag) =>
+                              !selectedTags.includes(tag) && (
+                                <Badge
+                                  key={tag}
+                                  className={`${getTagColor(
+                                    tag
+                                  )} cursor-pointer opacity-70 hover:opacity-100`}
+                                  variant="outline"
+                                  onClick={() => toggleTagSelection(tag)}
+                                >
+                                  {tag}
+                                </Badge>
+                              )
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="dateOfContact"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date of Contact</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Status</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Reached Out">Reached Out</SelectItem>
+                      <SelectItem value="Responded">Responded</SelectItem>
+                      <SelectItem value="Chatted">Chatted</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Add Contact</Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+````
+
+## File: src/features/contacts/components/TagManagementModal.tsx
+````typescript
+import React, { useState, useEffect } from "react";
+import { useTags } from "@/features/tags/hooks/useTags";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Trash2, Plus, X } from "lucide-react";
+import { getTagColor } from "../utils/contact-utils";
+import { cn } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { ContactStatus } from "@/features/contacts/types";
+
+interface TagManagementModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+// Database contact structure
+interface DbContact {
+  id: string;
+  user_id: string;
+  tags: string[];
+  dateofcontact: string;
+  email: string;
+  name: string;
+  role?: string | null;
+  company?: string | null;
+  status: ContactStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export const TagManagementModal: React.FC<TagManagementModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
+  const { availableTags, addTag, deleteTag, isDefaultTag } = useTags();
+  const { user } = useAuth();
+  const [newTagInput, setNewTagInput] = useState("");
+  const [tagToDelete, setTagToDelete] = useState<string | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [contacts, setContacts] = useState<DbContact[]>([]);
+
+  useEffect(() => {
+    if (isOpen && user) {
+      fetchContacts();
+    }
+  }, [isOpen, user]);
+
+  const fetchContacts = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      // Use type assertion to handle the database structure
+      setContacts((data as DbContact[]) || []);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+    }
+  };
+
+  const handleAddTag = () => {
+    if (newTagInput.trim() && !availableTags.includes(newTagInput.trim())) {
+      addTag(newTagInput.trim());
+      setNewTagInput("");
+      toast({
+        title: "Tag added",
+        description: `The tag "${newTagInput.trim()}" has been added.`,
+      });
+    }
+  };
+
+  const confirmDeleteTag = (tag: string) => {
+    setTagToDelete(tag);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteTag = async () => {
+    if (!tagToDelete || !user) return;
+
+    setIsLoading(true);
+
+    try {
+      // Use the TagContext's deleteTag function which handles the tag deletion
+      // from both the database and the UI context
+      const success = await deleteTag(tagToDelete);
+
+      if (success) {
+        // Update local contacts state to reflect the changes
+        setContacts((prevContacts) =>
+          prevContacts.map((contact) => {
+            if (contact.tags && contact.tags.includes(tagToDelete)) {
+              return {
+                ...contact,
+                tags: contact.tags.filter((tag) => tag !== tagToDelete),
+              };
+            }
+            return contact;
+          })
+        );
+
+        toast({
+          title: "Tag deleted",
+          description: `The tag "${tagToDelete}" has been removed from all contacts.`,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `Could not delete tag "${tagToDelete}". Default tags cannot be deleted.`,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting tag:", error);
+      toast({
+        title: "Error",
+        description: "An error occurred while deleting the tag.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+      setIsDeleteDialogOpen(false);
+      setTagToDelete(null);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddTag();
+    }
+  };
+
+  return (
+    <>
+      <Dialog
+        open={isOpen}
+        onOpenChange={onClose}
+      >
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Manage Tags</DialogTitle>
+            <DialogDescription>
+              Add, edit, or remove tags. Default tags cannot be deleted.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 my-4">
+            {/* Add new tag */}
+            <div className="flex items-center gap-2">
+              <Input
+                placeholder="Add a new tag"
+                value={newTagInput}
+                onChange={(e) => setNewTagInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                onClick={handleAddTag}
+                disabled={
+                  !newTagInput.trim() ||
+                  availableTags.includes(newTagInput.trim())
+                }
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Tag
+              </Button>
+            </div>
+
+            <div className="border rounded-md p-4">
+              <h3 className="text-sm font-medium mb-2">Available Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {availableTags.map((tag) => (
+                  <div
+                    key={tag}
+                    className="flex items-center"
+                  >
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        getTagColor(tag),
+                        isDefaultTag(tag) ? "opacity-70" : "opacity-100"
+                      )}
+                    >
+                      {tag}
+                      {isDefaultTag(tag) && (
+                        <span className="ml-1 text-xs opacity-70">
+                          (default)
+                        </span>
+                      )}
+                    </Badge>
+                    {!isDefaultTag(tag) && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 w-6 p-0 ml-1 text-gray-500 hover:text-red-600"
+                        onClick={() => confirmDeleteTag(tag)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                        <span className="sr-only">Delete {tag}</span>
+                      </Button>
+                    )}
+                  </div>
+                ))}
+                {availableTags.length === 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    No tags available
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              onClick={onClose}
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete confirmation dialog */}
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete tag</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete the tag "{tagToDelete}"? This will
+              remove the tag from all contacts where it's used. This action
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteTag}
+              className="bg-red-600 hover:bg-red-700"
+              disabled={isLoading}
+            >
+              {isLoading ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
+````
+
+## File: src/features/todos/hooks/useTodos.ts
+````typescript
+import { useCallback } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Todo } from "../types";
+import { toast } from "@/components/ui/use-toast";
+import { Contact } from "@/features/contacts/types";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import * as todoService from '../services/todos';
+
+interface UseTodosProps {
+  contactId?: string;
+  onTodoAdded?: (contactId: string, todo: Todo) => void;
+  onTodoCompleted?: (contactId: string, todoId: string, completed: boolean) => void;
+}
+
+export function useTodos({ contactId, onTodoAdded, onTodoCompleted }: UseTodosProps = {}) {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  // Query key for this specific todos request
+  const todosQueryKey = contactId 
+    ? ['todos', user?.id, contactId]
+    : ['todos', user?.id];
+
+  // Fetch todos using React Query
+  const { 
+    data: todos = [], 
+    isLoading: loading,
+    isError,
+    refetch 
+  } = useQuery({
+    queryKey: todosQueryKey,
+    queryFn: async () => {
+      if (!user) throw new Error("User not authenticated");
+      return await todoService.fetchTodos(user.id, contactId);
+    },
+    enabled: !!user,
+  });
+
+  // Function to fetch todos and update contacts if needed
+  const fetchTodos = useCallback(async (contacts?: Contact[]) => {
+    if (!user) return;
+
+    try {
+      // Use the refetch function from React Query
+      const { data } = await refetch();
+
+      // If contacts were provided, update their todos
+      if (contacts && data) {
+        todoService.updateContactsWithTodos(contacts, data);
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load to-dos",
+        variant: "destructive",
+      });
+    }
+  }, [user, refetch]);
+
+  // Mutation for adding a todo
+  const addTodoMutation = useMutation({
+    mutationFn: async ({ task, dueDate }: { task: string; dueDate: Date | null }) => {
+      if (!task.trim() || !user || !contactId) throw new Error("Invalid todo data");
+      return await todoService.createTodo(user.id, contactId, task, dueDate);
+    },
+    onSuccess: (newTodo: Todo) => {
+      // Update React Query cache with the new todo
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) => 
+        [newTodo, ...(oldTodos || [])]
+      );
+      
+      // Call the callback if provided
+      onTodoAdded?.(contactId!, newTodo);
+      
+      toast({
+        title: "To-do added",
+        description: "New to-do has been added successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Error adding todo:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add to-do",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation for toggling todo completion
+  const toggleTodoCompletionMutation = useMutation({
+    mutationFn: async ({ todoId, newStatus }: { todoId: string; newStatus: boolean }) => {
+      if (!user) throw new Error("User not authenticated");
+      await todoService.updateTodoCompletion(user.id, todoId, newStatus);
+      return { todoId, newStatus };
+    },
+    onSuccess: ({ todoId, newStatus }) => {
+      // Update the cache with the new todo status
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+        (oldTodos || []).map((todo) =>
+          todo.id === todoId ? { ...todo, completed: newStatus } : todo
+        )
+      );
+
+      if (contactId) {
+        onTodoCompleted?.(contactId, todoId, newStatus);
+      }
+    },
+    onError: (error) => {
+      console.error("Error updating todo:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update to-do status",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation for deleting a todo
+  const deleteTodoMutation = useMutation({
+    mutationFn: async (todoId: string) => {
+      if (!user) throw new Error("User not authenticated");
+      await todoService.deleteTodo(user.id, todoId);
+      return todoId;
+    },
+    onSuccess: (todoId) => {
+      // Remove the deleted todo from the cache
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+        (oldTodos || []).filter((todo) => todo.id !== todoId)
+      );
+
+      toast({ 
+        title: "Deleted", 
+        description: "To‑do removed" 
+      });
+    },
+    onError: (error) => {
+      console.error("Delete error:", error);
+      toast({
+        title: "Error",
+        description: "Could not delete to‑do",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation for updating todo due date
+  const updateTodoDateMutation = useMutation({
+    mutationFn: async ({ todoId, newDate }: { todoId: string; newDate: Date | null }) => {
+      if (!user) throw new Error("User not authenticated");
+      await todoService.updateTodoDueDate(user.id, todoId, newDate);
+      return { todoId, newDate };
+    },
+    onSuccess: ({ todoId, newDate }) => {
+      // Format the date for display in the UI
+      const formattedDate = newDate 
+        ? new Date(newDate).toISOString().split('T')[0] // format as YYYY-MM-DD
+        : null;
+
+      // Update the cache with the new due date
+      queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+        (oldTodos || []).map((todo) =>
+          todo.id === todoId ? { ...todo, dueDate: formattedDate } : todo
+        )
+      );
+
+      toast({
+        title: "Success",
+        description: "Due date updated successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Error updating due date:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update due date",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Wrapper functions to maintain the original API
+  const addTodo = async (task: string, dueDate: Date | null = null) => {
+    if (!task.trim() || !user || !contactId) return null;
+    
+    try {
+      return await addTodoMutation.mutateAsync({ task, dueDate });
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const toggleTodoCompletion = async (todoId: string, currentStatus: boolean) => {
+    if (!user) return;
+
+    const newStatus = !currentStatus;
+    try {
+      await toggleTodoCompletionMutation.mutateAsync({ todoId, newStatus });
+    } catch (error) {
+      // Error handling is done in the mutation
+    }
+  };
+
+  const deleteTodo = async (todoId: string) => {
+    if (!user) return;
+    
+    try {
+      await deleteTodoMutation.mutateAsync(todoId);
+    } catch (error) {
+      // Error handling is done in the mutation
+    }
+  };
+
+  const updateTodoDueDate = async (todoId: string, newDate: Date | null) => {
+    if (!user) return;
+    
+    try {
+      await updateTodoDateMutation.mutateAsync({ todoId, newDate });
+    } catch (error) {
+      // Error handling is done in the mutation
+    }
+  };
+
+  // Helper functions to handle todo state changes
+  const handleTodoAdded = (contactId: string, todo: Todo) => {
+    queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) => 
+      [todo, ...(oldTodos || [])]
+    );
+    onTodoAdded?.(contactId, todo);
+  };
+
+  const handleTodoCompleted = (contactId: string, todoId: string, completed: boolean) => {
+    queryClient.setQueryData(todosQueryKey, (oldTodos: Todo[] | undefined) =>
+      (oldTodos || []).map((todo) =>
+        todo.id === todoId ? { ...todo, completed } : todo
+      )
+    );
+    onTodoCompleted?.(contactId, todoId, completed);
+  };
+
+  return {
+    todos,
+    loading,
+    fetchTodos,
+    addTodo,
+    toggleTodoCompletion,
+    deleteTodo,
+    updateTodoDueDate,
+    handleTodoAdded,
+    handleTodoCompleted,
+  };
+}
+````
+
+## File: src/features/todos/services/todos.ts
+````typescript
+import { supabase } from "@/lib/client";
+import { Todo } from "../types";
+import { format } from "date-fns";
+import { Contact } from "@/features/contacts/types";
+
+/**
+ * Fetch todos for a specific user, optionally filtered by contact
+ */
+export async function fetchTodos(userId: string, contactId?: string): Promise<Todo[]> {
+  let query = supabase
+    .from("contact_todos")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (contactId) {
+    query = query.eq("contact_id", contactId);
+  }
+
+  const { data, error } = await query;
+
+  if (error) throw error;
+
+  return data.map((item) => ({
+    id: item.id,
+    contactId: item.contact_id,
+    task: item.task,
+    dueDate: item.due_date,
+    completed: item.completed,
+    createdAt: item.created_at,
+  }));
+}
+
+/**
+ * Add a new todo for a specific contact
+ */
+export async function createTodo(
+  userId: string, 
+  contactId: string, 
+  task: string, 
+  dueDate: Date | null = null
+): Promise<Todo> {
+  const { data, error } = await supabase
+    .from("contact_todos")
+    .insert({
+      contact_id: contactId,
+      user_id: userId,
+      task,
+      due_date: dueDate ? format(dueDate, "yyyy-MM-dd") : null,
+      completed: false,
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return {
+    id: data.id,
+    contactId: data.contact_id,
+    task: data.task,
+    dueDate: data.due_date,
+    completed: data.completed,
+    createdAt: data.created_at,
+  };
+}
+
+/**
+ * Toggle the completion status of a todo
+ */
+export async function updateTodoCompletion(
+  userId: string, 
+  todoId: string, 
+  completed: boolean
+): Promise<void> {
+  const { error } = await supabase
+    .from("contact_todos")
+    .update({ completed })
+    .eq("id", todoId)
+    .eq("user_id", userId);
+
+  if (error) throw error;
+}
+
+/**
+ * Delete a todo
+ */
+export async function deleteTodo(userId: string, todoId: string): Promise<void> {
+  const { error } = await supabase
+    .from("contact_todos")
+    .delete()
+    .eq("id", todoId)
+    .eq("user_id", userId);
+
+  if (error) throw error;
+}
+
+/**
+ * Update the due date of a todo
+ */
+export async function updateTodoDueDate(
+  userId: string, 
+  todoId: string, 
+  dueDate: Date | null
+): Promise<void> {
+  const { error } = await supabase
+    .from("contact_todos")
+    .update({
+      due_date: dueDate ? format(dueDate, "yyyy-MM-dd") : null,
+    })
+    .eq("id", todoId)
+    .eq("user_id", userId);
+
+  if (error) throw error;
+}
+
+/**
+ * Helper function to update todos in contacts
+ */
+export function updateContactsWithTodos(contacts: Contact[], todos: Todo[]): Contact[] {
+  return contacts.map(contact => ({
+    ...contact,
+    todos: todos.filter(todo => todo.contactId === contact.id)
+  }));
+}
+````
+
+## File: src/hooks/useContactFilters.ts
+````typescript
+import { useState, useMemo } from "react";
+import { Contact, ContactTag } from "@/features/contacts/types";
+
+export function useContactFilters(contacts: Contact[]) {
+  const [sortKey, setSortKey] = useState<string>("");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | "default">("default");
+  const [activeTagFilter, setActiveTagFilter] = useState<ContactTag | null>(null);
+
+  const handleSort = (key: string, direction: "asc" | "desc" | "default") => {
+    setSortKey(key);
+    setSortDirection(direction);
+  };
+
+  const handleFilterByTag = (tag: ContactTag | null) => {
+    setActiveTagFilter(tag);
+  };
+
+  const filteredAndSortedContacts = useMemo(() => {
+    // First apply tag filtering
+    const filtered = activeTagFilter
+      ? contacts.filter((contact) => contact.tags.includes(activeTagFilter))
+      : contacts;
+
+    // Then apply sorting
+    if (sortKey && sortDirection !== "default") {
+      return [...filtered].sort((a, b) => {
+        const aValue = a[sortKey as keyof Contact];
+        const bValue = b[sortKey as keyof Contact];
+
+        // Handle different types of values
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          // For dates, convert to timestamp first
+          if (sortKey === "dateOfContact") {
+            const aDate = new Date(aValue).getTime();
+            const bDate = new Date(bValue).getTime();
+            return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
+          }
+
+          // For normal strings
+          return sortDirection === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+
+        // Fallback for non-string values
+        return 0;
+      });
+    }
+
+    return filtered;
+  }, [contacts, sortKey, sortDirection, activeTagFilter]);
+
+  return {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    handleSort,
+    handleFilterByTag,
+    filteredAndSortedContacts,
+  };
+}
+````
+
+## File: src/main.tsx
+````typescript
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "@fontsource-variable/outfit";
+import "./index.css";
+
+createRoot(document.getElementById("root")!).render(<App />);
+````
+
+## File: vercel.json
+````json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
+      ]
+    }
+  ]
+}
+````
+
+## File: vite.config.ts
+````typescript
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+import { componentTagger } from "lovable-tagger";
+
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => ({
+  server: {
+    host: "::",
+    port: 8080,
+    historyApiFallback: true
+  },
+  plugins: [
+    react(),
+    mode === 'development' &&
+    componentTagger(),
+  ].filter(Boolean),
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+}));
+````
+
+## File: index.html
+````html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>networking-app</title>
+    <meta name="description" content="networking app for students v1" />
+    <meta name="author" content="andy" />
+
+    <meta property="og:title" content="networking-app" />
+    <meta property="og:description" content="networking app for students v1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+````
+
+## File: README.md
+````markdown
+# Networking App
+
+A modern web application for managing professional contacts, tasks, and networking relationships. Built with React, TypeScript, and Supabase.
+
+## Architecture
+
+### Frontend
+
+- **Framework**: React with TypeScript
+- **State Management**: React Context API for global state
+- **Routing**: React Router for navigation
+- **UI Components**: Custom components built with Tailwind CSS
+- **Data Fetching**: Supabase client for real-time database operations
+
+### Backend
+
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Real-time Updates**: Supabase Realtime subscriptions
+- **Storage**: Supabase Storage for file attachments
+
+## Core Features
+
+### Contact Management
+
+- Create, read, update, and delete contacts
+- Add custom tags to contacts
+- Track contact status (Reached Out, Responded, Chatted)
+- Group contacts into custom categories
+- Add notes and todos to contacts
+
+### Todo System
+
+- Create todos associated with contacts
+- Set due dates and completion status
+- View all todos across contacts
+- Filter and sort todos
+- Real-time updates for todo status
+
+### Group Management
+
+- Create and manage contact groups
+- Add/remove contacts from groups
+- View group-specific contact lists
+- Group-level operations
+
+## Data Flow
+
+### Authentication Flow
+
+1. User signs in/up through Supabase Auth
+2. Auth state is managed through AuthContext
+3. Protected routes ensure authenticated access
+4. Session persistence across page reloads
+
+### Contact Management Flow
+
+1. Contacts are fetched on initial load
+2. Real-time updates sync changes across clients
+3. Contact data includes todos, notes, and tags
+4. Changes are immediately reflected in the UI
+
+### Todo Management Flow
+
+1. Todos are associated with specific contacts
+2. Global todo view shows all todos across contacts
+3. Todo updates sync in real-time
+4. Due dates and completion status are tracked
+
+## Testing
+
+### Unit Tests
+
+- Component rendering tests
+- State management tests
+- Utility function tests
+
+### Integration Tests
+
+- Authentication flows
+- CRUD operations
+- Real-time updates
+
+### End-to-End Tests
+
+- User journeys
+- Critical paths
+- Edge cases
+
+## Development
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Supabase account and project
+
+### Environment Setup
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create a `.env` file with Supabase credentials
+4. Start the development server: `npm run dev`
+
+### Available Scripts
+
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run test`: Run tests
+- `npm run lint`: Run linter
+- `npm run format`: Format code
+
+## Deployment
+
+### Production Build
+
+1. Run `npm run build`
+2. Deploy the `dist` directory to your hosting service
+3. Configure environment variables
+4. Set up Supabase project for production
+
+### Environment Variables
+
+- `VITE_SUPABASE_URL`: Supabase project URL
+- `VITE_SUPABASE_ANON_KEY`: Supabase anonymous key
+- `VITE_API_URL`: API endpoint (if applicable)
+
+## Special Considerations
+
+### Security
+
+- All database operations are authenticated
+- Row-level security policies in Supabase
+- Protected routes for authenticated users
+- Secure storage of sensitive data
+
+### Performance
+
+- Lazy loading of components
+- Optimized database queries
+- Efficient state management
+- Caching strategies
+
+### Accessibility
+
+- ARIA labels and roles
+- Keyboard navigation
+- Screen reader support
+- Color contrast compliance
+
+### Browser Support
+
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- No IE11 support
+- Progressive enhancement
+
+## Contributing
+
+### Code Style
+
+- Follow TypeScript best practices
+- Use functional components
+- Implement proper error handling
+- Write meaningful comments
+
+### Git Workflow
+
+1. Create feature branch
+2. Make changes
+3. Write tests
+4. Submit pull request
+5. Code review
+6. Merge to main
+
+## Troubleshooting
+
+### Common Issues
+
+- Authentication problems
+- Real-time sync issues
+- Database connection errors
+- Build failures
+
+### Debugging
+
+- Check browser console
+- Verify environment variables
+- Test database connections
+- Monitor network requests
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Support
+
+For support, please:
+
+1. Check the documentation
+2. Search existing issues
+3. Create a new issue if needed
+4. Contact the maintainers
+
+## Acknowledgments
+
+- Supabase team for the backend infrastructure
+- React team for the frontend framework
+- All contributors to the project
+````
+
+## File: src/components/ui/input.tsx
+````typescript
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
+Input.displayName = "Input";
+
+export { Input };
+````
+
+## File: src/features/auth/components/ProtectedRoute.tsx
+````typescript
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { AuthSpinner } from "./AuthSpinner";
+
+type ProtectedRouteProps = {
+  redirectPath?: string;
+};
+
+export const ProtectedRoute = ({
+  redirectPath = "/auth",
+}: ProtectedRouteProps) => {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  console.log("ProtectedRoute check:", {
+    isAuthenticated: !!user,
+    isLoading: loading,
+    currentPath: location.pathname,
+  });
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <AuthSpinner message="Loading your account..." />
+      </div>
+    );
+  }
+
+  if (!user) {
+    console.log("No user found, redirecting to auth page");
+    return (
+      <Navigate
+        to={redirectPath}
+        replace
+      />
+    );
+  }
+
+  return <Outlet />;
+};
+````
+
+## File: src/features/auth/context/AuthContext.tsx
+````typescript
+import { ReactNode, useEffect, useState } from "react";
+import { Session, User } from "@supabase/supabase-js";
+import { AuthContext, AuthContextType } from "../types";
+import * as authService from "../services/auth";
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    // Get initial session
+    async function loadSession() {
+      try {
+        const { session, user } = await authService.getSession();
+        console.log("Initial auth state:", {
+          hasSession: !!session,
+          hasUser: !!user,
+          userId: user?.id,
+        });
+        setSession(session);
+        setUser(user);
+      } catch (error) {
+        console.error("Error loading session:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadSession();
+
+    // Listen for auth changes
+    const subscription = authService.onAuthStateChange((event, session) => {
+      console.log("Auth state change:", {
+        event,
+        hasSession: !!session,
+        userId: session?.user?.id,
+      });
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+  const signIn = async (email: string, password: string) => {
+    try {
+      console.log("AuthContext: Starting signIn process");
+      const {
+        user: authUser,
+        session: authSession,
+        error,
+      } = await authService.signInWithPassword(email, password);
+
+      console.log("AuthContext: SignIn result:", {
+        hasUser: !!authUser,
+        hasSession: !!authSession,
+        hasError: !!error,
+        errorMessage: error?.message,
+      });
+
+      // If successful, update local state immediately
+      if (authUser && authSession && !error) {
+        console.log(
+          "AuthContext: Setting user and session state after successful login"
+        );
+        setUser(authUser);
+        setSession(authSession);
+      } else if (error) {
+        console.error("AuthContext: Error during sign in:", error.message);
+      }
+
+      return { error };
+    } catch (error) {
+      console.error("Error signing in:", error);
+      return { error: error as Error };
+    }
+  };
+  const signUp = async (email: string, password: string) => {
+    try {
+      const { user, session, error } = await authService.signUp(
+        email,
+        password
+      );
+
+      // If successful and confirmation is not required, update local state
+      if (
+        user &&
+        session &&
+        !error &&
+        !user.identities?.[0]?.identity_data?.email_confirmed_at
+      ) {
+        setUser(user);
+        setSession(session);
+      }
+
+      return { error };
+    } catch (error) {
+      console.error("Error signing up:", error);
+      return { error: error as Error };
+    }
+  };
+  const signOut = async () => {
+    try {
+      console.log("Signing out user");
+      const { error } = await authService.signOut();
+
+      if (error) {
+        console.error("Error signing out:", error);
+      } else {
+        // Explicitly clear state even if the Supabase auth state listener doesn't fire
+        console.log("Sign out successful, clearing local state");
+        setUser(null);
+        setSession(null);
+      }
+    } catch (error) {
+      console.error("Unexpected error during sign out:", error);
+    }
+  };
+  const updateProfile = async (displayName: string) => {
+    try {
+      const { error } = await authService.updateProfile(displayName);
+      return { error };
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      return { error: error as Error };
+    }
+  };
+
+  const updatePassword = async (newPassword: string) => {
+    try {
+      const { error } = await authService.updatePassword(newPassword);
+      return { error };
+    } catch (error) {
+      console.error("Error updating password:", error);
+      return { error: error as Error };
+    }
+  };
+
+  const resetPassword = async (email: string) => {
+    try {
+      const { error } = await authService.resetPassword(email);
+      return { error };
+    } catch (error) {
+      console.error("Error sending reset password email:", error);
+      return { error: error as Error };
+    }
+  };
+  const signInWithOAuth = async (provider: "github" | "google") => {
+    try {
+      // OAuth redirects to another page, so we don't need to manually update the state
+      // The Auth state listener will handle the session update when the user returns
+      const { error } = await authService.signInWithOAuth(provider);
+      return { error };
+    } catch (error) {
+      console.error("Error signing in with OAuth:", error);
+      return { error: error as Error };
+    }
+  };
+
+  const value: AuthContextType = {
+    session,
+    user,
+    loading,
+    signIn,
+    signUp,
+    signOut,
+    updateProfile,
+    updatePassword,
+    resetPassword,
+    signInWithOAuth,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+````
+
+## File: src/features/auth/services/auth.ts
+````typescript
+import { supabase } from "@/lib/client";
+import { Session, User, AuthError } from "@supabase/supabase-js";
+
+// Get current session and user
+export async function getSession(): Promise<{ session: Session | null; user: User | null }> {
+  const { data } = await supabase.auth.getSession();
+  return {
+    session: data.session,
+    user: data.session?.user ?? null
+  };
+}
+
+// sign in with email and password
+export async function signInWithPassword(email: string, password: string): Promise<{ 
+  user: User | null;
+  session: Session | null;
+  error: AuthError | null;
+}> {
+  console.log("Calling Supabase signInWithPassword for:", email);
+  
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    console.log("Supabase auth response:", { 
+      hasUser: !!data?.user, 
+      hasSession: !!data?.session,
+      hasError: !!error,
+      errorMessage: error?.message || "none"
+    });
+
+    if (error) {
+      console.error("Supabase auth error:", error.message);
+    } else if (data?.user && data?.session) {
+      console.log("Supabase auth success - user and session found");
+    } else {
+      console.warn("Supabase auth partial success - missing user or session");
+    }
+
+    return { 
+      user: data?.user ?? null,
+      session: data?.session ?? null,
+      error 
+    };
+  } catch (err) {
+    const error = err as AuthError;
+    console.error("Unexpected error during sign in:", error);
+    return {
+      user: null,
+      session: null,
+      error
+    };
+  }
+}
+
+// register with email and password
+export async function signUp(email: string, password: string): Promise<{ 
+  user: User | null;
+  session: Session | null;
+  error: AuthError | null;
+}> {
+  const { data, error } = await supabase.auth.signUp({ 
+    email, 
+    password 
+  });
+
+  return { 
+    user: data?.user ?? null,
+    session: data?.session ?? null,
+    error 
+  };
+}
+
+// sign in with OAuth
+export async function signInWithOAuth(provider: 'google' | 'github' | 'facebook'): Promise<{ 
+  error: AuthError | null 
+}> {
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+    });
+    return { error };
+  } catch (error) {
+    console.error("Error signing in with OAuth:", error);
+    return { error: error as AuthError };
+  }
+}
+
+// sign out
+export async function signOut(): Promise<{ error: AuthError | null }> {
+  console.log("Auth service: Calling Supabase signOut");
+  
+  try {
+    const { error } = await supabase.auth.signOut();
+    
+    if (error) {
+      console.error("Error during Supabase signOut:", error.message);
+    } else {
+      console.log("Supabase signOut successful");
+    }
+    
+    return { error };
+  } catch (err) {
+    const error = err as AuthError;
+    console.error("Unexpected error during signOut:", error);
+    return { error };
+  }
+}
+
+// reset password
+export async function resetPassword(email: string): Promise<{ error: AuthError | null }> {
+  const { error } = await supabase.auth.resetPasswordForEmail(email);
+  return { error };
+}
+
+// update password
+export async function updatePassword(password: string): Promise<{ error: AuthError | null }> {
+  const { error } = await supabase.auth.updateUser({ password });
+  return { error };
+}
+
+// update user profile
+export async function updateProfile(displayName: string): Promise<{ error: AuthError | null }> {
+  const { error } = await supabase.auth.updateUser({
+    data: { display_name: displayName },
+  });
+  return { error };
+}
+
+// auth state change listener
+export function onAuthStateChange(callback: (event: string, session: Session | null) => void) {
+  console.log("Setting up auth state change listener");
+  
+  const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    console.log(`Auth state change detected: ${event}`, { 
+      hasSession: !!session,
+      userId: session?.user?.id
+    });
+    callback(event, session);
+  });
+  
+  return data.subscription;
+}
+````
+
+## File: src/features/contacts/components/ContactTableRow.tsx
+````typescript
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Contact, ContactStatus } from "@/features/contacts/types";
+import { Todo } from "@/features/todos/types";
+import { Badge } from "@/components/ui/badge";
+import { ClipboardList } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { getStatusColor, getTagColor } from "../utils/contact-utils";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { X, Plus } from "lucide-react";
+import { useTags } from "@/features/tags/hooks/useTags";
+
+interface ContactTableRowProps {
+  contact: Contact;
+  onEditContact: (contact: Contact) => void;
+  onUpdateContact: (contact: Contact) => void;
+  isSelected: boolean;
+  onSelectContact: (contact: Contact) => void;
+  onOpenTodoPanel?: (contact: Contact) => void;
+}
+
+export const ContactTableRow: React.FC<ContactTableRowProps> = ({
+  contact,
+  onEditContact,
+  onUpdateContact,
+  isSelected,
+  onSelectContact,
+  onOpenTodoPanel,
+}) => {
+  // State for each editable field
+  const [name, setName] = useState(contact.name);
+  const [email, setEmail] = useState(contact.email);
+  const [role, setRole] = useState(contact.role || "");
+  const [company, setCompany] = useState(contact.company || "");
+  const [date, setDate] = useState<Date>(() => {
+    return new Date(`${contact.dateOfContact}T00:00:00`);
+  });
+  const [status, setStatus] = useState<ContactStatus>(contact.status);
+  const [tags, setTags] = useState<string[]>(contact.tags);
+  const [newTagInput, setNewTagInput] = useState("");
+
+  // Refs for handling blur events
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const roleInputRef = useRef<HTMLInputElement>(null);
+  const companyInputRef = useRef<HTMLInputElement>(null);
+
+  // Use the shared tags context
+  const { availableTags, addTag } = useTags();
+  // Update local state when contact prop changes
+  useEffect(() => {
+    setName(contact.name);
+    setEmail(contact.email);
+    setRole(contact.role || "");
+    setCompany(contact.company || "");
+    setDate(new Date(`${contact.dateOfContact}T00:00:00`));
+    setStatus(contact.status);
+    setTags(contact.tags);
+
+    // Debug: Check if todos is properly passed
+    if (contact.todos) {
+      console.log(`Updated todos for ${contact.name}:`, contact.todos.length);
+    } else {
+      console.log(`No todos available for ${contact.name}`);
+    }
+  }, [contact]);
+
+  // Handle field updates
+  const handleUpdate = (updates: Partial<Contact>) => {
+    // Only trigger update if something changed
+    onUpdateContact({
+      ...contact,
+      ...updates,
+    });
+  };
+
+  const handleTagManagement = (selectedTag: string) => {
+    let updatedTags: string[];
+    if (tags.includes(selectedTag)) {
+      updatedTags = tags.filter((tag) => tag !== selectedTag);
+    } else {
+      updatedTags = [...tags, selectedTag];
+    }
+
+    setTags(updatedTags);
+    handleUpdate({ tags: updatedTags });
+  };
+
+  const handleAddNewTag = () => {
+    if (newTagInput.trim() && !tags.includes(newTagInput.trim())) {
+      const newTag = newTagInput.trim();
+      const updatedTags = [...tags, newTag];
+      setTags(updatedTags);
+      handleUpdate({ tags: updatedTags });
+      setNewTagInput("");
+
+      // Add the new tag to the global available tags
+      addTag(newTag);
+    }
+  };
+  const handleOpenTodoPanel = () => {
+    if (onOpenTodoPanel) {
+      onOpenTodoPanel(contact);
+    }
+  }; // Calculate latest todo and update when contact or todos change
+  const latestTodo = useMemo(() => {
+    // Directly compute the latest todo here
+    if (!contact.todos || contact.todos.length === 0) {
+      return null;
+    }
+
+    // Debug info
+    console.log(`Recalculating latest todo for ${contact.name}:`, {
+      todoCount: contact.todos.length,
+      todoData: contact.todos,
+    });
+
+    // First look for incomplete todos
+    const incompleteTodos = contact.todos.filter((todo) => !todo.completed);
+
+    if (incompleteTodos.length > 0) {
+      // Sort by due date (if available) or creation date
+      return incompleteTodos.sort((a, b) => {
+        // If both have due dates, compare them
+        if (a.dueDate && b.dueDate) {
+          return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+        }
+        // If only one has a due date, it comes first
+        if (a.dueDate) return -1;
+        if (b.dueDate) return 1;
+        // If neither has due dates, sort by created date (newest first)
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      })[0]; // Get the first one (earliest due date or most recent)
+    }
+
+    // If no incomplete todos, return the most recently completed one
+    return contact.todos.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )[0];
+  }, [contact.todos, contact.name]);
+
+  // Debug: Log the latestTodo value
+  useEffect(() => {
+    console.log(`Latest todo for ${contact.name}:`, latestTodo);
+  }, [latestTodo, contact.name]);
+
+  return (
+    <TableRow>
+      <TableCell className="w-10 px-4">
+        <Checkbox
+          checked={isSelected}
+          onCheckedChange={() => {
+            onSelectContact(contact);
+          }}
+          aria-label={`Select ${contact.name}`}
+          className="flex h-4 w-4"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={nameInputRef}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onBlur={() => {
+            if (name !== contact.name) {
+              handleUpdate({ name });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={emailInputRef}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onBlur={() => {
+            if (email !== contact.email) {
+              handleUpdate({ email });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={roleInputRef}
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          onBlur={() => {
+            if (role !== contact.role) {
+              handleUpdate({ role });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+          placeholder="-"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={companyInputRef}
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          onBlur={() => {
+            if (company !== contact.company) {
+              handleUpdate({ company });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+          placeholder="-"
+        />
+      </TableCell>
+      <TableCell className="py-2">
+        <Popover>
+          <div className="flex flex-wrap gap-1 min-h-[24px] group">
+            {tags.map((tag) => (
+              <Badge
+                key={tag}
+                variant="outline"
+                className={cn(getTagColor(tag), "gap-1 pr-1")}
+              >
+                {tag}
+                <button
+                  className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleTagManagement(tag);
+                    }
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  onClick={() => handleTagManagement(tag)}
+                >
+                  <X className="h-3 w-3 hover:text-destructive" />
+                  <span className="sr-only">Remove {tag} tag</span>
+                </button>
+              </Badge>
+            ))}
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="h-7 w-7 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <Plus
+                  color="black"
+                  className="h-4 w-4"
+                />
+              </Button>
+            </PopoverTrigger>
+          </div>
+          <PopoverContent
+            className="w-[200px] p-2"
+            align="start"
+          >
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add new tag"
+                  value={newTagInput}
+                  onChange={(e) => setNewTagInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && newTagInput.trim()) {
+                      handleAddNewTag();
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleAddNewTag}
+                  disabled={!newTagInput.trim()}
+                >
+                  Add
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {availableTags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className={cn(
+                      getTagColor(tag),
+                      "cursor-pointer",
+                      tags.includes(tag)
+                        ? "opacity-100"
+                        : "opacity-70 hover:opacity-100"
+                    )}
+                    onClick={() => handleTagManagement(tag)}
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </TableCell>
+      <TableCell className="min-w-0">
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className={cn(
+                "ml-4 flex h-6 items-center justify-center gap-1 rounded-md border bg-background px-2 text-sm",
+                "hover:bg-gray-100 dark:hover:bg-gray-800"
+              )}
+            >
+              <CalendarIcon className="h-3 w-3" />
+              <span className="hidden sm:inline">
+                {format(date, "MMM d, yyyy")}
+              </span>
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={(newDate) => {
+                if (newDate) {
+                  setDate(newDate);
+                  const formattedDate = format(newDate, "yyyy-MM-dd");
+                  handleUpdate({ dateOfContact: formattedDate });
+                }
+              }}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+      </TableCell>
+      <TableCell>
+        <button
+          className="w-full flex items-center gap-2 h-6 px-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer"
+          onClick={handleOpenTodoPanel}
+        >
+          <ClipboardList className="h-4 w-4 text-blue-500" />
+          {latestTodo ? (
+            <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+              {latestTodo.completed ? (
+                <span className="text-gray-400 line-through">
+                  {latestTodo.task}
+                </span>
+              ) : (
+                <span>{latestTodo.task}</span>
+              )}
+            </div>
+          ) : (
+            <span className="text-gray-400">Add to-do</span>
+          )}
+        </button>
+      </TableCell>
+      <TableCell className="!py-2 px-4 text-center">
+        <div className="ml-4">
+          <Select
+            value={status}
+            onValueChange={(value: ContactStatus) => {
+              setStatus(value);
+              handleUpdate({ status: value });
+            }}
+          >
+            <SelectTrigger
+              className={cn(
+                "h-6 border-none w-[140px] focus:ring-0",
+                getStatusColor(status)
+              )}
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Reached Out">Reached Out</SelectItem>
+              <SelectItem value="Responded">Responded</SelectItem>
+              <SelectItem value="Chatted">Chatted</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+};
+````
+
+## File: src/features/contacts/hooks/useContacts.ts
+````typescript
+import { useEffect } from 'react'
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Contact } from "@/features/contacts/types";
+import { toast } from "@/components/ui/use-toast";
+import { useTodos } from "@/features/todos/hooks/useTodos";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import * as contactsService from '@/features/contacts/services/contacts';
+import { useContactSelection } from './useContactSelection';
+
+export function useContacts() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const { fetchTodos } = useTodos();
+
+  // Fetch contacts using React Query
+  const { 
+    data: contacts = [],  // rename data to contacts and default to an empty array
+    isLoading, 
+    isError 
+  } = useQuery({
+    queryKey: ['contacts', user?.id], // use user ID as part of the unique query key
+    queryFn: async () => {
+      if (!user) throw new Error("User not authenticated");
+      return await contactsService.fetchContacts(user.id);
+    },
+    enabled: !!user, // only run the query if user is authenticated
+  });
+    // Fetch todos when the contacts array changes and update contacts with todos
+  useEffect(() => {
+    if (contacts && contacts.length > 0) {
+      // Using async IIFE to handle async operation
+      (async () => {
+        try {
+          const todos = await fetchTodos(contacts);
+          if (todos) {
+            // Update the contact's todos in the React Query cache
+            queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) => {
+              if (!oldContacts) return [];
+              
+              return oldContacts.map(contact => ({
+                ...contact,
+                todos: todos.filter(todo => todo.contactId === contact.id)
+              }));
+            });
+            
+            console.log("Todos loaded and attached to contacts:", todos.length);
+          }
+        } catch (err) {
+          console.error("Error loading todos:", err);
+        }
+      })();
+    }
+  }, [contacts, fetchTodos, queryClient, user?.id]);
+  
+  // Handle errors in fetching contacts
+  useEffect(() => {
+    if (isError) {
+      console.error("Error fetching contacts");
+      toast({
+        title: "Error",
+        description: "Failed to load your contacts",
+        variant: "destructive",
+      });
+    }
+  }, [isError]);
+
+  // Mutation for adding a contact
+  const addContactMutation = useMutation({ // useMutation is a hook from react-query, used for actions that change data
+    mutationFn: async (newContactData: Omit<Contact, "id">) => { // remove the id property from the Contact type
+      if (!user) throw new Error("User not authenticated");
+      return await contactsService.createContact(user.id, newContactData);
+    },
+    // runs after the mutation is successful
+    onSuccess: (newContact: Contact) => {
+      queryClient.setQueryData(['contacts', user?.id], 
+        // receives the previous data (oldContacts) and returns the new data
+        // the new data is an array with the new contact at the beginning and the old contacts after
+        // the old contacts are optional, so we use the || operator to return an empty array if they are undefined
+        (oldContacts: Contact[] | undefined) => [newContact, ...(oldContacts || [])]);
+      
+      toast({
+        title: "Contact added",
+        description: `${newContact.name} has been added to your contacts.`,
+      });
+    },
+    onError: (error) => {
+      console.error("Error adding contact:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add the contact",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation for updating a contact
+  const updateContactMutation = useMutation({
+    mutationFn: async (updatedContact: Contact) => {
+      if (!user) throw new Error("User not authenticated");
+      await contactsService.updateContact(user.id, updatedContact); // await waits until the promise is resolved then moves on to the next line
+      return updatedContact; // since contactsService.updateContact returns void, we must return the updated contact here
+    },
+    onSuccess: (updatedContact: Contact) => {
+      queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) =>
+        oldContacts?.map(contact => 
+          // if the contact id is the same as the updated contact id, return the updated contact. otherwise, return the old contact
+          contact.id === updatedContact.id ? updatedContact : contact
+        ) || []// return empty array if oldContacts is undefined
+      );
+      
+      toast({
+        title: "Contact updated",
+        description: `${updatedContact.name} has been updated.`,
+      });
+    },
+    onError: (error) => {
+      console.error("Error updating contact:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update the contact",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation for deleting contacts
+  const deleteContactsMutation = useMutation({
+    mutationFn: async (contactIds: string[]) => {
+      if (!user) throw new Error("User not authenticated");
+      await contactsService.deleteContacts(user.id, contactIds);
+      return contactIds; // Return the deleted IDs to fix the void error
+    },
+    onSuccess: (deletedIds: string[]) => {
+      queryClient.setQueryData(['contacts', user?.id], (oldContacts: Contact[] | undefined) =>
+        oldContacts?.filter(contact => !deletedIds.includes(contact.id)) || [] // !deletedIds.includes(contact.id) filters out the deleted contacts
+      );
+      
+      toast({
+        title: "Contacts deleted",
+        description: `${deletedIds.length} contact(s) have been deleted.`,
+      });
+    },
+    onError: (error) => {
+      console.error("Error deleting contacts:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete contacts",
+        variant: "destructive",
+      });
+    },  });
+
+  // Use the shared contact selection hook
+  const contactSelection = useContactSelection();
+
+  return {
+    contacts,
+    isLoading,
+    isError,
+    addContact: addContactMutation.mutate,
+    updateContact: updateContactMutation.mutate,
+    deleteContacts: deleteContactsMutation.mutate,
+    // Spread the contact selection properties
+    ...contactSelection
+  };
+}
+````
+
+## File: src/features/todos/components/TodoPanel.tsx
+````typescript
+import React, { useState, useEffect, useCallback } from "react";
+import { Contact } from "@/features/contacts/types";
+import { Todo } from "../types";
+import { supabase } from "@/lib/client";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  CalendarIcon,
+  Save,
+  CheckCircle2,
+  Circle,
+  X,
+  Plus,
+  Bold as BoldIcon,
+  Italic as ItalicIcon,
+  Underline as UnderlineIcon,
+  Link as LinkIcon,
+} from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { toast } from "@/components/ui/use-toast";
+import { useEditor, EditorContent } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
+import Bold from "@tiptap/extension-bold";
+import Italic from "@tiptap/extension-italic";
+import Underline from "@tiptap/extension-underline";
+import Link from "@tiptap/extension-link";
+import { useTodos } from "@/features/todos/hooks/useTodos";
+
+interface ContactNote {
+  id: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface TodoPanelProps {
+  open: boolean;
+  onClose: () => void;
+  contact: Contact | null;
+  onTodoAdded: (contactId: string, todo: Todo) => void;
+  onTodoCompleted: (
+    contactId: string,
+    todoId: string,
+    completed: boolean
+  ) => void;
+}
+
+export const TodoPanel: React.FC<TodoPanelProps> = ({
+  open,
+  onClose,
+  contact,
+  onTodoAdded,
+  onTodoCompleted,
+}) => {
+  const { user } = useAuth();
+  const [newTodo, setNewTodo] = useState("");
+  const [dueDate, setDueDate] = useState<Date | null>(null);
+  const [note, setNote] = useState<ContactNote | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const {
+    todos,
+    loading: todosLoading,
+    fetchTodos,
+    addTodo,
+    toggleTodoCompletion,
+    deleteTodo,
+  } = useTodos({
+    contactId: contact?.id,
+    onTodoAdded,
+    onTodoCompleted,
+  });
+
+  const editor = useEditor({
+    extensions: [StarterKit, Bold, Italic, Underline, Link],
+    content: "",
+  });
+
+  const fetchNote = useCallback(async () => {
+    if (!contact || !user) return;
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("contact_notes")
+        .select("*")
+        .eq("contact_id", contact.id)
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        setNote(data as ContactNote);
+        editor?.commands.setContent(data.content);
+      } else {
+        setNote(null);
+        editor?.commands.setContent("");
+      }
+    } catch (error) {
+      console.error("Error fetching note:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load notes",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [contact, user, editor]);
+
+  useEffect(() => {
+    if (open && contact && user) {
+      fetchTodos();
+      fetchNote();
+    }
+  }, [open, contact, user, fetchTodos, fetchNote]);
+
+  const handleAddTodo = async () => {
+    if (!newTodo.trim() || !contact || !dueDate) {
+      toast({
+        title: "Error",
+        description: "Please enter a task and select a due date",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const added = await addTodo(newTodo, dueDate);
+    if (added) {
+      setNewTodo("");
+      setDueDate(null);
+    }
+  };
+
+  const saveNote = async () => {
+    if (!contact || !user || !editor) return;
+
+    const content = editor.getHTML();
+
+    setLoading(true);
+    try {
+      if (note) {
+        // Update existing note
+        const { error } = await supabase
+          .from("contact_notes")
+          .update({
+            content,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", note.id);
+
+        if (error) throw error;
+      } else {
+        // Create new note
+        const { error } = await supabase.from("contact_notes").insert({
+          contact_id: contact.id,
+          user_id: user.id,
+          content,
+        });
+
+        if (error) throw error;
+      }
+
+      toast({
+        title: "Success",
+        description: "Notes saved successfully",
+      });
+
+      // Refresh the note data
+      fetchNote();
+    } catch (error) {
+      console.error("Error saving note:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save notes",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Sheet
+      open={open}
+      onOpenChange={(isOpen) => !isOpen && onClose()}
+    >
+      <SheetContent className="overflow-y-auto">
+        <SheetHeader>
+          <SheetTitle>
+            {contact ? `To-dos for ${contact.name}` : "Loading..."}
+          </SheetTitle>
+          <SheetDescription>
+            Add and manage to-dos for this contact
+          </SheetDescription>
+        </SheetHeader>
+
+        {contact && (
+          <div className="py-4 space-y-6">
+            {/* Add new to-do section */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium">Add a new to-do</h3>
+              <div className="flex gap-2">
+                <Input
+                  value={newTodo}
+                  onChange={(e) => setNewTodo(e.target.value)}
+                  placeholder="Enter a task..."
+                  className="flex-1"
+                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-[160px] justify-start text-left font-normal pl-3",
+                        !dueDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="h-4 w-4" />
+                      {dueDate ? format(dueDate, "PPP") : "Select due date*"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={dueDate as Date}
+                      onSelect={setDueDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <Button
+                  onClick={handleAddTodo}
+                  disabled={!newTodo.trim() || !dueDate || loading}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                * Due date is required
+              </p>
+            </div>
+
+            {/* To-do list section */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium">To-do List</h3>
+              {todos.length === 0 ? (
+                <p className="text-sm text-muted-foreground">No to-dos yet</p>
+              ) : (
+                <div className="space-y-2">
+                  {todos.map((todo) => (
+                    <div
+                      key={todo.id}
+                      className={cn(
+                        "flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800",
+                        todo.completed && "line-through text-muted-foreground"
+                      )}
+                    >
+                      {/* checkbox toggle */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={() =>
+                          toggleTodoCompletion(todo.id, todo.completed)
+                        }
+                      >
+                        {todo.completed ? (
+                          <CheckCircle2 className="h-5 w-5 text-green-500" />
+                        ) : (
+                          <Circle className="h-5 w-5" />
+                        )}
+                      </Button>
+
+                      {/* task text */}
+                      <div className="flex-1">
+                        <p className="text-sm">{todo.task}</p>
+                        {todo.dueDate && (
+                          <p className="text-xs text-muted-foreground">
+                            Due:{" "}
+                            {format(
+                              new Date(`${todo.dueDate}T00:00:00`),
+                              "MMM d, yyyy"
+                            )}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* delete "X" */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 text-muted-foreground"
+                        onClick={() => deleteTodo(todo.id)}
+                        aria-label="Delete to‑do"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Notes section */}
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-sm font-medium">Notes</h3>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={saveNote}
+                  disabled={loading}
+                  className="flex gap-2"
+                >
+                  <Save className="h-4 w-4" />
+                  Save Notes
+                </Button>
+              </div>
+              <div className="border rounded-md p-1">
+                <div className="flex border-b p-2 gap-2">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => editor?.chain().focus().toggleBold().run()}
+                    className={editor?.isActive("bold") ? "bg-accent" : ""}
+                    title="Bold"
+                  >
+                    <BoldIcon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => editor?.chain().focus().toggleItalic().run()}
+                    className={editor?.isActive("italic") ? "bg-accent" : ""}
+                    title="Italic"
+                  >
+                    <ItalicIcon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() =>
+                      editor?.chain().focus().toggleUnderline().run()
+                    }
+                    className={editor?.isActive("underline") ? "bg-accent" : ""}
+                    title="Underline"
+                  >
+                    <UnderlineIcon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => {
+                      const url = window.prompt("Enter URL");
+                      if (url) {
+                        editor?.chain().focus().setLink({ href: url }).run();
+                      }
+                    }}
+                    className={editor?.isActive("link") ? "bg-accent" : ""}
+                    title="Insert Link"
+                  >
+                    <LinkIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="min-h-[300px] p-3">
+                  <EditorContent
+                    editor={editor}
+                    className="h-full [&_div.ProseMirror]:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <SheetFooter>
+          <Button
+            variant="outline"
+            onClick={onClose}
+          >
+            Close
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+};
+````
+
+## File: src/index.css
+````css
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 240 71% 60%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 258 60% 48%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 240 71% 60%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 71% 60%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 240 71% 60%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 240 71% 60%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 258 60% 48%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 240 71% 60%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 240 71% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 240 71% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    @apply font-sans;
+  }
+}
+
+/* Custom styles for the project */
+.active-sidebar-item {
+  @apply bg-outreach-lightPurple text-white;
+}
+
+.sidebar-item:hover:not(.active-sidebar-item) {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+````
+
+## File: src/lib/client.ts
+````typescript
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/lib/supabase.ts';
+
+// Use environment variables for better security
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Create Supabase client with optimal configurations
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  },
+});
+````
+
+## File: tailwind.config.ts
+````typescript
+import type { Config } from "tailwindcss";
+
+export default {
+	darkMode: ["class"],
+	content: [
+		"./pages/**/*.{ts,tsx}",
+		"./components/**/*.{ts,tsx}",
+		"./app/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}",
+	],
+	prefix: "",
+	theme: {
+		container: {
+			center: true,
+			padding: '2rem',
+			screens: {
+				'2xl': '1400px'
+			}
+		},
+		extend: {
+			fontFamily: {
+				sans: ['Outfit', 'sans-serif'],
+			},
+			colors: {
+				border: 'hsl(var(--border))',
+				input: 'hsl(var(--input))',
+				ring: 'hsl(var(--ring))',
+				background: 'hsl(var(--background))',
+				foreground: 'hsl(var(--foreground))',
+				primary: {
+					DEFAULT: 'hsl(var(--primary))',
+					foreground: 'hsl(var(--primary-foreground))'
+				},
+				secondary: {
+					DEFAULT: 'hsl(var(--secondary))',
+					foreground: 'hsl(var(--secondary-foreground))'
+				},
+				destructive: {
+					DEFAULT: 'hsl(var(--destructive))',
+					foreground: 'hsl(var(--destructive-foreground))'
+				},
+				muted: {
+					DEFAULT: 'hsl(var(--muted))',
+					foreground: 'hsl(var(--muted-foreground))'
+				},
+				accent: {
+					DEFAULT: 'hsl(var(--accent))',
+					foreground: 'hsl(var(--accent-foreground))'
+				},
+				popover: {
+					DEFAULT: 'hsl(var(--popover))',
+					foreground: 'hsl(var(--popover-foreground))'
+				},
+				card: {
+					DEFAULT: 'hsl(var(--card))',
+					foreground: 'hsl(var(--card-foreground))'
+				},
+				sidebar: {
+					DEFAULT: 'hsl(var(--sidebar-background))',
+					foreground: 'hsl(var(--sidebar-foreground))',
+					primary: 'hsl(var(--sidebar-primary))',
+					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+					accent: 'hsl(var(--sidebar-accent))',
+					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+					border: 'hsl(var(--sidebar-border))',
+					ring: 'hsl(var(--sidebar-ring))'
+				},
+				outreach: {
+					blue: '#4361ee',
+					purple: '#6930c3',
+					lightPurple: '#9775fa',
+					light: '#f8f9fa',
+					dark: '#212529'
+				}
+			},
+			borderRadius: {
+				lg: 'var(--radius)',
+				md: 'calc(var(--radius) - 2px)',
+				sm: 'calc(var(--radius) - 4px)'
+			},
+			keyframes: {
+				'accordion-down': {
+					from: {
+						height: '0'
+					},
+					to: {
+						height: 'var(--radix-accordion-content-height)'
+					}
+				},
+				'accordion-up': {
+					from: {
+						height: 'var(--radix-accordion-content-height)'
+					},
+					to: {
+						height: '0'
+					}
+				}
+			},
+			animation: {
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out'
+			}
+		}
+	},
+	plugins: [require("tailwindcss-animate")],
+} satisfies Config;
+````
+
+## File: .gitignore
+````
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.env
+
+*.cursorrules
+````
+
+## File: src/pages/Settings.tsx
+````typescript
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Header } from "@/components/layout/Header";
+import { Sidebar } from "@/components/layout/Sidebar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/client";
+
+export const Settings = () => {
+  const { user, signOut, resetPassword, updatePassword } = useAuth();
+  const navigate = useNavigate();
+  const [displayName, setDisplayName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [resetEmail, setResetEmail] = useState("");
+
+  useEffect(() => {
+    if (user?.user_metadata?.display_name) {
+      setDisplayName(user.user_metadata.display_name);
+    }
+    if (user?.email) {
+      setResetEmail(user.email);
+    }
+  }, [user]);
+
+  const updateDisplayName = async () => {
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        data: { display_name: displayName },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Your display name has been updated.",
+      });
+    } catch (error) {
+      console.error("Error updating display name:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update display name",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteAccount = async () => {
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.rpc("delete_user");
+
+      if (error) throw error;
+
+      await signOut();
+      navigate("/auth");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete account",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordUpdate = async () => {
+    if (!newPassword || !confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Please fill in all password fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { error } = await updatePassword(newPassword);
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Your password has been updated successfully",
+      });
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      console.error("Error updating password:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update password",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    if (!resetEmail) {
+      toast({
+        title: "Error",
+        description: "Please provide an email address",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { error } = await resetPassword(resetEmail);
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Password reset email has been sent",
+      });
+    } catch (error) {
+      console.error("Error sending reset email:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send password reset email",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <Header />
+        <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-800 overflow-y-auto">
+          <div className="container mx-auto max-w-2xl">
+            <h1 className="text-3xl font-bold mb-8">Settings</h1>
+
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle>Profile Settings</CardTitle>
+                <CardDescription>
+                  Update your profile information
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="displayName">Display Name</Label>
+                    <Input
+                      id="displayName"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      placeholder="Enter your display name"
+                    />
+                  </div>
+                  <Button
+                    onClick={updateDisplayName}
+                    disabled={isLoading}
+                  >
+                    Save Changes
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle>Change Password</CardTitle>
+                <CardDescription>Update your account password</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="newPassword">New Password</Label>
+                    <Input
+                      id="newPassword"
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Enter new password"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm new password"
+                    />
+                  </div>
+                  <Button
+                    onClick={handlePasswordUpdate}
+                    disabled={isLoading}
+                  >
+                    Update Password
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle>Password Reset</CardTitle>
+                <CardDescription>
+                  Request a password reset email
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="resetEmail">Email</Label>
+                    <Input
+                      id="resetEmail"
+                      type="email"
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      placeholder="Enter your email"
+                    />
+                  </div>
+                  <Button
+                    onClick={handlePasswordReset}
+                    disabled={isLoading}
+                    variant="secondary"
+                  >
+                    Send Reset Email
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-destructive/5">
+              <CardHeader>
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                <CardDescription>Irreversible actions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive">Delete Account</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove all of your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={deleteAccount}
+                        className="bg-destructive hover:bg-destructive/90"
+                      >
+                        Delete Account
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+````
+
+## File: src/pages/Auth.tsx
+````typescript
+import React, { useState, useEffect } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
+import { Mail } from "lucide-react";
+
+const Auth = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { user, signIn, signUp, resetPassword, signInWithOAuth } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+  const handleEmailAuth = async (
+    e: React.FormEvent,
+    mode: "login" | "signup" | "reset"
+  ) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      console.log(`Attempting ${mode} for email: ${email}`);
+      let result;
+
+      if (mode === "login") {
+        // Perform login and capture result
+        console.log("Calling signIn function with:", {
+          email,
+          passwordLength: password.length,
+        });
+        result = await signIn(email, password);
+
+        // Check user state after login attempt
+        console.log("Login result:", {
+          success: !result?.error,
+          error: result?.error?.message || "none",
+          userAfterLogin: !!user,
+        });
+
+        // If we have a user object but got an error, something is inconsistent
+        if (result?.error && user) {
+          console.warn("Inconsistent state: Error reported but user exists");
+        }
+
+        // If successful but no user, delay and check again (async update may be pending)
+        if (!result?.error && !user) {
+          console.log("No error but user not set yet, might be async");
+          setTimeout(() => {
+            console.log("Delayed user state check:", { userExists: !!user });
+          }, 500);
+        }
+      } else if (mode === "signup") {
+        console.log("Calling signUp function with:", {
+          email,
+          passwordLength: password.length,
+        });
+        result = await signUp(email, password);
+        console.log("Signup result:", {
+          success: !result?.error,
+          error: result?.error?.message || "none",
+        });
+      } else if (mode === "reset") {
+        console.log("Calling resetPassword function with:", { email });
+        result = await resetPassword(email);
+        console.log("Password reset result:", {
+          success: !result?.error,
+          error: result?.error?.message || "none",
+        });
+      }
+      if (result?.error) {
+        console.error("Auth error detected:", result.error.message);
+        toast({
+          title: "Authentication error",
+          description: result.error.message || "An error occurred",
+          variant: "destructive",
+        });
+      } else if (mode === "login") {
+        console.log("Login successful, showing toast and redirecting");
+        toast({
+          title: "Login successful",
+          description: "You have been signed in successfully.",
+        });
+
+        // Explicitly redirect to home page after successful login
+        setTimeout(() => {
+          console.log("Executing navigation to home page");
+          navigate("/");
+        }, 100); // Small delay to ensure toast is displayed
+      } else if (mode === "signup") {
+        toast({
+          title: "Account created",
+          description: "Please check your email to confirm your account.",
+        });
+      } else if (mode === "reset") {
+        toast({
+          title: "Password reset email sent",
+          description:
+            "Please check your email for password reset instructions.",
+        });
+      }
+    } catch (err) {
+      console.error("Auth error:", err);
+      toast({
+        title: "Authentication error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOAuthSignIn = async (provider: "google") => {
+    try {
+      await signInWithOAuth(provider);
+    } catch (error) {
+      toast({
+        title: "Authentication error",
+        description: `Failed to sign in with ${provider}`,
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-800">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center">
+            Networking App
+          </CardTitle>
+          <CardDescription className="text-center">
+            Sign in to your account or create a new one
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent>
+          <Tabs
+            defaultValue="login"
+            className="w-full"
+          >
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="login">Login</TabsTrigger>
+              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="login">
+              <form
+                onSubmit={(e) => handleEmailAuth(e, "login")}
+                className="space-y-4"
+              >
+                <div className="space-y-2">
+                  <Label htmlFor="email-login">Email</Label>
+                  <Input
+                    id="email-login"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <Label htmlFor="password-login">Password</Label>
+                    <Button
+                      variant="link"
+                      type="button"
+                      className="p-0 h-auto text-xs"
+                      onClick={() =>
+                        handleEmailAuth(new Event("click") as never, "reset")
+                      }
+                    >
+                      Forgot password?
+                    </Button>
+                  </div>
+                  <Input
+                    id="password-login"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={loading}
+                >
+                  {loading ? "Signing in..." : "Sign In"}
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="signup">
+              <form
+                onSubmit={(e) => handleEmailAuth(e, "signup")}
+                className="space-y-4"
+              >
+                <div className="space-y-2">
+                  <Label htmlFor="email-signup">Email</Label>
+                  <Input
+                    id="email-signup"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password-signup">Password</Label>
+                  <Input
+                    id="password-signup"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={loading}
+                >
+                  {loading ? "Creating account..." : "Create Account"}
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <Separator />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 grid">
+              <Button
+                variant="outline"
+                onClick={() => handleOAuthSignIn("google")}
+                type="button"
+                disabled={loading}
+              >
+                <Mail className="h-4 w-4" />
+                Google
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default Auth;
+````
+
+## File: src/pages/Todos.tsx
+````typescript
+// filepath: c:\Users\Andy\networking-app-1\src\pages\Todos.tsx
+import React, { useState, useEffect } from "react";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header";
+import { Contact } from "@/features/contacts/types";
+import { Todo } from "@/features/todos/types";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { toast } from "@/components/ui/use-toast";
+import { TodoPanel } from "@/features/todos/components/TodoPanel";
+import { TodoTable } from "@/features/todos/components/TodoTable";
+import { useTodos } from "@/features/todos/hooks/useTodos";
+import { useTodoFilters } from "@/features/todos/hooks/useTodoFilters";
+import { TodoFilters } from "@/features/todos/components/TodoFilters";
+import { AddTaskDialog } from "@/features/todos/components/AddTaskDialog";
+import * as contactsService from "@/features/contacts/services/contacts";
+
+const Todos = () => {
+  const { user } = useAuth();
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(false);
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
+
+  // Fetch todos and provide todo operations
+  const {
+    todos,
+    loading,
+    fetchTodos,
+    toggleTodoCompletion,
+    updateTodoDueDate,
+  } = useTodos();
+
+  // Filter todos
+  const {
+    completionFilter,
+    setCompletionFilter,
+    dueDateFilter,
+    setDueDateFilter,
+    filteredTodos,
+  } = useTodoFilters(todos);
+
+  useEffect(() => {
+    if (user) {
+      fetchTodos();
+
+      const fetchContactsData = async () => {
+        try {
+          const contactsData = await contactsService.fetchContacts(user.id);
+          setContacts(contactsData);
+        } catch (error) {
+          console.error("Error fetching contacts:", error);
+          toast({
+            title: "Error",
+            description: "Failed to load contacts",
+            variant: "destructive",
+          });
+        }
+      };
+
+      fetchContactsData();
+    }
+  }, [user, fetchTodos]);
+
+  const handleOpenTodoPanel = (contactId: string) => {
+    const contact = contacts.find((c) => c.id === contactId);
+    if (contact) {
+      setSelectedContact(contact);
+      setIsTodoPanelOpen(true);
+    }
+  };
+
+  const handleTodoAdded = (contactId: string, todo: Todo) => {
+    fetchTodos();
+  };
+
+  const handleTodoCompleted = (
+    contactId: string,
+    todoId: string,
+    completed: boolean
+  ) => {
+    fetchTodos();
+  };
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <Header />
+        <main className="flex-1 p-6 bg-gray-50 dark:bg-gray-800 overflow-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold">All Todos</h1>
+
+            <TodoFilters
+              completionFilter={completionFilter}
+              dueDateFilter={dueDateFilter}
+              onCompletionFilterChange={setCompletionFilter}
+              onDueDateFilterChange={setDueDateFilter}
+              onAddNewTask={() => setIsAddTaskModalOpen(true)}
+            />
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
+              <TodoTable
+                todos={filteredTodos}
+                contacts={contacts}
+                onToggleCompletion={toggleTodoCompletion}
+                onUpdateDueDate={updateTodoDueDate}
+                onOpenTodoPanel={handleOpenTodoPanel}
+              />
+            </div>
+          )}
+        </main>
+      </div>
+
+      <TodoPanel
+        open={isTodoPanelOpen}
+        onClose={() => setIsTodoPanelOpen(false)}
+        contact={selectedContact}
+        onTodoAdded={handleTodoAdded}
+        onTodoCompleted={handleTodoCompleted}
+      />
+
+      <AddTaskDialog
+        open={isAddTaskModalOpen}
+        onOpenChange={setIsAddTaskModalOpen}
+        contacts={contacts}
+        onTaskAdded={fetchTodos}
+      />
+    </div>
+  );
+};
+
+export default Todos;
+````
+
+## File: src/components/layout/Header.tsx
+````typescript
+import React from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/use-toast";
+
+export const Header: React.FC = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      console.log("Header: Signing out user");
+      await signOut();
+
+      // Show success message
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully.",
+      });
+
+      // Redirect to login page
+      navigate("/auth");
+    } catch (error) {
+      console.error("Error during sign out:", error);
+      toast({
+        title: "Sign out failed",
+        description: "An error occurred while signing out.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getInitials = () => {
+    const displayName = user?.user_metadata?.display_name;
+    if (displayName) {
+      const parts = displayName.split(" ");
+      if (parts.length === 1) {
+        return parts[0].substring(0, 2).toUpperCase();
+      }
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    // Fall back to email initials if no display name
+    if (!user?.email) return "U";
+    const parts = user.email.split("@")[0].split(".");
+    if (parts.length === 1) {
+      return parts[0].substring(0, 2).toUpperCase();
+    }
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  };
+
+  return (
+    <header className="w-full bg-white dark:bg-gray-900 border-b px-6 py-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Outreach Dashboard
+        </h1>
+        <div className="flex items-center gap-4">
+          {user ? (
+            <>
+              <div className="text-right mr-2">
+                <div className="text-sm font-medium">Welcome back,</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  {user.user_metadata?.display_name || user.email}
+                </div>
+              </div>
+              <Avatar>
+                <AvatarFallback className="bg-primary text-white">
+                  {getInitials()}
+                </AvatarFallback>
+              </Avatar>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleSignOut}
+                title="Sign out"
+              >
+                <LogOut size={18} />
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => (window.location.href = "/auth")}
+            >
+              Sign In
+            </Button>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+};
+````
+
+## File: src/components/layout/Sidebar.tsx
+````typescript
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Logo } from "@/components/ui/Logo";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  Settings,
+  Users,
+  ChevronLeft,
+  ChevronRight,
+  Home,
+  ClipboardList,
+} from "lucide-react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useContactGroups } from "@/features/contacts/hooks/useContactGroups";
+import { ContactGroup } from "@/features/contacts/types";
+
+interface SidebarProps {
+  className?: string;
+}
+
+interface NavItem {
+  icon: React.ElementType;
+  label: string;
+  isActive: boolean;
+  path?: string;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { data: contactGroups = [] } = useContactGroups();
+
+  const navItems: NavItem[] = [
+    {
+      icon: Home,
+      label: "Contacts",
+      isActive: location.pathname === "/",
+      path: "/",
+    },
+    {
+      icon: ClipboardList,
+      label: "Todos",
+      isActive: location.pathname === "/todos",
+      path: "/todos",
+    },
+    {
+      icon: Users,
+      label: "Reminders",
+      isActive: location.pathname.startsWith("/reminders"),
+      path: "/reminders",
+    },
+    {
+      icon: Settings,
+      label: "Settings",
+      isActive: location.pathname === "/settings",
+      path: "/settings",
+    },
+  ];
+
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  const handleNavigation = (path?: string) => {
+    if (path) {
+      navigate(path);
+    }
+  };
+
+  const isGroupActive = (groupId: string) => {
+    return location.pathname === `/groups/${groupId}`;
+  };
+
+  return (
+    <div
+      className={`${className} relative bg-white dark:bg-gray-900 h-screen shadow-sm flex flex-col transition-all duration-300 ${
+        isCollapsed ? "w-16" : "w-64"
+      }`}
+    >
+      <div className="p-4 flex items-center justify-between">
+        {!isCollapsed && <Logo />}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggleSidebar}
+          className="absolute -right-3 top-6 bg-white dark:bg-gray-900 rounded-full shadow-sm border z-10"
+        >
+          {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+        </Button>
+      </div>
+      <Separator />
+      <div className="flex-1 py-6 overflow-y-auto">
+        <nav className="px-2 space-y-1">
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation(item.path);
+              }}
+              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+                item.isActive
+                  ? "bg-gray-100 dark:bg-gray-800 text-primary"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+              }`}
+            >
+              <item.icon size={20} />
+              {!isCollapsed && <span>{item.label}</span>}
+            </a>
+          ))}
+        </nav>
+
+        {/* Contact Groups Section */}
+        {contactGroups.length > 0 && (
+          <div className="mt-6">
+            {!isCollapsed && (
+              <div className="px-3 mb-2">
+                <h3 className="text-xs uppercase font-semibold text-gray-500 dark:text-gray-400">
+                  Contact Groups
+                </h3>
+              </div>
+            )}
+            <nav className="px-2 space-y-1">
+              {contactGroups.map((group) => (
+                <a
+                  key={group.id}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavigation(`/groups/${group.id}`);
+                  }}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+                    isGroupActive(group.id)
+                      ? "bg-gray-100 dark:bg-gray-800 text-primary"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  <Users size={20} />
+                  {!isCollapsed && <span>{group.name}</span>}
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
+      </div>
+      <div className="p-4">
+        {!isCollapsed && (
+          <div className="text-xs text-gray-500 dark:text-gray-400">
+            Made with ❤️ by{" "}
+            <a
+              href="https://www.linkedin.com/in/aliu24/"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Andy Liu
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+````
+
+## File: package.json
+````json
+{
+  "name": "vite_react_shadcn_ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.2.5",
+    "@fontsource-variable/outfit": "^5.2.5",
+    "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-alert-dialog": "^1.1.1",
+    "@radix-ui/react-aspect-ratio": "^1.1.0",
+    "@radix-ui/react-avatar": "^1.1.0",
+    "@radix-ui/react-checkbox": "^1.1.1",
+    "@radix-ui/react-collapsible": "^1.1.0",
+    "@radix-ui/react-context-menu": "^2.2.1",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-hover-card": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-menubar": "^1.1.1",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
+    "@radix-ui/react-popover": "^1.1.1",
+    "@radix-ui/react-progress": "^1.1.0",
+    "@radix-ui/react-radio-group": "^1.2.0",
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slider": "^1.2.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.1",
+    "@radix-ui/react-toggle": "^1.1.0",
+    "@radix-ui/react-toggle-group": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.4",
+    "@supabase/supabase-js": "^2.49.4",
+    "@tanstack/react-query": "^5.75.5",
+    "@tiptap/extension-bold": "^2.12.0",
+    "@tiptap/extension-italic": "^2.12.0",
+    "@tiptap/extension-link": "^2.12.0",
+    "@tiptap/extension-underline": "^2.12.0",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
+    "@types/uuid": "^10.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
+    "date-fns": "^3.6.0",
+    "embla-carousel-react": "^8.3.0",
+    "input-otp": "^1.2.4",
+    "lucide-react": "^0.462.0",
+    "next-themes": "^0.3.0",
+    "react": "^18.3.1",
+    "react-day-picker": "^8.10.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.56.2",
+    "react-resizable-panels": "^2.1.3",
+    "react-router-dom": "^6.26.2",
+    "recharts": "^2.12.7",
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.1.0",
+    "vaul": "^0.9.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^22.5.5",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "lovable-tagger": "^1.1.7",
+    "postcss": "^8.4.47",
+    "supabase": "^2.22.6",
+    "tailwindcss": "^3.4.11",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.1",
+    "vite": "^5.4.1"
+  }
+}
+````
+
+## File: src/App.tsx
+````typescript
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import GroupContacts from "./pages/GroupContacts";
+import Auth from "./pages/Auth";
+import NotFound from "./pages/NotFound";
+import { Settings } from "./pages/Settings";
+import Todos from "./pages/Todos";
+import { AuthProvider } from "@/features/auth/context/AuthContext";
+import { TagProvider } from "@/features/tags/context/TagContext";
+import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <HashRouter>
+        <AuthProvider>
+          <TagProvider>
+            <Routes>
+              <Route
+                path="/auth"
+                element={<Auth />}
+              />
+
+              {/* Protected routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route
+                  path="/"
+                  element={<Index />}
+                />
+                <Route
+                  path="/groups/:groupId"
+                  element={<GroupContacts />}
+                />
+                <Route
+                  path="/settings"
+                  element={<Settings />}
+                />
+                <Route
+                  path="/todos"
+                  element={<Todos />}
+                />
+                {/* Add other protected routes here */}
+              </Route>
+
+              {/* Catch-all route */}
+              <Route
+                path="*"
+                element={<NotFound />}
+              />
+            </Routes>
+          </TagProvider>
+        </AuthProvider>
+      </HashRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;
+````
+
+## File: src/pages/GroupContacts.tsx
+````typescript
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header";
+import { ContactTable } from "@/features/contacts/components/ContactTable";
+import { Contact, ContactTag } from "@/features/contacts/types";
+import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Trash2, Pencil, Save, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { useContactGroup } from "@/features/contacts/hooks/useContactGroup";
+import { useContactFilters } from "@/features/contacts/hooks/useContactFilters";
+import { useContactSelection } from "@/features/contacts/hooks/useContactSelection";
+import { useContacts } from "@/features/contacts/hooks/useContacts";
+
+const GroupContacts = () => {
+  const { groupId = "" } = useParams<{ groupId: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // Use the shared contact selection hook
+  const { selectedContacts, toggleContactSelection, clearSelectedContacts } =
+    useContactSelection();
+
+  // State for group renaming
+  const [editingGroupName, setEditingGroupName] = useState(false);
+  const [newGroupName, setNewGroupName] = useState("");
+
+  // State for deletion confirmation
+  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+
+  // Use the contactGroup hook to fetch group data and contacts
+  const {
+    group,
+    contacts,
+    isLoading,
+    isError,
+    updateGroupName: updateGroupNameMutation,
+    removeContacts: removeContactsMutation,
+    isUpdatingGroup,
+  } = useContactGroup(groupId);
+
+  // Set newGroupName when group data is loaded
+  useEffect(() => {
+    if (group) {
+      setNewGroupName(group.name);
+    }
+  }, [group]);
+
+  // Navigate away if there's an error fetching the group
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: "Error",
+        description: "Failed to load group information",
+        variant: "destructive",
+      });
+      navigate("/");
+    }
+  }, [isError, navigate]);
+
+  // Use the contactFilters hook for sorting and filtering
+  const {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    filteredAndSortedContacts,
+    handleSort,
+    handleFilterByTag,
+  } = useContactFilters(contacts);
+
+  const { updateContact } = useContacts();
+
+  // Handle group name update
+  const handleUpdateGroupName = async () => {
+    if (!newGroupName.trim()) return;
+
+    const success = await updateGroupNameMutation(newGroupName.trim());
+
+    if (success) {
+      toast({
+        title: "Group updated",
+        description: "Group name has been updated successfully.",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to update group name",
+        variant: "destructive",
+      });
+    }
+
+    setEditingGroupName(false);
+  };
+  // Handle removing contacts from group
+  const handleRemoveContacts = async () => {
+    if (selectedContacts.length === 0) return;
+
+    const contactIds = selectedContacts.map((contact) => contact.id);
+    const success = await removeContactsMutation(contactIds);
+
+    if (success) {
+      clearSelectedContacts();
+      toast({
+        title: "Contacts removed",
+        description: `${contactIds.length} contact(s) removed from group.`,
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to remove contacts from group",
+        variant: "destructive",
+      });
+    }
+
+    setShowRemoveDialog(false);
+  };
+
+  // Handle contact update
+  const handleUpdateContact = async (updatedContact: Contact) => {
+    const success = await updateContactMutation(updatedContact);
+
+    if (success) {
+      toast({
+        title: "Contact updated",
+        description: `${updatedContact.name} has been updated.`,
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to update the contact",
+        variant: "destructive",
+      });
+    }
+  };
+  // Handle contact selection
+  const handleSelectContact = (contact: Contact) => {
+    toggleContactSelection(contact);
+  };
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Header />
+        <main className="flex-1 overflow-auto p-6 bg-gray-50 dark:bg-gray-800">
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/")}
+                className="gap-1"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
+            </div>
+            <div className="flex justify-between items-center">
+              <div>
+                {editingGroupName ? (
+                  <div className="flex gap-2 items-center">
+                    <Input
+                      value={newGroupName}
+                      onChange={(e) => setNewGroupName(e.target.value)}
+                      className="text-xl font-semibold w-64"
+                      autoFocus
+                    />
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={handleUpdateGroupName}
+                      disabled={!newGroupName.trim() || isUpdatingGroup}
+                    >
+                      <Save className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        setEditingGroupName(false);
+                        setNewGroupName(group?.name || "");
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <h2 className="text-2xl font-semibold group flex items-center gap-2">
+                    {group?.name || "Group"}
+                    <Pencil
+                      className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      onClick={() => setEditingGroupName(true)}
+                    />
+                  </h2>
+                )}
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {contacts.length} contacts in this group
+                </p>
+              </div>
+
+              {selectedContacts.length > 0 && (
+                <Button
+                  variant="destructive"
+                  className="gap-1"
+                  onClick={() => setShowRemoveDialog(true)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Remove from Group
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
+              <ContactTable
+                contacts={filteredAndSortedContacts}
+                onSort={handleSort}
+                sortKey={sortKey}
+                sortDirection={sortDirection}
+                onFilterByTag={handleFilterByTag}
+                activeTagFilter={activeTagFilter}
+                onEditContact={handleUpdateContact}
+                onUpdateContact={handleUpdateContact}
+                selectedContacts={selectedContacts}
+                onSelectContact={handleSelectContact}
+              />
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* Modals */}
+
+      {/* Remove confirmation dialog */}
+      <AlertDialog
+        open={showRemoveDialog}
+        onOpenChange={setShowRemoveDialog}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove contacts from group</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to remove {selectedContacts.length}{" "}
+              contact(s) from this group? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleRemoveContacts}>
+              Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
+
+export default GroupContacts;
+````
+
+## File: src/pages/Index.tsx
+````typescript
+import React, { useState } from "react";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header";
+import { ContactTable } from "@/features/contacts/components/ContactTable";
+import { NewContactModal } from "@/features/contacts/components/NewContactModal";
+import { AddToGroupModal } from "@/features/contacts/components/AddToGroupModal";
+import { Contact } from "@/features/contacts/types";
+import { Button } from "@/components/ui/button";
+import { UserPlus, Trash2, Tag } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { TagManagementModal } from "@/features/contacts/components/TagManagementModal";
+import { TodoPanel } from "@/features/todos/components/TodoPanel";
+import { useContacts } from "@/features/contacts/hooks/useContacts";
+import { useContactFilters } from "@/hooks/useContactFilters";
+import { useTodos } from "@/features/todos/hooks/useTodos";
+import { Plus } from "lucide-react";
+
+const Index = () => {
+  // Contact management
+  const {
+    contacts,
+    isLoading,
+    isError,
+    addContact,
+    updateContact,
+    deleteContacts,
+    selectedContacts,
+    toggleContactSelection,
+    clearSelectedContacts,
+  } = useContacts();
+
+  // Sorting and filtering
+  const {
+    sortKey,
+    sortDirection,
+    activeTagFilter,
+    handleSort,
+    handleFilterByTag,
+    filteredAndSortedContacts,
+  } = useContactFilters(contacts);
+
+  // Todo management
+  const { handleTodoAdded, handleTodoCompleted } = useTodos();
+
+  // Modal states
+  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddToGroupModalOpen, setIsAddToGroupModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isTagManagementOpen, setIsTagManagementOpen] = useState(false);
+  const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(false);
+
+  // Selected contact states
+  const [contactToEdit, setContactToEdit] = useState<Contact | null>(null);
+  const [contactForTodos, setContactForTodos] = useState<Contact | null>(null);
+
+  const handleEditContact = (contact: Contact) => {
+    setContactToEdit(contact);
+    setIsEditModalOpen(true);
+  };
+
+  const handleOpenTodoPanel = (contact: Contact) => {
+    setContactForTodos(contact);
+    setIsTodoPanelOpen(true);
+  };
+
+  const handleDeleteSelectedContacts = async () => {
+    if (selectedContacts.length === 0) return;
+    await deleteContacts(selectedContacts.map((c) => c.id));
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleGroupAdded = () => {
+    setIsAddToGroupModalOpen(false);
+  };
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Header />
+        <main className="flex-1 overflow-auto p-6 bg-gray-50 dark:bg-gray-800">
+          <div className="mb-6 flex justify-between items-center">
+            <div>
+              <h2 className="text-2xl font-semibold">Contacts</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Manage your professional network
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setIsTagManagementOpen(true)}
+                className="gap-1"
+              >
+                <Tag className="h-4 w-4" />
+                Manage Tags
+              </Button>
+              {selectedContacts.length > 0 && (
+                <>
+                  <Button
+                    onClick={() => setIsDeleteDialogOpen(true)}
+                    variant="outline"
+                    className="gap-1 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Delete ({selectedContacts.length})
+                  </Button>
+                  <Button
+                    onClick={() => setIsAddToGroupModalOpen(true)}
+                    variant="outline"
+                    className="gap-1"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    Add to Group ({selectedContacts.length})
+                  </Button>
+                </>
+              )}
+              <Button
+                onClick={() => setIsNewModalOpen(true)}
+                className="hover:bg/90"
+              >
+                <Plus className="mr-2 h-4 w-4" /> New Contact
+              </Button>
+            </div>
+          </div>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow">
+              <ContactTable
+                contacts={filteredAndSortedContacts}
+                onSort={handleSort}
+                sortKey={sortKey}
+                sortDirection={sortDirection}
+                onFilterByTag={handleFilterByTag}
+                activeTagFilter={activeTagFilter}
+                onEditContact={handleEditContact}
+                onUpdateContact={updateContact}
+                selectedContacts={selectedContacts}
+                onSelectContact={toggleContactSelection}
+                onOpenTodoPanel={handleOpenTodoPanel}
+              />
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* Modals */}
+      <NewContactModal
+        isOpen={isNewModalOpen}
+        onClose={() => setIsNewModalOpen(false)}
+        onSubmit={addContact}
+      />
+
+      <AddToGroupModal
+        isOpen={isAddToGroupModalOpen}
+        onClose={() => setIsAddToGroupModalOpen(false)}
+        selectedContacts={selectedContacts}
+        onGroupAdded={handleGroupAdded}
+      />
+
+      <TagManagementModal
+        isOpen={isTagManagementOpen}
+        onClose={() => setIsTagManagementOpen(false)}
+      />
+
+      <TodoPanel
+        open={isTodoPanelOpen}
+        onClose={() => setIsTodoPanelOpen(false)}
+        contact={contactForTodos}
+        onTodoAdded={handleTodoAdded}
+        onTodoCompleted={handleTodoCompleted}
+      />
+
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete contacts</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete {selectedContacts.length}{" "}
+              contact(s)? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteSelectedContacts}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
+
+export default Index;
+````

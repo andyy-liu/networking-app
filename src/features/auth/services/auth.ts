@@ -1,9 +1,7 @@
 import { supabase } from "@/lib/client";
 import { Session, User, AuthError } from "@supabase/supabase-js";
 
-/**
- * Get the current session
- */
+// Get current session and user
 export async function getSession(): Promise<{ session: Session | null; user: User | null }> {
   const { data } = await supabase.auth.getSession();
   return {
@@ -12,9 +10,7 @@ export async function getSession(): Promise<{ session: Session | null; user: Use
   };
 }
 
-/**
- * Sign in with email and password
- */
+// sign in with email and password
 export async function signInWithPassword(email: string, password: string): Promise<{ 
   user: User | null;
   session: Session | null;
@@ -59,9 +55,7 @@ export async function signInWithPassword(email: string, password: string): Promi
   }
 }
 
-/**
- * Sign up with email and password
- */
+// register with email and password
 export async function signUp(email: string, password: string): Promise<{ 
   user: User | null;
   session: Session | null;
@@ -79,9 +73,7 @@ export async function signUp(email: string, password: string): Promise<{
   };
 }
 
-/**
- * Sign in with OAuth provider
- */
+// sign in with OAuth
 export async function signInWithOAuth(provider: 'google' | 'github' | 'facebook'): Promise<{ 
   error: AuthError | null 
 }> {
@@ -96,9 +88,7 @@ export async function signInWithOAuth(provider: 'google' | 'github' | 'facebook'
   }
 }
 
-/**
- * Sign out the current user
- */
+// sign out
 export async function signOut(): Promise<{ error: AuthError | null }> {
   console.log("Auth service: Calling Supabase signOut");
   
@@ -119,25 +109,19 @@ export async function signOut(): Promise<{ error: AuthError | null }> {
   }
 }
 
-/**
- * Reset password
- */
+// reset password
 export async function resetPassword(email: string): Promise<{ error: AuthError | null }> {
   const { error } = await supabase.auth.resetPasswordForEmail(email);
   return { error };
 }
 
-/**
- * Update user password
- */
+// update password
 export async function updatePassword(password: string): Promise<{ error: AuthError | null }> {
   const { error } = await supabase.auth.updateUser({ password });
   return { error };
 }
 
-/**
- * Update user profile
- */
+// update user profile
 export async function updateProfile(displayName: string): Promise<{ error: AuthError | null }> {
   const { error } = await supabase.auth.updateUser({
     data: { display_name: displayName },
@@ -145,9 +129,7 @@ export async function updateProfile(displayName: string): Promise<{ error: AuthE
   return { error };
 }
 
-/**
- * Set up auth state change listener
- */
+// auth state change listener
 export function onAuthStateChange(callback: (event: string, session: Session | null) => void) {
   console.log("Setting up auth state change listener");
   

@@ -1,9 +1,7 @@
 import { supabase } from "@/lib/client";
 import { Contact, ContactGroup } from "@/features/contacts/types";
 
-/**
- * Fetch all contact groups for a user
- */
+// Fetch all contact groups for a user
 export async function fetchContactGroups(userId: string): Promise<ContactGroup[]> {
   if (!userId) return [];
 
@@ -29,9 +27,7 @@ export async function fetchContactGroups(userId: string): Promise<ContactGroup[]
   }
 }
 
-/**
- * Create a new contact group
- */
+// Create a new contact group
 export async function createContactGroup(userId: string, name: string): Promise<ContactGroup | null> {
   if (!userId || !name) return null;
 
@@ -58,9 +54,7 @@ export async function createContactGroup(userId: string, name: string): Promise<
   }
 }
 
-/**
- * Update a contact group
- */
+// Update a contact group
 export async function updateContactGroup(groupId: string, name: string): Promise<ContactGroup | null> {
   if (!groupId || !name) return null;
 
@@ -88,9 +82,7 @@ export async function updateContactGroup(groupId: string, name: string): Promise
   }
 }
 
-/**
- * Delete a contact group
- */
+// Delete a contact group
 export async function deleteContactGroup(groupId: string): Promise<boolean> {
   if (!groupId) return false;
 
@@ -111,9 +103,7 @@ export async function deleteContactGroup(groupId: string): Promise<boolean> {
   }
 }
 
-/**
- * Fetch a single contact group by ID
- */
+// Fetch a single contact group
 export async function fetchContactGroup(groupId: string, userId: string): Promise<ContactGroup | null> {
   if (!userId || !groupId) return null;
 
@@ -139,9 +129,7 @@ export async function fetchContactGroup(groupId: string, userId: string): Promis
   }
 }
 
-/**
- * Fetch all contacts in a group
- */
+// fetch all contacts in a group
 export async function fetchContactsInGroup(groupId: string, userId: string): Promise<Contact[]> {
   if (!userId || !groupId) return [];
 
@@ -185,9 +173,7 @@ export async function fetchContactsInGroup(groupId: string, userId: string): Pro
   }
 }
 
-/**
- * Update a contact group's name
- */
+// Update contact group name
 export async function updateContactGroupName(
   groupId: string, 
   userId: string, 
