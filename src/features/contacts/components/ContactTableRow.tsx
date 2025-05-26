@@ -166,16 +166,18 @@ export const ContactTableRow: React.FC<ContactTableRowProps> = ({
 
   return (
     <TableRow>
-      <TableCell className="w-10 px-4">
-        <Checkbox
-          checked={isSelected}
-          onCheckedChange={() => {
-            onSelectContact(contact);
-          }}
-          aria-label={`Select ${contact.name}`}
-          className="flex h-4 w-4"
-        />
-      </TableCell>
+      {onSelectContact && (
+        <TableCell className="w-10 px-4">
+          <Checkbox
+            checked={isSelected}
+            onCheckedChange={() => {
+              onSelectContact(contact);
+            }}
+            aria-label={`Select ${contact.name}`}
+            className="flex h-4 w-4"
+          />
+        </TableCell>
+      )}
       <TableCell>
         <Input
           ref={nameInputRef}

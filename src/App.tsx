@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import { Settings } from "./pages/Settings";
 import Todos from "./pages/Todos";
+import Reminders from "./pages/Reminders";
 import { AuthProvider } from "@/features/auth/context/AuthContext";
 import { TagProvider } from "@/features/tags/context/TagContext";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
@@ -46,6 +47,10 @@ const App = () => (
                 <Route
                   path="/todos"
                   element={<Todos />}
+                />
+                <Route
+                  path="/reminders"
+                  element={<Reminders />}
                 />
                 {/* Add other protected routes here */}
               </Route>
