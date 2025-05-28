@@ -29,7 +29,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus } from "lucide-react";
+import { X, Plus, CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { getTagColor } from "../utils/contact-utils";
 import { useTags } from "@/features/tags/hooks/useTags";
 
@@ -278,19 +286,39 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
-
-            <FormField
+            />            <FormField
               control={form.control}
               name="dateOfContact"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Date of Contact</FormLabel>
                   <FormControl>
-                    <Input
-                      type="date"
-                      {...field}
-                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={field.value ? new Date(field.value) : undefined}
+                          onSelect={(date) => {
+                            if (date) {
+                              field.onChange(format(date, "yyyy-MM-dd"));
+                            }
+                          }}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

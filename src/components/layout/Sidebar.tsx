@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useContactGroups } from "@/features/contacts/hooks/useContactGroups";
-import { ContactGroup } from "@/features/contacts/types";
 
 interface SidebarProps {
   className?: string;
@@ -76,11 +75,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
 
   return (
     <div
-      className={`${className} relative bg-white dark:bg-gray-900 h-screen shadow-sm flex flex-col transition-all duration-300 ${
+      className={`${className} relative bg-slate-100 dark:bg-gray-900 h-screen shadow-sm flex flex-col transition-all duration-300 ${
         isCollapsed ? "w-16" : "w-64"
       }`}
     >
-      <div className="p-4 flex items-center justify-between">
+      <div className="p-5 flex items-center justify-between">
         {!isCollapsed && <Logo />}
         <Button
           variant="ghost"
@@ -92,8 +91,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
         </Button>
       </div>
       <Separator />
-      <div className="flex-1 py-6 overflow-y-auto">
-        <nav className="px-2 space-y-1">
+      <div className="flex-1 py-4 overflow-y-auto">
+        <nav className="px-2">
           {navItems.map((item) => (
             <a
               key={item.label}
@@ -102,13 +101,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
                 e.preventDefault();
                 handleNavigation(item.path);
               }}
-              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+              className={`flex items-center text-base gap-2 mb-1 px-4 py-1 rounded-lg duration-150 ${
                 item.isActive
-                  ? "bg-gray-100 dark:bg-gray-800 text-primary"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  ? "bg-gray-200 dark:bg-gray-800"
+                  : "text-gray-700 hover:bg-gray-200"
               }`}
             >
-              <item.icon size={20} />
+              <item.icon size={14} />
               {!isCollapsed && <span>{item.label}</span>}
             </a>
           ))}
@@ -119,12 +118,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
           <div className="mt-6">
             {!isCollapsed && (
               <div className="px-3 mb-2">
-                <h3 className="text-xs uppercase font-semibold text-gray-500 dark:text-gray-400">
+                <h3 className="text-xs px-2 uppercase font-semibold text-gray-500 dark:text-gray-400">
                   Contact Groups
                 </h3>
               </div>
             )}
-            <nav className="px-2 space-y-1">
+            <nav className="px-2">
               {contactGroups.map((group) => (
                 <a
                   key={group.id}
@@ -133,13 +132,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
                     e.preventDefault();
                     handleNavigation(`/groups/${group.id}`);
                   }}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${
+                  className={`flex items-center gap-2 mb-1 px-4 py-1 rounded-md duration-150 ${
                     isGroupActive(group.id)
-                      ? "bg-gray-100 dark:bg-gray-800 text-primary"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                      ? "bg-gray-200 dark:bg-gray-800"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                   }`}
                 >
-                  <Users size={20} />
+                  <Users size={14} />
                   {!isCollapsed && <span>{group.name}</span>}
                 </a>
               ))}

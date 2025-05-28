@@ -1,28 +1,43 @@
 import React, { useState } from "react";
 import { Contact, ContactStatus } from "../types";
-import { ReminderCategory, getReminderCategoryTitle, getDaysSinceLastContact } from "../utils/reminder-utils";
-import { Table, TableBody, TableHeader, TableRow, TableHead, TableCell } from "@/components/ui/table";
-import { formatDate, getTagColor, getStatusColor } from "../utils/contact-utils";
-import { 
+import {
+  ReminderCategory,
+  getReminderCategoryTitle,
+  getDaysSinceLastContact,
+} from "../utils/reminder-utils";
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
+import {
+  formatDate,
+  getTagColor,
+  getStatusColor,
+} from "../utils/contact-utils";
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger
+  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, ClipboardList } from "lucide-react";
-import { 
+import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
 } from "@/components/ui/popover";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
@@ -36,10 +51,10 @@ interface ReminderTableProps {
 }
 
 // Custom enhanced table row component for reminders
-const ReminderTableRowEnhanced = ({ 
-  contact, 
+const ReminderTableRowEnhanced = ({
+  contact,
   onUpdateContact,
-  onOpenTodoPanel 
+  onOpenTodoPanel,
 }: {
   contact: Contact;
   onUpdateContact: (contact: Contact) => void;
@@ -47,7 +62,7 @@ const ReminderTableRowEnhanced = ({
 }) => {
   const daysSinceLastContact = getDaysSinceLastContact(contact.dateOfContact);
   const [date, setDate] = useState<Date>(new Date(contact.dateOfContact));
-  
+
   // Update the contact when date changes
   const handleDateChange = (newDate: Date | undefined) => {
     if (newDate) {
@@ -55,11 +70,11 @@ const ReminderTableRowEnhanced = ({
       const formattedDate = format(newDate, "yyyy-MM-dd");
       onUpdateContact({
         ...contact,
-        dateOfContact: formattedDate
+        dateOfContact: formattedDate,
       });
     }
   };
-  
+
   return (
     <TableRow className="h-10">
       <TableCell className="py-0.5">{contact.name}</TableCell>
@@ -68,10 +83,10 @@ const ReminderTableRowEnhanced = ({
       <TableCell className="py-0.5">{contact.company || "-"}</TableCell>
       <TableCell className="py-0.5">
         <div className="flex flex-wrap gap-1">
-          {contact.tags.map(tag => (
-            <Badge 
-              key={tag} 
-              variant="outline" 
+          {contact.tags.map((tag) => (
+            <Badge
+              key={tag}
+              variant="outline"
               className={cn("text-xs", getTagColor(tag))}
             >
               {tag}
@@ -107,12 +122,14 @@ const ReminderTableRowEnhanced = ({
         </Popover>
       </TableCell>
       <TableCell className="py-0.5">
-        <Badge variant={daysSinceLastContact > 30 ? "destructive" : "secondary"}>
+        <Badge
+          variant={daysSinceLastContact > 30 ? "destructive" : "secondary"}
+        >
           {daysSinceLastContact} days
         </Badge>
       </TableCell>
       <TableCell className="py-0.5">
-        <button 
+        <button
           className="w-full flex items-center gap-2 h-6 px-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer"
           onClick={() => onOpenTodoPanel?.(contact)}
         >
@@ -121,36 +138,49 @@ const ReminderTableRowEnhanced = ({
             <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
               {/* Find the first incomplete todo, or use the most recent one */}
               {(() => {
-                if (!contact.todos) return <span className="text-gray-400">Add todo</span>;
-                
+                if (!contact.todos)
+                  return <span className="text-gray-400">Add todo</span>;
+
                 // First look for incomplete todos
-                const incompleteTodos = contact.todos.filter(todo => !todo.completed);
-                
+                const incompleteTodos = contact.todos.filter(
+                  (todo) => !todo.completed
+                );
+
                 if (incompleteTodos.length > 0) {
                   // Sort by due date (if available) or creation date
                   const sortedTodos = incompleteTodos.sort((a, b) => {
                     // If both have due dates, compare them
                     if (a.dueDate && b.dueDate) {
-                      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+                      return (
+                        new Date(a.dueDate).getTime() -
+                        new Date(b.dueDate).getTime()
+                      );
                     }
                     // If only one has a due date, it comes first
                     if (a.dueDate) return -1;
                     if (b.dueDate) return 1;
-                    
+
                     // If neither has due dates, sort by created date (newest first)
-                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    return (
+                      new Date(b.createdAt).getTime() -
+                      new Date(a.createdAt).getTime()
+                    );
                   });
-                  
+
                   return <span>{sortedTodos[0].task}</span>;
                 }
-                
+
                 // If no incomplete todos, show the most recently completed one
                 const latestTodo = contact.todos.sort(
-                  (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                  (a, b) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
                 )[0];
-                
+
                 return latestTodo ? (
-                  <span className="text-gray-400 line-through">{latestTodo.task}</span>
+                  <span className="text-gray-400 line-through">
+                    {latestTodo.task}
+                  </span>
                 ) : (
                   <span className="text-gray-400">Add todo</span>
                 );
@@ -168,7 +198,7 @@ const ReminderTableRowEnhanced = ({
             onValueChange={(value: ContactStatus) => {
               onUpdateContact({
                 ...contact,
-                status: value
+                status: value,
               });
             }}
           >
@@ -197,7 +227,7 @@ export const ReminderTable: React.FC<ReminderTableProps> = ({
   contacts,
   onUpdateContact,
   onOpenTodoPanel,
-  defaultOpen = true
+  defaultOpen = true,
 }) => {
   if (contacts.length === 0) {
     return null;
@@ -222,17 +252,30 @@ export const ReminderTable: React.FC<ReminderTableProps> = ({
 
   return (
     <div className="mb-6 bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
-      <Accordion type="single" collapsible defaultValue={defaultOpen ? category : undefined}>
-        <AccordionItem value={category} className="border-none">
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue={defaultOpen ? category : undefined}
+      >
+        <AccordionItem
+          value={category}
+          className="border-none"
+        >
           <AccordionTrigger className="px-4 py-3 hover:no-underline">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold">{getReminderCategoryTitle(category)}</h2>
-              <Badge variant="outline" className={cn("ml-2", getBadgeColor(category))}>
-                {contacts.length} {contacts.length === 1 ? 'contact' : 'contacts'}
+              <h2 className="text-lg font-semibold">
+                {getReminderCategoryTitle(category)}
+              </h2>
+              <Badge
+                variant="outline"
+                className={cn("ml-2", getBadgeColor(category))}
+              >
+                {contacts.length}{" "}
+                {contacts.length === 1 ? "contact" : "contacts"}
               </Badge>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="pt-0 pb-3">
+          <AccordionContent className="pt-0 pb-0">
             <div className="overflow-x-auto">
               <div className="min-w-max">
                 <Table>
@@ -250,7 +293,7 @@ export const ReminderTable: React.FC<ReminderTableProps> = ({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {contacts.map(contact => (
+                    {contacts.map((contact) => (
                       <ReminderTableRowEnhanced
                         key={contact.id}
                         contact={contact}
