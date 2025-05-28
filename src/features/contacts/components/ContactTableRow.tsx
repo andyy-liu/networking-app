@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Contact, ContactStatus } from "@/features/contacts/types";
-import { Todo } from "@/features/todos/types";
 import { Badge } from "@/components/ui/badge";
 import { ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -169,12 +168,17 @@ export function ContactTableRow({
       style={{ cursor: "pointer" }}
     >
       <TableCell className="p-2">
-        <Checkbox
-          checked={isSelected}
-          onCheckedChange={() => onToggleSelect(contact.id)}
-          onClick={(e) => e.stopPropagation()} // Prevent row click when interacting with checkbox
-          aria-label="Select row"
-        />
+        <div className="flex items-center justify-center h-6">
+          {" "}
+          {/* Fixed height wrapper with flex centering */}
+          <Checkbox
+            checked={isSelected}
+            onCheckedChange={() => onToggleSelect(contact.id)}
+            onClick={(e) => e.stopPropagation()} // Prevent row click when interacting with checkbox
+            aria-label="Select row"
+            className="focus-visible:ring-0" // Remove focus ring that could cause shifting
+          />
+        </div>
       </TableCell>
       <TableCell className="font-medium p-2">{name}</TableCell>
       <TableCell className="p-2">{role}</TableCell>
@@ -350,8 +354,9 @@ export function ContactTableRow({
               )}
             >
               <SelectValue />
-            </SelectTrigger>
+            </SelectTrigger>{" "}
             <SelectContent>
+              <SelectItem value="Not Started">Not Started</SelectItem>
               <SelectItem value="Reached Out">Reached Out</SelectItem>
               <SelectItem value="Responded">Responded</SelectItem>
               <SelectItem value="Chatted">Chatted</SelectItem>

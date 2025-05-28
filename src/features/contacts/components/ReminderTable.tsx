@@ -78,7 +78,6 @@ const ReminderTableRowEnhanced = ({
   return (
     <TableRow className="h-10">
       <TableCell className="py-0.5">{contact.name}</TableCell>
-      <TableCell className="py-0.5">{contact.email}</TableCell>
       <TableCell className="py-0.5">{contact.role || "-"}</TableCell>
       <TableCell className="py-0.5">{contact.company || "-"}</TableCell>
       <TableCell className="py-0.5">
@@ -209,8 +208,9 @@ const ReminderTableRowEnhanced = ({
               )}
             >
               <SelectValue />
-            </SelectTrigger>
+            </SelectTrigger>{" "}
             <SelectContent>
+              <SelectItem value="Not Started">Not Started</SelectItem>
               <SelectItem value="Reached Out">Reached Out</SelectItem>
               <SelectItem value="Responded">Responded</SelectItem>
               <SelectItem value="Chatted">Chatted</SelectItem>
@@ -282,7 +282,6 @@ export const ReminderTable: React.FC<ReminderTableProps> = ({
                   <TableHeader>
                     <TableRow>
                       <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
                       <TableHead>Role</TableHead>
                       <TableHead>Company</TableHead>
                       <TableHead>Tags</TableHead>

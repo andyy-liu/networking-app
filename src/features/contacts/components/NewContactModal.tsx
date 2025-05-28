@@ -49,13 +49,22 @@ interface NewContactModalProps {
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
+  email: z
+    .string()
+    .email({ message: "Please enter a valid email address." })
+    .optional()
+    .or(z.literal("")), // Made email optional
   role: z.string().optional(),
   company: z.string().optional(),
   dateOfContact: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
     message: "Date must be in YYYY-MM-DD format.",
   }),
-  status: z.enum(["Reached Out", "Responded", "Chatted"] as const),
+  status: z.enum([
+    "Not Started",
+    "Reached Out",
+    "Responded",
+    "Chatted",
+  ] as const),
   tags: z.array(z.string()).optional().default([]),
   linkedinUrl: z
     .string()
@@ -81,7 +90,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
       company: "",
       linkedinUrl: "", // Added linkedinUrl
       dateOfContact: new Date().toISOString().split("T")[0],
-      status: "Reached Out",
+      status: "Not Started",
       tags: [],
     },
   });
@@ -183,7 +192,8 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Email</FormLabel>{" "}
+                  {/* Updated label to show it's optional */}
                   <FormControl>
                     <Input
                       placeholder="john.doe@example.com"
@@ -231,7 +241,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
               name="linkedinUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>LinkedIn URL (Optional)</FormLabel>
+                  <FormLabel>LinkedIn URL</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="https://linkedin.com/in/johndoe"
@@ -368,8 +378,9 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                       <SelectTrigger>
                         <SelectValue placeholder="Select a status" />
                       </SelectTrigger>
-                    </FormControl>
+                    </FormControl>{" "}
                     <SelectContent>
+                      <SelectItem value="Not Started">Not Started</SelectItem>
                       <SelectItem value="Reached Out">Reached Out</SelectItem>
                       <SelectItem value="Responded">Responded</SelectItem>
                       <SelectItem value="Chatted">Chatted</SelectItem>

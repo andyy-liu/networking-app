@@ -161,7 +161,7 @@ export type Database = {
           company?: string | null
           created_at?: string
           dateofcontact: string
-          email: string
+          email: string | null
           id?: string
           linkedin_url?: string | null
           name: string

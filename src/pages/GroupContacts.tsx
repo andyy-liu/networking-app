@@ -22,7 +22,6 @@ import { Input } from "@/components/ui/input";
 import { useContactGroup } from "@/features/contacts/hooks/useContactGroup";
 import { useContactFilters } from "@/features/contacts/hooks/useContactFilters";
 import { useContactSelection } from "@/features/contacts/hooks/useContactSelection";
-import { useContacts } from "@/features/contacts/hooks/useContacts";
 
 const GroupContacts = () => {
   const { groupId = "" } = useParams<{ groupId: string }>();
@@ -47,6 +46,7 @@ const GroupContacts = () => {
     isLoading,
     isError,
     updateGroupName: updateGroupNameMutation,
+    updateContact: updateContactMutation,
     removeContacts: removeContactsMutation,
     isUpdatingGroup,
   } = useContactGroup(groupId);
@@ -79,8 +79,6 @@ const GroupContacts = () => {
     handleSort,
     handleFilterByTag,
   } = useContactFilters(contacts);
-
-  const { updateContact } = useContacts();
 
   // Handle group name update
   const handleUpdateGroupName = async () => {
@@ -235,7 +233,6 @@ const GroupContacts = () => {
                 sortDirection={sortDirection}
                 onFilterByTag={handleFilterByTag}
                 activeTagFilter={activeTagFilter}
-                onEditContact={handleUpdateContact}
                 onUpdateContact={handleUpdateContact}
                 selectedContacts={selectedContacts}
                 onSelectContact={handleSelectContact}

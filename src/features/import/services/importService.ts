@@ -22,25 +22,23 @@ export async function importContacts(
 ): Promise<ImportResult> {
   console.log("[importService] importContacts - Received mappedData:", JSON.parse(JSON.stringify(mappedData)));
   console.log("[importService] importContacts - Received fieldMappings:", fieldMappings);
-  console.log("[importService] importContacts - Received skipDuplicates:", skipDuplicates);
-  try {
+  console.log("[importService] importContacts - Received skipDuplicates:", skipDuplicates);  try {
     // Map the data to Contact objects
     const contacts = mapToContacts(mappedData, fieldMappings);
-    console.log("[importService] importContacts - Result of mapToContacts:", JSON.parse(JSON.stringify(contacts)));
-
-    // Prepare data for Supabase insert
+    console.log("[importService] importContacts - Result of mapToContacts:", JSON.parse(JSON.stringify(contacts)));    // Prepare data for Supabase insert    
     const contactsToInsert = contacts.map(contact => ({
-      user_id: userId,
-      name: contact.name,
-      email: contact.email,
+      user_id: userId,      name: contact.name,
+      // Since email is required in the database, use a placeholder if empty
+      email: contact.email || `placeholder_${Date.now()}_${Math.random().toString(36).substring(2, 15)}@example.com`,
       role: contact.role || null,
       company: contact.company || null,
-      tags: contact.tags,
+      tags: contact.tags || [],
+      linkedin_url: contact.linkedinUrl || null, // Note: database field is linkedin_url
       // Ensure dateOfContact is correctly formatted or handled if it's a number (Excel date)
       dateofcontact: typeof contact.dateOfContact === 'number' 
         ? new Date(Math.round((contact.dateOfContact - 25569) * 86400 * 1000)).toISOString().split('T')[0]
         : contact.dateOfContact,
-      status: contact.status,
+      status: contact.status || 'Not Started',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     }));
@@ -61,8 +59,7 @@ export async function importContacts(
     const errors: string[] = [];
     let importedCount = 0;
     const importedIds: string[] = [];
-    
-    for (let i = 0; i < contactsToInsert.length; i += BATCH_SIZE) {
+      for (let i = 0; i < contactsToInsert.length; i += BATCH_SIZE) {
       const batch = contactsToInsert.slice(i, i + BATCH_SIZE);
       console.log(`[importService] importContacts - Inserting batch ${i / BATCH_SIZE + 1}:`, JSON.parse(JSON.stringify(batch)));
 
@@ -70,10 +67,13 @@ export async function importContacts(
         .from("contacts")
         .insert(batch)
         .select();
-      
-      if (error) {
+        if (error) {
+        console.error(`[importService] Error inserting batch ${i / BATCH_SIZE + 1}:`, error);
+        console.error(`[importService] Error details:`, JSON.stringify(error, null, 2));
+        console.error(`[importService] First few records in the batch:`, JSON.stringify(batch.slice(0, 3), null, 2));
         errors.push(`Batch ${i / BATCH_SIZE + 1} error: ${error.message}`);
       } else {
+        console.log(`[importService] Successfully inserted batch ${i / BATCH_SIZE + 1}, count:`, data?.length || 0);
         importedCount += data?.length || 0;
         // Store the imported IDs for potential undo
         if (data) {
@@ -110,8 +110,11 @@ export async function checkForDuplicates(
 ): Promise<{ hasDuplicates: boolean; duplicates: string[] }> {
   console.log(`Checking for duplicates. User ID: ${userId}, Emails to check: ${emailsToCheck.length}`);
   try {
-    if (emailsToCheck.length === 0) {
-      console.log("No emails to check for duplicates");
+    // Filter out empty emails
+    const validEmails = emailsToCheck.filter(email => email && email.trim() !== '');
+    
+    if (validEmails.length === 0) {
+      console.log("No valid emails to check for duplicates");
       return { hasDuplicates: false, duplicates: [] };
     }
     
@@ -121,7 +124,7 @@ export async function checkForDuplicates(
       .from("contacts")
       .select("email")
       .eq("user_id", userId)
-      .in("email", emailsToCheck);
+      .in("email", validEmails);
     
     if (error) {
       console.error("Error checking for duplicates:", error);

@@ -1,12 +1,12 @@
 import { Todo } from 'src/features/todos/types';
 
-export type ContactStatus = 'Reached Out' | 'Responded' | 'Chatted';
+export type ContactStatus = 'Not Started' | 'Reached Out' | 'Responded' | 'Chatted';
 
 export type ContactTag = string;
 
 export interface BaseContact {
   name: string;
-  email: string;
+  email?: string; // Made email optional
   role?: string;
   company?: string;
   tags: ContactTag[];

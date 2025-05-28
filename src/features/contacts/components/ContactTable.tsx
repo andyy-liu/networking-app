@@ -60,8 +60,9 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                   contact={contact}
                   onUpdateContact={onUpdateContact}
                   isSelected={selectedContacts.some((c) => c.id === contact.id)}
-                  onSelectContact={onSelectContact}
+                  onToggleSelect={() => onSelectContact(contact)} // Changed to onToggleSelect and adapt the call
                   onOpenTodoPanel={onOpenTodoPanel}
+                  onDeleteContact={() => {}} // Added a placeholder for onDeleteContact, assuming it will be implemented later
                 />
               ))
             )}

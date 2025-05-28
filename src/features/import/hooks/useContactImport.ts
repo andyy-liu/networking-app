@@ -178,15 +178,16 @@ export function useContactImport() {
           console.error("User not authenticated");
           throw new Error("User not authenticated");
         }
-        
-        const emails = validation.validData
+          const emails = validation.validData
           .map(item => {
             // Find the email field mapping
             const emailMapping = fieldMappings.find(m => m.targetField === 'email');
             if (!emailMapping) return null;
-            return item[emailMapping.sourceField] as string;
+            const email = item[emailMapping.sourceField] as string;
+            // Skip empty emails since they're optional
+            return email && email.trim() ? email : null;
           })
-          .filter((email): email is string => email !== null);
+          .filter((email): email is string => email !== null && email !== "");
           const duplicateCheck = await checkForDuplicates(user.id, emails);
         console.log("Duplicate check results:", duplicateCheck);
         setDuplicateEmails(duplicateCheck.duplicates);
@@ -220,13 +221,15 @@ export function useContactImport() {
     setIsProcessing(true);
     
     let dataToImport = validationResults.validData;
-    
-    // If skipping duplicates, filter out any records with duplicate emails
-    if (skipDuplicates && duplicateEmails.length > 0) {
-      dataToImport = dataToImport.filter(item => {
+      // If skipping duplicates, filter out any records with duplicate emails
+    if (skipDuplicates && duplicateEmails.length > 0) {      dataToImport = dataToImport.filter(item => {
         const emailMapping = fieldMappings.find(m => m.targetField === 'email');
         if (!emailMapping) return true;
         const email = item[emailMapping.sourceField] as string;
+        
+        // Empty emails are not considered duplicates
+        if (!email || email.trim() === '') return true;
+        
         return !duplicateEmails.includes(email);
       });
     }

@@ -101,13 +101,11 @@ export function validateImportData(data: Record<string, unknown>[], mappings: Fi
   valid: boolean;
   errors: string[];
   validData: Record<string, unknown>[];
-} {
-  console.log(`validateImportData called with ${data.length} rows and ${mappings.length} mappings`);
+} {  console.log(`validateImportData called with ${data.length} rows and ${mappings.length} mappings`);
   const errors: string[] = [];
   const validData: Record<string, unknown>[] = [];
-  
-  // Required fields for a valid contact
-  const requiredFields: (keyof Omit<Contact, 'id' | 'todos'>)[] = ['name', 'email', 'status', 'dateOfContact'];
+    // Required fields for a valid contact - only name and dateOfContact are mandatory
+  const requiredFields: (keyof Omit<Contact, 'id' | 'todos'>)[] = ['name', 'dateOfContact'];
   
   // Check if mappings cover all required fields
   const mappedFields = mappings.map(m => m.targetField);
@@ -145,14 +143,21 @@ export function validateImportData(data: Record<string, unknown>[], mappings: Fi
       }
       
       transformedRow[targetField] = value;
+    }    // Validate status is a valid ContactStatus (if provided)
+    if (transformedRow.status !== undefined && 
+        transformedRow.status !== null && 
+        transformedRow.status !== '' && 
+        !['Not Started', 'Reached Out', 'Responded', 'Chatted'].includes(transformedRow.status as string)) {
+      rowErrors.push(`Invalid status value: ${transformedRow.status}. Must be one of: Not Started, Reached Out, Responded, Chatted`);
     }
     
-    // Validate status is a valid ContactStatus
-    if (transformedRow.status && !['Reached Out', 'Responded', 'Chatted'].includes(transformedRow.status as string)) {
-      rowErrors.push(`Invalid status value: ${transformedRow.status}. Must be one of: Reached Out, Responded, Chatted`);
+    // If status is empty, we'll set a default later, so don't consider it an error
+    if (transformedRow.status === undefined || 
+        transformedRow.status === null || 
+        transformedRow.status === '') {
+      transformedRow.status = 'Not Started';
     }
-    
-    // Ensure tags is an array
+      // Ensure tags is an array
     if (transformedRow.tags) {
       if (!Array.isArray(transformedRow.tags)) {
         // Try to convert comma-separated string to array
@@ -165,6 +170,9 @@ export function validateImportData(data: Record<string, unknown>[], mappings: Fi
           rowErrors.push('Tags must be an array or comma-separated string');
         }
       }
+    } else {
+      // Initialize empty tags array if not provided
+      transformedRow.tags = [];
     }
     
     // If there are errors for this row, add them to the overall errors
@@ -200,9 +208,7 @@ export function mapToContacts(data: Record<string, unknown>[], mappings: FieldMa
     // because it comes from `validData` which is processed by `validateImportData`.
     for (const mapping of mappings) {
       const { targetField, transform } = mapping; // Use targetField to access data from row
-      let value = row[targetField]; // Access value using targetField
-
-      console.log(`[mapToContacts] Processing mapping - Target: ${targetField}, Value from row:`, value);
+      let value = row[targetField]; // Access value using targetField      console.log(`[mapToContacts] Processing mapping - Target: ${targetField}, Value from row:`, value);
 
       if (transform) {
         try {
@@ -212,27 +218,30 @@ export function mapToContacts(data: Record<string, unknown>[], mappings: FieldMa
           console.error(`[mapToContacts] Error transforming ${targetField}:`, e);
           value = row[targetField]; // Revert to original value on transform error
         }
-      }
-
-      // Assign value to the corresponding property in the contact object
+      }      // Assign value to the corresponding property in the contact object
       switch (targetField) {
         case 'name':
+          contact[targetField] = String(value || '');
+          break;
         case 'email':
+          // Only set email if it's not empty or null
+          contact[targetField] = value ? String(value) : undefined;
+          break;
         case 'role':
         case 'company':
+        case 'linkedinUrl':
           contact[targetField] = String(value || '');
           break;
         case 'tags':
           if (Array.isArray(value)) {
             contact.tags = value as ContactTag[];
           } else if (typeof value === 'string' && value.trim() !== '') {
-            contact.tags = value.split(',').map(tag => tag.trim()) as ContactTag[];
-          } else {
+            contact.tags = value.split(',').map(tag => tag.trim()) as ContactTag[];          } else {
             contact.tags = [];
           }
           break;
         case 'status':
-          contact.status = (value || 'Reached Out') as ContactStatus;
+          contact.status = (value || 'Not Started') as ContactStatus;
           break;
         case 'dateOfContact':
           if (typeof value === 'number') { // Excel date number
@@ -246,12 +255,10 @@ export function mapToContacts(data: Record<string, unknown>[], mappings: FieldMa
         // No default case needed as all keys of Omit<Contact, 'id' | 'todos'> are handled
         // or should not be manually assigned here if they are not part of the explicit cases.
       }
-    }
-
-    // Ensure essential fields have defaults if somehow still missing
+    }// Ensure essential fields have defaults if somehow still missing
     contact.name = contact.name || '';
-    contact.email = contact.email || '';
-    contact.status = contact.status || 'Reached Out';
+    // Email is optional, so don't default it to empty string
+    contact.status = contact.status || 'Not Started';
     contact.dateOfContact = contact.dateOfContact || new Date().toISOString().split('T')[0];
 
     console.log("[mapToContacts] Constructed contact:", JSON.parse(JSON.stringify(contact)));
@@ -283,8 +290,7 @@ export function createDefaultMappings(headers: string[]): FieldMapping[] {
     company: 'company',
     organization: 'company',
     'company name': 'company',
-    
-    tags: 'tags',
+      tags: 'tags',
     categories: 'tags',
     labels: 'tags',
     
@@ -295,7 +301,13 @@ export function createDefaultMappings(headers: string[]): FieldMapping[] {
     'date of contact': 'dateOfContact',
     'contact date': 'dateOfContact',
     'last contact': 'dateOfContact',
-    'last contacted': 'dateOfContact'
+    'last contacted': 'dateOfContact',
+    
+    linkedin: 'linkedinUrl',
+    'linkedin url': 'linkedinUrl',
+    'linkedinurl': 'linkedinUrl',
+    'linkedin profile': 'linkedinUrl',
+    'linkedin link': 'linkedinUrl'
   };
     // Create mappings based on header names
   headers.forEach(header => {

@@ -147,7 +147,6 @@ const Index = () => {
                 sortDirection={sortDirection}
                 onFilterByTag={handleFilterByTag}
                 activeTagFilter={activeTagFilter}
-                onEditContact={handleEditContact}
                 onUpdateContact={updateContact}
                 selectedContacts={selectedContacts}
                 onSelectContact={toggleContactSelection}

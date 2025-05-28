@@ -63,8 +63,7 @@ export function DataValidation({
         status: "Status",
       }[mapping.targetField] || mapping.targetField,
   }));
-  console.log("[DataValidation] displayFields:", displayFields);
-  // Calculate how many contacts will actually be imported
+  console.log("[DataValidation] displayFields:", displayFields); // Calculate how many contacts will actually be imported
   const totalToImport = skipDuplicates
     ? validData.filter((item) => {
         const emailMapping = fieldMappings.find(
@@ -72,6 +71,10 @@ export function DataValidation({
         );
         if (!emailMapping) return true;
         const email = item[emailMapping.sourceField] as string;
+
+        // Empty emails are not considered duplicates
+        if (!email || email.trim() === "") return true;
+
         return !duplicateEmails.includes(email);
       }).length
     : validData.length;

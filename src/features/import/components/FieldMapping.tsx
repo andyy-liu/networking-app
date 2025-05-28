@@ -42,14 +42,22 @@ export function FieldMappingComponent({
   const targetFields: Array<{
     label: string;
     value: keyof Omit<Contact, "id" | "todos">;
+    optional?: boolean;
+    defaultValue?: string;
   }> = [
     { label: "Name", value: "name" },
-    { label: "Email", value: "email" },
-    { label: "Role", value: "role" },
-    { label: "Company", value: "company" },
-    { label: "Tags", value: "tags" },
+    { label: "Email (Optional)", value: "email", optional: true },
+    { label: "Role (Optional)", value: "role", optional: true },
+    { label: "Company (Optional)", value: "company", optional: true },
+    { label: "Tags (Optional)", value: "tags", optional: true },
     { label: "Date of Contact", value: "dateOfContact" },
-    { label: "Status", value: "status" },
+    {
+      label: "Status (Optional, defaults to Not Started)",
+      value: "status",
+      optional: true,
+      defaultValue: "Not Started",
+    },
+    { label: "LinkedIn URL (Optional)", value: "linkedinUrl", optional: true },
   ];
 
   // Find unused source fields
@@ -72,12 +80,9 @@ export function FieldMappingComponent({
       });
     }
   };
-
   // Check if required fields are mapped
   const requiredFields: (keyof Omit<Contact, "id" | "todos">)[] = [
     "name",
-    "email",
-    "status",
     "dateOfContact",
   ];
   const missingRequiredFields = requiredFields.filter(
@@ -87,6 +92,7 @@ export function FieldMappingComponent({
 
   return (
     <Card className="w-full">
+      {" "}
       <CardHeader>
         <CardTitle>Map Your Fields</CardTitle>
         <CardDescription>
@@ -94,6 +100,15 @@ export function FieldMappingComponent({
         </CardDescription>
       </CardHeader>
       <CardContent>
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md text-blue-800 text-sm">
+          <p className="font-medium">Field Information:</p>
+          <ul className="list-disc ml-5 mt-1">
+            <li>Only Name and Date of Contact are required</li>
+            <li>Email will use a placeholder if empty</li>
+            <li>Status will default to "Not Started" if not provided</li>
+          </ul>
+        </div>
+
         {missingRequiredFields.length > 0 && (
           <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md text-yellow-800 text-sm">
             <p className="font-medium">Required fields missing:</p>
@@ -166,7 +181,7 @@ export function FieldMappingComponent({
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select target field" />
-                  </SelectTrigger>
+                  </SelectTrigger>{" "}
                   <SelectContent>
                     {targetFields.map((field) => (
                       <SelectItem
