@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import React, { Suspense } from "react";
 import Index from "./pages/Index";
 import GroupContacts from "./pages/GroupContacts";
 import Auth from "./pages/Auth";
@@ -10,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import { Settings } from "./pages/Settings";
 import Todos from "./pages/Todos";
 import Reminders from "./pages/Reminders";
+
+const ImportPage = React.lazy(() => import("./pages/Import"));
 import { AuthProvider } from "@/features/auth/context/AuthContext";
 import { TagProvider } from "@/features/tags/context/TagContext";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
@@ -47,10 +50,18 @@ const App = () => (
                 <Route
                   path="/todos"
                   element={<Todos />}
-                />
+                />{" "}
                 <Route
                   path="/reminders"
                   element={<Reminders />}
+                />
+                <Route
+                  path="/import"
+                  element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <ImportPage />
+                    </Suspense>
+                  }
                 />
                 {/* Add other protected routes here */}
               </Route>

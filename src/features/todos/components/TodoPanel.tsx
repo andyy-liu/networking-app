@@ -41,6 +41,7 @@ import Italic from "@tiptap/extension-italic";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import { useTodos } from "@/features/todos/hooks/useTodos";
+import { Label } from "@/components/ui/label"; // Added import
 
 interface ContactNote {
   id: string;
@@ -59,6 +60,7 @@ interface TodoPanelProps {
     todoId: string,
     completed: boolean
   ) => void;
+  onUpdateContact?: (contact: Contact) => void; // Added onUpdateContact prop
 }
 
 export const TodoPanel: React.FC<TodoPanelProps> = ({
@@ -67,12 +69,20 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
   contact,
   onTodoAdded,
   onTodoCompleted,
+  onUpdateContact, // Added prop
 }) => {
   const { user } = useAuth();
   const [newTodo, setNewTodo] = useState("");
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [note, setNote] = useState<ContactNote | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // State for editable contact fields
+  const [contactName, setContactName] = useState(contact?.name || "");
+  const [contactRole, setContactRole] = useState(contact?.role || "");
+  const [contactCompany, setContactCompany] = useState(contact?.company || "");
+  const [contactEmail, setContactEmail] = useState(contact?.email || "");
+  const [linkedinUrl, setLinkedinUrl] = useState(contact?.linkedinUrl || ""); // State for LinkedIn URL
 
   const {
     todos,
@@ -131,6 +141,12 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
     if (open && contact && user) {
       fetchTodos();
       fetchNote();
+      // Set editable contact fields when contact changes
+      setContactName(contact.name || "");
+      setContactRole(contact.role || "");
+      setContactCompany(contact.company || "");
+      setContactEmail(contact.email || "");
+      setLinkedinUrl(contact.linkedinUrl || ""); // Set LinkedIn URL when contact changes
     }
   }, [open, contact, user, fetchTodos, fetchNote]);
 
@@ -199,23 +215,153 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
     }
   };
 
+  const saveAllPendingChanges = () => {
+    if (!contact) {
+      console.error("Save Changes Error: Contact data is missing.");
+      toast({
+        title: "Error Saving",
+        description: "Contact data is not available. Cannot save changes.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!onUpdateContact) {
+      console.error(
+        "Save Changes Error: onUpdateContact prop is not provided. Save functionality is not configured."
+      );
+      toast({
+        title: "Configuration Error",
+        description:
+          "Save functionality is not properly configured. Please contact support.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const updatedFields: Partial<Contact> = {};
+    let hasChanges = false;
+
+    // Retrieve original values from the contact prop for comparison
+    const originalName = contact.name || "";
+    const originalRole = contact.role || "";
+    const originalCompany = contact.company || "";
+    const originalEmail = contact.email || "";
+    const originalLinkedinUrl = contact.linkedinUrl || "";
+
+    if (contactName !== originalName) {
+      updatedFields.name = contactName;
+      hasChanges = true;
+    }
+    if (contactRole !== originalRole) {
+      updatedFields.role = contactRole;
+      hasChanges = true;
+    }
+    if (contactCompany !== originalCompany) {
+      updatedFields.company = contactCompany;
+      hasChanges = true;
+    }
+    if (contactEmail !== originalEmail) {
+      updatedFields.email = contactEmail;
+      hasChanges = true;
+    }
+    if (linkedinUrl !== originalLinkedinUrl) {
+      updatedFields.linkedinUrl = linkedinUrl;
+      hasChanges = true;
+    }
+
+    if (hasChanges) {
+      console.log(
+        `Attempting to save changes for contact ID: ${contact.id}`,
+        updatedFields
+      );
+      onUpdateContact({ ...contact, ...updatedFields });
+      onClose(); // Close panel after saving changes
+    } else {
+      console.log(
+        `No changes detected for contact ID: ${contact.id}. Save action initiated but no modifications found.`
+      );
+      onClose(); // Close panel even if no changes were made, as user clicked "Save Changes"
+    }
+  };
+
+  const handleLinkedinUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLinkedinUrl(e.target.value);
+  };
+
   return (
     <Sheet
       open={open}
-      onOpenChange={(isOpen) => !isOpen && onClose()}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          onClose(); // Call the original onClose prop
+        }
+      }}
     >
       <SheetContent className="overflow-y-auto">
         <SheetHeader>
           <SheetTitle>
-            {contact ? `To-dos for ${contact.name}` : "Loading..."}
+            {contact ? `Details for ${contactName}` : "Loading..."}
           </SheetTitle>
-          <SheetDescription>
+          {/* <SheetDescription>
             Add and manage to-dos for this contact
-          </SheetDescription>
+          </SheetDescription> */}
         </SheetHeader>
 
         {contact && (
           <div className="py-4 space-y-6">
+            {/* Contact Info Section */}
+            <div className="space-y-4">
+              {" "}
+              {/* Increased spacing */}
+              <h3 className="text-sm font-medium">Contact Information</h3>
+              <div>
+                <Label htmlFor="contact-name">Name</Label>
+                <Input
+                  id="contact-name"
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
+                  placeholder="Enter name"
+                />
+              </div>
+              <div>
+                <Label htmlFor="contact-role">Role</Label>
+                <Input
+                  id="contact-role"
+                  value={contactRole}
+                  onChange={(e) => setContactRole(e.target.value)}
+                  placeholder="Enter role"
+                />
+              </div>
+              <div>
+                <Label htmlFor="contact-company">Company</Label>
+                <Input
+                  id="contact-company"
+                  value={contactCompany}
+                  onChange={(e) => setContactCompany(e.target.value)}
+                  placeholder="Enter company"
+                />
+              </div>
+              <div>
+                <Label htmlFor="contact-email">Email</Label>
+                <Input
+                  id="contact-email"
+                  type="email"
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
+                  placeholder="Enter email"
+                />
+              </div>
+              <div>
+                <Label htmlFor="contact-linkedin">LinkedIn URL</Label>
+                <Input
+                  id="contact-linkedin"
+                  value={linkedinUrl}
+                  onChange={handleLinkedinUrlChange}
+                  placeholder="Enter LinkedIn URL"
+                />
+              </div>
+            </div>
+
             {/* Add new to-do section */}
             <div className="space-y-4">
               <h3 className="text-sm font-medium">Add a new to-do</h3>
@@ -399,6 +545,12 @@ export const TodoPanel: React.FC<TodoPanelProps> = ({
             onClick={onClose}
           >
             Close
+          </Button>
+          <Button
+            onClick={saveAllPendingChanges}
+            disabled={loading}
+          >
+            <Save className="mr-2 h-4 w-4" /> Save Changes
           </Button>
         </SheetFooter>
       </SheetContent>

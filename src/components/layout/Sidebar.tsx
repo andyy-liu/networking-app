@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Home,
   ClipboardList,
+  Upload,
 } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useContactGroups } from "@/features/contacts/hooks/useContactGroups";
@@ -31,7 +32,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
   const { user } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { data: contactGroups = [] } = useContactGroups();
-
   const navItems: NavItem[] = [
     {
       icon: Home,
@@ -50,6 +50,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "" }) => {
       label: "Reminders",
       isActive: location.pathname.startsWith("/reminders"),
       path: "/reminders",
+    },
+    {
+      icon: Upload,
+      label: "Import",
+      isActive: location.pathname === "/import",
+      path: "/import",
     },
     {
       icon: Settings,

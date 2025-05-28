@@ -28,6 +28,7 @@ A modern web application for managing professional contacts, tasks, and networki
 - Track contact status (Reached Out, Responded, Chatted)
 - Group contacts into custom categories
 - Add notes and todos to contacts
+- Import contacts from CSV or Excel files
 
 ### Todo System
 

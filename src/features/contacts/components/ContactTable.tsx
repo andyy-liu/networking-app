@@ -12,7 +12,6 @@ interface ContactTableProps {
   sortDirection: "asc" | "desc" | "default";
   onFilterByTag: (tag: string | null) => void;
   activeTagFilter: string | null;
-  onEditContact: (contact: Contact) => void;
   onUpdateContact: (contact: Contact) => void;
   selectedContacts: Contact[];
   onSelectContact: (contact: Contact) => void;
@@ -26,7 +25,6 @@ export const ContactTable: React.FC<ContactTableProps> = ({
   sortDirection,
   onFilterByTag,
   activeTagFilter,
-  onEditContact,
   onUpdateContact,
   selectedContacts,
   onSelectContact,
@@ -60,7 +58,6 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                 <ContactTableRow
                   key={contact.id}
                   contact={contact}
-                  onEditContact={onEditContact}
                   onUpdateContact={onUpdateContact}
                   isSelected={selectedContacts.some((c) => c.id === contact.id)}
                   onSelectContact={onSelectContact}

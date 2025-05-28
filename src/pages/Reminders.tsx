@@ -3,25 +3,26 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { useContacts } from "@/features/contacts/hooks/useContacts";
 import { ReminderTable } from "@/features/contacts/components/ReminderTable";
-import { Contact } from "@/features/contacts/types";
+import { Contact, ContactUpdate } from "@/features/contacts/types";
 import { Todo } from "@/features/todos/types";
 import { useContactReminders } from "@/features/contacts/hooks/useContactReminders";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { TodoPanel } from "@/features/todos/components/TodoPanel";
+import { toast } from "@/components/ui/use-toast";
 
 const Reminders = () => {
   const { contacts, isLoading, isError, updateContact } = useContacts();
   const [contactForTodos, setContactForTodos] = useState<Contact | null>(null);
-  
+
   // Use our custom hook for reminders
   const { categoryOrder, categorizedContacts } = useContactReminders(contacts);
-  
+
   // Handle opening the todo panel
   const handleOpenTodoPanel = (contact: Contact) => {
     setContactForTodos(contact);
   };
-  
+
   // Handle closing the todo panel
   const handleCloseTodoPanel = () => {
     setContactForTodos(null);
@@ -30,39 +31,97 @@ const Reminders = () => {
   // Handle todo callbacks
   const handleTodoAdded = (contactId: string, todo: Todo) => {
     // Update the specific contact with the new todo
-    const updatedContacts = contacts.map(contact => {
+    const updatedContacts = contacts.map((contact) => {
       if (contact.id === contactId) {
         const todos = contact.todos || [];
         return {
           ...contact,
-          todos: [todo, ...todos]
+          todos: [todo, ...todos],
         };
       }
       return contact;
     });
-    
+
     // Update the UI with the new todo
-    updateContact(updatedContacts.find(c => c.id === contactId)!);
+    updateContact(updatedContacts.find((c) => c.id === contactId)!);
   };
 
-  const handleTodoCompleted = (contactId: string, todoId: string, completed: boolean) => {
+  const handleTodoCompleted = (
+    contactId: string,
+    todoId: string,
+    completed: boolean
+  ) => {
     // Update the specific contact with the updated todo
-    const updatedContacts = contacts.map(contact => {
+    const updatedContacts = contacts.map((contact) => {
       if (contact.id === contactId && contact.todos) {
         return {
           ...contact,
-          todos: contact.todos.map(todo => 
+          todos: contact.todos.map((todo) =>
             todo.id === todoId ? { ...todo, completed } : todo
-          )
+          ),
         };
       }
       return contact;
     });
-    
+
     // Update the UI with the updated todo
-    updateContact(updatedContacts.find(c => c.id === contactId)!);
+    const contactToUpdate = updatedContacts.find((c) => c.id === contactId);
+    if (contactToUpdate) {
+      updateContact(contactToUpdate);
+    }
   };
-  
+
+  const handleUpdateContact = async (contactUpdatePayload: Contact) => {
+    if (!contactForTodos) {
+      console.warn("handleUpdateContact called without active contactForTodos");
+      return;
+    }
+
+    if (contactForTodos.id !== contactUpdatePayload.id) {
+      console.error(
+        "Mismatched contact IDs in handleUpdateContact. Panel ID:",
+        contactForTodos.id,
+        "Payload ID:",
+        contactUpdatePayload.id
+      );
+      toast({
+        title: "Error",
+        description: "A data mismatch occurred while saving. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // The updateContact mutation from useContacts is called.
+      // It will internally update the react-query cache, triggering a re-render.
+      await updateContact(contactUpdatePayload);
+
+      // Optimistically update the local state for the panel.
+      // The list of contacts will be refetched by react-query automatically on mutation success (if configured),
+      // but the panel needs immediate feedback.
+      setContactForTodos((prevContact) => {
+        if (!prevContact) return null;
+        // Merge the existing contact data with the new payload
+        return { ...prevContact, ...contactUpdatePayload };
+      });
+
+      toast({
+        title: "Contact Updated",
+        description: "Contact details saved successfully.",
+      });
+    } catch (error) {
+      console.error("Error updating contact in Reminders page:", error);
+      toast({
+        title: "Error",
+        description: `Failed to update contact: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
@@ -72,10 +131,11 @@ const Reminders = () => {
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Contact Reminders</h1>
             <p className="text-gray-500 dark:text-gray-400">
-              Keep track of who you need to reach out to based on last contact date
+              Keep track of who you need to reach out to based on last contact
+              date
             </p>
           </div>
-          
+
           {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -109,7 +169,7 @@ const Reminders = () => {
               ))}
             </div>
           )}
-          
+
           {/* Todo panel integration */}
           <TodoPanel
             open={!!contactForTodos}
@@ -117,6 +177,7 @@ const Reminders = () => {
             contact={contactForTodos}
             onTodoAdded={handleTodoAdded}
             onTodoCompleted={handleTodoCompleted}
+            onUpdateContact={handleUpdateContact} // Pass the handler
           />
         </main>
       </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Contact } from "@/features/contacts/types";
+import { Contact, ContactCreate } from "@/features/contacts/types";
 import {
   Dialog,
   DialogContent,
@@ -44,7 +44,7 @@ import { useTags } from "@/features/tags/hooks/useTags";
 interface NewContactModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: Omit<Contact, "id">) => void;
+  onSubmit: (data: ContactCreate) => void; // Changed to use ContactCreate type
 }
 
 const formSchema = z.object({
@@ -57,6 +57,11 @@ const formSchema = z.object({
   }),
   status: z.enum(["Reached Out", "Responded", "Chatted"] as const),
   tags: z.array(z.string()).optional().default([]),
+  linkedinUrl: z
+    .string()
+    .url({ message: "Please enter a valid URL." })
+    .optional()
+    .or(z.literal("")), // Ensured linkedinUrl is in schema
 });
 
 export const NewContactModal: React.FC<NewContactModalProps> = ({
@@ -74,6 +79,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
       email: "",
       role: "",
       company: "",
+      linkedinUrl: "", // Added linkedinUrl
       dateOfContact: new Date().toISOString().split("T")[0],
       status: "Reached Out",
       tags: [],
@@ -122,8 +128,8 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
   };
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    // Make sure all required fields are present
-    const contactData: Omit<Contact, "id"> = {
+    const contactData: ContactCreate = {
+      // Changed to use ContactCreate type
       name: values.name,
       email: values.email,
       role: values.role,
@@ -131,6 +137,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
       tags: values.tags || [],
       dateOfContact: values.dateOfContact,
       status: values.status,
+      linkedinUrl: values.linkedinUrl,
     };
 
     onSubmit(contactData);
@@ -221,6 +228,22 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
             />
             <FormField
               control={form.control}
+              name="linkedinUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>LinkedIn URL (Optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://linkedin.com/in/johndoe"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="tags"
               render={({ field }) => (
                 <FormItem>
@@ -286,7 +309,8 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />            <FormField
+            />{" "}
+            <FormField
               control={form.control}
               name="dateOfContact"
               render={({ field }) => (
@@ -303,13 +327,19 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                          {field.value ? (
+                            format(new Date(field.value), "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={field.value ? new Date(field.value) : undefined}
+                          selected={
+                            field.value ? new Date(field.value) : undefined
+                          }
                           onSelect={(date) => {
                             if (date) {
                               field.onChange(format(date, "yyyy-MM-dd"));

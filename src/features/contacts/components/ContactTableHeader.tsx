@@ -68,7 +68,6 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
             {renderSortIndicator("name")}
           </div>
         </TableHead>
-        <TableHead>Email</TableHead>
         <TableHead>Role</TableHead>
         <TableHead
           className="cursor-pointer"

@@ -183,6 +183,7 @@ const Index = () => {
         contact={contactForTodos}
         onTodoAdded={handleTodoAdded}
         onTodoCompleted={handleTodoCompleted}
+        onUpdateContact={updateContact}
       />
 
       <AlertDialog

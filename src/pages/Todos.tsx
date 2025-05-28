@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
-import { Contact } from "@/features/contacts/types";
+import { Contact, ContactUpdate } from "@/features/contacts/types"; // Added ContactUpdate
 import { Todo } from "@/features/todos/types";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { toast } from "@/components/ui/use-toast";
@@ -13,6 +13,7 @@ import { useTodoFilters } from "@/features/todos/hooks/useTodoFilters";
 import { TodoFilters } from "@/features/todos/components/TodoFilters";
 import { AddTaskDialog } from "@/features/todos/components/AddTaskDialog";
 import * as contactsService from "@/features/contacts/services/contacts";
+import { updateContact as updateContactService } from "@/features/contacts/services/contacts"; // Import the service
 
 const Todos = () => {
   const { user } = useAuth();
@@ -81,6 +82,34 @@ const Todos = () => {
     fetchTodos();
   };
 
+  const handleUpdateContact = async (contactToUpdate: ContactUpdate) => {
+    if (!user || !selectedContact) return;
+    try {
+      await updateContactService(selectedContact.id, contactToUpdate);
+      // Refetch contacts to update the local state
+      const contactsData = await contactsService.fetchContacts(user.id);
+      setContacts(contactsData);
+      // Update selectedContact if it's the one being edited
+      const updatedSelectedContact = contactsData.find(
+        (c) => c.id === selectedContact.id
+      );
+      if (updatedSelectedContact) {
+        setSelectedContact(updatedSelectedContact);
+      }
+      toast({
+        title: "Contact Updated",
+        description: "Contact details saved successfully in Todos page.",
+      });
+    } catch (error) {
+      console.error("Error updating contact in Todos page:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update contact.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
@@ -123,6 +152,7 @@ const Todos = () => {
         contact={selectedContact}
         onTodoAdded={handleTodoAdded}
         onTodoCompleted={handleTodoCompleted}
+        onUpdateContact={handleUpdateContact} // Pass the handler
       />
 
       <AddTaskDialog

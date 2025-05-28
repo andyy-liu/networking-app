@@ -4,8 +4,7 @@ export type ContactStatus = 'Reached Out' | 'Responded' | 'Chatted';
 
 export type ContactTag = string;
 
-export interface Contact {
-  id: string;
+export interface BaseContact {
   name: string;
   email: string;
   role?: string;
@@ -14,6 +13,14 @@ export interface Contact {
   dateOfContact: string;
   status: ContactStatus;
   todos?: Todo[];
+  linkedinUrl?: string; // Added new field
+}
+
+export interface Contact extends BaseContact {
+  id: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ContactGroup {
@@ -29,3 +36,16 @@ export interface ContactGroupMember {
   groupId: string;
   createdAt: string;
 }
+
+export interface ContactWithTodos extends Contact {
+  todos: Todo[];
+}
+
+export type ContactUpdate = Partial<Omit<Contact, "id" | "userId" | "createdAt" | "updatedAt" | "todos" | "groupMemberships">> & {
+  id: string;
+  linkedinUrl?: string; // Added new field
+};
+
+export type ContactCreate = Omit<Contact, "id" | "userId" | "createdAt" | "updatedAt" | "todos" | "groupMemberships"> & {
+  linkedinUrl?: string; // Added new field
+};

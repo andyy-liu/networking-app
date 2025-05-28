@@ -11,6 +11,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Get initial session
     async function loadSession() {
       try {
+        console.log("Loading authentication session...");
         const { session, user } = await authService.getSession();
         console.log("Initial auth state:", {
           hasSession: !!session,
