@@ -60,17 +60,17 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
       <TableRow>
         {hasCheckboxColumn && <TableHead className="w-10"></TableHead>}
         <TableHead
-          className="w-[200px] cursor-pointer"
+          className="w-[200px] cursor-pointer px-2"
           onClick={() => handleSortClick("name")}
         >
           <div className="flex items-center">
-            Person
+            Name
             {renderSortIndicator("name")}
           </div>
         </TableHead>
-        <TableHead>Role</TableHead>
+        <TableHead className="px-2">Role</TableHead>
         <TableHead
-          className="cursor-pointer"
+          className="cursor-pointer px-2"
           onClick={() => handleSortClick("company")}
         >
           <div className="flex items-center">
@@ -114,7 +114,7 @@ export const ContactTableHeader: React.FC<ContactTableHeaderProps> = ({
             {renderSortIndicator("dateOfContact")}
           </div>
         </TableHead>
-        <TableHead>
+        <TableHead className="px-2">
           <div className="flex items-center ml-4">To-do</div>
         </TableHead>
         <TableHead

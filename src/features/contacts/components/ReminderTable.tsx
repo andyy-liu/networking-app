@@ -74,13 +74,14 @@ const ReminderTableRowEnhanced = ({
       });
     }
   };
-
   return (
     <TableRow className="h-10">
-      <TableCell className="py-0.5">{contact.name}</TableCell>
-      <TableCell className="py-0.5">{contact.role || "-"}</TableCell>
-      <TableCell className="py-0.5">{contact.company || "-"}</TableCell>
-      <TableCell className="py-0.5">
+      <TableCell className="w-[140px] py-0.5">{contact.name}</TableCell>
+      <TableCell className="w-[120px] py-0.5">{contact.role || "-"}</TableCell>
+      <TableCell className="w-[140px] py-0.5">
+        {contact.company || "-"}
+      </TableCell>
+      <TableCell className="w-[140px] py-0.5">
         <div className="flex flex-wrap gap-1">
           {contact.tags.map((tag) => (
             <Badge
@@ -94,7 +95,7 @@ const ReminderTableRowEnhanced = ({
           {contact.tags.length === 0 && "-"}
         </div>
       </TableCell>
-      <TableCell className="py-0.5">
+      <TableCell className="w-[140px] py-0.5">
         <Popover>
           <PopoverTrigger asChild>
             <button
@@ -120,14 +121,14 @@ const ReminderTableRowEnhanced = ({
           </PopoverContent>
         </Popover>
       </TableCell>
-      <TableCell className="py-0.5">
+      <TableCell className="w-[100px] py-0.5">
         <Badge
           variant={daysSinceLastContact > 30 ? "destructive" : "secondary"}
         >
           {daysSinceLastContact} days
         </Badge>
       </TableCell>
-      <TableCell className="py-0.5">
+      <TableCell className="w-[200px] py-0.5">
         <button
           className="w-full flex items-center gap-2 h-6 px-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer"
           onClick={() => onOpenTodoPanel?.(contact)}
@@ -189,34 +190,32 @@ const ReminderTableRowEnhanced = ({
             <span className="text-gray-400">Add todo</span>
           )}
         </button>
-      </TableCell>
-      <TableCell className="py-0.5">
-        <div className="ml-4">
-          <Select
-            value={contact.status}
-            onValueChange={(value: ContactStatus) => {
-              onUpdateContact({
-                ...contact,
-                status: value,
-              });
-            }}
+      </TableCell>{" "}
+      <TableCell className="w-[140px] py-0.5">
+        <Select
+          value={contact.status}
+          onValueChange={(value: ContactStatus) => {
+            onUpdateContact({
+              ...contact,
+              status: value,
+            });
+          }}
+        >
+          <SelectTrigger
+            className={cn(
+              "h-6 border-none w-[120px] focus:ring-0",
+              getStatusColor(contact.status)
+            )}
           >
-            <SelectTrigger
-              className={cn(
-                "h-6 border-none w-[140px] focus:ring-0",
-                getStatusColor(contact.status)
-              )}
-            >
-              <SelectValue />
-            </SelectTrigger>{" "}
-            <SelectContent>
-              <SelectItem value="Not Started">Not Started</SelectItem>
-              <SelectItem value="Reached Out">Reached Out</SelectItem>
-              <SelectItem value="Responded">Responded</SelectItem>
-              <SelectItem value="Chatted">Chatted</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Not Started">Not Started</SelectItem>
+            <SelectItem value="Reached Out">Reached Out</SelectItem>
+            <SelectItem value="Responded">Responded</SelectItem>
+            <SelectItem value="Chatted">Chatted</SelectItem>
+          </SelectContent>
+        </Select>
       </TableCell>
     </TableRow>
   );
@@ -276,22 +275,25 @@ export const ReminderTable: React.FC<ReminderTableProps> = ({
             </div>
           </AccordionTrigger>
           <AccordionContent className="pt-0 pb-0">
+            {" "}
             <div className="overflow-x-auto">
               <div className="min-w-max">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Role</TableHead>
-                      <TableHead>Company</TableHead>
-                      <TableHead>Tags</TableHead>
-                      <TableHead>Last Contacted</TableHead>
-                      <TableHead>Days Since</TableHead>
-                      <TableHead>To-do</TableHead>
-                      <TableHead>Status</TableHead>
-                    </TableRow>
+                      <TableHead className="w-[140px]">Name</TableHead>
+                      <TableHead className="w-[120px]">Role</TableHead>
+                      <TableHead className="w-[140px]">Company</TableHead>
+                      <TableHead className="w-[140px]">Tags</TableHead>
+                      <TableHead className="w-[140px]">
+                        Last Contacted
+                      </TableHead>
+                      <TableHead className="w-[100px]">Days Since</TableHead>
+                      <TableHead className="w-[200px]">To-do</TableHead>
+                      <TableHead className="w-[140px]">Status</TableHead>
+                    </TableRow>{" "}
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="[&_tr]:!h-10 [&_td]:!py-0.5">
                     {contacts.map((contact) => (
                       <ReminderTableRowEnhanced
                         key={contact.id}
