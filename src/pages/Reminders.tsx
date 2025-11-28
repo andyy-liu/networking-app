@@ -3,13 +3,12 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { useContacts } from "@/features/contacts/hooks/useContacts";
 import { ReminderTable } from "@/features/contacts/components/ReminderTable";
-import { Contact, ContactUpdate } from "@/features/contacts/types";
+import { Contact } from "@/features/contacts/types";
 import { Todo } from "@/features/todos/types";
 import { useContactReminders } from "@/features/contacts/hooks/useContactReminders";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { TodoPanel } from "@/features/todos/components/TodoPanel";
-import { toast } from "@/components/ui/use-toast";
 
 const Reminders = () => {
   const { contacts, isLoading, isError, updateContact } = useContacts();
@@ -65,61 +64,7 @@ const Reminders = () => {
     });
 
     // Update the UI with the updated todo
-    const contactToUpdate = updatedContacts.find((c) => c.id === contactId);
-    if (contactToUpdate) {
-      updateContact(contactToUpdate);
-    }
-  };
-
-  const handleUpdateContact = async (contactUpdatePayload: Contact) => {
-    if (!contactForTodos) {
-      console.warn("handleUpdateContact called without active contactForTodos");
-      return;
-    }
-
-    if (contactForTodos.id !== contactUpdatePayload.id) {
-      console.error(
-        "Mismatched contact IDs in handleUpdateContact. Panel ID:",
-        contactForTodos.id,
-        "Payload ID:",
-        contactUpdatePayload.id
-      );
-      toast({
-        title: "Error",
-        description: "A data mismatch occurred while saving. Please try again.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      // The updateContact mutation from useContacts is called.
-      // It will internally update the react-query cache, triggering a re-render.
-      await updateContact(contactUpdatePayload);
-
-      // Optimistically update the local state for the panel.
-      // The list of contacts will be refetched by react-query automatically on mutation success (if configured),
-      // but the panel needs immediate feedback.
-      setContactForTodos((prevContact) => {
-        if (!prevContact) return null;
-        // Merge the existing contact data with the new payload
-        return { ...prevContact, ...contactUpdatePayload };
-      });
-
-      toast({
-        title: "Contact Updated",
-        description: "Contact details saved successfully.",
-      });
-    } catch (error) {
-      console.error("Error updating contact in Reminders page:", error);
-      toast({
-        title: "Error",
-        description: `Failed to update contact: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-        variant: "destructive",
-      });
-    }
+    updateContact(updatedContacts.find((c) => c.id === contactId)!);
   };
 
   return (
@@ -177,7 +122,6 @@ const Reminders = () => {
             contact={contactForTodos}
             onTodoAdded={handleTodoAdded}
             onTodoCompleted={handleTodoCompleted}
-            onUpdateContact={handleUpdateContact} // Pass the handler
           />
         </main>
       </div>

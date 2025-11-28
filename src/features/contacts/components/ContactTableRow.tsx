@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Contact, ContactStatus } from "@/features/contacts/types";
+import { Todo } from "@/features/todos/types";
 import { Badge } from "@/components/ui/badge";
 import { ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,26 +26,28 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { X, Plus } from "lucide-react";
 import { useTags } from "@/features/tags/hooks/useTags";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ContactTableRowProps {
   contact: Contact;
+  onEditContact: (contact: Contact) => void;
   onUpdateContact: (contact: Contact) => void;
-  onOpenTodoPanel: (contact: Contact) => void;
-  onDeleteContact: (contactId: string) => void;
   isSelected: boolean;
-  onToggleSelect: (contactId: string) => void;
+  onSelectContact: (contact: Contact) => void;
+  onOpenTodoPanel?: (contact: Contact) => void;
 }
 
-export function ContactTableRow({
+export const ContactTableRow: React.FC<ContactTableRowProps> = ({
   contact,
+  onEditContact,
   onUpdateContact,
-  onOpenTodoPanel,
-  onDeleteContact,
   isSelected,
-  onToggleSelect,
-}: ContactTableRowProps) {
+  onSelectContact,
+  onOpenTodoPanel,
+}) => {
   // State for each editable field
   const [name, setName] = useState(contact.name);
+  const [email, setEmail] = useState(contact.email);
   const [role, setRole] = useState(contact.role || "");
   const [company, setCompany] = useState(contact.company || "");
   const [date, setDate] = useState<Date>(() => {
@@ -56,6 +59,7 @@ export function ContactTableRow({
 
   // Refs for handling blur events
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const roleInputRef = useRef<HTMLInputElement>(null);
   const companyInputRef = useRef<HTMLInputElement>(null);
 
@@ -64,6 +68,7 @@ export function ContactTableRow({
   // Update local state when contact prop changes
   useEffect(() => {
     setName(contact.name);
+    setEmail(contact.email);
     setRole(contact.role || "");
     setCompany(contact.company || "");
     setDate(new Date(`${contact.dateOfContact}T00:00:00`));
@@ -161,28 +166,41 @@ export function ContactTableRow({
   }, [latestTodo, contact.name]);
 
   return (
-    <TableRow
-      key={contact.id}
-      className={cn("hover:bg-muted/50 data-[state=selected]:bg-muted")}
-      onClick={() => onOpenTodoPanel(contact)} // This is the main row click handler
-      style={{ cursor: "pointer" }}
-    >
-      <TableCell className="p-2">
-        <div className="flex items-center justify-center h-6">
-          {" "}
-          {/* Fixed height wrapper with flex centering */}
-          <Checkbox
-            checked={isSelected}
-            onCheckedChange={() => onToggleSelect(contact.id)}
-            onClick={(e) => e.stopPropagation()} // Prevent row click when interacting with checkbox
-            aria-label="Select row"
-            className="focus-visible:ring-0" // Remove focus ring that could cause shifting
-          />
+    <TableRow key={contact.id}>
+      <TableCell className="font-medium">
+        <div className="flex flex-col">
+          <span className="font-semibold">{contact.name}</span>
+          <span className="text-sm text-gray-500">{contact.email}</span>
         </div>
       </TableCell>
-      <TableCell className="font-medium p-2">{name}</TableCell>
-      <TableCell className="p-2">{role}</TableCell>
-      <TableCell className="p-2">{company}</TableCell>
+      <TableCell>
+        <Input
+          ref={roleInputRef}
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          onBlur={() => {
+            if (role !== contact.role) {
+              handleUpdate({ role });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+          placeholder="-"
+        />
+      </TableCell>
+      <TableCell>
+        <Input
+          ref={companyInputRef}
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          onBlur={() => {
+            if (company !== contact.company) {
+              handleUpdate({ company });
+            }
+          }}
+          className="w-full h-6 bg-transparent border-0 p-0 focus-visible:ring-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+          placeholder="-"
+        />
+      </TableCell>
       <TableCell className="py-2">
         <Popover>
           <div className="flex flex-wrap gap-1 min-h-[24px] group">
@@ -204,10 +222,7 @@ export function ContactTableRow({
                     e.preventDefault();
                     e.stopPropagation();
                   }}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent row click
-                    handleTagManagement(tag);
-                  }}
+                  onClick={() => handleTagManagement(tag)}
                 >
                   <X className="h-3 w-3 hover:text-destructive" />
                   <span className="sr-only">Remove {tag} tag</span>
@@ -220,7 +235,6 @@ export function ContactTableRow({
                 variant="ghost"
                 size="sm"
                 className="h-7 w-7 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={(e) => e.stopPropagation()} // Prevent row click
               >
                 <Plus
                   color="black"
@@ -232,10 +246,7 @@ export function ContactTableRow({
           <PopoverContent
             className="w-[200px] p-2"
             align="start"
-            onClick={(e) => e.stopPropagation()}
           >
-            {" "}
-            {/* Prevent row click on content too */}
             <div className="space-y-2">
               <div className="flex gap-2">
                 <Input
@@ -288,7 +299,6 @@ export function ContactTableRow({
                 "ml-4 flex h-6 items-center justify-center gap-1 rounded-md border bg-background px-2 text-sm",
                 "hover:bg-gray-100 dark:hover:bg-gray-800"
               )}
-              onClick={(e) => e.stopPropagation()} // Prevent row click
             >
               <CalendarIcon className="h-3 w-3" />
               <span className="hidden sm:inline">
@@ -296,12 +306,7 @@ export function ContactTableRow({
               </span>
             </button>
           </PopoverTrigger>
-          <PopoverContent
-            className="w-auto p-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {" "}
-            {/* Prevent row click on content too */}
+          <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
               selected={date}
@@ -354,9 +359,8 @@ export function ContactTableRow({
               )}
             >
               <SelectValue />
-            </SelectTrigger>{" "}
+            </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Not Started">Not Started</SelectItem>
               <SelectItem value="Reached Out">Reached Out</SelectItem>
               <SelectItem value="Responded">Responded</SelectItem>
               <SelectItem value="Chatted">Chatted</SelectItem>
@@ -366,4 +370,4 @@ export function ContactTableRow({
       </TableCell>
     </TableRow>
   );
-}
+};
